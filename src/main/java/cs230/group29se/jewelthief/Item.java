@@ -1,3 +1,5 @@
+package cs230.group29se.jewelthief;
+
 /**
  * Item is an abstract class that allows it's children to be made with a location.
  * @version 1.0

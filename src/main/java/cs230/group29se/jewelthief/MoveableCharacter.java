@@ -1,3 +1,5 @@
+package cs230.group29se.jewelthief;
+
 /**
  * This interface represents any character that moves and provides a contract for which all those characters adhere
  * to.

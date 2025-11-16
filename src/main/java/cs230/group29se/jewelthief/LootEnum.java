@@ -1,3 +1,5 @@
+package cs230.group29se.jewelthief;
+
 /**
  * LootEnum is a template for the Loot class to set the loot as.
  * @author Charlie
