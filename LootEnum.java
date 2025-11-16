@@ -10,9 +10,9 @@ public enum LootEnum {
     CENT(10),
 
     /**
-     * Second-lowest value loot called COIN.
+     * Second-lowest value loot called DOLLAR.
      */
-    COIN(20),
+    DOLLAR(20),
 
     /**
      * Second-highest value loot called RUBY.
