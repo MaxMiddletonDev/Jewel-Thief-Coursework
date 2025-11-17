@@ -20,7 +20,7 @@ public interface MoveableCharacter {
      *
      * @return the current direction towards which a character is facing
      */
-    Direction getDirection();
+    //Direction getDirection();
 
     /**
      * Provides movement behaviour for the character using movement logic in specification.
