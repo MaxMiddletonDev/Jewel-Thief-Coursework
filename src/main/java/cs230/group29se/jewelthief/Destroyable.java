@@ -2,12 +2,12 @@ package cs230.group29se.jewelthief;
 
 /**
  * Destroyable allows its children to be destroyed.
- * Destroyable implements Remove for collected items,
+ * Destroyable inherits collectable for Remove for collected items,
  * and those being destroyed.
  * @author Charlie
  * @version 1.0
  */
-public abstract class Destroyable extends Item {
+public abstract class Destroyable extends Collectable {
 
     /**
      * Allows for a destroyable item to be created with a position in level.
