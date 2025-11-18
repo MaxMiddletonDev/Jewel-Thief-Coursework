@@ -6,7 +6,7 @@ package cs230.group29se.jewelthief;
  * @author Charlie
  * @version 1.0
  */
-public class Gate implements Remove{
+public class Gate implements Remove {
     /**
      * The colour the gate is
      */
