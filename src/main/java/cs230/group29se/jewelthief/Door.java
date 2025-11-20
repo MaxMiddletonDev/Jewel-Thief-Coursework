@@ -2,6 +2,8 @@ package cs230.group29se.jewelthief;
 
 /**
  * Door allows a player or thief to leave the level when open.
+ * @author Charlie
+ * @version 0.1 - interact is not implemented - needs game before implementation.
  */
 public class Door extends Item {
 

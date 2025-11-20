@@ -4,7 +4,7 @@ package cs230.group29se.jewelthief;
  * Loot can be one of various types that increase the score of the
  * level when picked up by the player.
  * @author Charlie
- * @version 0.1
+ * @version 0.1 - interact needs to be implemented - needs level to be implemented.
  */
 public class Loot extends Destroyable {
 
@@ -26,7 +26,7 @@ public class Loot extends Destroyable {
 
     /**
      * Interact increases the score based on the value of the loot.
-     * Needs scoreboard to be implemented.
+     * Needs level to be implemented.
      */
     public void interact() {
 

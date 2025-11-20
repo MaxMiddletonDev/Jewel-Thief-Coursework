@@ -3,7 +3,7 @@ package cs230.group29se.jewelthief;
 /**
  * Allows for a clock to be created which change the time left in a level.
  * @author Charlie
- * @version 0.1
+ * @version 0.1 - Interact is not implemented - Needs level to be implemented.
  */
 public class Clock extends Destroyable {
 

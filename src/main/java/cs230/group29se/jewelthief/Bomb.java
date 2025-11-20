@@ -6,7 +6,7 @@ import java.util.TimerTask;
 /**
  * The bomb class destroys certain items in its pathway after being triggered.
  * @author Charlie
- * @version 0.1
+ * @version 0.1 - run isn't implemented - needs level and tiles.
  */
 public class Bomb extends Destroyable {
 
