@@ -1,6 +1,7 @@
 module cs230.group29se.jewelthief {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.fasterxml.jackson.databind;
 
 
     opens cs230.group29se.jewelthief to javafx.fxml;
