@@ -177,18 +177,19 @@ public class Level {
         };
 
 
+        //Populate level from file todo: ben will fix later
+        try{
+            readLevelFile(levelName);
+        }catch(FileNotFoundException e){
+            System.out.println("Level file not found: " + levelName);
+            e.printStackTrace();
+        }
 
         timeRemaining = maxTime * 1000L;
         lastUpdateTime = System.nanoTime();
         gameController.scoreLabel.setText("Score: " + score);
 
-        //Populate level from file todo: ben will fix later
-//        try{
-//            readLevelFile(levelName);
-//        }catch(FileNotFoundException e){
-//            System.out.println("Level file not found: " + levelName);
-//            e.printStackTrace();
-//        }
+
 
     }
     public void update() {
@@ -296,6 +297,14 @@ public class Level {
      * @param filename the name of the level file
      * @throws FileNotFoundException if the level file is not found
      */
+
+    /**
+     * reads through the level file and populates the level appropriately
+     * this covers map size, time limit, individual tiles, the player start location, NPCs and Items
+     * @author Ben Poole
+     * @param filename the name of the level to be loaded
+     * @throws FileNotFoundException if the file name entered is not found
+     */
     public void readLevelFile(String filename) throws FileNotFoundException {
         int testMultiplier = 1;
         File inputFile = new File("levels/"+filename);
@@ -318,24 +327,24 @@ public class Level {
             reader.nextLine();
             for (int j = x; j > 0; j--) {
                 Colour[] colours = new Colour[4];
+                String sequence = reader.next();
                 for (int z = 0; z < 4; z++) {
-                    char colChar = (char) reader.nextShort();
+                    char colChar = sequence.charAt(z);
                     colours[z] = colourSetter(String.valueOf(colChar));
                 }
-                grid[j][i] = new Tile(j * testMultiplier, i * testMultiplier, colours);
+                grid[j - 1][i - 1] = new Tile(j * testMultiplier, i * testMultiplier, colours);
             }
         }
         reader.nextLine();
-
+        reader.nextLine();
         //reads characters (to be uncommented once player class pushed)
-
-        /*
+        reader.next();
         x = reader.nextInt();
         y = reader.nextInt();
-        Player player = new Player(x, y);
-         */
+        //Player player = new Player(x, y);
 
-        while (!reader.nextLine().isEmpty()) {
+        // reads and creates NPCs and items
+        while (reader.hasNextLine()) {
             String entityType = reader.next();
             switch (entityType) {
                 case "FLYING" -> {
@@ -361,63 +370,53 @@ public class Level {
                     Colour colour = colourSetter(followerColour);
                     //FollowerEnemy followerEnemy = new FollowerEnemy(xPos, yPos, direction, colour);
                 }
-
-            }
-
-        }
-        reader.nextLine();
-
-        //reads items
-        while (reader.hasNext()) {
-            String itemType = reader.next();
-            switch(itemType) {
                 case "LOOT" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
                     String value = reader.next();
                     switch (value) {
                         case "CENT" -> {
-                            items.add(new Loot(LootEnum.CENT, xPos, yPos));
+                            //items.add(new Loot(LootEnum.CENT, xPos, yPos));
                         }
                         case "DOLLAR" -> {
-                            items.add(new Loot(LootEnum.DOLLAR, xPos, yPos));
+                            //items.add(new Loot(LootEnum.DOLLAR, xPos, yPos));
                         }
                         case "RUBY" -> {
-                            items.add(new Loot(LootEnum.RUBY, xPos, yPos));
+                            //items.add(new Loot(LootEnum.RUBY, xPos, yPos));
                         }
                         case "DIAMOND" -> {
-                            items.add(new Loot(LootEnum.DIAMOND, xPos, yPos));
+                            //items.add(new Loot(LootEnum.DIAMOND, xPos, yPos));
                         }
                     }
                 }
                 case "BOMB" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    items.add(new Bomb(xPos, yPos));
+                    //items.add(new Bomb(xPos, yPos));
                 }
                 case "LEVER" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
                     String leverColour = reader.next();
                     Colour colour = colourSetter(leverColour);
-                    items.add(new Lever(colour, xPos, yPos));
+                    //items.add(new Lever(colour, xPos, yPos));
                 }
                 case "GATE" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
                     String gateColour = reader.next();
                     Colour colour = colourSetter(gateColour);
-                    new Gate(colour, xPos, yPos);
+                    //new Gate(colour, xPos, yPos);
                 }
                 case "DOOR" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    items.add(new Door(xPos, yPos));
+                    //items.add(new Door(xPos, yPos));
                 }
                 case "CLOCK" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    items.add(new Clock(xPos, yPos));
+                    //items.add(new Clock(xPos, yPos));
                 }
                 default -> {
 
@@ -428,9 +427,9 @@ public class Level {
     }
 
     /**
-     * Sets the direction based on the input string.
-     * @param direction
-     * @return
+     * converts strings to direction enum values
+     * @param direction the string to be converted
+     * @return the appropriate direction value
      */
     private Direction directionSetter (String direction) {
         switch (direction) {
@@ -443,9 +442,9 @@ public class Level {
     }
 
     /**
-     * Sets the colour based on the input string.
-     * @param colour
-     * @return
+     * converts strings to colour enum values
+     * @param colour the string to be converted
+     * @return the appropriate colour value
      */
     private Colour colourSetter (String colour) {
         switch (colour) {
