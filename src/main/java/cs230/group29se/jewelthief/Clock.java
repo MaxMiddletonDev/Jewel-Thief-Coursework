@@ -28,4 +28,9 @@ public class Clock extends Destroyable {
     public void interact() {
 
     }
+
+    @Override
+    public void remove() {
+
+    }
 }

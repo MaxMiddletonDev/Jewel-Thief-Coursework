@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.canvas.Canvas?>
+<!--<AnchorPane xmlns="http://javafx.com/javafx"-->
+<!--            xmlns:fx="http://javafx.com/fxml"-->
+<!--            fx:controller="cs230.group29se.jewelthief.Scenes.GameScene.GameController"-->
+<!--            prefHeight="600.0" prefWidth="800.0">-->
+<!--    <Canvas fx:id="gameCanvas" width="800" height="600"/>-->
+<!--</AnchorPane>-->
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="cs230.group29se.jewelthief.Scenes.GameScene.GameController">
+    <Label fx:id="timerLabel"/>
+    <Label fx:id="scoreLabel"/>
+
+    <Canvas fx:id="gameCanvas" width="800" height="800"/>
+
+
+</VBox>

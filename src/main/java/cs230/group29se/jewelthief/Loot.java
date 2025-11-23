@@ -47,4 +47,9 @@ public class Loot extends Destroyable {
     public LootEnum getType() {
         return type;
     }
+
+    @Override
+    public void remove() {
+
+    }
 }

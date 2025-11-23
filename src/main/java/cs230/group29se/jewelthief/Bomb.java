@@ -112,4 +112,8 @@ public class Bomb extends Destroyable {
         }
     }
 
+    @Override
+    public void remove() {
+
+    }
 }

@@ -1,5 +1,7 @@
 package cs230.group29se.jewelthief;
 
+import javafx.scene.canvas.GraphicsContext;
+
 /**
  * Item is an abstract class that allows it's children to be made with a location.
  * @version 1.0
@@ -32,5 +34,9 @@ public abstract class Item {
      */
     public int[] getPosition() {
         return POSITION;
+    }
+
+    public void draw(GraphicsContext gc) {
+
     }
 }

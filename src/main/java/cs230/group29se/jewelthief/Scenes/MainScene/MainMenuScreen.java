@@ -3,6 +3,7 @@ package cs230.group29se.jewelthief.Scenes.MainScene;
 import cs230.group29se.jewelthief.MainApplication;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import java.io.IOException;
@@ -26,6 +27,11 @@ public class MainMenuScreen extends Screen {
     @Override
     public void draw() {
 
+    }
+
+    @Override
+    public Scene createScene() {
+        return null;
     }
 
 }

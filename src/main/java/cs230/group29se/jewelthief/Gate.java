@@ -35,4 +35,8 @@ public class Gate implements Remove {
         return colour;
     }
 
+    @Override
+    public void remove() {
+
+    }
 }

@@ -52,4 +52,9 @@ public class Lever extends Destroyable {
         }
         this.remove();
     }
+
+    @Override
+    public void remove() {
+
+    }
 }

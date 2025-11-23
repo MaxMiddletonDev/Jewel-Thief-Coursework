@@ -1,19 +1,20 @@
 package cs230.group29se.jewelthief.Scenes;
 
 import javafx.scene.Scene;
-
-import java.io.IOException;
+import javafx.scene.layout.Pane;
 
 abstract public class Screen {
+    protected Pane root;
+    protected Scene scene;
     protected boolean finished = false;
     // Initialize
-    abstract public void initialize();
+    public abstract void initialize();
 
     // Update, Logic happens here
-    abstract public void update();
+    public abstract void update();
 
     // Draw, Rendering happens here
-    abstract public void draw();
+    public abstract void draw();
 
     // IsFinished bool
     public boolean isFinished(){
@@ -23,5 +24,5 @@ abstract public class Screen {
     public void setFinished(boolean finished) {
         this.finished = finished;
     }
-
+    public abstract Scene createScene();
 }
