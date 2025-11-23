@@ -1,9 +1,11 @@
 package cs230.group29se.jewelthief;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 /**
  * Door allows a player or thief to leave the level when open.
  * @author Charlie
- * @version 0.1 - interact is not implemented - needs game before implementation.
+ * @version 0.2 - interact is not implemented - needs game before implementation.
  */
 public class Door extends Item {
 
@@ -12,12 +14,15 @@ public class Door extends Item {
      */
     private boolean closed = true;
 
+    private static final Image image = new Image("Images/DOOR.png");
+
     /**
      * Allows for a door to be added to a level.
-     * @param position Where the door is located in the level.
+     * @param x Where in tiles the item is located.
+     * @param y Where in tiles the item is located.
      */
-    public Door(final int[] position) {
-        super(position);
+    public Door(final int x , final int y) {
+        super(x, y);
     }
 
     /**
@@ -44,5 +49,11 @@ public class Door extends Item {
      */
     public void setClosed(final boolean closed) {
         this.closed = closed;
+    }
+
+
+
+    public void draw(GraphicsContext gc) {
+        gc.drawImage(image,getX(),getY(),50,50);
     }
 }

@@ -13,5 +13,6 @@ public interface Remove {
      * will work based on the items co-ordinates then set that tile's item to void.
      * will be in interact for most items and will be triggered by it or by Bomb.destroy().
      */
-    void remove();
+    default void remove(){
+    }
 }

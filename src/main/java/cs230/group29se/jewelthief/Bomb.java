@@ -1,12 +1,14 @@
 package cs230.group29se.jewelthief;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
  * The bomb class destroys certain items in its pathway after being triggered.
  * @author Charlie
- * @version 0.1 - run isn't implemented - needs level and tiles.
+ * @version 0.2 - run isn't implemented - needs level and tiles.
  */
 public class Bomb extends Destroyable {
 
@@ -32,14 +34,17 @@ public class Bomb extends Destroyable {
      */
     private boolean armed = false;
 
+    private Image image;
+
 
     /**
      * Creates an active bomb with a location and time left before detonation.
-     * @param position where the bomb is located.
+     * @param x Where in tiles the item is located
+     * @param y Where in tiles the item is located
      * @param timeRemaining how long left till the bomb detonates.
      */
-    public Bomb(final int[] position, final Long timeRemaining) {
-        super(position);
+    public Bomb(final Long timeRemaining, final int x, final int y) {
+        super(x, y);
         // ensures bomb timer is 3 seconds or smaller.
         if (this.timeRemaining >= timeRemaining) {
             this.timeRemaining = timeRemaining;
@@ -51,10 +56,12 @@ public class Bomb extends Destroyable {
 
     /**
      * Creates a dormant bomb with a position.
-     * @param position where the bomb is located.
+     * @param x Where in tiles the item is located
+     * @param y Where in tiles the item is located
      */
-    public Bomb(final int[] position) {
-        super(position);
+    public Bomb(final int x, final int y) {
+        super(x, y);
+        image = new Image("Images/BOMB0.png");
     }
 
 
@@ -95,7 +102,6 @@ public class Bomb extends Destroyable {
         return armed;
     }
 
-
     /**
      * Get the time left (in milliseconds) before the bomb explodes.
      * @return the time left before the bomb explodes.
@@ -112,8 +118,7 @@ public class Bomb extends Destroyable {
         }
     }
 
-    @Override
-    public void remove() {
-
+    public void draw(GraphicsContext gc) {
+        gc.drawImage(image, getX(), getY(), 40, 40);
     }
 }

@@ -211,16 +211,14 @@ public class Level {
 
     //Called every tick from GameScreen.draw()
     public void draw(GraphicsContext gc) {
-        for (Item item : items) {
-            item.draw(gc);
-        }
-
         for (Tile[] row : grid) {
             for (Tile tile : row) {
                 tile.draw(gc);
             }
         }
-
+        for (Item item : items) {
+            item.draw(gc);
+        }
     }
 
     /**
@@ -376,55 +374,53 @@ public class Level {
                 case "LOOT" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    //TEMPORARY FIX for array constructor
-                    int[] itemPos = new int[]{xPos, yPos};
                     String value = reader.next();
                     switch (value) {
                         case "CENT" -> {
-                            new Loot(itemPos, LootEnum.CENT);
+                            items.add(new Loot(LootEnum.CENT, xPos, yPos));
                         }
                         case "DOLLAR" -> {
-                            new Loot(itemPos, LootEnum.DOLLAR);
+                            items.add(new Loot(LootEnum.DOLLAR, xPos, yPos));
                         }
                         case "RUBY" -> {
-                            new Loot(itemPos, LootEnum.RUBY);
+                            items.add(new Loot(LootEnum.RUBY, xPos, yPos));
                         }
                         case "DIAMOND" -> {
-                            new Loot(itemPos, LootEnum.DIAMOND);
+                            items.add(new Loot(LootEnum.DIAMOND, xPos, yPos));
                         }
                     }
                 }
                 case "BOMB" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    //TEMPORARY FIX for array constructor
-                    int[] itemPos = new int[]{xPos, yPos};
-                    new Bomb(itemPos);
+                    items.add(new Bomb(xPos, yPos));
                 }
                 case "LEVER" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    //TEMPORARY FIX for array constructor
-                    int[] itemPos = new int[]{xPos, yPos};
                     String leverColour = reader.next();
                     Colour colour = colourSetter(leverColour);
-                    new Lever(colour, itemPos);
+                    items.add(new Lever(colour, xPos, yPos));
                 }
                 case "GATE" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    //TEMPORARY FIX for array constructor
-                    int[] itemPos = new int[]{xPos, yPos};
                     String gateColour = reader.next();
                     Colour colour = colourSetter(gateColour);
-                    new Gate(colour);
+                    new Gate(colour, xPos, yPos);
                 }
                 case "DOOR" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    //TEMPORARY FIX for array constructor
-                    int[] itemPos = new int[]{xPos, yPos};
-                    new Door(itemPos);
+                    items.add(new Door(xPos, yPos));
+                }
+                case "CLOCK" -> {
+                    int xPos = reader.nextInt();
+                    int yPos = reader.nextInt();
+                    items.add(new Clock(xPos, yPos));
+                }
+                default -> {
+
                 }
             }
         }
@@ -453,10 +449,10 @@ public class Level {
      */
     private Colour colourSetter (String colour) {
         switch (colour) {
-            case "R" -> {return Colour.RED;}
-            case "G" -> {return Colour.GREEN;}
-            case "B" -> {return Colour.BLUE;}
-            case "Y" -> {return Colour.YELLOW;}
+            case "R" -> { return Colour.RED; }
+            case "G" -> { return Colour.GREEN; }
+            case "B" -> { return Colour.BLUE; }
+            case "Y" -> { return Colour.YELLOW; }
         }
         return null;
     }

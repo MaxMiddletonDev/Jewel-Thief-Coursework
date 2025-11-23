@@ -1,5 +1,8 @@
 package cs230.group29se.jewelthief;
 
+import javafx.scene.canvas.GraphicsContext;
+
+
 /**
  * Loot can be one of various types that increase the score of the
  * level when picked up by the player.
@@ -16,11 +19,12 @@ public class Loot extends Destroyable {
     /**
      * Allows for loot to be created with a position
      *  and set value from existing LootEnum.
-     * @param position the position of the loot.
+     * @param x Where in tiles the item is located
+     * @param y Where in tiles the item is located
      * @param type the type of loot from a set of types.
      */
-    public Loot(final int[] position, final LootEnum type) {
-        super(position);
+    public Loot(final LootEnum type, final int x, final int y) {
+        super(x, y);
         this.type = type;
     }
 
@@ -48,8 +52,11 @@ public class Loot extends Destroyable {
         return type;
     }
 
-    @Override
-    public void remove() {
-
+    /**
+     * Draws this loot onto the screen at its x,y.
+     * @param gc the class the loot will be drawn with.
+     */
+    public void draw(GraphicsContext gc) {
+        gc.drawImage(type.getImage(),getX()*40,getY()*40,40,40);
     }
 }

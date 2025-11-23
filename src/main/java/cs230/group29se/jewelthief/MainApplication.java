@@ -88,7 +88,7 @@ public class MainApplication extends Application {
                 if(gameScreen.isFinished()){
                     currentScreen = new MainMenuScreen();
                     stage.setTitle("Main Menu");
-                    scene =currentScreen.createScene();
+                    scene = currentScreen.createScene();
                     stage.setScene(scene);
                     stage.show();
                     currentScreen.initialize();

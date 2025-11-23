@@ -1,30 +1,43 @@
 package cs230.group29se.jewelthief;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
 /**
  * An obstacle that blocks the player that can be opened.
  * Will implement Remove when remove() can be made.
  * @author Charlie
- * @version 1.0
+ * @version 1.1
  */
 public class Gate implements Remove {
     /**
-     * The colour the gate is
+     * The colour the gate is.
      */
-    private Colour colour;
-
+    private final Colour colour;
     /**
-     *  It is not in the design but gate should
-     *  have a position? i cant think what it would do maybe data
-     *  preservation but would that data not be gotten by the tile itself
-     *  {@code private int[] position;}
+     * The width of all gates.
      */
-
+    private static final double WIDTH = 50.0;
     /**
-     * Allows for gates to be made in the l
-     * @param colour The colour of the gate
+     * The height of all gates.
      */
-    public Gate(Colour colour) {
+    private static final double HEIGHT = 50.0;
+
+
+    private final int posX;
+    private final int posY;
+    private final Image image;
+    /**
+     * Allows for gates to be made in the level.
+     * @param colour The colour of the gate.
+     * @param x the row the gate is in.
+     * @param y the column the gate is in.
+     */
+    public Gate(final Colour colour, final int x, final int y) {
         this.colour = colour;
+        posX = x;
+        posY = y;
+        image = new Image("Images/GATE" + colour.name() + ".png");
     }
 
     /**
@@ -35,8 +48,11 @@ public class Gate implements Remove {
         return colour;
     }
 
-    @Override
-    public void remove() {
-
+    /**
+     * Draws this gate onto the screen at its x,y.
+     * @param gc the class the gate will be drawn with.
+     */
+    public void draw(final GraphicsContext gc) {
+        gc.drawImage(image, posX, posY, 40, 40);
     }
 }
