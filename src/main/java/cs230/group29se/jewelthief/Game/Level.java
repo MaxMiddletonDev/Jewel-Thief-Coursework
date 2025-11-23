@@ -21,6 +21,8 @@ import java.util.Scanner;
  * @version 1.0
  */
 public class Level {
+    private int levelNumber = 1;
+
     GameController gameController;
 
     List<Item> items = new ArrayList<>();
@@ -38,6 +40,12 @@ public class Level {
     private int score;
 
 
+    /**
+     * Constructs a Level with the specified level name and game controller.
+     *
+     * @param levelName      the name of the level file
+     * @param gameController the game controller for updating UI elements
+     */
     public Level(String levelName, GameController gameController){
         this.gameController = gameController;
         dummyPlayer = new Rectangle(38, 38, Color.GREEN);
@@ -216,6 +224,14 @@ public class Level {
     }
 
     /**
+     * Gets the level number.
+     * @return the level number
+     */
+    public int getLevelNumber() {
+        return levelNumber;
+    }
+
+    /**
      * Adds time to the remaining time, up to the maximum time.
      * Unit of time is seconds.
      * @param timeToAdd
@@ -276,6 +292,12 @@ public class Level {
         return score;
     }
 
+    /**
+     * Reads a level file and populates the level with tiles, items, and enemies.
+     *
+     * @param filename the name of the level file
+     * @throws FileNotFoundException if the level file is not found
+     */
     public void readLevelFile(String filename) throws FileNotFoundException {
         int testMultiplier = 1;
         File inputFile = new File("levels/"+filename);
@@ -409,6 +431,11 @@ public class Level {
         reader.close();
     }
 
+    /**
+     * Sets the direction based on the input string.
+     * @param direction
+     * @return
+     */
     private Direction directionSetter (String direction) {
         switch (direction) {
             case "UP" -> {return Direction.UP;}
@@ -419,6 +446,11 @@ public class Level {
         return null;
     }
 
+    /**
+     * Sets the colour based on the input string.
+     * @param colour
+     * @return
+     */
     private Colour colourSetter (String colour) {
         switch (colour) {
             case "R" -> {return Colour.RED;}

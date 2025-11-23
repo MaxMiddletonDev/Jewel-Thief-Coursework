@@ -18,7 +18,6 @@ public class GameScreen extends Screen {
 
     @Override   
     public void initialize() {
-
         GameManager.startNewGame(new Level("level1.txt", controller));
         root.getChildren().add(GameManager.getCurrentLevel().dummyPlayer);
         scene.setOnKeyPressed(event -> {
@@ -41,8 +40,6 @@ public class GameScreen extends Screen {
                 }
             }
         });
-
-
     }
 
     @Override
@@ -81,7 +78,5 @@ public class GameScreen extends Screen {
             return null;
         }
     }
-
-
 
 }

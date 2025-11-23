@@ -21,7 +21,6 @@ public class LevelSelectScreen extends Screen {
         }
     }
 
-
     @Override
     public void update() {
 
@@ -61,6 +60,5 @@ public class LevelSelectScreen extends Screen {
             return null;
         }
     }
-
 
 }

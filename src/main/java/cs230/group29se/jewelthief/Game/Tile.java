@@ -8,6 +8,11 @@ import javafx.util.Pair;
 import java.util.Arrays;
 import java.util.Comparator;
 
+/**
+ * Represents a tile in the game, which is divided into four quadrants,
+ * each with its own colour.
+ * @author Gustas Rove
+ */
 public class Tile {
     private final static int TILE_SIZE = 64;
     private final static int HALF_TILE_SIZE = TILE_SIZE / 2;
@@ -16,6 +21,12 @@ public class Tile {
     private final int posY;
     private Colour[] colours = new Colour[4];
 
+    /**
+     * Constructs a Tile with the specified position and colours.
+     * @param posX the x position of the tile in the grid
+     * @param posY the y position of the tile in the grid
+     * @param colours an array of four colours for the quadrants
+     */
     public Tile(int posX,int posY, Colour[] colours) {
         this.posX = posX;
         this.posY = posY;
@@ -24,7 +35,7 @@ public class Tile {
 
     /**
      * Draws the tile on the given GraphicsContext.
-     * @param gc
+     * @param gc the GraphicsContext to draw on
      */
     public void draw(GraphicsContext gc) {
         Arrays.sort(colours, Comparator.comparing(Colour::toString));
