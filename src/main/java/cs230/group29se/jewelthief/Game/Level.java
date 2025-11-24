@@ -376,30 +376,30 @@ public class Level {
                     String value = reader.next();
                     switch (value) {
                         case "CENT" -> {
-                            //items.add(new Loot(LootEnum.CENT, xPos, yPos));
+                            items.add(new Loot(LootEnum.CENT, xPos, yPos));
                         }
                         case "DOLLAR" -> {
-                            //items.add(new Loot(LootEnum.DOLLAR, xPos, yPos));
+                            items.add(new Loot(LootEnum.DOLLAR, xPos, yPos));
                         }
                         case "RUBY" -> {
-                            //items.add(new Loot(LootEnum.RUBY, xPos, yPos));
+                            items.add(new Loot(LootEnum.RUBY, xPos, yPos));
                         }
                         case "DIAMOND" -> {
-                            //items.add(new Loot(LootEnum.DIAMOND, xPos, yPos));
+                            items.add(new Loot(LootEnum.DIAMOND, xPos, yPos));
                         }
                     }
                 }
                 case "BOMB" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    //items.add(new Bomb(xPos, yPos));
+                    items.add(new Bomb(xPos, yPos));
                 }
                 case "LEVER" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
                     String leverColour = reader.next();
                     Colour colour = colourSetter(leverColour);
-                    //items.add(new Lever(colour, xPos, yPos));
+                    items.add(new Lever(colour, xPos, yPos));
                 }
                 case "GATE" -> {
                     int xPos = reader.nextInt();
@@ -411,12 +411,12 @@ public class Level {
                 case "DOOR" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    //items.add(new Door(xPos, yPos));
+                    items.add(new Door(xPos, yPos));
                 }
                 case "CLOCK" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    //items.add(new Clock(xPos, yPos));
+                    items.add(new Clock(xPos, yPos));
                 }
                 default -> {
 
