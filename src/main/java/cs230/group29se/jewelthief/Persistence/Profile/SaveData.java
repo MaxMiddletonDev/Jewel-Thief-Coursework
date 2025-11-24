@@ -10,7 +10,7 @@ import java.util.Map;
  *
  * <b>JSON constraint:</b> Values inside {@code Object[]} and {@code Map<String,Object>} must be JSON-serializable.</p>
  *
- * @author You
+ * @author Iyaad
  * @since 1.0
  * @see cs230.group29se.jewelthief.Persistence.Storage.FileStore
  * @see cs230.group29se.jewelthief.Persistence.Storage.JsonSerializer
@@ -19,31 +19,31 @@ public class SaveData {
     /**
      * The level/scene identifier for this save (e.g., "level-03"), non-null.
      */
-    private String levelId;                 // or levelNumber if you prefer int
+    private String levelId;
     /**
      * The owner profile name associated with this save, non-null.
      */
-    private String profileName;             // who owns this save
+    private String profileName;
     /**
      * Heterogeneous snapshot of the player at save time (position, HP, inventory, etc.). Elements must be JSON-serializable.
      */
-    private Object[] playerState;           // heterogeneous snapshot pieces e.g. (x,y,hp,inventory, etc.)
+    private Object[] playerState;
     /**
      * Cumulative play time in seconds, non-negative.
      */
-    private int elapsedSeconds;       // cumulative play time
+    private int elapsedSeconds;
     /**
      * NPC states keyed by NPC identifier. Values must be JSON-serializable.
      */
-    private Map<String, Object> npcStates;  // keyed by npc identifier
+    private Map<String, Object> npcStates;
     /**
      * Gate/door states keyed by gate identifier. Values must be JSON-serializable.
      */
-    private Map<String, Object> gates;      // keyed by gate identifier
+    private Map<String, Object> gates;
     /**
      * Item states keyed by item identifier (e.g., count, durability). Values must be JSON-serializable.
      */
-    private Map<String, Object> items;      // keyed by item identifier
+    private Map<String, Object> items;
     /**
      * No-arg constructor required by JSON deserializers.
      */
@@ -60,12 +60,12 @@ public class SaveData {
      */
     public void setLevelId(String levelId) { this.levelId = levelId; }
     /**
-     * Gets the owner profile name.
-     * @return non-null profile name
+     * Gets the profile name.
+     * @return profile name
      */
     public String getProfileName() { return profileName; }
     /**
-     * Sets the owner profile name.
+     * Sets the profile name.
      * @param profileName  non-null profile name
      */
     public void setProfileName(String profileName) { this.profileName = profileName; }
