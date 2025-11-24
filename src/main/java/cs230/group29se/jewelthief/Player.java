@@ -4,7 +4,8 @@ import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
 
 /**
- * This class represents a Player Character while implementing MoveableCharacter
+ * This class represents a Player Character while implementing MoveableCharacter.
+ * This Player will serve as the Main Character in which the User will use.
  * @author Max Middleton
  */
 
@@ -44,7 +45,7 @@ public class Player implements MoveableCharacter {
 
     /**
      * Retrieves the player's current facing direction.
-     * @return direction, the current direction.
+     * @return direction
      */
     @Override
     public Direction getDirection() {
@@ -62,7 +63,7 @@ public class Player implements MoveableCharacter {
 
     /**
      * Checks if the player is currently alive.
-     * @return True if the player is alive, {@code false} otherwise.
+     * @return True if the player is alive, false otherwise.
      */
     @Override
     public boolean isAlive() {
@@ -73,6 +74,7 @@ public class Player implements MoveableCharacter {
     /**
      * Attempts to move the player in the current facing direction.
      * The method scans the grid along the vector of the current direction (dx, dy).
+     * Then if its valid it will change co-ordinates
      */
     public void move() {
         int x = currentTile.getX();
@@ -95,6 +97,11 @@ public class Player implements MoveableCharacter {
         }
     }
 
+    /**
+     * This method is to handle player collision with enemy
+     * which will end the game as player will die.
+     * @param other - character that collides with this one
+     */
     @Override
     public void onCollision(MoveableCharacter other) {
         // Will create when enemies are created
