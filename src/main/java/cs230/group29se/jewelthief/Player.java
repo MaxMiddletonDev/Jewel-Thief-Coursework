@@ -103,7 +103,7 @@ public class Player implements MoveableCharacter {
      * @param other - character that collides with this one
      */
     @Override
-    public void onCollision(MoveableCharacter other) {
+    public void onCollisionWith(MoveableCharacter other) {
         // Will create when enemies are created
     }
 }

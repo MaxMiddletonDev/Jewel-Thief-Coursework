@@ -36,7 +36,7 @@ public interface MoveableCharacter {
      *
      * @param other - character that collides with this one
      */
-    void onCollision(MoveableCharacter other);
+    void onCollisionWith(MoveableCharacter other);
 
     /**
      * Handles item collection for all characters.
