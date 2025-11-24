@@ -210,6 +210,35 @@ public class Level {
 
     }
 
+    /**
+     * Returns the width of the grid.
+     * @return the width of the grid.
+     */
+    public int getWidth() {
+        return grid.length;
+    }
+
+    /**
+     * Returns the height of the grid.
+     * @return the height of the grid.
+     */
+    public int getHeight() {
+        return grid[0].length;
+    }
+
+    /**
+     * This method finds the tile at the specified (x, y) coordinates.
+     * @param x the x-coordinate to retrieve.
+     * @param y the y-coordinate to retrieve.
+     * @return Retrieves the tile at the specified location, or null if the coordinates are out of bounds.
+     */
+    public Tile getTile(int x, int y) {
+        if (x >= 0 && x < getWidth() && y >= 0 && y < getHeight()) {
+            return grid[x][y];
+        }
+        return null;
+    }
+
     //Called every tick from GameScreen.draw()
     public void draw(GraphicsContext gc) {
         for (Tile[] row : grid) {

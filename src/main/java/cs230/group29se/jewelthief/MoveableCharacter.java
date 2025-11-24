@@ -4,9 +4,11 @@ package cs230.group29se.jewelthief;
  * This interface represents any character that moves and provides a contract for which all those characters adhere
  * to.
  * @author Baba
+ * @author Max Middleton
  */
 public interface MoveableCharacter {
 
+    int[] getPosition();
     /**
      * Tells us whether a character is still in the game or not
      * Sidenote: if a character is no longer "active" in the game, they should be removed
@@ -20,7 +22,7 @@ public interface MoveableCharacter {
      *
      * @return the current direction towards which a character is facing
      */
-    //Direction getDirection();
+    Direction getDirection();
 
     /**
      * Provides movement behaviour for the character using movement logic in specification.
@@ -43,5 +45,4 @@ public interface MoveableCharacter {
      * @param item
      */
     void collectItem(Item item);
-
 }

@@ -3,7 +3,6 @@ package cs230.group29se.jewelthief.Game;
 import cs230.group29se.jewelthief.Colour;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.util.Pair;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -31,6 +30,54 @@ public class Tile {
         this.posX = posX;
         this.posY = posY;
         this.colours = colours;
+    }
+
+    /**
+     * Determines if a move from this tile to the specified target tile is valid.
+     * @param target the destination tile to check against.
+     * @return True if the tiles share a color, false if otherwise.
+     */
+    public boolean isValidMove(Tile target) {
+        if (target == null) {
+            return false;
+        }
+        for (Colour playerColour : this.colours) {
+            for (Colour targetColour : target.getColours()) {
+                if (playerColour == targetColour) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Retrieves the array of colours assigned with this tile.
+     * Made to compare colours between tiles.
+     * @return an array of Colour objects assigned to said tile.
+     */
+    private Colour[] getColours() {
+        return this.colours;
+    }
+
+    /**
+     * Retrieves the x-coordinate of the tile's position on the grid.
+     * @return the x-coordinate.
+     */
+    public int getX() {
+        return posX;
+    }
+
+    /**
+     * Retrieves the y-coordinate of the tile's position on the grid.
+     * @return the y-coordinate.
+     */
+    public int getY() {
+        return posY;
+    }
+
+    public int[] getPosition() {
+        return new int[]{posX, posY};
     }
 
     /**

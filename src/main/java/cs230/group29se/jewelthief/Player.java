@@ -1,0 +1,102 @@
+package cs230.group29se.jewelthief;
+
+import cs230.group29se.jewelthief.Game.Level;
+import cs230.group29se.jewelthief.Game.Tile;
+
+/**
+ * This class represents a Player Character while implementing MoveableCharacter
+ * @author Max Middleton
+ */
+
+public class Player implements MoveableCharacter {
+    private Tile currentTile;
+    private boolean isAlive;
+    private Direction direction;
+
+    private Level level;
+
+    /**
+     * Constructs a new Player instance.
+     * @param startTile the tile where the player spawns at the start of the level.
+     * @param level the level instance the player belongs to, used for checking boundaries and tile data.
+     */
+    public Player(Tile startTile, Level level) {
+        this.currentTile = startTile;
+        this.level = level;
+        this.direction = Direction.UP;
+        this.isAlive = true;
+    }
+    /**
+     * Interactions with a collectable item.
+     * @param item the item to interact with.
+     */
+    public void collectItem(Item item) {
+        item.interact();
+    }
+
+    /**
+     * Updates the facing direction of the player.
+     * @param direction the new direction for the player to face.
+     */
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    /**
+     * Retrieves the player's current facing direction.
+     * @return direction, the current direction.
+     */
+    @Override
+    public Direction getDirection() {
+        return direction;
+    }
+
+    /**
+     * Retrieves the coordinate position of the player.
+     * @return an int array containing the x and y coordinates of the player's current tile.
+     */
+    @Override
+    public int[] getPosition() {
+        return currentTile.getPosition();
+    }
+
+    /**
+     * Checks if the player is currently alive.
+     * @return True if the player is alive, {@code false} otherwise.
+     */
+    @Override
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+
+    /**
+     * Attempts to move the player in the current facing direction.
+     * The method scans the grid along the vector of the current direction (dx, dy).
+     */
+    public void move() {
+        int x = currentTile.getX();
+        int y = currentTile.getY();
+
+        int dx = direction.getX();
+        int dy = direction.getY();
+
+        x += dx;
+        y += dy;
+
+        while (x >= 0 && x < level.getWidth() && y >= 0 && y < level.getHeight()) {
+            Tile target = level.getTile(x, y);
+            if (currentTile.isValidMove(target)) {
+                this.currentTile = target;
+                return;
+            }
+            x += dx;
+            y += dy;
+        }
+    }
+
+    @Override
+    public void onCollision(MoveableCharacter other) {
+        // Will create when enemies are created
+    }
+}
