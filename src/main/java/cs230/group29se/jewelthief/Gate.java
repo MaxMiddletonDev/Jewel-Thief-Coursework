@@ -37,7 +37,7 @@ public class Gate implements Remove {
         this.colour = colour;
         posX = x;
         posY = y;
-        image = new Image("Images/GATE" + colour.name() + ".png");
+        image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/GATE" + colour.name() + ".png").toString());
     }
 
     /**
@@ -53,6 +53,6 @@ public class Gate implements Remove {
      * @param gc the class the gate will be drawn with.
      */
     public void draw(final GraphicsContext gc) {
-        gc.drawImage(image, posX, posY, 40, 40);
+        gc.drawImage(image, posX*64, posY*64);
     }
 }

@@ -14,7 +14,7 @@ public class Door extends Item {
      */
     private boolean closed = true;
 
-    private static final Image image = new Image("Images/DOOR.png");
+    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/DOOR.png").toString());;
 
     /**
      * Allows for a door to be added to a level.
@@ -54,6 +54,6 @@ public class Door extends Item {
 
 
     public void draw(GraphicsContext gc) {
-        gc.drawImage(image,getX(),getY(),50,50);
+        gc.drawImage(image, getX()*64, getY()*64);
     }
 }

@@ -16,7 +16,7 @@ public class Clock extends Destroyable {
      */
     private static final int TIME_CHANGE = 5;
 
-    private static final Image image = new Image("Images/CLOCK.png");
+    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/CLOCK.png").toString());;
     /**
      * Allows for a clock to be created at a position in the level.
      * @param x Where in tiles the item is located
@@ -40,6 +40,6 @@ public class Clock extends Destroyable {
      * @param gc the class the clock will be drawn with.
      */
     public void draw(GraphicsContext gc) {
-        gc.drawImage(image, getX(), getY(), 40, 40);
+        gc.drawImage(image, getX()*64, getY()*64);
     }
 }

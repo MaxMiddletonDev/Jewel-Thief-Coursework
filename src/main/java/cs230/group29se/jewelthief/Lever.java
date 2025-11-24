@@ -1,11 +1,11 @@
 package cs230.group29se.jewelthief;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+
 /**
  * Levers can be collected to open gates of the same colour.
  * @author Charlie
@@ -44,7 +44,8 @@ public class Lever extends Destroyable {
 
         super(x, y);
         this.colour = colour;
-        image = new Image("Images/LEVER"+colour.name()+".png");
+
+        image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/LEVER" + colour.name() + ".png").toString());
     }
 
     /**
@@ -74,6 +75,6 @@ public class Lever extends Destroyable {
     }
 
     public void draw(GraphicsContext gc) {
-        gc.drawImage(image, getX(), getY(), 40, 40);
+        gc.drawImage(image, getX()*64, getY()*64);
     }
 }

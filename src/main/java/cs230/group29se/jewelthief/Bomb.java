@@ -61,7 +61,7 @@ public class Bomb extends Destroyable {
      */
     public Bomb(final int x, final int y) {
         super(x, y);
-        image = new Image("Images/BOMB0.png");
+        image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/BOMB0.png").toString());
     }
 
 
@@ -119,6 +119,6 @@ public class Bomb extends Destroyable {
     }
 
     public void draw(GraphicsContext gc) {
-        gc.drawImage(image, getX(), getY(), 40, 40);
+        gc.drawImage(image, getX()*64, getY()*64);
     }
 }

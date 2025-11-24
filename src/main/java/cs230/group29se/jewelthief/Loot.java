@@ -57,6 +57,6 @@ public class Loot extends Destroyable {
      * @param gc the class the loot will be drawn with.
      */
     public void draw(GraphicsContext gc) {
-        gc.drawImage(type.getImage(),getX()*40,getY()*40,40,40);
+        gc.drawImage(type.getImage(),getX()*64,getY()*64);
     }
 }
