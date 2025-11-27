@@ -46,6 +46,9 @@ public abstract class NonPlayableCharacter implements MoveableCharacter {
     }
 
     @Override
+    public void setAliveTo(boolean alive) {isAlive = alive; }
+
+    @Override
     public Direction getDirection() {
         return direction;
     }
@@ -56,9 +59,7 @@ public abstract class NonPlayableCharacter implements MoveableCharacter {
     }
 
     @Override
-    public void collectItem(Item item) {
-
-    }
+    public void collectItem(Item item) {}
 
     @Override
     public abstract void onCollisionWith(MoveableCharacter other);

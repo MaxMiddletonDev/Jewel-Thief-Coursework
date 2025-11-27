@@ -8,7 +8,12 @@ package cs230.group29se.jewelthief;
  */
 public interface MoveableCharacter {
 
+    /**
+     * Returns the position of a character
+     * @return characters x,y position
+     */
     int[] getPosition();
+
     /**
      * Tells us whether a character is still in the game or not
      * Sidenote: if a character is no longer "active" in the game, they should be removed
@@ -16,6 +21,14 @@ public interface MoveableCharacter {
      * @return true, if character is still in game, false otherwise
      */
     boolean isAlive();
+
+    /**
+     * When a character has collided with another character capable of removing them from the game, it set isAlive to
+     * false, indicating their removal from the game
+     *
+     * @return set to true if character is still alive, false otherwise.
+     */
+    void setAliveTo(boolean alive);
 
     /**
      * Tells us the characters current facing direction

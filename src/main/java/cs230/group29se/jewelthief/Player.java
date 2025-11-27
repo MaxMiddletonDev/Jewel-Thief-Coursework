@@ -70,6 +70,15 @@ public class Player implements MoveableCharacter {
         return isAlive;
     }
 
+    @Override
+    /**
+     * When a character has collided with another character capable of removing them from the game, it set isAlive to
+     * false, indicating their removal from the game
+     *
+     * @return set to true if character is still alive, false otherwise.
+     */
+    public void setAliveTo(boolean alive) {isAlive = alive; }
+
 
     /**
      * Attempts to move the player in the current facing direction.
