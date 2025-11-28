@@ -8,12 +8,10 @@
 <?import javafx.scene.canvas.Canvas?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<!--    <padding>-->
+<!--        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>-->
+<!--    </padding>-->
 
-    <Label fx:id="levelSelectText"/>
-    <Canvas fx:id="levelSelectCanvas" width="800" height="600"/>
     <Button fx:id="level1Button" text="Level 1" onAction="#selectLevel" userData="1"/>
     <Button fx:id="level2Button" text="Level 2" onAction="#selectLevel" userData="2"/>
     <Button fx:id="level3Button" text="Level 3" onAction="#selectLevel" userData="3"/>
@@ -24,7 +22,5 @@
     <Button fx:id="level8Button" text="Level 8" onAction="#selectLevel" userData="8"/>
     <Button fx:id="level9Button" text="Level 9" onAction="#selectLevel" userData="9"/>
     <Button fx:id="level10Button" text="Level 10" onAction="#selectLevel" userData="10"/>
-
-    <Button text="Level 2" />
 
 </VBox>

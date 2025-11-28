@@ -14,8 +14,6 @@ import java.util.ResourceBundle;
 public class LevelSelectController implements Initializable {
 
     @FXML
-    public Canvas levelSelectCanvas;
-    @FXML
     public Button level1Button;
     public Button level2Button;
     public Button level4Button;
@@ -26,8 +24,6 @@ public class LevelSelectController implements Initializable {
     public Button level8Button;
     public Button level9Button;
     public Button level10Button;
-    @FXML
-    private Label levelSelectText;
 
     private LevelSelectScreen screen;
 
@@ -61,7 +57,7 @@ public class LevelSelectController implements Initializable {
     }
 
     /**
-     * PLACEHOLDER MNETHOD. SHOULD BE A DATA PERSISTENCE METHOD
+     * PLACEHOLDER METHOD. SHOULD BE A DATA PERSISTENCE METHOD
      * Should take in a level number and return whether that level is unlocked in the save file
      */
     private boolean isLevelUnlocked(int levelNumber) {

@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 public class LevelSelectScreen extends Screen {
+    //Only needed if we plan to draw directly onto the canvas for level select buttons, remove if not
     private Canvas levelSelectCanvas;
     private GraphicsContext gc;
     private LevelSelectController controller;
@@ -32,10 +33,6 @@ public class LevelSelectScreen extends Screen {
     }
 
     public void drawInitial() {
-        //draw 3 squares for 3 levels
-        gc.strokeRect(50, 50, 100, 100);
-        gc.strokeRect(200, 50, 100, 100);
-        gc.strokeRect(350, 50, 100, 100);
     }
     @Override
     public Scene createScene() {
@@ -50,8 +47,8 @@ public class LevelSelectScreen extends Screen {
             //Bind this screen to the controller
             controller.setScreen(this);
 
-            levelSelectCanvas = controller.levelSelectCanvas;
-            gc = levelSelectCanvas.getGraphicsContext2D();
+//            levelSelectCanvas = controller.levelSelectCanvas;
+//            gc = levelSelectCanvas.getGraphicsContext2D();
             scene = new Scene(root, 320, 240);
             return scene;
 
