@@ -4,8 +4,15 @@ package cs230.group29se.jewelthief;
  * This interface represents any character that moves and provides a contract for which all those characters adhere
  * to.
  * @author Baba
+ * @author Max Middleton
  */
 public interface MoveableCharacter {
+
+    /**
+     * Returns the position of a character
+     * @return characters x,y position
+     */
+    int[] getPosition();
 
     /**
      * Tells us whether a character is still in the game or not
@@ -16,11 +23,19 @@ public interface MoveableCharacter {
     boolean isAlive();
 
     /**
+     * When a character has collided with another character capable of removing them from the game, it set isAlive to
+     * false, indicating their removal from the game
+     *
+     * @return set to true if character is still alive, false otherwise.
+     */
+    void setAliveTo(boolean alive);
+
+    /**
      * Tells us the characters current facing direction
      *
      * @return the current direction towards which a character is facing
      */
-    //Direction getDirection();
+    Direction getDirection();
 
     /**
      * Provides movement behaviour for the character using movement logic in specification.
@@ -34,7 +49,7 @@ public interface MoveableCharacter {
      *
      * @param other - character that collides with this one
      */
-    void onCollision(MoveableCharacter other);
+    void onCollisionWith(MoveableCharacter other);
 
     /**
      * Handles item collection for all characters.
@@ -43,5 +58,4 @@ public interface MoveableCharacter {
      * @param item
      */
     void collectItem(Item item);
-
 }

@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief;
-import cs230.group29se.jewelthief.Scenes.MainScene.LevelSelectScreen;
+import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
+import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
 import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.animation.Animation;
@@ -50,18 +51,20 @@ public class MainApplication extends Application {
                  //Handle main menu logic here
                 if(mainMenuScreen.isFinished()){
                     currentScreen = new LevelSelectScreen();
-                    currentScreen.initialize();
-                    FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("level-select-view.fxml"));
-                    try{
-                        scene = new Scene(fxmlLoader.load(), 320, 240);
-                    }
-                    catch (IOException e) {
-                        System.out.println("error: Failed to load level select screen");
-                        e.printStackTrace(); // UH OH
-                    }
                     stage.setTitle("Level Select");
+                    scene = currentScreen.createScene();
                     stage.setScene(scene);
                     stage.show();
+                    currentScreen.initialize();
+//                    FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("level-select-view.fxml"));
+//                    try{
+//                        scene = new Scene(fxmlLoader.load(), 320, 240);
+//                    }
+//                    catch (IOException e) {
+//                        System.out.println("error: Failed to load level select screen");
+//                        e.printStackTrace(); // UH OH
+//                    }
+
                 }else{
                     mainMenuScreen.update();
                 }
@@ -70,9 +73,27 @@ public class MainApplication extends Application {
             case LevelSelectScreen levelSelectScreen -> {
                 // Handle level select logic here
                 if(levelSelectScreen.isFinished()){
-                    // Load next Screen
+                    currentScreen = new GameScreen();
+                    stage.setTitle("Playing Game");
+                    scene = currentScreen.createScene();
+                    stage.setScene(scene);
+                    stage.show();
+                    currentScreen.initialize();
                 }else{
                     levelSelectScreen.update();
+                }
+            }
+            case GameScreen gameScreen -> {
+                // Handle game logic here
+                if(gameScreen.isFinished()){
+                    currentScreen = new MainMenuScreen();
+                    stage.setTitle("Main Menu");
+                    scene = currentScreen.createScene();
+                    stage.setScene(scene);
+                    stage.show();
+                    currentScreen.initialize();
+                }else{
+                    gameScreen.update();
                 }
             }
             default -> {
