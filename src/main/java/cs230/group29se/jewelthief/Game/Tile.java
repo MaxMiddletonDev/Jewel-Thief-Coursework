@@ -51,6 +51,10 @@ public class Tile {
         return false;
     }
 
+    public static int getTileSize() {
+        return TILE_SIZE;
+    }
+
     /**
      * Retrieves the array of colours assigned with this tile.
      * Made to compare colours between tiles.

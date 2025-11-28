@@ -2,12 +2,16 @@ package cs230.group29se.jewelthief.Game;
 
 import cs230.group29se.jewelthief.*;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameController;
+import cs230.group29se.jewelthief.Persistence.Storage.LevelLoader;
+import cs230.group29se.jewelthief.Persistence.Storage.LevelDef;
+import cs230.group29se.jewelthief.Persistence.Storage.EntityDef;
 import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -330,129 +334,226 @@ public class Level {
     /**
      * reads through the level file and populates the level appropriately
      * this covers map size, time limit, individual tiles, the player start location, NPCs and Items
-     * @author Ben Poole
+     * @author Ben Poole, Iyaad
      * @param filename the name of the level to be loaded
      * @throws FileNotFoundException if the file name entered is not found
      */
+//    public void readLevelFile(String filename) throws FileNotFoundException {
+//        int testMultiplier = 1;
+//        File inputFile = new File("levels/"+filename); //TODO: save files are probs somewhere else bub
+//        Scanner reader = new Scanner(inputFile);
+//        reader.next();
+//
+//        // reads size of grid
+//        int x = reader.nextInt();
+//        int y = reader.nextInt();
+//        grid = new Tile[x][y];
+//        reader.nextLine();
+//
+//        // reads time limit
+//        reader.next();
+//        maxTime = reader.nextInt();
+//        reader.nextLine();
+//
+//        // reads tile data
+//        for (int i = y; i > 0; i--) {
+//            reader.nextLine();
+//            for (int j = x; j > 0; j--) {
+//                Colour[] colours = new Colour[4];
+//                String sequence = reader.next();
+//                for (int z = 0; z < 4; z++) {
+//                    char colChar = sequence.charAt(z);
+//                    colours[z] = colourSetter(String.valueOf(colChar));
+//                }
+//                grid[j - 1][i - 1] = new Tile(j * testMultiplier, i * testMultiplier, colours);
+//            }
+//        }
+//        reader.nextLine();
+//        reader.nextLine();
+//        //reads characters (to be uncommented once player class pushed)
+//        reader.next();
+//        x = reader.nextInt();
+//        y = reader.nextInt();
+//        //Player player = new Player(x, y);
+//
+//        // reads and creates NPCs and items
+//        while (reader.hasNextLine()) {
+//            String entityType = reader.next();
+//            switch (entityType) {
+//                case "FLYING" -> {
+//                    int xPos = reader.nextInt();
+//                    int yPos = reader.nextInt();
+//                    String npcDirection = reader.next();
+//                    Direction direction = directionSetter(npcDirection);
+//                    //new FlyingEnemy(xPos, yPos, direction);
+//                }
+//                case "SMART" -> {
+//                    int xPos = reader.nextInt();
+//                    int yPos = reader.nextInt();
+//                    String npcDirection = reader.next();
+//                    Direction direction = directionSetter(npcDirection);
+//                    //new SmartEnemy(xPos, yPos, direction);
+//                }
+//                case "FOLLOWER" -> {
+//                    int xPos = reader.nextInt();
+//                    int yPos = reader.nextInt();
+//                    String npcDirection = reader.next();
+//                    Direction direction = directionSetter(npcDirection);
+//                    String followerColour = reader.next();
+//                    Colour colour = colourSetter(followerColour);
+//                    //FollowerEnemy followerEnemy = new FollowerEnemy(xPos, yPos, direction, colour);
+//                }
+//                case "LOOT" -> {
+//                    int xPos = reader.nextInt();
+//                    int yPos = reader.nextInt();
+//                    String value = reader.next();
+//                    switch (value) {
+//                        case "CENT" -> {
+//                            items.add(new Loot(LootEnum.CENT, xPos, yPos));
+//                        }
+//                        case "DOLLAR" -> {
+//                            items.add(new Loot(LootEnum.DOLLAR, xPos, yPos));
+//                        }
+//                        case "RUBY" -> {
+//                            items.add(new Loot(LootEnum.RUBY, xPos, yPos));
+//                        }
+//                        case "DIAMOND" -> {
+//                            items.add(new Loot(LootEnum.DIAMOND, xPos, yPos));
+//                        }
+//                    }
+//                }
+//                case "BOMB" -> {
+//                    int xPos = reader.nextInt();
+//                    int yPos = reader.nextInt();
+//                    items.add(new Bomb(xPos, yPos));
+//                }
+//                case "LEVER" -> {
+//                    int xPos = reader.nextInt();
+//                    int yPos = reader.nextInt();
+//                    String leverColour = reader.next();
+//                    Colour colour = colourSetter(leverColour);
+//                    items.add(new Lever(colour, xPos, yPos));
+//                }
+//                case "GATE" -> {
+//                    int xPos = reader.nextInt();
+//                    int yPos = reader.nextInt();
+//                    String gateColour = reader.next();
+//                    Colour colour = colourSetter(gateColour);
+//                    //new Gate(colour, xPos, yPos);
+//                }
+//                case "DOOR" -> {
+//                    int xPos = reader.nextInt();
+//                    int yPos = reader.nextInt();
+//                    items.add(new Door(xPos, yPos));
+//                }
+//                case "CLOCK" -> {
+//                    int xPos = reader.nextInt();
+//                    int yPos = reader.nextInt();
+//                    items.add(new Clock(xPos, yPos));
+//                }
+//                default -> {
+//
+//                }
+//            }
+//        }
+//        reader.close();
+//    }
+
     public void readLevelFile(String filename) throws FileNotFoundException {
-        int testMultiplier = 1;
-        File inputFile = new File("levels/"+filename); //TODO: save files are probs somewhere else bub
-        Scanner reader = new Scanner(inputFile);
-        reader.next();
+        String levelId = extractLevelId(filename);
+        java.nio.file.Path levelPath = java.nio.file.Path.of("levels", filename);
+        LevelDef def = new LevelLoader().loadLevel(levelId, levelPath);
 
-        // reads size of grid
-        int x = reader.nextInt();
-        int y = reader.nextInt();
+        maxTime = def.timeLimitSec;
+
+        int x = def.width;
+        int y = def.height;
         grid = new Tile[x][y];
-        reader.nextLine();
 
-        // reads time limit
-        reader.next();
-        maxTime = reader.nextInt();
-        reader.nextLine();
+        // --- tiles: row 0 = top, row y-1 = bottom ---
+        for (int row = 0; row < y; row++) {
+            String rowString = def.tiles.get(row);
+            String[] tileTokens = rowString.split("\\s+");
 
-        // reads tile data
-        for (int i = y; i > 0; i--) {
-            reader.nextLine();
-            for (int j = x; j > 0; j--) {
+            for (int col = 0; col < x; col++) {
+                String sequence = tileTokens[col];
                 Colour[] colours = new Colour[4];
-                String sequence = reader.next();
                 for (int z = 0; z < 4; z++) {
                     char colChar = sequence.charAt(z);
                     colours[z] = colourSetter(String.valueOf(colChar));
                 }
-                grid[j - 1][i - 1] = new Tile(j * testMultiplier, i * testMultiplier, colours);
+
+                int gridX = col;       // 0..x-1
+                int gridY = row;       // 0..y-1, top to bottom
+
+                grid[gridX][gridY] = new Tile(gridX, gridY, colours);
+                Tile t00 = grid[0][0];
+                System.out.println("Tile(0,0) grid=(" + t00.getX() + "," + t00.getY() + ")");
+
             }
         }
-        reader.nextLine();
-        reader.nextLine();
-        //reads characters (to be uncommented once player class pushed)
-        reader.next();
-        x = reader.nextInt();
-        y = reader.nextInt();
-        //Player player = new Player(x, y);
 
-        // reads and creates NPCs and items
-        while (reader.hasNextLine()) {
-            String entityType = reader.next();
-            switch (entityType) {
-                case "FLYING" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    String npcDirection = reader.next();
-                    Direction direction = directionSetter(npcDirection);
-                    //new FlyingEnemy(xPos, yPos, direction);
-                }
-                case "SMART" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    String npcDirection = reader.next();
-                    Direction direction = directionSetter(npcDirection);
-                    //new SmartEnemy(xPos, yPos, direction);
-                }
-                case "FOLLOWER" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    String npcDirection = reader.next();
-                    Direction direction = directionSetter(npcDirection);
-                    String followerColour = reader.next();
-                    Colour colour = colourSetter(followerColour);
-                    //FollowerEnemy followerEnemy = new FollowerEnemy(xPos, yPos, direction, colour);
-                }
+        // --- player: flip raw Y from txt so 0 = bottom row ---
+        if (def.playerStart != null) {
+            int rawX = def.playerStart.x;
+            int rawY = def.playerStart.y;
+            int gridX = rawX;
+            int gridY = (y - 1) - rawY; // still flip Y if txt uses bottom origin
+
+            int tileSize = Tile.getTileSize();
+            int border = 2; // BORDER_WIDTH
+
+            double px = gridX * tileSize + border;
+            double py = gridY * tileSize + border;
+
+            dummyPlayer.setTranslateX(px);
+            dummyPlayer.setTranslateY(py);
+        }
+
+        // --- items: same Y flip so they sit on correct tiles ---
+        for (EntityDef e : def.entities) {
+            int rawX = e.x;
+            int rawY = e.y;
+            int gridX = rawX;
+            int gridY = (y - 1) - rawY;
+
+            switch (e.type) {
                 case "LOOT" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    String value = reader.next();
+                    String value = e.arg1;
                     switch (value) {
-                        case "CENT" -> {
-                            items.add(new Loot(LootEnum.CENT, xPos, yPos));
-                        }
-                        case "DOLLAR" -> {
-                            items.add(new Loot(LootEnum.DOLLAR, xPos, yPos));
-                        }
-                        case "RUBY" -> {
-                            items.add(new Loot(LootEnum.RUBY, xPos, yPos));
-                        }
-                        case "DIAMOND" -> {
-                            items.add(new Loot(LootEnum.DIAMOND, xPos, yPos));
-                        }
+                        case "CENT"    -> items.add(new Loot(LootEnum.CENT,    gridX, gridY));
+                        case "DOLLAR"  -> items.add(new Loot(LootEnum.DOLLAR,  gridX, gridY));
+                        case "RUBY"    -> items.add(new Loot(LootEnum.RUBY,    gridX, gridY));
+                        case "DIAMOND" -> items.add(new Loot(LootEnum.DIAMOND, gridX, gridY));
                     }
                 }
-                case "BOMB" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    items.add(new Bomb(xPos, yPos));
-                }
+                case "BOMB" -> items.add(new Bomb(gridX, gridY));
                 case "LEVER" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    String leverColour = reader.next();
-                    Colour colour = colourSetter(leverColour);
-                    items.add(new Lever(colour, xPos, yPos));
+                    Colour colour = colourSetter(e.arg1);
+                    items.add(new Lever(colour, gridX, gridY));
                 }
-                case "GATE" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    String gateColour = reader.next();
-                    Colour colour = colourSetter(gateColour);
-                    //new Gate(colour, xPos, yPos);
-                }
-                case "DOOR" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    items.add(new Door(xPos, yPos));
-                }
-                case "CLOCK" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    items.add(new Clock(xPos, yPos));
-                }
-                default -> {
-
-                }
+                case "DOOR" -> items.add(new Door(gridX, gridY));
+                case "CLOCK" -> items.add(new Clock(gridX, gridY));
+                default -> { /* NPCs/gates later */ }
             }
         }
-        reader.close();
+    }
+
+    /**
+     * Quick helper method to find the levelID
+     * @param filename the level file in .txt format
+     * @return the level id
+     */
+    private String extractLevelId(String filename) {
+        // very basic: strip "level" prefix and ".txt" suffix if present
+        String name = filename;
+        if (name.startsWith("level")) {
+            name = name.substring("level".length());
+        }
+        if (name.endsWith(".txt")) {
+            name = name.substring(0, name.length() - 4);
+        }
+        return name;
     }
 
     /**

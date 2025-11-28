@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import cs230.group29se.jewelthief.Game.GameManager;
 
 import java.io.IOException;
 
@@ -41,6 +42,17 @@ public class MainApplication extends Application {
         stage.setScene(scene);
         stage.show();
         // Handles the screen transitions
+
+        // Save on window close
+        stage.setOnCloseRequest(event -> {
+            // Optionally, stop the tick timeline
+            if (tickTimeline != null) {
+                tickTimeline.stop();
+            }
+            // Ask GameManager to persist the current game state
+            GameManager.saveCurrentGameState();
+            // Let JavaFX continue closing
+        });
 
     }
 

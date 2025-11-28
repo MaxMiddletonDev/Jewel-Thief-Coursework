@@ -8,28 +8,35 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 
 public class GameScreen extends Screen {
+
     private Canvas canvas;
     private GraphicsContext gc;
     private GameController controller;
 
-    @Override   
+    // You will probably pass this in from LevelSelectScreen later
+    private String activeProfileName = "testProfile"; // or "Amsyar"
+    @Override
     public void initialize() {
-        //TODO:Decide if we need to load a new level or continue current level here -------------------------
-        String levelFileName;
-        if(levelHasSaveData()){
-            levelFileName = ""; //Todo: Get level file name from save data
-        }else{
-            levelFileName = "level" + GameManager.getCurrentLevelNumber() + ".txt";
+        // Decide which level number we’re on; if 0, start at 1
+        int levelNum = GameManager.getCurrentLevelNumber();
+        if (levelNum == 0) {
+            levelNum = 1;
+            GameManager.setCurrentLevelNumber(levelNum);
         }
-        Level level = new Level(levelFileName, controller);
-        //TODO:Decide if we need to load a new level or continue current level here -------------------------
-        GameManager.setCurrentLevel(level);
-        root.getChildren().add(GameManager.getCurrentLevel().dummyPlayer);
+
+        // Ask GameManager to handle: JSON save vs txt + LevelLoader
+        GameManager.loadLevelForProfile(activeProfileName, levelNum, controller);
+
+        // Now there is a Level object ready in GameManager
+        Level level = GameManager.getCurrentLevel();
+        ((Pane) controller.gameCanvas.getParent()).getChildren().add(level.dummyPlayer);
+        // Keyboard movement – unchanged
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
-                case UP ->{
+                case UP -> {
                     Node player = GameManager.getCurrentLevel().dummyPlayer;
                     player.setTranslateY(player.getTranslateY() - 40);
                 }
@@ -52,9 +59,11 @@ public class GameScreen extends Screen {
     /**
      * PLACEHOLDER METHOD, THIS IS WAITING FOR DATA PERSISTENCE IMPLEMENTATION
      * Determines if the current level has saved data to load from.
-     * @return
      */
-    public boolean levelHasSaveData(){
+    public boolean levelHasSaveData() {
+        // If you want to keep this, you can delegate to PersistenceManager
+        // once you have a reference here. For now, GameManager.loadLevelForProfile
+        // already checks for SaveData, so this method can be unused.
         return false;
     }
 
@@ -83,9 +92,7 @@ public class GameScreen extends Screen {
             );
             root = loader.load();
             controller = loader.getController();
-
             controller.setScreen(this);
-
             this.canvas = controller.gameCanvas;
             this.gc = canvas.getGraphicsContext2D();
             scene = new Scene(root, 1028, 700);
@@ -95,5 +102,4 @@ public class GameScreen extends Screen {
             return null;
         }
     }
-
 }

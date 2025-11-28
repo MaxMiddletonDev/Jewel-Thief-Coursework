@@ -66,17 +66,32 @@ public class PersistenceManager {
         return true;
     }
 
-    /** Loads a ProfileData */
+    /**
+     * Loads a ProfileData.
+     * Returns null if no profile exists for the remembered name.
+     */
     public ProfileData loadProfile() {
-        String name = rememberedProfileName();
+        String name = rememberedProfileName(); // e.g. "Amsyar"
+
         if (name != null) {
-            return serializer.fromJson(fileStore.read(pathProfile(name)), ProfileData.class);
+            String path = pathProfile(name); // "profiles/Amsyar.json"
+            if (!fileStore.exists(path)) {
+                // No profile saved yet for this name
+                return null;
+            }
+            return serializer.fromJson(fileStore.read(path), ProfileData.class);
         }
+
+        // No remembered name: try the first existing profile in the folder
         var files = fileStore.list("profiles");
-        if (files.isEmpty()) return null;
+        if (files.isEmpty()) {
+            // No profiles at all
+            return null;
+        }
+
+        // files.get(0) is already a relative path like "profiles/Someone.json"
         return serializer.fromJson(fileStore.read(files.get(0)), ProfileData.class);
     }
-
     /** Writes SaveData to saves/<profileName>/level-<levelId>.json */
     public void saveGame() {
         SaveData s = currentSaveData();

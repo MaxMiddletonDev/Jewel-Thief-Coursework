@@ -31,6 +31,10 @@ public class FileStore {
         } catch (IOException e) { throw new RuntimeException("write failed: " + path, e); }
     }
 
+    public boolean exists(String path) {
+        return Files.exists(resolve(path));
+    }
+
     public List<String> list(String dir) {
         try (var s = Files.list(resolve(dir))) {
             return s.map(p -> baseDir.relativize(p).toString()).toList();

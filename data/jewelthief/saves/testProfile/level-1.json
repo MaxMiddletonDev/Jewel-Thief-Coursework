@@ -1,0 +1,19 @@
+{
+  "levelId" : "1",
+  "profileName" : "testProfile",
+  "playerState" : [ -518.0, -646.0 ],
+  "elapsedSeconds" : 0,
+  "npcStates" : {
+    "FLYING#1#1" : "RIGHT",
+    "SMART#3#1" : "LEFT",
+    "FOLLOWER#2#2" : "DOWN"
+  },
+  "gates" : {
+    "GATE#3#3" : "R"
+  },
+  "items" : {
+    "LOOT#2#3" : "DOLLAR",
+    "LEVER#0#3" : "R",
+    "BOMB#1#2" : null
+  }
+}
