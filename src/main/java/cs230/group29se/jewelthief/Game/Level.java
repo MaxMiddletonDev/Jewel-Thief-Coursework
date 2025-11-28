@@ -53,128 +53,7 @@ public class Level {
         dummyPlayer.setTranslateX(0);
 
         //Test Grid
-        grid = new Tile[][] {
-                {
-                        new Tile(1,1,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(1,2,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(1,3,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(1,4,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(1,5,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(1,6,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(1,7,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(1,8,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(1,9,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(1,10,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE})
-                },
-                {
-                        new Tile(2,1,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(2,2,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(2,3,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(2,4,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(2,5,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(2,6,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(2,7,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(2,8,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(2,9,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(2,10,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED})
-                },
-                {
-                        new Tile(3,1,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(3,2,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(3,3,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(3,4,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(3,5,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(3,6,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(3,7,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(3,8,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(3,9,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(3,10,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE})
-                },
-                {
-                        new Tile(4,1,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(4,2,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(4,3,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(4,4,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(4,5,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(4,6,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(4,7,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(4,8,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(4,9,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(4,10,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED})
-                },
-                {
-                        new Tile(5,1,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(5,2,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(5,3,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(5,4,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(5,5,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(5,6,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(5,7,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(5,8,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(5,9,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(5,10,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE})
-                },
-                {
-                        new Tile(6,1,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(6,2,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(6,3,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(6,4,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(6,5,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(6,6,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(6,7,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(6,8,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(6,9,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(6,10,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED})
-                },
-                {
-                        new Tile(7,1,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(7,2,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(7,3,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(7,4,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(7,5,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(7,6,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(7,7,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(7,8,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(7,9,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(7,10,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE})
-                },
-                {
-                        new Tile(8,1,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(8,2,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(8,3,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(8,4,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(8,5,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(8,6,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(8,7,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(8,8,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(8,9,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(8,10,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED})
-                },
-                {
-                        new Tile(9,1,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(9,2,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(9,3,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(9,4,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(9,5,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(9,6,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(9,7,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(9,8,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(9,9,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(9,10,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE})
-                },
-                {
-                        new Tile(10,1,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(10,2,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(10,3,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(10,4,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(10,5,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(10,6,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED}),
-                        new Tile(10,7,new Colour[]{Colour.RED, Colour.GREEN, Colour.BLUE, Colour.YELLOW}),
-                        new Tile(10,8,new Colour[]{Colour.GREEN, Colour.RED, Colour.YELLOW, Colour.BLUE}),
-                        new Tile(10,9,new Colour[]{Colour.BLUE, Colour.YELLOW, Colour.RED, Colour.GREEN}),
-                        new Tile(10,10,new Colour[]{Colour.YELLOW, Colour.BLUE, Colour.GREEN, Colour.RED})
-                }
-        };
+        Tile[][] grid;
 
 
         //Populate level from file todo: ben will fix later
@@ -405,30 +284,42 @@ public class Level {
                     String value = reader.next();
                     switch (value) {
                         case "CENT" -> {
-                            items.add(new Loot(LootEnum.CENT, xPos, yPos));
+                            Loot tempLoot = new Loot(LootEnum.CENT, xPos, yPos);
+                            items.add(tempLoot);
+                            grid[xPos-1][yPos-1].setOccupying(tempLoot);
                         }
                         case "DOLLAR" -> {
-                            items.add(new Loot(LootEnum.DOLLAR, xPos, yPos));
+                            Loot tempLoot = new Loot(LootEnum.DOLLAR, xPos, yPos);
+                            items.add(tempLoot);
+                            grid[xPos-1][yPos-1].setOccupying(tempLoot);
                         }
                         case "RUBY" -> {
-                            items.add(new Loot(LootEnum.RUBY, xPos, yPos));
+                            Loot tempLoot = new Loot(LootEnum.RUBY, xPos, yPos);
+                            items.add(tempLoot);
+                            grid[xPos-1][yPos-1].setOccupying(tempLoot);
                         }
                         case "DIAMOND" -> {
-                            items.add(new Loot(LootEnum.DIAMOND, xPos, yPos));
+                            Loot tempLoot =new Loot(LootEnum.DIAMOND, xPos, yPos);
+                            items.add(tempLoot);
+                            grid[xPos-1][yPos-1].setOccupying(tempLoot);
                         }
                     }
                 }
                 case "BOMB" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    items.add(new Bomb(xPos, yPos));
+                    Bomb tempBomb = new Bomb(xPos, yPos);
+                    items.add(tempBomb);
+                    grid[xPos-1][yPos-1].setOccupying(tempBomb);
                 }
                 case "LEVER" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
                     String leverColour = reader.next();
                     Colour colour = colourSetter(leverColour);
-                    items.add(new Lever(colour, xPos, yPos));
+                    Lever tempLever = new Lever(colour, xPos, yPos);
+                    items.add(tempLever);
+                    grid[xPos-1][yPos-1].setOccupying(tempLever);
                 }
                 case "GATE" -> {
                     int xPos = reader.nextInt();
@@ -440,12 +331,16 @@ public class Level {
                 case "DOOR" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    items.add(new Door(xPos, yPos));
+                    Door tempDoor = new Door(xPos, yPos);
+                    items.add(tempDoor);
+                    grid[xPos-1][yPos-1].setOccupying(tempDoor);
                 }
                 case "CLOCK" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
-                    items.add(new Clock(xPos, yPos));
+                    Clock tempClock = new Clock(xPos, yPos);
+                    items.add(tempClock);
+                    grid[xPos-1][yPos-1].setOccupying(tempClock);
                 }
                 default -> {
 
@@ -483,5 +378,18 @@ public class Level {
             case "Y" -> { return Colour.YELLOW; }
         }
         return null;
+    }
+
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public Tile[][] getGrid() {
+        return grid;
     }
 }

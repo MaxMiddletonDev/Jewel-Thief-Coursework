@@ -19,6 +19,8 @@ public class Tile {
     private final int posX;
     private final int posY;
     private Colour[] colours = new Colour[4];
+    //The item or gate or nothing occupying a tile
+    private Object occupying = null;
 
     /**
      * Constructs a Tile with the specified position and colours.
@@ -119,5 +121,14 @@ public class Tile {
     gc.setFill(tile.getColor());
     gc.fillRect(px, py, TILE_SIZE, TILE_SIZE);
          */
+    }
+
+
+    public void setOccupying(Object occupying) {
+        this.occupying = occupying;
+    }
+
+    public Object getOccupying(){
+        return occupying;
     }
 }
