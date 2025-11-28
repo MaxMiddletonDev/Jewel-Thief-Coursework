@@ -1,0 +1,22 @@
+{
+  "perLevelBest" : {
+    "3" : [ {
+      "profileName" : "Amsyar",
+      "score" : 1200,
+      "timestamp" : "2025-11-28T06:38:25.101386Z"
+    }, {
+      "profileName" : "Amsyar",
+      "score" : 1200,
+      "timestamp" : "2025-11-28T06:39:26.190296100Z"
+    } ]
+  },
+  "globalRanking" : [ {
+    "profileName" : "Amsyar",
+    "score" : 1200,
+    "timestamp" : "2025-11-28T06:38:25.101386Z"
+  }, {
+    "profileName" : "Amsyar",
+    "score" : 1200,
+    "timestamp" : "2025-11-28T06:39:26.190296100Z"
+  } ]
+}
