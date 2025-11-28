@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief.Scenes.LevelSelectScene;
 
+import cs230.group29se.jewelthief.MainApplication;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -49,7 +50,9 @@ public class LevelSelectScreen extends Screen {
 
 //            levelSelectCanvas = controller.levelSelectCanvas;
 //            gc = levelSelectCanvas.getGraphicsContext2D();
-            scene = new Scene(root, 320, 240);
+            double x = MainApplication.getWindowWidth();
+            double y = MainApplication.getWindowHeight();
+            scene = new Scene(root, x, y);
             return scene;
 
         } catch (Exception e) {
