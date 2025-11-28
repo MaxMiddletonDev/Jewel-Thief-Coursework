@@ -14,7 +14,17 @@
 
     <Label fx:id="levelSelectText"/>
     <Canvas fx:id="levelSelectCanvas" width="800" height="600"/>
-    <Button fx:id="level1Button" text="Level 1" onAction="#selectLevel1"/>
+    <Button fx:id="level1Button" text="Level 1" onAction="#selectLevel" userData="1"/>
+    <Button fx:id="level2Button" text="Level 2" onAction="#selectLevel" userData="2"/>
+    <Button fx:id="level3Button" text="Level 3" onAction="#selectLevel" userData="3"/>
+    <Button fx:id="level4Button" text="Level 4" onAction="#selectLevel" userData="4"/>
+    <Button fx:id="level5Button" text="Level 5" onAction="#selectLevel" userData="5"/>
+    <Button fx:id="level6Button" text="Level 6" onAction="#selectLevel" userData="6"/>
+    <Button fx:id="level7Button" text="Level 7" onAction="#selectLevel" userData="7"/>
+    <Button fx:id="level8Button" text="Level 8" onAction="#selectLevel" userData="8"/>
+    <Button fx:id="level9Button" text="Level 9" onAction="#selectLevel" userData="9"/>
+    <Button fx:id="level10Button" text="Level 10" onAction="#selectLevel" userData="10"/>
+
     <Button text="Level 2" />
 
 </VBox>

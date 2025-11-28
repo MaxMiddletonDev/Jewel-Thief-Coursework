@@ -9,17 +9,17 @@ import javafx.scene.canvas.GraphicsContext;
  * @version 1.0
  */
 public final class GameManager {
+    private static int levelNumber;
     private static Level currentLevel;
     private GameManager() {
     }
 
     /**
-     * Starts a new game with the specified level.
-     * @param level the Level object to start the game with
+     * Set the current level.
+     * @param level the Level object.
      */
-    public static void startNewGame(Level level) {
+    public static void setCurrentLevel(Level level) {
         currentLevel = level;
-        // Further game initialization logic goes here
     }
 
     /**
@@ -55,5 +55,12 @@ public final class GameManager {
      */
     public static Level getCurrentLevel() {
         return currentLevel;
+    }
+
+    public static void setCurrentLevelNumber(int levelNum) {
+        levelNumber = levelNum;
+    }
+    public static int getCurrentLevelNumber() {
+        return levelNumber;
     }
 }

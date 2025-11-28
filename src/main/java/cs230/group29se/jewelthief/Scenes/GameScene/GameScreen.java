@@ -9,8 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.util.ArrayList;
-
 public class GameScreen extends Screen {
     private Canvas canvas;
     private GraphicsContext gc;
@@ -18,7 +16,16 @@ public class GameScreen extends Screen {
 
     @Override   
     public void initialize() {
-        GameManager.startNewGame(new Level("level1.txt", controller));
+        //TODO:Decide if we need to load a new level or continue current level here -------------------------
+        String levelFileName;
+        if(levelHasSaveData()){
+            levelFileName = ""; //Todo: Get level file name from save data
+        }else{
+            levelFileName = "level" + GameManager.getCurrentLevelNumber() + ".txt";
+        }
+        Level level = new Level(levelFileName, controller);
+        //TODO:Decide if we need to load a new level or continue current level here -------------------------
+        GameManager.setCurrentLevel(level);
         root.getChildren().add(GameManager.getCurrentLevel().dummyPlayer);
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
@@ -42,6 +49,15 @@ public class GameScreen extends Screen {
         });
     }
 
+    /**
+     * PLACEHOLDER METHOD, THIS IS WAITING FOR DATA PERSISTENCE IMPLEMENTATION
+     * Determines if the current level has saved data to load from.
+     * @return
+     */
+    public boolean levelHasSaveData(){
+        return false;
+    }
+
     @Override
     public void update() {
         draw();
@@ -50,6 +66,7 @@ public class GameScreen extends Screen {
 
     @Override
     public void draw() {
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         GameManager.draw(gc);
     }
 
