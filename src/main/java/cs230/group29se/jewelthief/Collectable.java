@@ -6,7 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
  * Allows for the creation of items that can be
  * collected and removed from the level.
  * Will implement the interface Remove when it is made.
- * @author Charlie
+ * @author Charlie, Hamza
  * @version 1.2 - ADDED: collector tracking (who picked up the item).
  */
 public abstract class Collectable extends Item implements Remove {

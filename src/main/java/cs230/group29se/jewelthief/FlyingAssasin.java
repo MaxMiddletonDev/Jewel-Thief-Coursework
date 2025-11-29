@@ -25,15 +25,10 @@ public class FlyingAssasin extends NonPlayableCharacter {
     /**
      * kept empty because a Flying Assasin does not collect items.
      *
-     * @param item to be collected
+     * @param item that would be collected.
      */
     @Override
-    public void collectItem(Item item) {
-        if (item instanceof Collectable collectable) {
-            collectable.setCollector(this);
-        }
-        item.interact();
-    }
+    public void collectItem(Item item) {}
 
     /**
      * if a flying assasin occupies the same tile as another character, that character is taken off the game, if its

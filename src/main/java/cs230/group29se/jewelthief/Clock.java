@@ -7,9 +7,9 @@ import javafx.scene.image.Image;
 
 /**
  * Allows for a clock to be created which changes the time left in a level.
- * @author Charlie
+ * @author Charlie, Hamza
  *
- * @version 0.6 - IMPLEMENTED: Player adds time, Thief removes time.
+ * @version 1 - IMPLEMENTED interact: Player adds time, Thief removes time.
  */
 public class Clock extends Destroyable {
 

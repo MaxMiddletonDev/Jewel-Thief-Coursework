@@ -26,6 +26,7 @@ public class Level {
     GameController gameController;
 
     List<Item> items = new ArrayList<>();
+    List<Gate> gates = new ArrayList<>();
     Tile[][] grid;
 
     //Replace with actual player object later
@@ -120,6 +121,7 @@ public class Level {
 
     //Called every tick from GameScreen.draw()
     public void draw(GraphicsContext gc) {
+        // needs to go first so it doesn't draw over items or gates
         for (Tile[] row : grid) {
             for (Tile tile : row) {
                 tile.draw(gc);
@@ -127,6 +129,9 @@ public class Level {
         }
         for (Item item : items) {
             item.draw(gc);
+        }
+        for (Gate gate : gates) {
+            gate.draw(gc);
         }
     }
 
@@ -326,7 +331,9 @@ public class Level {
                     int yPos = reader.nextInt();
                     String gateColour = reader.next();
                     Colour colour = colourSetter(gateColour);
-                    //new Gate(colour, xPos, yPos);
+                    Gate tempGate = new Gate(colour, xPos, yPos);
+                    gates.add(tempGate);
+                    grid[xPos-1][yPos-1].setOccupying(tempGate);
                 }
                 case "DOOR" -> {
                     int xPos = reader.nextInt();
@@ -381,15 +388,44 @@ public class Level {
     }
 
 
+    /**
+     * Returns a list of the current levels intact items.
+     * @return the list of items un-removed in the level.
+     */
     public List<Item> getItems() {
         return items;
     }
 
+    /**
+     * Changes the current levels intact items.
+     * Allows for items to be removed from drawing.
+     * @param items the new list of items.
+     */
     public void setItems(List<Item> items) {
         this.items = items;
     }
 
+    /**
+     * Allows tiles to be accessed
+     * @return the grid of the level made of tiles.
+     */
     public Tile[][] getGrid() {
         return grid;
+    }
+
+    /**
+     * Changes the list of intact gates in the level to be changed.
+     * @param gates the gates still intact.
+     */
+    public void setGates(List<Gate> gates) {
+        this.gates = gates;
+    }
+
+    /**
+     * Gets the list of intact gates.
+     * @return the list of intact gates in the level.
+     */
+    public List<Gate> getGates() {
+        return gates;
     }
 }

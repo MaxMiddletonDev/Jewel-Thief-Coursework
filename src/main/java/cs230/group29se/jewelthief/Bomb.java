@@ -8,7 +8,7 @@ import java.util.TimerTask;
 /**
  * The bomb class destroys certain items in its pathway after being triggered.
  * @author Charlie
- * @version 0.2 - run isn't implemented - needs level and tiles.
+ * @version 0.2 - //TODO can be implemented.
  */
 public class Bomb extends Destroyable {
 
@@ -34,6 +34,10 @@ public class Bomb extends Destroyable {
      */
     private boolean armed = false;
 
+    /**
+     * starting image of the bomb it is not final since
+     * the bombs image changes as it counts down.
+     */
     private Image image;
 
 

@@ -136,10 +136,19 @@ public class Tile {
     }
 
 
+    /**
+     * Changes what loot or gate is on a tile. Can be null.
+     * @param occupying the object that will occupy the tile.
+     */
     public void setOccupying(Object occupying) {
         this.occupying = occupying;
     }
 
+    /**
+     * Get what item or gate may be occupying the tile.
+     * @return the item or gate occupying the tile,
+     * if null then the tile is not occupied.
+     */
     public Object getOccupying(){
         return occupying;
     }
