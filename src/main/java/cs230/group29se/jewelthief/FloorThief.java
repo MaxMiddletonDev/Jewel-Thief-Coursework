@@ -58,8 +58,36 @@ public class FloorThief extends NonPlayableCharacter {
     @Override
     public void collectItem(Item item) {}
 
+    /**
+     * Handles Floor thief movements on the tiles and validates it's movements
+     */
     @Override
-    public void move(){}
+    public void move(){
+        if (!isAlive) {
+            return;
+        }
+
+        Direction nextDirection = findNextDirection();
+
+        if (nextDirection != null) {
+            moveIn(nextDirection);
+            direction = nextDirection; //change direction facing to nextDirection
+        }
+    }
+
+    /**
+     * finds what direction the FloorThief can move in
+     * @return direction to move towards
+     */
+    public Direction findNextDirection() {
+        return Direction.RIGHT; //implement later
+    }
+
+    /**
+     * Makes the move to the nextDirection
+     * @param direction to move towards
+     */
+    public void moveIn(Direction direction) {}
 
     /**
      * Checks if a floor thief is at an edge or not
