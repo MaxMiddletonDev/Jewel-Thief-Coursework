@@ -80,14 +80,86 @@ public class FloorThief extends NonPlayableCharacter {
      * @return direction to move towards
      */
     public Direction findNextDirection() {
-        return Direction.RIGHT; //implement later
+        Direction[] possibleDirections = getPossibleDirections();
+
+        for (Direction direction : possibleDirections) {
+            if (isValidColorTile(direction)) {
+                return direction;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Provides the possible directions a floor thief can move in, keeping in mind that the LHS has greater priority
+     * @return possible directions to move in with LHS rule in mind
+     */
+    public Direction[] getPossibleDirections() {
+        if (direction == Direction.UP) {
+            return new Direction[]{Direction.LEFT, Direction.UP, Direction.RIGHT, Direction.DOWN};
+        } else if (direction == Direction.DOWN) {
+            return new Direction[]{Direction.RIGHT, Direction.DOWN, Direction.LEFT, Direction.UP};
+        } else if (direction == Direction.LEFT) {
+            return new Direction[]{Direction.DOWN, Direction.LEFT, Direction.UP, Direction.RIGHT};
+        } else if (direction == Direction.RIGHT) {
+            return new Direction[]{Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT};
+        } else {
+            return new Direction[0];
+        }
+    }
+
+    /**
+     * checks if a tile a thief wants to move in is 1) a valid tile to actually move to i.e. not an edge, and 2) shares
+     * a common colour with the thief's assigned colour.
+     * @param moveDirection - direction to move towards
+     * @return true if conditions are met, false otherwise
+     */
+    public boolean isValidColorTile(Direction moveDirection) {
+        int[] currentPos = getPosition();
+        int thiefTargetX = currentPos[0];
+        int thiefTargetY = currentPos[1];
+
+        if (direction == Direction.UP) {
+            thiefTargetY--;
+        } else if (direction == Direction.DOWN) {
+            thiefTargetY++;
+        } else if (direction == Direction.LEFT) {
+            thiefTargetX--;
+        } else if (direction == Direction.RIGHT) {
+            thiefTargetX++;
+        }
+
+        if (!isValidMove(thiefTargetX, thiefTargetY)) {
+            return false;
+        }
+
+        Tile targetTile = level.getTile(thiefTargetX, thiefTargetY);
+        return targetTile != null && targetTile.containsColour(assignedColour);
     }
 
     /**
      * Makes the move to the nextDirection
      * @param direction to move towards
      */
-    public void moveIn(Direction direction) {}
+    public void moveIn(Direction direction) {
+        int[] currentPos = getPosition();
+        int thiefTargetX = currentPos[0];
+        int thiefTargetY = currentPos[1];
+
+        if (direction == Direction.UP) {
+            thiefTargetY--;
+        } else if (direction == Direction.DOWN) {
+            thiefTargetY++;
+        } else if (direction == Direction.LEFT) {
+            thiefTargetX--;
+        } else if (direction == Direction.RIGHT) {
+            thiefTargetX++;
+        }
+
+        Tile targetTile = level.getTile(thiefTargetX, thiefTargetY);
+        if (targetTile != null) {}
+        currentTile = targetTile;
+    }
 
     /**
      * Checks if a floor thief is at an edge or not

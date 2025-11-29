@@ -60,9 +60,9 @@ public class FlyingAssasin extends NonPlayableCharacter {
         int targetY = currentPosition[1];
 
         if (direction == Direction.UP) {
-            targetY++;
-        } else if (direction == Direction.DOWN) {
             targetY--;
+        } else if (direction == Direction.DOWN) {
+            targetY++;
         } else if (direction == Direction.LEFT) {
             targetX--;
         } else if (direction == Direction.RIGHT) {

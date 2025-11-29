@@ -83,6 +83,18 @@ public class Tile {
     }
 
     /**
+     * Checks if a tile has a Floor Thief's assigned colour
+     */
+    public boolean containsColour(Colour assignedColour) {
+        for (Colour colour : this.colours) {
+            if (colour == assignedColour) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Draws the tile on the given GraphicsContext.
      * @param gc the GraphicsContext to draw on
      */
