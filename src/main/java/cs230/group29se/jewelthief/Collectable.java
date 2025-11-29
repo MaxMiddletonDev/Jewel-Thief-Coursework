@@ -7,9 +7,14 @@ import javafx.scene.canvas.GraphicsContext;
  * collected and removed from the level.
  * Will implement the interface Remove when it is made.
  * @author Charlie
- * @version 1.1
+ * @version 1.2 - ADDED: collector tracking (who picked up the item).
  */
 public abstract class Collectable extends Item implements Remove {
+
+    /**
+     * The character that collected this item (Player or NPC).
+     */
+    protected MoveableCharacter collector;
 
     /**
      * Allows for a collectable to be made.
@@ -21,9 +26,25 @@ public abstract class Collectable extends Item implements Remove {
     }
 
     /**
+     * Sets the character that collected this item.
+     * @param collector the MoveableCharacter that picked up this item
+     */
+    public void setCollector(MoveableCharacter collector) {
+        this.collector = collector;
+    }
+
+    /**
+     * Gets the character that collected this item.
+     * @return the MoveableCharacter that picked up this item
+     */
+    public MoveableCharacter getCollector() {
+        return collector;
+    }
+
+    /**
      * Interact is used when it is picked up and its behavior is
      * different based on the child class implementing it.
-     * will be removed at some point after collection.
+     * Will be removed at some point after collection.
      */
     public abstract void interact();
 

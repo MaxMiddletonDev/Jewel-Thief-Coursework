@@ -56,7 +56,12 @@ public class FloorThief extends NonPlayableCharacter {
     }
 
     @Override
-    public void collectItem(Item item) {}
+    public void collectItem(Item item) {
+        if (item instanceof Collectable collectable) {
+            collectable.setCollector(this);
+        }
+        item.interact();
+    }
 
     /**
      * Handles Floor thief movements on the tiles and validates it's movements
