@@ -23,11 +23,11 @@ import java.util.Scanner;
 public class Level {
     private int levelNumber = 1;
 
-    GameController gameController;
+    private GameController gameController;
 
-    List<Item> items = new ArrayList<>();
-    List<Gate> gates = new ArrayList<>();
-    Tile[][] grid;
+    private List<Item> items = new ArrayList<>();
+    private List<Gate> gates = new ArrayList<>();
+    private Tile[][] grid;
 
     //Replace with actual player object later
     public Node dummyPlayer;
@@ -403,6 +403,23 @@ public class Level {
      */
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    /**
+     * Adds an item to the level's list of items.
+     * @param item the item to be added.
+     */
+    public void addItem(Item item) {
+        items.add(item);
+    }
+
+    /**
+     * Removes an item from the level's list of items.
+     * @param item the item to be removed.
+     */
+
+    public void removeItem(Item item) {
+        items.remove(item);
     }
 
     /**
