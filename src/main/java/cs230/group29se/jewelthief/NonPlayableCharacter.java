@@ -59,7 +59,7 @@ public abstract class NonPlayableCharacter implements MoveableCharacter {
     }
 
     @Override
-    public void collectItem(Item item) {}
+    public abstract void collectItem(Item item);
 
     @Override
     public abstract void onCollisionWith(MoveableCharacter other);

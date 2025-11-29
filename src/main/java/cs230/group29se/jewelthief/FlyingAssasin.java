@@ -6,7 +6,7 @@ import cs230.group29se.jewelthief.Game.Tile;
 /**
  * An NPC that moves in a straight line, either horizontally or vertically, upon contact (when occupying the same
  * tile as a player/thief) it takes out the other moveable character, it doesn't take loot, just moves, and takes
- * out other movable characters
+ * out other moveable characters
  *
  * @author Baba
  */
