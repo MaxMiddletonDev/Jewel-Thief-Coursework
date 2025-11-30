@@ -41,5 +41,35 @@ public class GameProfileHelper {
         PM.deleteProfile(name);
         System.out.println("Deleted profile " + name);
     }
+    public static boolean renameProfile(String oldName, String newName) {
+        if (oldName == null || newName == null) return false;
+        newName = newName.trim();
+        if (newName.isEmpty()) return false;
+        if (oldName.equals(newName)) return true;
 
+
+        if (listProfiles().contains(newName)) return false;
+
+        try {
+
+            PM.setActiveProfileName(oldName);
+            ProfileData p = PM.loadProfile();
+            if (p == null) return false;
+
+            // 改名并缓存
+            p.setProfileName(newName);
+            PM.setCachedProfile(p);
+
+
+            PM.setActiveProfileName(newName);
+            PM.saveProfile();
+
+
+            PM.deleteProfile(oldName);
+            return true;
+        } catch (Exception e) {
+            System.out.println("rename failed: " + e.getMessage());
+            return false;
+        }
+    }
 }

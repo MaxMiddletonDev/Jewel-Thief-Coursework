@@ -10,6 +10,8 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 
 public class ProfileSelectController {
+    @FXML
+    private Button renameButton;
 
     @FXML
     private VBox slotsContainer;
@@ -165,5 +167,38 @@ public class ProfileSelectController {
         GameProfileHelper.deleteProfile(selectedProfile);
         selectedProfile = null;
         populateProfiles();
+    }
+
+    @FXML
+    private void handleRenameClicked() {
+        // get new name
+        String newName = newProfileNameField.getText();
+        if (selectedProfile == null || newName == null || newName.trim().isEmpty()) {
+            showWarn("Invalid name", "Please select a profile and type a new name.");
+            return;
+        }
+        newName = newName.trim();
+
+        try {
+            boolean ok = GameProfileHelper.renameProfile(selectedProfile, newName);
+            if (!ok) {
+                showWarn("Name exists", "A profile with that name already exists.");
+                return;
+            }
+
+            selectedProfile = newName;
+            populateProfiles();
+            newProfileNameField.clear();
+        } catch (Exception e) {
+            showWarn("Rename failed", e.getMessage());
+        }
+    }
+
+    private void showWarn(String header, String msg) {
+        javafx.scene.control.Alert alert =
+                new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
+        alert.setHeaderText(header);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }
