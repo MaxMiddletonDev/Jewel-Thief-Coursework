@@ -1,5 +1,7 @@
 package cs230.group29se.jewelthief;
 
+import cs230.group29se.jewelthief.Game.GameManager;
+import cs230.group29se.jewelthief.Game.Level;
 import javafx.scene.canvas.GraphicsContext;
 
 
@@ -7,7 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
  * Loot can be one of various types that increase the score of the
  * level when picked up by the player.
  * @author Charlie
- * @version 0.1 - TODO interact can now be implemented.
+ * @version 1.0 - interact added.
  */
 public class Loot extends Destroyable {
 
@@ -28,14 +30,22 @@ public class Loot extends Destroyable {
         this.type = type;
     }
 
-    /**
-     * Interact increases the score based on the value of the loot.
-     * SCORE GOES UP WHEN PICKED UP BY PLAYER.
-     * NOTHING HAPPENS WHEN PICKED UP BY THIEF.
-     * Needs level to be implemented.
-     */
-    public void interact() {
 
+    /**
+     * Changes the score of the level:
+     *  - If Player collects  → increase score.
+     * Then removes the loot from play.
+     */
+    @Override
+    public void interact() {
+        // Get current level from the game manager
+        Level currentLevel = GameManager.getCurrentLevel();
+        if (currentLevel != null) {
+                currentLevel.addScore(type.getValue());
+        }
+
+        // Remove the loot from the level so it can't be reused
+        remove();
     }
 
     /**
