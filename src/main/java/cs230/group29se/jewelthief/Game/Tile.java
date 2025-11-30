@@ -13,8 +13,8 @@ import java.util.Comparator;
  * @author Gustas Rove
  */
 public class Tile {
-    private final static int TILE_SIZE = 64;
-    private final static int HALF_TILE_SIZE = TILE_SIZE / 2;
+    public final static int TILE_SIZE = 64;
+    public final static int HALF_TILE_SIZE = TILE_SIZE / 2;
     private final static int BORDER_WIDTH = 2;
     private final int posX;
     private final int posY;
