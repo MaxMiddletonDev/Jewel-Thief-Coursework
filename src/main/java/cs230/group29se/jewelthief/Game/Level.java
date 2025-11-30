@@ -416,6 +416,34 @@ public class Level {
 
             switch (e.type) {
                 //TODO add other npcs
+                case "FLYING" -> {
+                    // e.arg1 = direction string ("UP","DOWN","LEFT","RIGHT")
+                    String npcDirection = e.arg1;
+                    Direction direction = directionSetter(npcDirection);
+
+                    //FlyingAssasin enemy = new FlyingAssasin(xPos, yPos, direction);
+                    // grid[xPos][yPos].setOccupying(enemy);
+                }
+
+                case "SMART" -> {
+                    String npcDirection = e.arg1;
+                    Direction direction = directionSetter(npcDirection);
+
+                    // SmartEnemy enemy = new SmartEnemy(xPos, yPos, direction);
+                    // grid[xPos][yPos].setOccupying(enemy);
+                }
+
+                case "FOLLOWER" -> {
+                    // e.arg1 = direction, e.arg2 = follower colour ("R","G","B","Y")
+                    String npcDirection = e.arg1;
+                    Direction direction = directionSetter(npcDirection);
+                    String followerColour = e.arg2;
+                    Colour colour = colourSetter(followerColour);
+
+                    // FollowerEnemy followerEnemy = new FollowerEnemy(xPos, yPos, direction, colour);
+                    // grid[xPos][yPos].setOccupying(followerEnemy);
+                }
+
                 case "LOOT" -> {
                     String value = e.arg1;
                     Loot tempLoot;
