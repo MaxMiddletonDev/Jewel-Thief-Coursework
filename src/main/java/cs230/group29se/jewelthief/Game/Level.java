@@ -27,14 +27,13 @@ public class Level {
 
     private List<Item> items = new ArrayList<>();
     private List<Gate> gates = new ArrayList<>();
+    private ArrayList<NonPlayableCharacter> enemies = new ArrayList<>();
     private Tile[][] grid;
 
     //Replace with actual player object later
     public Node dummyPlayer;
 
     private Player player;
-
-    private ArrayList<NonPlayableCharacter> enemies = new ArrayList<>();
 
     private int maxTime = 60; // Seconds
     private long timeRemaining; // Milliseconds
@@ -135,6 +134,7 @@ public class Level {
         for (Gate gate : gates) {
             gate.draw(gc);
         }
+        //player.draw(gc);
     }
 
     /**
@@ -256,7 +256,7 @@ public class Level {
         reader.next();
         x = reader.nextInt();
         y = reader.nextInt();
-        //Player player = new Player(x, y);
+        Player player = new Player(grid[x][y], this);
 
         // reads and creates NPCs and items
         while (reader.hasNextLine()) {
@@ -267,14 +267,17 @@ public class Level {
                     int yPos = reader.nextInt();
                     String npcDirection = reader.next();
                     Direction direction = directionSetter(npcDirection);
-                    //new FlyingEnemy(xPos, yPos, direction);
+                    FlyingAssasin tempEnemy = new FlyingAssasin(grid[xPos][yPos], direction, this);
+                    enemies.add(tempEnemy);
                 }
                 case "SMART" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
                     String npcDirection = reader.next();
                     Direction direction = directionSetter(npcDirection);
-                    //new SmartEnemy(xPos, yPos, direction);
+                    //Adding Smart enemy to arrayList
+                    //Smart Enemy temp enemy = new SmartEnemy(grid[xPos][yPos], direction);
+                    //enemies.add(tempEnemy);
                 }
                 case "FOLLOWER" -> {
                     int xPos = reader.nextInt();
@@ -283,7 +286,8 @@ public class Level {
                     Direction direction = directionSetter(npcDirection);
                     String followerColour = reader.next();
                     Colour colour = colourSetter(followerColour);
-                    //FollowerEnemy followerEnemy = new FollowerEnemy(xPos, yPos, direction, colour);
+                    FloorThief tempEnemy = new FloorThief(colour, grid[xPos][yPos], direction, this);
+                    enemies.add(tempEnemy);
                 }
                 case "LOOT" -> {
                     int xPos = reader.nextInt();
