@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
  * @author Gustas Rove
  * @version 1.0
  */
-abstract public class ProfileSelectScreen {
+abstract public class Screen {
     protected Pane root;
     protected Scene scene;
     protected boolean finished = false;

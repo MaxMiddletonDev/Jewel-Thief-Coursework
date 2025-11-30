@@ -3,7 +3,7 @@ package cs230.group29se.jewelthief.Scenes.GameScene;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
 import cs230.group29se.jewelthief.Game.Level;
-import cs230.group29se.jewelthief.Scenes.ProfileSelectScreen;
+import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -11,7 +11,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 
-public class GameScreen extends ProfileSelectScreen {
+public class GameScreen extends Screen {
 
     private Canvas canvas;
     private GraphicsContext gc;

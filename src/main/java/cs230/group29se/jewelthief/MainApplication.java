@@ -2,7 +2,7 @@ package cs230.group29se.jewelthief;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
 import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
 import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
-import cs230.group29se.jewelthief.Scenes.ProfileSelectScreen;
+import cs230.group29se.jewelthief.Scenes.Screen;
 import cs230.group29se.jewelthief.Scenes.ProfileScene.ProfileSelectMenu;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
@@ -18,7 +18,7 @@ import java.io.IOException;
 // DO NOT TOUCH THIS FILE AT ALL
 public class MainApplication extends Application {
     private Timeline tickTimeline;
-    public static ProfileSelectScreen currentScreen; //TODO: if fuckery is going on, probs cos timeline is creating a new thread and this shit aint thread safe
+    public static Screen currentScreen; //TODO: if fuckery is going on, probs cos timeline is creating a new thread and this shit aint thread safe
     private static Scene scene;
     @Override
     public void start(Stage stage) throws IOException {

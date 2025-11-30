@@ -1,10 +1,10 @@
 package cs230.group29se.jewelthief.Scenes.ProfileScene;
 
-import cs230.group29se.jewelthief.Scenes.ProfileSelectScreen;
+import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
-public class ProfileSelectMenu extends ProfileSelectScreen {
+public class ProfileSelectMenu extends Screen {
 
     private ProfileSelectController controller;
     private String selectedProfile;
