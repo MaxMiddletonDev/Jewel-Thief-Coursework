@@ -169,24 +169,16 @@ public class PersistenceManager {
     }
 
     /** Deletes the profile JSON and all its saves */
-    // in PersistenceManager
     public void deleteProfile(String profileName) {
+        if (profileName == null || profileName.isEmpty()) return;
+
         // Delete profile JSON
-        String profilePath = pathProfile(profileName); // e.g. "profiles/testProfile.json"
+        String profilePath = pathProfile(profileName); // "profiles/<name>.json"
         fileStore.delete(profilePath);
 
-        // Delete all saves for this profile
+        // Delete all saves folder for this profile
         String savesDir = "saves/" + profileName;
-        List<String> saves;
-        try {
-            saves = fileStore.list(savesDir); // returns ["saves/name/level-1.json", ...]
-        } catch (RuntimeException e) {
-            // no saves dir, nothing to delete
-            saves = List.of();
-        }
-        for (String rel : saves) {
-            fileStore.delete(rel);
-        }
+        fileStore.deleteDirectory(savesDir);           // removes folder + contents
 
         // Clear active profile if it was this one
         if (profileName.equals(activeProfileName)) {
@@ -194,8 +186,10 @@ public class PersistenceManager {
             cachedProfile = null;
             cachedSave = null;
         }
+
+        System.out.println("Deleted profile " + profileName + " and its saves folder");
     }
-    // ---- internal DTO + loader for highscores.json ----
+    // internal DTO + loader for highscores.json
     static class HighScoresDTO {
         public java.util.Map<String, java.util.List<HighScoreEntry>> perLevelBest = new java.util.HashMap<>();
         public java.util.List<HighScoreEntry> globalRanking = new java.util.ArrayList<>();

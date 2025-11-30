@@ -46,6 +46,33 @@ public class FileStore {
         catch (IOException e) { throw new RuntimeException("delete failed: " + path, e); }
     }
 
+    public void deleteDirectory(String dir) {
+        Path dirPath = resolve(dir);
+        try {
+            if (!Files.exists(dirPath)) return;
+
+            // Delete children first, then the directory itself
+            // walkFileTree handles nested dirs if you ever add them.
+            Files.walkFileTree(dirPath, new java.nio.file.SimpleFileVisitor<>() {
+                @Override
+                public java.nio.file.FileVisitResult visitFile(Path file, java.nio.file.attribute.BasicFileAttributes attrs)
+                        throws IOException {
+                    Files.deleteIfExists(file);
+                    return java.nio.file.FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public java.nio.file.FileVisitResult postVisitDirectory(Path dir, IOException exc)
+                        throws IOException {
+                    Files.deleteIfExists(dir);
+                    return java.nio.file.FileVisitResult.CONTINUE;
+                }
+            });
+        } catch (IOException e) {
+            throw new RuntimeException("deleteDirectory failed: " + dir, e);
+        }
+    }
+
     private Path resolve(String relative) { return baseDir.resolve(relative.replace("\\", "/")); }
     private static void ensureDir(Path d) { try { Files.createDirectories(d); } catch (IOException e) { throw new RuntimeException(e); } }
 }
