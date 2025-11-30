@@ -2,6 +2,9 @@ package cs230.group29se.jewelthief;
 
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import java.util.Objects;
 
 /**
  * This class represents a Player Character while implementing MoveableCharacter.
@@ -15,6 +18,7 @@ public class Player implements MoveableCharacter {
     private Direction direction;
 
     private Level level;
+    private Image playerImage;
 
     /**
      * Constructs a new Player instance.
@@ -26,6 +30,7 @@ public class Player implements MoveableCharacter {
         this.level = level;
         this.direction = Direction.UP;
         this.isAlive = true;
+        this.playerImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/cs230/group29se/jewelthief/Images/player.png")));
     }
     /**
      * Interactions with a collectable item.
@@ -84,6 +89,21 @@ public class Player implements MoveableCharacter {
      * @return set to true if character is still alive, false otherwise.
      */
     public void setAliveTo(boolean alive) {isAlive = alive; }
+
+    public void draw(GraphicsContext gc) {
+        int tileSize = Tile.TILE_SIZE;
+
+        int tileX = currentTile.getX();
+        int tileY = currentTile.getY();
+
+        double x = tileX * tileSize;
+        double y = tileY * tileSize;
+
+        if (playerImage != null) {
+            gc.drawImage(playerImage, x, y, tileSize, tileSize);
+
+        }
+    }
 
 
     /**
