@@ -32,6 +32,12 @@ public class Player implements MoveableCharacter {
      * @param item the item to interact with.
      */
     public void collectItem(Item item) {
+        // If the item is collectable, record that the player collected it
+        if (item instanceof Collectable collectable) {
+            collectable.setCollector(this);
+        }
+
+        // Then trigger the item's behaviour
         item.interact();
     }
 

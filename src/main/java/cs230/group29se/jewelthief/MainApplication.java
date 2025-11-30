@@ -19,7 +19,7 @@ import java.io.IOException;
 public class MainApplication extends Application {
     private Timeline tickTimeline;
     public static Screen currentScreen; //TODO: if fuckery is going on, probs cos timeline is creating a new thread and this shit aint thread safe
-    private Scene scene;
+    private static Scene scene;
     @Override
     public void start(Stage stage) throws IOException {
         boolean exitProgram = false;
@@ -27,7 +27,7 @@ public class MainApplication extends Application {
         currentScreen.initialize();
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
         try{
-            scene = new Scene(fxmlLoader.load(), 320, 240);
+            scene = new Scene(fxmlLoader.load(), 500, 500);
         }
         catch (IOException e) {
             System.out.println("error: Failed to load level select screen");
@@ -114,6 +114,15 @@ public class MainApplication extends Application {
             }
         }
     }
+
+    public static double getWindowWidth(){
+        return scene.getWidth();
+    }
+
+    public static double getWindowHeight(){
+        return scene.getHeight();
+    }
+
     public static void main(String[] args) {
         launch();
     }

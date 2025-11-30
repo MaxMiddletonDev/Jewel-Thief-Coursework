@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief.Scenes.LevelSelectScene;
 
+import cs230.group29se.jewelthief.MainApplication;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,17 +9,17 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 public class LevelSelectScreen extends Screen {
-    // Only needed if we plan to draw directly onto the canvas for level select buttons, remove if not
+    //Only needed if we plan to draw directly onto the canvas for level select buttons, remove if not
     private Canvas levelSelectCanvas;
     private GraphicsContext gc;
     private LevelSelectController controller;
 
-    // --- NEW: store which level was selected (and optionally profile) ---
+    // store which level was selected (and optionally profile)
     private int selectedLevel = 1;      // default to level 1
-    private String selectedProfile = "Amsyar"; // or whatever you use
+    private String selectedProfile = "testProfile"; // or whatever you use
 
     @Override
-    public void initialize(){
+    public void initialize() {
         try {
             drawInitial();
         } catch (Exception e) {
@@ -27,12 +28,15 @@ public class LevelSelectScreen extends Screen {
     }
 
     @Override
-    public void update() { }
+    public void update() {
+    }
 
     @Override
-    public void draw() { }
+    public void draw() {
+    }
 
-    public void drawInitial() { }
+    public void drawInitial() {
+    }
 
     @Override
     public Scene createScene() {
@@ -44,7 +48,12 @@ public class LevelSelectScreen extends Screen {
             controller = loader.getController();
             // Bind this screen to the controller
             controller.setScreen(this);
-            scene = new Scene(root, 320, 240);
+
+//            levelSelectCanvas = controller.levelSelectCanvas;
+//            gc = levelSelectCanvas.getGraphicsContext2D();
+            double x = MainApplication.getWindowWidth();
+            double y = MainApplication.getWindowHeight();
+            scene = new Scene(root, x, y);
             return scene;
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,9 +62,9 @@ public class LevelSelectScreen extends Screen {
     }
 
 
-
     /**
      * called by controller when a level button is clicked.
+     *
      * @author Iyaad
      */
     public void onLevelChosen(int levelNum) {
@@ -71,7 +80,6 @@ public class LevelSelectScreen extends Screen {
     public String getSelectedProfile() {
         return selectedProfile;
     }
-
     public void setSelectedProfile(String profileName) {
         this.selectedProfile = profileName;
     }

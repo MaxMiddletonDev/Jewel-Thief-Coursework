@@ -19,6 +19,8 @@ public class Tile {
     private final int posX;
     private final int posY;
     private Colour[] colours = new Colour[4];
+    //The item or gate or nothing occupying a tile
+    private Object occupying = null;
 
     /**
      * Constructs a Tile with the specified position and colours.
@@ -85,6 +87,18 @@ public class Tile {
     }
 
     /**
+     * Checks if a tile has a Floor Thief's assigned colour
+     */
+    public boolean containsColour(Colour assignedColour) {
+        for (Colour colour : this.colours) {
+            if (colour == assignedColour) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Draws the tile on the given GraphicsContext.
      * @param gc the GraphicsContext to draw on
      */
@@ -123,5 +137,23 @@ public class Tile {
     gc.setFill(tile.getColor());
     gc.fillRect(px, py, TILE_SIZE, TILE_SIZE);
          */
+    }
+
+
+    /**
+     * Changes what loot or gate is on a tile. Can be null.
+     * @param occupying the object that will occupy the tile.
+     */
+    public void setOccupying(Object occupying) {
+        this.occupying = occupying;
+    }
+
+    /**
+     * Get what item or gate may be occupying the tile.
+     * @return the item or gate occupying the tile,
+     * if null then the tile is not occupied.
+     */
+    public Object getOccupying(){
+        return occupying;
     }
 }

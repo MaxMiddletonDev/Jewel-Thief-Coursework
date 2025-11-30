@@ -53,6 +53,6 @@ public class Gate implements Remove {
      * @param gc the class the gate will be drawn with.
      */
     public void draw(final GraphicsContext gc) {
-        gc.drawImage(image, posX*64, posY*64);
+        gc.drawImage(image, posX*64, posY*64, 32 ,32);
     }
 }
