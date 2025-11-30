@@ -152,4 +152,8 @@ public final class GameManager {
     public static int getCurrentLevelNumber() {
         return levelNumber;
     }
+
+    public static PersistenceManager getPersistenceManager() {
+        return PM;
+    }
 }

@@ -1,8 +1,9 @@
 package cs230.group29se.jewelthief.Scenes.GameScene;
 
 import cs230.group29se.jewelthief.Game.GameManager;
+import cs230.group29se.jewelthief.Game.GameProfileHelper;
 import cs230.group29se.jewelthief.Game.Level;
-import cs230.group29se.jewelthief.Scenes.Screen;
+import cs230.group29se.jewelthief.Scenes.ProfileSelectScreen;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -10,7 +11,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 
-public class GameScreen extends Screen {
+public class GameScreen extends ProfileSelectScreen {
 
     private Canvas canvas;
     private GraphicsContext gc;
@@ -20,19 +21,20 @@ public class GameScreen extends Screen {
     private String activeProfileName = "testProfile"; // or "Amsyar"
     @Override
     public void initialize() {
-        // Decide which level number we’re on; if 0, start at 1
         int levelNum = GameManager.getCurrentLevelNumber();
         if (levelNum == 0) {
             levelNum = 1;
             GameManager.setCurrentLevelNumber(levelNum);
         }
 
-        // Ask GameManager to handle: JSON save vs txt + LevelLoader
-        GameManager.loadLevelForProfile(activeProfileName, levelNum, controller);
+        String profileName = GameProfileHelper.getActiveProfileName();
+        GameManager.loadLevelForProfile(profileName, levelNum, controller);
 
-        // Now there is a Level object ready in GameManager
         Level level = GameManager.getCurrentLevel();
-        ((Pane) controller.gameCanvas.getParent()).getChildren().add(level.dummyPlayer);
+
+        // Add dummyPlayer to same parent as canvas
+        Pane parent = (Pane) controller.gameCanvas.getParent();
+        parent.getChildren().add(level.dummyPlayer);
         // Keyboard movement – unchanged
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {

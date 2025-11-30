@@ -2,6 +2,9 @@ package cs230.group29se.jewelthief.Persistence.Storage;
 
 import cs230.group29se.jewelthief.Persistence.Profile.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Drop-in implementation of PersistenceManager for experimentation.
  * Also includes minimal default hooks so it runs without a UI.
@@ -55,7 +58,6 @@ public class PersistenceManager {
     }
     private String currentLevelId() { return activeLevelId; }
     private int currentRunScore() { return activeRunScore; }
-    private String currentProfileNameToDelete() { return activeProfileName; }
     private void applySaveToGame(SaveData s) { this.cachedSave = s; }
 
     /** Saves current ProfileData */
@@ -119,6 +121,10 @@ public class PersistenceManager {
         catch (RuntimeException ex) { return null; }
     }
 
+    public String getActiveProfileName() {
+        return activeProfileName;
+    }
+
     /** Appends a high score and sorts lists desc */
     public void submitScore() {
         String profile = currentProfileName();
@@ -145,24 +151,50 @@ public class PersistenceManager {
     }
 
     /** Lists profile names from profiles/*.json */
-    public java.util.List<String> listProfiles() {
-        var files = fileStore.list("profiles");
-        var out = new java.util.ArrayList<String>();
-        for (String f : files) if (f.endsWith(".json")) {
-            String base = f.substring(f.lastIndexOf('/') + 1);
-            out.add(base.substring(0, base.length() - 5));
+    public List<String> listProfiles() {
+        List<String> files = fileStore.list("profiles"); // e.g. ["profiles/newProfile.json", "profiles/testProfile.json"]
+        List<String> out = new ArrayList<>();
+
+        for (String rel : files) {
+            if (!rel.endsWith(".json")) continue;
+
+            // strip directory prefixes
+            String base = rel.replace('\\', '/');              // normalize separators
+            base = base.substring(base.lastIndexOf('/') + 1);  // "newProfile.json"
+
+            // strip ".json"
+            out.add(base.substring(0, base.length() - 5));     // "newProfile"
         }
         return out;
     }
 
     /** Deletes the profile JSON and all its saves */
-    public void deleteProfile() {
-        String name = currentProfileNameToDelete();
-        if (name == null) return;
-        fileStore.delete(pathProfile(name));
-        for (String p : fileStore.list("saves/" + name)) fileStore.delete(p);
-    }
+    // in PersistenceManager
+    public void deleteProfile(String profileName) {
+        // Delete profile JSON
+        String profilePath = pathProfile(profileName); // e.g. "profiles/testProfile.json"
+        fileStore.delete(profilePath);
 
+        // Delete all saves for this profile
+        String savesDir = "saves/" + profileName;
+        List<String> saves;
+        try {
+            saves = fileStore.list(savesDir); // returns ["saves/name/level-1.json", ...]
+        } catch (RuntimeException e) {
+            // no saves dir, nothing to delete
+            saves = List.of();
+        }
+        for (String rel : saves) {
+            fileStore.delete(rel);
+        }
+
+        // Clear active profile if it was this one
+        if (profileName.equals(activeProfileName)) {
+            activeProfileName = null;
+            cachedProfile = null;
+            cachedSave = null;
+        }
+    }
     // ---- internal DTO + loader for highscores.json ----
     static class HighScoresDTO {
         public java.util.Map<String, java.util.List<HighScoreEntry>> perLevelBest = new java.util.HashMap<>();

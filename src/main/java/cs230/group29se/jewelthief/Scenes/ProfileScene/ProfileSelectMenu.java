@@ -1,15 +1,20 @@
-package cs230.group29se.jewelthief.Scenes.MainScene;
+package cs230.group29se.jewelthief.Scenes.ProfileScene;
 
 import cs230.group29se.jewelthief.Scenes.ProfileSelectScreen;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
-public class MainMenuScreen extends ProfileSelectScreen {
+public class ProfileSelectMenu extends ProfileSelectScreen {
 
-    private MainMenuController controller;
+    private ProfileSelectController controller;
+    private String selectedProfile;
 
     @Override
-    public void initialize() { }
+    public void initialize() {
+        if (controller != null) {
+            controller.populateProfiles();
+        }
+    }
 
     @Override
     public void update() { }
@@ -21,7 +26,7 @@ public class MainMenuScreen extends ProfileSelectScreen {
     public Scene createScene() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/cs230/group29se/jewelthief/main-view.fxml")
+                    getClass().getResource("/cs230/group29se/jewelthief/profile-select-view.fxml")
             );
             root = loader.load();
             controller = loader.getController();
@@ -34,7 +39,12 @@ public class MainMenuScreen extends ProfileSelectScreen {
         }
     }
 
-    public void onStartClicked() {
+    public void onProfileChosen(String profileName) {
+        this.selectedProfile = profileName;
         this.finished = true;
+    }
+
+    public String getSelectedProfile() {
+        return selectedProfile;
     }
 }

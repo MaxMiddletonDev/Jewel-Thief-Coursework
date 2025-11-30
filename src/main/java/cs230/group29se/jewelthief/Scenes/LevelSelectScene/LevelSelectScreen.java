@@ -1,14 +1,13 @@
 package cs230.group29se.jewelthief.Scenes.LevelSelectScene;
 
 import cs230.group29se.jewelthief.MainApplication;
-import cs230.group29se.jewelthief.Scenes.Screen;
+import cs230.group29se.jewelthief.Scenes.ProfileSelectScreen;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-public class LevelSelectScreen extends Screen {
+public class LevelSelectScreen extends ProfileSelectScreen {
     //Only needed if we plan to draw directly onto the canvas for level select buttons, remove if not
     private Canvas levelSelectCanvas;
     private GraphicsContext gc;

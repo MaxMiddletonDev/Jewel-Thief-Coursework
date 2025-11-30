@@ -2,7 +2,14 @@ package cs230.group29se.jewelthief;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
 import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
 import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
-import cs230.group29se.jewelthief.Scenes.Screen;
+import cs230.group29se.jewelthief.Scenes.ProfileSelectScreen;
+import cs230.group29se.jewelthief.Scenes.ProfileSelectScreen; // abstract base
+import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
+import cs230.group29se.jewelthief.Scenes.ProfileScene.ProfileSelectMenu;
+import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
+import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
+import cs230.group29se.jewelthief.Game.GameManager;
+import cs230.group29se.jewelthief.Game.GameProfileHelper;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -14,100 +21,91 @@ import javafx.util.Duration;
 import cs230.group29se.jewelthief.Game.GameManager;
 
 import java.io.IOException;
-
 // DO NOT TOUCH THIS FILE AT ALL
 public class MainApplication extends Application {
     private Timeline tickTimeline;
-    public static Screen currentScreen; //TODO: if fuckery is going on, probs cos timeline is creating a new thread and this shit aint thread safe
+    public static ProfileSelectScreen currentScreen; //TODO: if fuckery is going on, probs cos timeline is creating a new thread and this shit aint thread safe
     private static Scene scene;
     @Override
     public void start(Stage stage) throws IOException {
-        boolean exitProgram = false;
         currentScreen = new MainMenuScreen();
+        scene = currentScreen.createScene();
         currentScreen.initialize();
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
-        try{
-            scene = new Scene(fxmlLoader.load(), 500, 500);
-        }
-        catch (IOException e) {
-            System.out.println("error: Failed to load level select screen");
-            e.printStackTrace(); // UH OH
-        }
-        //tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick(currentScreen, stage)));
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick(stage)));
 
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick(stage)));
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play();
+
         stage.setTitle("Main Menu");
         stage.setScene(scene);
         stage.show();
-        // Handles the screen transitions
 
-        // Save on window close
         stage.setOnCloseRequest(event -> {
-            // Optionally, stop the tick timeline
             if (tickTimeline != null) {
                 tickTimeline.stop();
             }
-            // Ask GameManager to persist the current game state
             GameManager.saveCurrentGameState();
-            // Let JavaFX continue closing
         });
-
     }
 
-    public void tick(Stage stage){
-        //TODO: Exit program if exitProgram  == true
-        switch (currentScreen){
+    public void tick(Stage stage) { //TODO: Exit program if exitProgram  == true
+        switch (currentScreen) {
             case MainMenuScreen mainMenuScreen -> {
-                 //Handle main menu logic here
-                if(mainMenuScreen.isFinished()){
+                if (mainMenuScreen.isFinished()) {
+                    currentScreen = new ProfileSelectMenu();
+                    stage.setTitle("Select Profile");
+                    scene = currentScreen.createScene();
+                    stage.setScene(scene);
+                    stage.show();
+                    currentScreen.initialize();
+                } else {
+                    mainMenuScreen.update();
+                }
+            }
+
+            case ProfileSelectMenu profileSelectMenu -> {
+                if (profileSelectMenu.isFinished()) {
+                    String chosen = profileSelectMenu.getSelectedProfile();
+                    if (chosen != null && !chosen.isEmpty()) {
+                        GameProfileHelper.setActiveProfileName(chosen);
+                    }
                     currentScreen = new LevelSelectScreen();
                     stage.setTitle("Level Select");
                     scene = currentScreen.createScene();
                     stage.setScene(scene);
                     stage.show();
                     currentScreen.initialize();
-//                    FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("level-select-view.fxml"));
-//                    try{
-//                        scene = new Scene(fxmlLoader.load(), 320, 240);
-//                    }
-//                    catch (IOException e) {
-//                        System.out.println("error: Failed to load level select screen");
-//                        e.printStackTrace(); // UH OH
-//                    }
-
-                }else{
-                    mainMenuScreen.update();
+                } else {
+                    profileSelectMenu.update();
                 }
-
             }
+
             case LevelSelectScreen levelSelectScreen -> {
-                // Handle level select logic here
-                if(levelSelectScreen.isFinished()){
+                if (levelSelectScreen.isFinished()) {
                     currentScreen = new GameScreen();
                     stage.setTitle("Playing Game");
                     scene = currentScreen.createScene();
                     stage.setScene(scene);
                     stage.show();
                     currentScreen.initialize();
-                }else{
+                } else {
                     levelSelectScreen.update();
                 }
             }
+
             case GameScreen gameScreen -> {
-                // Handle game logic here
-                if(gameScreen.isFinished()){
+                if (gameScreen.isFinished()) {
                     currentScreen = new MainMenuScreen();
                     stage.setTitle("Main Menu");
                     scene = currentScreen.createScene();
                     stage.setScene(scene);
                     stage.show();
                     currentScreen.initialize();
-                }else{
+                } else {
                     gameScreen.update();
                 }
             }
+
             default -> {
                 System.out.println("unknown current screen ");
                 throw new IllegalStateException("Unexpected value: " + currentScreen);

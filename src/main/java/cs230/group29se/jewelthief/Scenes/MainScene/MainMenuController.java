@@ -1,16 +1,23 @@
 package cs230.group29se.jewelthief.Scenes.MainScene;
 
-import cs230.group29se.jewelthief.MainApplication;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 
 public class MainMenuController {
-    @FXML
-    private Label welcomeText;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-        MainApplication.currentScreen.setFinished(true);
+    private Button startButton;
+
+    private MainMenuScreen screen;
+
+    public void setScreen(MainMenuScreen screen) {
+        this.screen = screen;
+    }
+
+    @FXML
+    private void handleStartClicked() {
+        if (screen != null) {
+            screen.onStartClicked();
+        }
     }
 }
