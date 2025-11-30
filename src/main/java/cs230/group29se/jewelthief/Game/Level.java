@@ -134,7 +134,7 @@ public class Level {
         for (Gate gate : gates) {
             gate.draw(gc);
         }
-        //player.draw(gc);
+        player.draw(gc);
     }
 
     /**
