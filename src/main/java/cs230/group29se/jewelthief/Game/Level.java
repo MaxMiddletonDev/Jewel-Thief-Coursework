@@ -256,7 +256,7 @@ public class Level {
         reader.next();
         x = reader.nextInt();
         y = reader.nextInt();
-        Player player = new Player(grid[x][y], this);
+        player = new Player(grid[x][y], this);
 
         // reads and creates NPCs and items
         while (reader.hasNextLine()) {
