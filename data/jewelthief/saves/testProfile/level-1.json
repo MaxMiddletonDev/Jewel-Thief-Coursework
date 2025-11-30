@@ -1,7 +1,7 @@
 {
   "levelId" : "1",
   "profileName" : "testProfile",
-  "playerState" : [ -118.0, -518.0 ],
+  "playerState" : [ -158.0, -278.0 ],
   "elapsedSeconds" : 0,
   "npcStates" : {
     "FOLLOWER#4#6" : "DOWN",

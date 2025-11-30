@@ -85,7 +85,7 @@ public final class GameManager {
         }
 
         // Create the Level object (Level.readLevelFile will build grid etc.)
-        Level level = new Level(levelFileName, controller);
+        Level level = new Level(levelFileName, controller, save);
         setCurrentLevel(level);
     }
     /**

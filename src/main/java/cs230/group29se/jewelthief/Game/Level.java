@@ -1,6 +1,7 @@
 package cs230.group29se.jewelthief.Game;
 
 import cs230.group29se.jewelthief.*;
+import cs230.group29se.jewelthief.Persistence.Profile.SaveData;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameController;
 import cs230.group29se.jewelthief.Persistence.Storage.LevelLoader;
 import cs230.group29se.jewelthief.Persistence.Storage.LevelDef;
@@ -51,8 +52,10 @@ public class Level {
      * @param levelName      the name of the level file
      * @param gameController the game controller for updating UI elements
      */
-    public Level(String levelName, GameController gameController) {
+    private final SaveData saveData;
+    public Level(String levelName, GameController gameController, SaveData saveData) {
         this.gameController = gameController;
+        this.saveData = saveData;
         dummyPlayer = new Rectangle(38, 38, Color.GREEN);
         dummyPlayer.setTranslateY(0);
         dummyPlayer.setTranslateX(0);
@@ -365,7 +368,7 @@ public class Level {
         int y = def.height;
         grid = new Tile[x][y];
 
-        // ---- 1) Tiles: row 0 = top, row y-1 = bottom ----
+        // Tiles: row 0 = top, row y-1 = bottom
         for (int row = 0; row < y; row++) {
             String rowString = def.tiles.get(row);      // e.g. "YYYY RBYG YRGB BRGY"
             String[] tileTokens = rowString.split("\\s+");
@@ -386,16 +389,19 @@ public class Level {
         }
 
         // Player start
-        if (def.playerStart != null) {
+        if (saveData != null && saveData.getPlayerState() != null && saveData.getPlayerState().length >= 2) {
+            Object[] ps = saveData.getPlayerState();
+            double px = ((Number) ps[0]).doubleValue();
+            double py = ((Number) ps[1]).doubleValue();
+            dummyPlayer.setTranslateX(px);
+            dummyPlayer.setTranslateY(py);
+        } else if (def.playerStart != null) {
             int xPos = def.playerStart.x;
             int yPos = def.playerStart.y;
-
             int tileSize = Tile.getTileSize();
             int border = 2; // BORDER_WIDTH
-
             double px = xPos * tileSize + border;
             double py = yPos * tileSize + border;
-
             dummyPlayer.setTranslateX(px);
             dummyPlayer.setTranslateY(py);
         }
