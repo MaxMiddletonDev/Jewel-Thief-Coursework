@@ -470,7 +470,7 @@ public class Level {
         int y = def.height;
         grid = new Tile[x][y];
 
-        // --- tiles: row 0 = top, row y-1 = bottom ---
+        // tiles: row 0 = top, row y-1 = bottom
         for (int row = 0; row < y; row++) {
             String rowString = def.tiles.get(row);
             String[] tileTokens = rowString.split("\\s+");
@@ -493,7 +493,7 @@ public class Level {
             }
         }
 
-        // --- player: flip raw Y from txt so 0 = bottom row ---
+        // player: flip raw Y from txt so 0 = bottom row
         if (def.playerStart != null) {
             int rawX = def.playerStart.x;
             int rawY = def.playerStart.y;
@@ -510,12 +510,10 @@ public class Level {
             dummyPlayer.setTranslateY(py);
         }
 
-        // --- items: same Y flip so they sit on correct tiles ---
+        // items: same Y flip so they sit on correct tiles
         for (EntityDef e : def.entities) {
-            int rawX = e.x;
-            int rawY = e.y;
-            int gridX = rawX;
-            int gridY = (y - 1) - rawY;
+            int gridX = e.x;
+            int gridY = e.y;
 
             switch (e.type) {
                 case "LOOT" -> {
@@ -534,7 +532,7 @@ public class Level {
                 }
                 case "DOOR" -> items.add(new Door(gridX, gridY));
                 case "CLOCK" -> items.add(new Clock(gridX, gridY));
-                default -> { /* NPCs/gates later */ }
+                default -> { } //TODO NPCs/gates later
             }
         }
     }
