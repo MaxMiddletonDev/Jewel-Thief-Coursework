@@ -355,7 +355,6 @@ public class Level {
 //        reader.close();
 //    }
     public void readLevelFile(String filename) throws FileNotFoundException {
-        int testMultiplier = 1;
         String levelId = extractLevelId(filename);
         java.nio.file.Path levelPath = java.nio.file.Path.of("levels", filename);
         LevelDef def = new LevelLoader().loadLevel(levelId, levelPath);
@@ -366,106 +365,97 @@ public class Level {
         int y = def.height;
         grid = new Tile[x][y];
 
-        // tiles: row 0 = top, row y-1 = bottom
+        // ---- 1) Tiles: row 0 = top, row y-1 = bottom ----
         for (int row = 0; row < y; row++) {
-            String rowString = def.tiles.get(row);
+            String rowString = def.tiles.get(row);      // e.g. "YYYY RBYG YRGB BRGY"
             String[] tileTokens = rowString.split("\\s+");
-            //Player player = new Player(x, y);
+
             for (int col = 0; col < x; col++) {
-                String sequence = tileTokens[col];
+                String sequence = tileTokens[col];      // e.g. "YYYY"
                 Colour[] colours = new Colour[4];
-                int xPos = col;       // 0..x-1
-                int yPos = row;       // 0..y-1, top to bottom
+                for (int z = 0; z < 4; z++) {
+                    char colChar = sequence.charAt(z);
+                    colours[z] = colourSetter(String.valueOf(colChar));
+                }
+
+                int xPos = col;    // 0..x-1
+                int yPos = row;    // 0..y-1
 
                 grid[xPos][yPos] = new Tile(xPos, yPos, colours);
-                Tile t00 = grid[0][0];
-                System.out.println("Tile(0,0) grid=(" + t00.getX() + "," + t00.getY() + ")");
+            }
+        }
 
+        // Player start
+        if (def.playerStart != null) {
+            int xPos = def.playerStart.x;
+            int yPos = def.playerStart.y;
 
-                // player: flip raw Y from txt so 0 = bottom row
-                if (def.playerStart != null) {
-                    int rawX = def.playerStart.x;
-                    int rawY = def.playerStart.y;
-                    xPos = rawX;
-                    yPos = rawY;
+            int tileSize = Tile.getTileSize();
+            int border = 2; // BORDER_WIDTH
 
-                    int tileSize = Tile.getTileSize();
-                    int border = 2; // BORDER_WIDTH
+            double px = xPos * tileSize + border;
+            double py = yPos * tileSize + border;
 
-                    double px = xPos * tileSize + border;
-                    double py = yPos * tileSize + border;
+            dummyPlayer.setTranslateX(px);
+            dummyPlayer.setTranslateY(py);
+        }
 
-                    dummyPlayer.setTranslateX(px);
-                    dummyPlayer.setTranslateY(py);
-                }
+        // Items and gates
+        for (EntityDef e : def.entities) {
+            int rawX = e.x;
+            int rawY = e.y;
 
-                // items: same Y flip so they sit on correct tiles
-                for (EntityDef e : def.entities) {
-                    xPos = e.x;
-                    yPos = e.y;
+            int xPos = rawX;
+            int yPos = (y - 1) - rawY;   // flip to reflect level design
 
-                    switch (e.type) {
-                        case "LOOT" -> {
-                            String value = e.arg1;
-                            switch (value) {
-                                case "CENT" -> {
-                                    Loot tempLoot = new Loot(LootEnum.CENT, xPos, yPos);
-                                    items.add(tempLoot);
-                                    grid[xPos - 1][yPos - 1].setOccupying(tempLoot);
-                                }
-                                case "DOLLAR" -> {
-                                    Loot tempLoot = new Loot(LootEnum.DOLLAR, xPos, yPos);
-                                    items.add(tempLoot);
-                                    grid[xPos - 1][yPos - 1].setOccupying(tempLoot);
-                                }
-                                case "RUBY" -> {
-                                    Loot tempLoot = new Loot(LootEnum.RUBY, xPos, yPos);
-                                    items.add(tempLoot);
-                                    grid[xPos - 1][yPos - 1].setOccupying(tempLoot);
-                                }
-                                case "DIAMOND" -> {
-                                    Loot tempLoot = new Loot(LootEnum.DIAMOND, xPos, yPos);
-                                    items.add(tempLoot);
-                                    grid[xPos - 1][yPos - 1].setOccupying(tempLoot);
-                                }
-                            }
-                        }
-                        case "BOMB" -> {
-                            Bomb tempBomb = (new Bomb(xPos, yPos));
-                            items.add(tempBomb);
-                            grid[xPos - 1][yPos - 1].setOccupying(tempBomb);
-
-                        }
-                        case "LEVER" -> {
-                            Colour colour = colourSetter(e.arg1);
-                            Lever tempLever = new Lever(colour, xPos, yPos);
-                            items.add(tempLever);
-                            grid[xPos - 1][yPos - 1].setOccupying(tempLever);
-                        }
-                        case "GATE" -> {
-                            Colour colour = colourSetter(e.arg1);
-                            //new Gate(colour, xPos, yPos);
-                            Gate tempGate = new Gate(colour, xPos, yPos);
-                            gates.add(tempGate);
-                            grid[xPos-1][yPos-1].setOccupying(tempGate);
-                        }
-                        case "DOOR" -> {
-                            Door tempDoor = new Door(xPos, yPos);
-                            items.add(tempDoor);
-                            grid[xPos-1][yPos-1].setOccupying(tempDoor);
-                        }
-                        case "CLOCK" -> {
-                            Clock tempClock = new Clock(xPos, yPos);
-                            items.add(tempClock);
-                            grid[xPos-1][yPos-1].setOccupying(tempClock);
-                        }
-                        default -> {  }
+            switch (e.type) {
+                //TODO add other npcs
+                case "LOOT" -> {
+                    String value = e.arg1;
+                    Loot tempLoot;
+                    switch (value) {
+                        case "CENT"    -> tempLoot = new Loot(LootEnum.CENT,    xPos, yPos);
+                        case "DOLLAR"  -> tempLoot = new Loot(LootEnum.DOLLAR,  xPos, yPos);
+                        case "RUBY"    -> tempLoot = new Loot(LootEnum.RUBY,    xPos, yPos);
+                        case "DIAMOND" -> tempLoot = new Loot(LootEnum.DIAMOND, xPos, yPos);
+                        default        -> tempLoot = null;
+                    }
+                    if (tempLoot != null) {
+                        items.add(tempLoot);
+                        grid[xPos][yPos].setOccupying(tempLoot);
                     }
                 }
+                case "BOMB" -> {
+                    Bomb tempBomb = new Bomb(xPos, yPos);
+                    items.add(tempBomb);
+                    grid[xPos][yPos].setOccupying(tempBomb);
+                }
+                case "LEVER" -> {
+                    Colour colour = colourSetter(e.arg1);
+                    Lever tempLever = new Lever(colour, xPos, yPos);
+                    items.add(tempLever);
+                    grid[xPos][yPos].setOccupying(tempLever);
+                }
+                case "GATE" -> {
+                    Colour colour = colourSetter(e.arg1);
+                    Gate tempGate = new Gate(colour, xPos, yPos);
+                    gates.add(tempGate);
+                    grid[xPos][yPos].setOccupying(tempGate);
+                }
+                case "DOOR" -> {
+                    Door tempDoor = new Door(xPos, yPos);
+                    items.add(tempDoor);
+                    grid[xPos][yPos].setOccupying(tempDoor);
+                }
+                case "CLOCK" -> {
+                    Clock tempClock = new Clock(xPos, yPos);
+                    items.add(tempClock);
+                    grid[xPos][yPos].setOccupying(tempClock);
+                }
+                default -> {  }
             }
         }
     }
-
     /**
      * Quick helper method to find the levelID
      *
