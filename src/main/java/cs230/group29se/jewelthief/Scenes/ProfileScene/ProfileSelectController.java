@@ -75,7 +75,7 @@ public class ProfileSelectController {
         Region spacer = new Region();
         HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
 
-        Label hintLabel = new Label("Save Slot");
+        Label hintLabel = new Label("Profile Slot");
         hintLabel.setStyle("-fx-text-fill: #888888; -fx-font-size: 12px;");
 
         Label numberLabel = new Label(String.valueOf(slotNumber));
