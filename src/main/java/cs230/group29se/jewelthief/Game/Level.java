@@ -451,4 +451,13 @@ public class Level {
     public List<Gate> getGates() {
         return gates;
     }
+
+    /**
+     * Gets the player of the level.
+     * @return the player.
+     */
+    public Player getPlayer() {
+        return player;
+    }
+
 }

@@ -27,6 +27,7 @@ public class GameScreen extends Screen {
         //TODO:Decide if we need to load a new level or continue current level here -------------------------
         GameManager.setCurrentLevel(level);
         root.getChildren().add(GameManager.getCurrentLevel().dummyPlayer);
+
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case UP ->{
