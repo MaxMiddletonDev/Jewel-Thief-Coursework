@@ -3,22 +3,16 @@ import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
 import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
 import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
 import cs230.group29se.jewelthief.Scenes.ProfileSelectScreen;
-import cs230.group29se.jewelthief.Scenes.ProfileSelectScreen; // abstract base
-import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
 import cs230.group29se.jewelthief.Scenes.ProfileScene.ProfileSelectMenu;
-import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
-import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import cs230.group29se.jewelthief.Game.GameManager;
 
 import java.io.IOException;
 // DO NOT TOUCH THIS FILE AT ALL

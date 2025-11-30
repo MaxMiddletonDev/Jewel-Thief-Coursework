@@ -18,7 +18,7 @@
                    style="-fx-font-size: 24px; -fx-text-fill: black;"/>
 
             <!-- Save slot area -->
-            <VBox fx:id="slotsContainer" spacing="10" prefHeight="250"/>
+            <VBox fx:id="slotsContainer" spacing="10" prefHeight="150"/>
 
             <!-- New save row -->
             <HBox spacing="10" alignment="CENTER">

@@ -1,6 +1,5 @@
 package cs230.group29se.jewelthief.Scenes.ProfileScene;
 
-import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

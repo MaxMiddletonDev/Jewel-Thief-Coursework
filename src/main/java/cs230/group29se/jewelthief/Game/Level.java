@@ -10,13 +10,9 @@ import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
-import java.io.File;
-import java.nio.file.Path;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Represents a level in the game, containing tiles, items, enemies, and player.
