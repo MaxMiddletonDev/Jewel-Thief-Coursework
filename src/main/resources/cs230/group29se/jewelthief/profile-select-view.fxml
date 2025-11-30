@@ -14,7 +14,7 @@
               AnchorPane.rightAnchor="40"
               AnchorPane.bottomAnchor="20">
 
-            <Label text="Select Save"
+            <Label text="Select Profile"
                    style="-fx-font-size: 24px; -fx-text-fill: black;"/>
 
             <!-- Save slot area -->
