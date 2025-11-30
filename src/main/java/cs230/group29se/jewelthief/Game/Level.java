@@ -381,8 +381,8 @@ public class Level {
                     colours[z] = colourSetter(String.valueOf(colChar));
                 }
 
-                int xPos = col;    // 0..x-1
-                int yPos = row;    // 0..y-1
+                int xPos = (x - 1) - col;    // 0..x-1
+                int yPos = (y-1) - row;    // 0..y-1
 
                 grid[xPos][yPos] = new Tile(xPos, yPos, colours);
             }
@@ -411,8 +411,8 @@ public class Level {
             int rawX = e.x;
             int rawY = e.y;
 
-            int xPos = rawX;
-            int yPos = (y - 1) - rawY;   // flip to reflect level design
+            int xPos = rawX - 1;
+            int yPos = rawY - 1;   // flip to reflect level design
 
             switch (e.type) {
                 //TODO add other npcs
