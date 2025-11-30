@@ -32,7 +32,9 @@ public class Level {
     //Replace with actual player object later
     public Node dummyPlayer;
 
-    //Add arraylist of enemies later
+    private Player player;
+
+    private ArrayList<NonPlayableCharacter> enemies = new ArrayList<>();
 
     private int maxTime = 60; // Seconds
     private long timeRemaining; // Milliseconds
