@@ -2,10 +2,7 @@ package cs230.group29se.jewelthief.Game;
 
 import cs230.group29se.jewelthief.*;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameController;
-import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,9 +27,6 @@ public class Level {
     private ArrayList<NonPlayableCharacter> enemies = new ArrayList<>();
     private Tile[][] grid;
 
-    //Replace with actual player object later
-    public Node dummyPlayer;
-
     private Player player;
 
     private int maxTime = 60; // Seconds
@@ -50,9 +44,6 @@ public class Level {
      */
     public Level(String levelName, GameController gameController){
         this.gameController = gameController;
-        dummyPlayer = new Rectangle(38, 38, Color.GREEN);
-        dummyPlayer.setTranslateY(0);
-        dummyPlayer.setTranslateX(0);
 
         //Test Grid
         Tile[][] grid;

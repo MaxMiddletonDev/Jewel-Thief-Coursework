@@ -1,10 +1,11 @@
 package cs230.group29se.jewelthief.Scenes.GameScene;
 
+import cs230.group29se.jewelthief.Direction;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.Level;
+import cs230.group29se.jewelthief.Player;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,25 +27,25 @@ public class GameScreen extends Screen {
         Level level = new Level(levelFileName, controller);
         //TODO:Decide if we need to load a new level or continue current level here -------------------------
         GameManager.setCurrentLevel(level);
-        root.getChildren().add(GameManager.getCurrentLevel().dummyPlayer);
 
         scene.setOnKeyPressed(event -> {
+            Player player = GameManager.getCurrentLevel().getPlayer();
             switch (event.getCode()) {
                 case UP ->{
-                    Node player = GameManager.getCurrentLevel().dummyPlayer;
-                    player.setTranslateY(player.getTranslateY() - 40);
+                    player.setDirection(Direction.UP);
+                    player.move();
                 }
                 case DOWN -> {
-                    Node player = GameManager.getCurrentLevel().dummyPlayer;
-                    player.setTranslateY(player.getTranslateY() + 40);
+                    player.setDirection(Direction.DOWN);
+                    player.move();
                 }
                 case LEFT -> {
-                    Node player = GameManager.getCurrentLevel().dummyPlayer;
-                    player.setTranslateX(player.getTranslateX() - 40);
+                    player.setDirection(Direction.LEFT);
+                    player.move();
                 }
                 case RIGHT -> {
-                    Node player = GameManager.getCurrentLevel().dummyPlayer;
-                    player.setTranslateX(player.getTranslateX() + 40);
+                    player.setDirection(Direction.RIGHT);
+                    player.move();
                 }
             }
         });
@@ -53,7 +54,7 @@ public class GameScreen extends Screen {
     /**
      * PLACEHOLDER METHOD, THIS IS WAITING FOR DATA PERSISTENCE IMPLEMENTATION
      * Determines if the current level has saved data to load from.
-     * @return
+     * @return false
      */
     public boolean levelHasSaveData(){
         return false;
