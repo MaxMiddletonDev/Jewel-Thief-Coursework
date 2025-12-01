@@ -14,7 +14,7 @@
 
     <Label fx:id="levelFailedLabel" text="Level Failed!" style="-fx-font-size: 36px; -fx-font-weight: bold;"/>
     <Label fx:id="scoreLabel" text="Your Score: 0" style="-fx-font-size: 24px;"/>
-    <Button fx:id="backToMainMenuButton" userData="" text="Back to Main Menu"/>
-    <Button fx:id="retryLevelButton" userData="" text="Retry Level"/>
+    <Button fx:id="backToMainMenuButton" userData="" text="Back to Main Menu" onAction="#backToMainMenu"/>
+    <Button fx:id="retryLevelButton" userData="" text="Retry Level" onAction="#restartLevel"/>
 
 </VBox>

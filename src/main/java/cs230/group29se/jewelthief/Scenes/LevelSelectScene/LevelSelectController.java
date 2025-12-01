@@ -1,6 +1,7 @@
 package cs230.group29se.jewelthief.Scenes.LevelSelectScene;
 
 import cs230.group29se.jewelthief.Game.GameManager;
+import cs230.group29se.jewelthief.Scenes.BaseController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,7 +12,7 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LevelSelectController implements Initializable {
+public class LevelSelectController extends BaseController implements Initializable {
 
     @FXML
     public Button level1Button;
@@ -25,18 +26,13 @@ public class LevelSelectController implements Initializable {
     public Button level9Button;
     public Button level10Button;
 
-    private LevelSelectScreen screen;
-
-    public void setScreen(LevelSelectScreen screen) {
-        this.screen = screen;
-    }
 
     @FXML
     protected void selectLevel(ActionEvent e) {
         Button b = (Button) e.getSource();
         int level = Integer.parseInt(b.getUserData().toString());
         GameManager.setCurrentLevelNumber(level);
-        screen.setFinished(true);
+        getScreen().setFinished(true);
     }
 
 
@@ -66,5 +62,10 @@ public class LevelSelectController implements Initializable {
         }{
             return false;
         }
+    }
+
+    @Override
+    public Canvas getCanvas() {
+        return null; // No canvas needed for this scene
     }
 }

@@ -35,6 +35,9 @@ public class Level {
 
     private int score;
 
+    private boolean failedLevel = false;
+    private String failReason = "";
+
 
     /**
      * Constructs a Level with the specified level name and game controller.
@@ -76,10 +79,19 @@ public class Level {
 
         if (timeRemaining <= 0) {
             timeRemaining = 0;
-            //TODO: PLAYER LOSS
+            failLevel("Time's up!");
         }
         gameController.timerLabel.setText("Time: " + getTimeRemainingTimeInSeconds() + "s");
 
+    }
+
+    public void failLevel(String failReason) {
+        failedLevel = true;
+        this.failReason = failReason;
+    }
+
+    public boolean isLevelFailed() {
+        return failedLevel;
     }
 
     /**
