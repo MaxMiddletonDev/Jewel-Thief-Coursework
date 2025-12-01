@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
+import cs230.group29se.jewelthief.Scenes.HighScoresScene.HighScoresScreen;
 import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
 import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
@@ -46,8 +47,13 @@ public class MainApplication extends Application {
         switch (currentScreen) {
             case MainMenuScreen mainMenuScreen -> {
                 if (mainMenuScreen.isFinished()) {
-                    currentScreen = new ProfileSelectMenu();
-                    stage.setTitle("Select Profile");
+                    if (mainMenuScreen.getNextAction() == MainMenuScreen.NextAction.SHOW_HIGHSCORES) {
+                        currentScreen = new HighScoresScreen();
+                        stage.setTitle("High Scores");
+                    } else {
+                        currentScreen = new ProfileSelectMenu();
+                        stage.setTitle("Select Profile");
+                    }
                     scene = currentScreen.createScene();
                     stage.setScene(scene);
                     stage.show();
@@ -59,12 +65,18 @@ public class MainApplication extends Application {
 
             case ProfileSelectMenu profileSelectMenu -> {
                 if (profileSelectMenu.isFinished()) {
-                    String chosen = profileSelectMenu.getSelectedProfile();
-                    if (chosen != null && !chosen.isEmpty()) {
-                        GameProfileHelper.setActiveProfileName(chosen);
+                    if (profileSelectMenu.getNextAction() == ProfileSelectMenu.NextAction.CONTINUE) {
+                        String chosen = profileSelectMenu.getSelectedProfile();
+                        if (chosen != null && !chosen.isEmpty()) {
+                            GameProfileHelper.setActiveProfileName(chosen);
+                        }
+                        currentScreen = new LevelSelectScreen();
+                        stage.setTitle("Level Select");
+                    } else { // BACK
+                        currentScreen = new MainMenuScreen();
+                        stage.setTitle("Main Menu");
                     }
-                    currentScreen = new LevelSelectScreen();
-                    stage.setTitle("Level Select");
+
                     scene = currentScreen.createScene();
                     stage.setScene(scene);
                     stage.show();
@@ -84,6 +96,19 @@ public class MainApplication extends Application {
                     currentScreen.initialize();
                 } else {
                     levelSelectScreen.update();
+                }
+            }
+
+            case HighScoresScreen highScoresScreen -> {
+                if (highScoresScreen.isFinished()) {
+                    currentScreen = new MainMenuScreen();
+                    stage.setTitle("Main Menu");
+                    scene = currentScreen.createScene();
+                    stage.setScene(scene);
+                    stage.show();
+                    currentScreen.initialize();
+                } else {
+                    highScoresScreen.update();
                 }
             }
 

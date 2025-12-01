@@ -125,21 +125,31 @@ public class PersistenceManager {
         return activeProfileName;
     }
 
-    /** Appends a high score and sorts lists desc */
-    public void submitScore() {
-        String profile = currentProfileName();
-        int score = currentRunScore();
-        var entry = new HighScoreEntry(profile, score, java.time.Instant.now().toString());
+    /** Appends a high score and sorts lists desc both per-level and globally*/
+    public void submitScore(String profileName, String levelId, int score, String timestampIso) {
+        HighScoreEntry entry = new HighScoreEntry(profileName, score, timestampIso);
         HighScoresDTO dto = loadHighScoresDTO();
+
+        // Global
         dto.globalRanking.add(entry);
         dto.globalRanking.sort(java.util.Comparator.comparingInt(HighScoreEntry::getScore).reversed());
-        String levelId = currentLevelId();
+
+        // Per-level
         if (levelId != null) {
             var list = dto.perLevelBest.computeIfAbsent(levelId, k -> new java.util.ArrayList<>());
             list.add(entry);
             list.sort(java.util.Comparator.comparingInt(HighScoreEntry::getScore).reversed());
         }
+
         fileStore.write(pathHighScores(), serializer.toJson(dto));
+    }
+
+    public void submitScore() {
+        String profile = currentProfileName();
+        int score = currentRunScore();
+        String levelId = currentLevelId();
+        String timestamp = java.time.Instant.now().toString();
+        submitScore(profile, levelId, score, timestamp);
     }
 
     /** Loads highscores.json and returns a table view */
@@ -198,5 +208,15 @@ public class PersistenceManager {
     private HighScoresDTO loadHighScoresDTO() {
         try { return serializer.fromJson(fileStore.read(pathHighScores()), HighScoresDTO.class); }
         catch (RuntimeException ex) { return new HighScoresDTO(); }
+    }
+
+    /** Returns raw per-level best as a map (levelId -> list of entries). */
+    public java.util.Map<String, java.util.List<HighScoreEntry>> loadPerLevelHighScores() {
+        return loadHighScoresDTO().perLevelBest;
+    }
+
+    /** Returns the global high scores list (unsliced). */
+    public java.util.List<HighScoreEntry> loadGlobalHighScores() {
+        return loadHighScoresDTO().globalRanking;
     }
 }

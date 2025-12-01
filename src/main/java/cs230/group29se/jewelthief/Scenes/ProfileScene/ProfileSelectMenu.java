@@ -6,6 +6,9 @@ import javafx.scene.Scene;
 
 public class ProfileSelectMenu extends Screen {
 
+    public enum NextAction { CONTINUE, BACK }
+
+    private NextAction nextAction = NextAction.CONTINUE;
     private ProfileSelectController controller;
     private String selectedProfile;
 
@@ -41,10 +44,20 @@ public class ProfileSelectMenu extends Screen {
 
     public void onProfileChosen(String profileName) {
         this.selectedProfile = profileName;
+        this.nextAction = NextAction.CONTINUE;
+        this.finished = true;
+    }
+
+    public void onBackClicked() {
+        this.nextAction = NextAction.BACK;
         this.finished = true;
     }
 
     public String getSelectedProfile() {
         return selectedProfile;
+    }
+
+    public NextAction getNextAction() {
+        return nextAction;
     }
 }

@@ -34,7 +34,22 @@ public class MainMenuScreen extends Screen {
         }
     }
 
+    public enum NextAction { START_GAME, SHOW_HIGHSCORES }
+
+    private NextAction nextAction = NextAction.START_GAME;
+
     public void onStartClicked() {
-        this.finished = true;
+        nextAction = NextAction.START_GAME;
+        finished = true;
     }
+
+    public void onHighScoresClicked() {
+        nextAction = NextAction.SHOW_HIGHSCORES;
+        finished = true;
+    }
+
+    public NextAction getNextAction() {
+        return nextAction;
+    }
+
 }

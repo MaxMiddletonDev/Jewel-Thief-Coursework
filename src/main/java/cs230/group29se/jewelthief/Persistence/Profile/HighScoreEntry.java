@@ -3,6 +3,10 @@ package cs230.group29se.jewelthief.Persistence.Profile;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 /**
  * This class stores individual high scores of a user
  * It is used for storing the player's profile.
@@ -90,10 +94,25 @@ public class HighScoreEntry {
     /**
      * This method is used to set the timestamp for the high score entry.
      *
-     * @param timestamp The new timestamp value to assign;it mustn't be null.
+     * @param timestamp The new timestamp value to assign; it mustn't be null.
      */
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getFormattedTime() {
+        if (timestamp == null || timestamp.isEmpty()) {
+            return "";
+        }
+        try {
+            Instant instant = Instant.parse(timestamp); // parses "2025-11-29T18:30:00Z"
+            var zoned = instant.atZone(ZoneId.systemDefault());
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            return zoned.format(fmt);
+        } catch (Exception e) {
+            // If parsing fails, just show the raw string
+            return timestamp;
+        }
     }
 
     /**

@@ -30,6 +30,16 @@ public class MainMenuController {
     }
 
     @FXML
+    private Button highScoresButton;
+
+    @FXML
+    private void handleHighScoresClicked() {
+        if (screen != null) {
+            screen.onHighScoresClicked();
+        }
+    }
+
+    @FXML
     private void handleCreditsClicked() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Credits");

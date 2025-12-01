@@ -28,6 +28,9 @@ public class ProfileSelectController {
     @FXML
     private Button deleteButton;
 
+    @FXML
+    private Button backButton;
+
     private ProfileSelectMenu screen;
 
     // Track which profile is “selected” in this menu
@@ -191,6 +194,13 @@ public class ProfileSelectController {
             newProfileNameField.clear();
         } catch (Exception e) {
             showWarn("Rename failed", e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleBackClicked() {
+        if (screen != null) {
+            screen.onBackClicked();
         }
     }
 

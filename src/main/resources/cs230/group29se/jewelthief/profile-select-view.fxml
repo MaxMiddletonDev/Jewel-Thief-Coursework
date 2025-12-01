@@ -37,8 +37,12 @@
                         onAction="#handleCreateClicked"/>
             </HBox>
 
-            <!-- Continue / Delete row / rename row -->
+            <!-- Back / Continue / Delete row / rename row -->
             <HBox spacing="20" alignment="CENTER">
+                <Button fx:id="backButton"
+                        text="Back"
+                        onAction="#handleBackClicked"
+                        prefWidth="120"/>
                 <Button fx:id="selectButton"
                         text="Continue"
                         onAction="#handleSelectClicked"
