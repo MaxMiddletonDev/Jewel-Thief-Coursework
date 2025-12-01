@@ -9,16 +9,23 @@
 
     <children>
         <VBox spacing="20" alignment="CENTER"
-              AnchorPane.topAnchor="20"
+              AnchorPane.topAnchor="10"
               AnchorPane.leftAnchor="40"
               AnchorPane.rightAnchor="40"
-              AnchorPane.bottomAnchor="20">
+              AnchorPane.bottomAnchor="10">
 
             <Label text="Select Profile"
                    style="-fx-font-size: 24px; -fx-text-fill: black;"/>
 
             <!-- Save slot area -->
-            <VBox fx:id="slotsContainer" spacing="10" prefHeight="150"/>
+            <ScrollPane fitToWidth="true"
+                        VBox.vgrow="ALWAYS"
+                        hbarPolicy="NEVER">
+                <content>
+                    <VBox fx:id="slotsContainer"
+                          spacing="10"/>
+                </content>
+            </ScrollPane>
 
             <!-- New save row -->
             <HBox spacing="10" alignment="CENTER">
