@@ -69,7 +69,7 @@ public class HighScoresController {
             TableColumn<HighScoreEntry, Integer> scoreCol = new TableColumn<>("Score");
             scoreCol.setCellValueFactory(new PropertyValueFactory<>("score"));
 
-            TableColumn<HighScoreEntry, String> timeCol = new TableColumn<>("Time");
+            TableColumn<HighScoreEntry, String> timeCol = new TableColumn<>("Time Time Achieved");
             timeCol.setCellValueFactory(new PropertyValueFactory<>("formattedTime")); // or "timestamp"
 
             globalTable.getColumns().addAll(nameCol, scoreCol, timeCol);
@@ -82,7 +82,7 @@ public class HighScoresController {
             TableColumn<HighScoreEntry, Integer> scoreCol = new TableColumn<>("Score");
             scoreCol.setCellValueFactory(new PropertyValueFactory<>("score"));
 
-            TableColumn<HighScoreEntry, String> timeCol = new TableColumn<>("Time");
+            TableColumn<HighScoreEntry, String> timeCol = new TableColumn<>("Time Achieved");
             timeCol.setCellValueFactory(new PropertyValueFactory<>("formattedTime"));
 
             levelTable.getColumns().addAll(nameCol, scoreCol, timeCol);
