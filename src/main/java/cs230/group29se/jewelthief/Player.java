@@ -80,14 +80,11 @@ public class Player implements MoveableCharacter {
     }
 
     @Override
-    /**
-     * When a character has collided with another character capable of removing them from the game, it set isAlive to
-     * false, indicating their removal from the game
-     *
-     * @return set to true if character is still alive, false otherwise.
-     */
     public void setAliveTo(boolean alive) {isAlive = alive; }
 
+    /**
+     * Draw Function for Player, shapes it to the tile size.
+     */
     public void draw(GraphicsContext gc) {
         int tileSize = Tile.TILE_SIZE;
 
@@ -99,7 +96,6 @@ public class Player implements MoveableCharacter {
 
         gc.drawImage(image, x, y, tileSize, tileSize);
     }
-
 
     /**
      * Attempts to move the player in the current facing direction.
@@ -116,9 +112,9 @@ public class Player implements MoveableCharacter {
         x += dx;
         y += dy;
 
-        while (x >= 0 && x < level.getWidth() && y >= 0 && y < level.getHeight()) {
-            Tile target = level.getTile(x, y);
-            if (currentTile.isValidMove(target)) {
+        while (x > 0 && x <= level.getWidth() && y > 0 && y <= level.getHeight()) {
+            Tile target = level.getTile(x - 1, y - 1);
+            if (target != null && currentTile.isValidMove(target)) {
                 this.currentTile = target;
                 return;
             }
