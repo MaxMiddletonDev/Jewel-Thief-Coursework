@@ -61,14 +61,14 @@ public class GameScreen extends Screen {
 
     @Override
     public void update() {
-        draw();
         GameManager.getCurrentLevel().update();
+        draw();
     }
 
     @Override
     public void draw() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        GameManager.draw(gc);
+        GameManager.getCurrentLevel().draw(gc);
     }
 
     @Override
@@ -95,6 +95,10 @@ public class GameScreen extends Screen {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void failLevel() {
+        setFinished(true);
     }
 
 }

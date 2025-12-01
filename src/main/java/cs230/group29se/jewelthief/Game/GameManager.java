@@ -31,25 +31,6 @@ public final class GameManager {
     }
 
     /**
-     * Ends the current game session.
-     * Handles cleanup, high score saving, and transitioning to end screens.
-     */
-    public static void gameEnd() {
-        // Logic for ending the game goes here
-    }
-
-    /**
-     * Draws the current level using the provided GraphicsContext.
-     * @param gc the GraphicsContext to draw on
-     */
-    public static void draw(GraphicsContext gc) {
-        if (currentLevel != null) {
-            currentLevel.draw(gc);
-        }
-
-    }
-
-    /**
      * Gets the current level of the game.
      * @return the current Level object
      */

@@ -11,6 +11,8 @@ import javafx.scene.layout.Pane;
  * @version 1.0
  */
 abstract public class Screen {
+    protected Screen nextScreen;
+
     protected Pane root;
     protected Scene scene;
     protected boolean finished = false;
@@ -45,6 +47,10 @@ abstract public class Screen {
      */
     public void setFinished(boolean finished) {
         this.finished = finished;
+    }
+
+    public Screen getNextScreen() {
+        return nextScreen;
     }
 
     /**
