@@ -70,9 +70,9 @@ public class Lever extends Destroyable {
      */
     public void interact() {
         for (Gate gate : gates) {
-            gate.remove();
+            gate.remove(gate);
         }
-        this.remove();
+        this.remove(this);
     }
 
     public void draw(GraphicsContext gc) {

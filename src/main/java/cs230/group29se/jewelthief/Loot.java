@@ -45,7 +45,7 @@ public class Loot extends Destroyable {
         }
 
         // Remove the loot from the level so it can't be reused
-        remove();
+        remove(this);
     }
 
     /**

@@ -48,7 +48,7 @@ public class Clock extends Destroyable {
         }
 
         // Remove the clock from the level so it can't be reused
-        remove();
+        remove(this);
     }
 
     /**

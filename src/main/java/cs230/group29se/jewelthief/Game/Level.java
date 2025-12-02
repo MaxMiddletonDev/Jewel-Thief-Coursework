@@ -399,6 +399,13 @@ public class Level {
                     Gate tempGate = new Gate(colour, xPos, yPos);
                     gates.add(tempGate);
                     grid[xPos][yPos].setOccupying(tempGate);
+                    for(Item item : items) {
+                        if(item instanceof Lever lever){
+                            if (tempGate.getColour() == lever.getColour()) {
+                                lever.addGate(tempGate);
+                            }
+                        }
+                    }
                 }
                 case "DOOR" -> {
                     Door tempDoor = new Door(xPos, yPos);
@@ -544,6 +551,9 @@ public class Level {
         return gates;
     }
 
+    public void removeGate(Gate gate) {
+        gates.remove(gate);
+    }
     /**
      * Gets the player of the level.
      *

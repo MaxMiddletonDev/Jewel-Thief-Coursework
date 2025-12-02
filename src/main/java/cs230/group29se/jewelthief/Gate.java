@@ -55,4 +55,12 @@ public class Gate implements Remove {
     public void draw(final GraphicsContext gc) {
         gc.drawImage(image, posX*64, posY*64, 32 ,32);
     }
+
+    public int getX() {
+        return posX;
+    }
+
+    public int getY (){
+        return posY;
+    }
 }
