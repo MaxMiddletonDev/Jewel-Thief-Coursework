@@ -1,14 +1,20 @@
 package cs230.group29se.jewelthief.Game;
 
 import cs230.group29se.jewelthief.*;
+import cs230.group29se.jewelthief.Persistence.Profile.SaveData;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameController;
+import cs230.group29se.jewelthief.Persistence.Storage.LevelLoader;
+import cs230.group29se.jewelthief.Persistence.Storage.LevelDef;
+import cs230.group29se.jewelthief.Persistence.Storage.EntityDef;
+import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.io.File;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Represents a level in the game, containing tiles, items, enemies, and player.
@@ -45,8 +51,10 @@ public class Level {
      * @param levelName      the name of the level file
      * @param gameController the game controller for updating UI elements
      */
-    public Level(String levelName, GameController gameController) {
+    private final SaveData saveData;
+    public Level(String levelName, GameController gameController, SaveData saveData) {
         this.gameController = gameController;
+        this.saveData = saveData;
         try {
             readLevelFile(levelName);
         } catch (FileNotFoundException e) {
@@ -260,149 +268,156 @@ public class Level {
      *
      * @param filename the name of the level to be loaded
      * @throws FileNotFoundException if the file name entered is not found
+     * @author Ben Poole, Iyaad
      * @author Ben Poole
      */
     public void readLevelFile(String filename) throws FileNotFoundException {
-        int testMultiplier = 1;
-        File inputFile = new File("levels/" + filename); //TODO: save files are probs somewhere else bub
-        Scanner reader = new Scanner(inputFile);
-        reader.next();
+        String levelId = extractLevelId(filename);
+        java.nio.file.Path levelPath = java.nio.file.Path.of("levels", filename);
+        LevelDef def = new LevelLoader().loadLevel(levelId, levelPath);
 
-        // reads size of grid
-        int x = reader.nextInt();
-        int y = reader.nextInt();
+        maxTime = def.timeLimitSec;
+
+        int x = def.width;
+        int y = def.height;
         grid = new Tile[x][y];
-        reader.nextLine();
 
-        // reads time limit
-        reader.next();
-        maxTime = reader.nextInt();
-        reader.nextLine();
+        // Tiles: row 0 = top, row y-1 = bottom
+        for (int row = 0; row < y; row++) {
+            String rowString = def.tiles.get(row);      // e.g. "YYYY RBYG YRGB BRGY"
+            String[] tileTokens = rowString.split("\\s+");
 
-        // reads tile data
-        for (int i = y; i > 0; i--) {
-            reader.nextLine();
-            for (int j = x; j > 0; j--) {
+            for (int col = 0; col < x; col++) {
+                String sequence = tileTokens[col];      // e.g. "YYYY"
                 Colour[] colours = new Colour[4];
-                String sequence = reader.next();
                 for (int z = 0; z < 4; z++) {
                     char colChar = sequence.charAt(z);
                     colours[z] = colourSetter(String.valueOf(colChar));
                 }
-                grid[j - 1][i - 1] = new Tile(j * testMultiplier, i * testMultiplier, colours);
+
+                int xPos = (x - 1) - col;    // 0..x-1
+                int yPos = (y-1) - row;    // 0..y-1
+
+                grid[xPos][yPos] = new Tile(xPos, yPos, colours);
             }
         }
-        reader.nextLine();
-        reader.nextLine();
-        //reads characters (to be uncommented once player class pushed)
-        reader.next();
-        x = reader.nextInt();
-        y = reader.nextInt();
-        player = new Player(grid[x][y], this);
 
-        // reads and creates NPCs and items
-        while (reader.hasNextLine()) {
-            String entityType = reader.next();
-            switch (entityType) {
+        // Player start
+        if (saveData != null && saveData.getPlayerState() != null && saveData.getPlayerState().length >= 2) {
+            Object[] ps = saveData.getPlayerState();
+            int px = ((Number) ps[0]).intValue();
+            int py = ((Number) ps[1]).intValue();
+            player = new Player(grid[px][py], this);
+        } else if (def.playerStart != null) {
+            int xPos = def.playerStart.x;
+            int yPos = def.playerStart.y;
+            int tileSize = Tile.getTileSize();
+            int border = 2; // BORDER_WIDTH
+            double px = (xPos * tileSize + border);
+            double py = (yPos * tileSize + border);
+            player = new Player(grid[(int) px][(int) py], this);
+        }
+
+        // Items and gates
+        for (EntityDef e : def.entities) {
+            int rawX = e.x;
+            int rawY = e.y;
+
+            int xPos = rawX - 1;
+            int yPos = rawY - 1;   // flip to reflect level design
+
+            switch (e.type) {
+                //TODO add other npcs
                 case "FLYING" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    String npcDirection = reader.next();
+                    // e.arg1 = direction string ("UP","DOWN","LEFT","RIGHT")
+                    String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
-                    FlyingAssasin tempEnemy = new FlyingAssasin(grid[xPos][yPos], direction, this);
-                    enemies.add(tempEnemy);
+
+                    //FlyingAssasin enemy = new FlyingAssasin(xPos, yPos, direction);
+                    // grid[xPos][yPos].setOccupying(enemy);
                 }
+
                 case "SMART" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    String npcDirection = reader.next();
+                    String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
-                    //Adding Smart enemy to arrayList
-                    //Smart Enemy temp enemy = new SmartEnemy(grid[xPos][yPos], direction);
-                    //enemies.add(tempEnemy);
+
+                    // SmartEnemy enemy = new SmartEnemy(xPos, yPos, direction);
+                    // grid[xPos][yPos].setOccupying(enemy);
                 }
+
                 case "FOLLOWER" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    String npcDirection = reader.next();
+                    // e.arg1 = direction, e.arg2 = follower colour ("R","G","B","Y")
+                    String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
-                    String followerColour = reader.next();
+                    String followerColour = e.arg2;
                     Colour colour = colourSetter(followerColour);
-                    FloorThief tempEnemy = new FloorThief(colour, grid[xPos][yPos], direction, this);
-                    enemies.add(tempEnemy);
+
+                    // FollowerEnemy followerEnemy = new FollowerEnemy(xPos, yPos, direction, colour);
+                    // grid[xPos][yPos].setOccupying(followerEnemy);
                 }
+
                 case "LOOT" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    String value = reader.next();
+                    String value = e.arg1;
+                    Loot tempLoot;
                     switch (value) {
-                        case "CENT" -> {
-                            Loot tempLoot = new Loot(LootEnum.CENT, xPos, yPos);
-                            items.add(tempLoot);
-                            grid[xPos - 1][yPos - 1].setOccupying(tempLoot);
-                        }
-                        case "DOLLAR" -> {
-                            Loot tempLoot = new Loot(LootEnum.DOLLAR, xPos, yPos);
-                            items.add(tempLoot);
-                            grid[xPos - 1][yPos - 1].setOccupying(tempLoot);
-                        }
-                        case "RUBY" -> {
-                            Loot tempLoot = new Loot(LootEnum.RUBY, xPos, yPos);
-                            items.add(tempLoot);
-                            grid[xPos - 1][yPos - 1].setOccupying(tempLoot);
-                        }
-                        case "DIAMOND" -> {
-                            Loot tempLoot = new Loot(LootEnum.DIAMOND, xPos, yPos);
-                            items.add(tempLoot);
-                            grid[xPos - 1][yPos - 1].setOccupying(tempLoot);
-                        }
+                        case "CENT"    -> tempLoot = new Loot(LootEnum.CENT,    xPos, yPos);
+                        case "DOLLAR"  -> tempLoot = new Loot(LootEnum.DOLLAR,  xPos, yPos);
+                        case "RUBY"    -> tempLoot = new Loot(LootEnum.RUBY,    xPos, yPos);
+                        case "DIAMOND" -> tempLoot = new Loot(LootEnum.DIAMOND, xPos, yPos);
+                        default        -> tempLoot = null;
+                    }
+                    if (tempLoot != null) {
+                        items.add(tempLoot);
+                        grid[xPos][yPos].setOccupying(tempLoot);
                     }
                 }
                 case "BOMB" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
                     Bomb tempBomb = new Bomb(xPos, yPos);
                     items.add(tempBomb);
-                    grid[xPos - 1][yPos - 1].setOccupying(tempBomb);
+                    grid[xPos][yPos].setOccupying(tempBomb);
                 }
                 case "LEVER" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    String leverColour = reader.next();
-                    Colour colour = colourSetter(leverColour);
+                    Colour colour = colourSetter(e.arg1);
                     Lever tempLever = new Lever(colour, xPos, yPos);
                     items.add(tempLever);
-                    grid[xPos - 1][yPos - 1].setOccupying(tempLever);
+                    grid[xPos][yPos].setOccupying(tempLever);
                 }
                 case "GATE" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
-                    String gateColour = reader.next();
-                    Colour colour = colourSetter(gateColour);
+                    Colour colour = colourSetter(e.arg1);
                     Gate tempGate = new Gate(colour, xPos, yPos);
                     gates.add(tempGate);
-                    grid[xPos - 1][yPos - 1].setOccupying(tempGate);
+                    grid[xPos][yPos].setOccupying(tempGate);
                 }
                 case "DOOR" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
                     Door tempDoor = new Door(xPos, yPos);
                     items.add(tempDoor);
-                    grid[xPos - 1][yPos - 1].setOccupying(tempDoor);
+                    grid[xPos][yPos].setOccupying(tempDoor);
                 }
                 case "CLOCK" -> {
-                    int xPos = reader.nextInt();
-                    int yPos = reader.nextInt();
                     Clock tempClock = new Clock(xPos, yPos);
                     items.add(tempClock);
-                    grid[xPos - 1][yPos - 1].setOccupying(tempClock);
+                    grid[xPos][yPos].setOccupying(tempClock);
                 }
-                default -> {
-
-                }
+                default -> {  }
             }
         }
-        reader.close();
+    }
+    /**
+     * Quick helper method to find the levelID
+     *
+     * @param filename the level file in .txt format
+     * @return the level id
+     */
+    private String extractLevelId(String filename) {
+        // very basic: strip "level" prefix and ".txt" suffix if present
+        String name = filename;
+        if (name.startsWith("level")) {
+            name = name.substring("level".length());
+        }
+        if (name.endsWith(".txt")) {
+            name = name.substring(0, name.length() - 4);
+        }
+        return name;
     }
 
     /**
@@ -452,8 +467,6 @@ public class Level {
         }
         return null;
     }
-
-
     /**
      * Returns a list of the current levels intact items.
      *

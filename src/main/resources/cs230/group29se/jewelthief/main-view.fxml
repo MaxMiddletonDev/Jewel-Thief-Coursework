@@ -1,16 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="cs230.group29se.jewelthief.Scenes.MainScene.MainMenuController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="cs230.group29se.jewelthief.Scenes.MainScene.MainMenuController"
+            style="-fx-background-color: #ffffff;">
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+    <children>
+        <VBox spacing="30"
+              alignment="CENTER"
+              AnchorPane.topAnchor="40"
+              AnchorPane.leftAnchor="40"
+              AnchorPane.rightAnchor="40"
+              AnchorPane.bottomAnchor="40">
+
+            <!-- Big title -->
+            <Label text="Jewel Thief"
+                   style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #222222;"/>
+
+            <!-- Main buttons -->
+            <VBox spacing="15" alignment="CENTER">
+                <Button fx:id="startButton"
+                        text="Start"
+                        onAction="#handleStartClicked"
+                        prefWidth="160"
+                        style="-fx-font-size: 16px;"/>
+                <Button fx:id="highScoresButton"
+                        text="High Scores"
+                        onAction="#handleHighScoresClicked"
+                        prefWidth="160"/>
+                <Button fx:id="creditsButton"
+                        text="Credits"
+                        onAction="#handleCreditsClicked"
+                        prefWidth="160"/>
+                <Button fx:id="quitButton"
+                        text="Quit"
+                        onAction="#handleQuitClicked"
+                        prefWidth="120"/>
+
+            </VBox>
+
+
+        </VBox>
+    </children>
+</AnchorPane>

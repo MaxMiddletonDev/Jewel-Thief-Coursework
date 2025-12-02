@@ -1,7 +1,9 @@
 package cs230.group29se.jewelthief.Scenes.MainScene;
 
 import cs230.group29se.jewelthief.MainApplication;
+import cs230.group29se.jewelthief.Scenes.HighScoresScene.HighScoresScreen;
 import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
+import cs230.group29se.jewelthief.Scenes.ProfileScene.ProfileSelectMenu;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +20,9 @@ import java.io.IOException;
  * @author Gustas Rove
  */
 public class MainMenuScreen extends Screen {
+
+    private MainMenuController controller;
+
 
     /**
      * Constructs a MainMenuScreen and sets its title, FXML path, and the next screen.
@@ -58,5 +63,34 @@ public class MainMenuScreen extends Screen {
     @Override
     public void draw() {
         // No drawing logic for this screen.
+    }
+
+
+    public enum NextAction {START_GAME, SHOW_HIGHSCORES}
+
+    private NextAction nextAction = NextAction.START_GAME;
+
+    public void onStartClicked() {
+        nextAction = NextAction.START_GAME;
+        finished = true;
+    }
+
+    public void onHighScoresClicked() {
+        nextAction = NextAction.SHOW_HIGHSCORES;
+        finished = true;
+    }
+
+    public NextAction getNextAction() {
+        return nextAction;
+    }
+
+    @Override
+    public Screen getNextScreen() {
+        return switch (nextAction) {
+            case START_GAME -> new ProfileSelectMenu();
+            case SHOW_HIGHSCORES -> new HighScoresScreen();
+            default -> this; // should not happen; or return new MainMenuScreen()
+        };
+
     }
 }

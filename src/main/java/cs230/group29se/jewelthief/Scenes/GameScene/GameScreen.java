@@ -1,6 +1,7 @@
 package cs230.group29se.jewelthief.Scenes.GameScene;
 import cs230.group29se.jewelthief.Direction;
 import cs230.group29se.jewelthief.Game.GameManager;
+import cs230.group29se.jewelthief.Game.GameProfileHelper;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.MainApplication;
 import cs230.group29se.jewelthief.Player;
@@ -8,6 +9,9 @@ import cs230.group29se.jewelthief.Scenes.LevelFailedScene.LevelFailedScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 
 /**
  * Represents the game screen in the game.
@@ -17,6 +21,10 @@ import javafx.scene.Scene;
  * @author Gustas Rove
  */
 public class GameScreen extends Screen {
+
+    private Canvas canvas;
+    private GraphicsContext gc;
+    private GameController controller;
 
     /**
      * Constructs a GameScreen and sets its title and FXML path.
@@ -29,34 +37,24 @@ public class GameScreen extends Screen {
     /**
      * Initializes the game screen by setting up the level and player movement key bindings.
      */
+    // You will probably pass this in from LevelSelectScreen later
+    private String activeProfileName = "testProfile"; // or "Amsyar"
     @Override
     public void initialize() {
-        initializeLevel();
-        bindPlayerMoveKeybinds();
-    }
-
-    /**
-     * Initializes the level by loading the appropriate level file.
-     * If save data is available, it uses the saved level file; otherwise, it loads the current level.
-     */
-    private void initializeLevel() {
-        String levelFileName;
-        if (levelHasSaveData()) {
-            levelFileName = ""; // TODO: Get level file name from save data
-        } else {
-            levelFileName = "level" + GameManager.getCurrentLevelNumber() + ".txt";
+        int levelNum = GameManager.getCurrentLevelNumber();
+        if (levelNum == 0) {
+            levelNum = 1;
+            GameManager.setCurrentLevelNumber(levelNum);
         }
-        Level level = new Level(levelFileName, (GameController) getController());
-        GameManager.setCurrentLevel(level);
-    }
 
-    /**
-     * Binds key events to player movement actions.
-     * Updates the player's direction and moves the player based on the key pressed.
-     */
-    private void bindPlayerMoveKeybinds() {
+        String profileName = GameProfileHelper.getActiveProfileName();
+        GameManager.loadLevelForProfile(profileName, levelNum, controller);
+
+        Level level = GameManager.getCurrentLevel();
+        Player player = GameManager.getCurrentLevel().getPlayer();
+
+        // Keyboard movement – unchanged
         scene.setOnKeyPressed(event -> {
-            Player player = GameManager.getCurrentLevel().getPlayer();
             switch (event.getCode()) {
                 case UP -> {
                     player.setDirection(Direction.UP);
@@ -85,6 +83,9 @@ public class GameScreen extends Screen {
      * @return false, indicating no save data is available.
      */
     public boolean levelHasSaveData() {
+        // If you want to keep this, you can delegate to PersistenceManager
+        // once you have a reference here. For now, GameManager.loadLevelForProfile
+        // already checks for SaveData, so this method can be unused.
         return false;
     }
 
@@ -118,5 +119,24 @@ public class GameScreen extends Screen {
     public void loadFailedLevelScreen() {
         setNextScreen(new LevelFailedScreen());
         setFinished(true);
+    }
+
+    @Override
+    public Scene createScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/cs230/group29se/jewelthief/game-view.fxml")
+            );
+            root = loader.load();
+            controller = loader.getController();
+            controller.setScreen(this);
+            this.canvas = controller.gameCanvas;
+            this.gc = canvas.getGraphicsContext2D();
+            scene = new Scene(root, 1028, 700);
+            return scene;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

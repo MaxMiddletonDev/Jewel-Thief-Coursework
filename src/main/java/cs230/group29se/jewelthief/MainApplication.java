@@ -1,10 +1,13 @@
 package cs230.group29se.jewelthief;
-
 import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
 import cs230.group29se.jewelthief.Scenes.LevelFailedScene.LevelFailedScreen;
+import cs230.group29se.jewelthief.Scenes.HighScoresScene.HighScoresScreen;
 import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
 import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
+import cs230.group29se.jewelthief.Scenes.ProfileScene.ProfileSelectMenu;
+import cs230.group29se.jewelthief.Game.GameManager;
+import cs230.group29se.jewelthief.Game.GameProfileHelper;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -56,6 +59,12 @@ public class MainApplication extends Application {
         tickTimeline.play();
 
         loadNextScreen(stage, new MainMenuScreen());
+        stage.setOnCloseRequest(event -> {
+            if (tickTimeline != null) {
+                tickTimeline.stop();
+            }
+            GameManager.saveCurrentGameState();
+        });
     }
 
     /**

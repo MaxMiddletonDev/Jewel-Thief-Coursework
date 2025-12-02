@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="cs230.group29se.jewelthief.Scenes.HighScoresScene.HighScoresController"
+            style="-fx-background-color: #ffffff;">
+
+    <children>
+        <VBox spacing="20" alignment="TOP_CENTER"
+              AnchorPane.topAnchor="20"
+              AnchorPane.leftAnchor="20"
+              AnchorPane.rightAnchor="20"
+              AnchorPane.bottomAnchor="20">
+
+            <Label text="High Scores"
+                   style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222222;"/>
+
+            <Label text="Global"
+                   style="-fx-font-size: 16px; -fx-text-fill: #333333;"/>
+
+            <TableView fx:id="globalTable" prefHeight="200"/>
+
+            <!-- Per-level header with level selector -->
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Per Level"
+                       style="-fx-font-size: 16px; -fx-text-fill: #333333;"/>
+                <Label text="Level:" alignment="BASELINE_LEFT"/>
+                <ComboBox fx:id="levelComboBox" onAction="#handleLevelChanged"/>
+            </HBox>
+
+            <TableView fx:id="levelTable" prefHeight="200"/>
+
+            <Button fx:id="backButton"
+                    text="Back"
+                    onAction="#handleBackClicked"
+                    prefWidth="120"/>
+        </VBox>
+    </children>
+</AnchorPane>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="cs230.group29se.jewelthief.Scenes.ProfileScene.ProfileSelectController">
+
+    <children>
+        <VBox spacing="20" alignment="CENTER"
+              AnchorPane.topAnchor="10"
+              AnchorPane.leftAnchor="40"
+              AnchorPane.rightAnchor="40"
+              AnchorPane.bottomAnchor="10">
+
+            <Label text="Select Profile"
+                   style="-fx-font-size: 24px; -fx-text-fill: black;"/>
+
+            <!-- Save slot area -->
+            <ScrollPane fitToWidth="true"
+                        VBox.vgrow="ALWAYS"
+                        hbarPolicy="NEVER">
+                <content>
+                    <VBox fx:id="slotsContainer"
+                          spacing="10"/>
+                </content>
+            </ScrollPane>
+
+            <!-- New save row -->
+            <HBox spacing="10" alignment="CENTER">
+                <TextField fx:id="newProfileNameField"
+                           promptText="New save name..."
+                           prefWidth="200"/>
+                <Button fx:id="createButton"
+                        text="Create"
+                        onAction="#handleCreateClicked"/>
+            </HBox>
+
+            <!-- Back / Continue / Delete row / rename row -->
+            <HBox spacing="20" alignment="CENTER">
+                <Button fx:id="backButton"
+                        text="Back"
+                        onAction="#handleBackClicked"
+                        prefWidth="120"/>
+                <Button fx:id="selectButton"
+                        text="Continue"
+                        onAction="#handleSelectClicked"
+                        prefWidth="120"/>
+                <Button fx:id="renameButton"
+                        text="Rename"
+                        onAction="#handleRenameClicked"
+                        prefWidth="120"/>
+                <Button fx:id="deleteButton"
+                        text="Delete"
+                        onAction="#handleDeleteClicked"
+                        prefWidth="120"/>
+            </HBox>
+
+        </VBox>
+    </children>
+</AnchorPane>

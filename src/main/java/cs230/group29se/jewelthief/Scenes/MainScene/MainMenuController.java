@@ -1,57 +1,68 @@
 package cs230.group29se.jewelthief.Scenes.MainScene;
 
-import cs230.group29se.jewelthief.MainApplication;
-import cs230.group29se.jewelthief.Scenes.BaseController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class MainMenuController {
 
-/**
- * Controller class for the Main Menu scene in the game.
- * Manages the main menu UI and handles user interactions.
- * Implements the Initializable interface to handle initialization logic.
- *
- * @author Gustas Rove
- */
-public class MainMenuController extends BaseController implements Initializable {
-
-    /** Label for displaying the welcome text on the main menu. */
     @FXML
-    private Label welcomeText;
+    private Button startButton;
 
-    /**
-     * Handles the event when the "Hello" button is clicked. Test method, will be removed.
-     * Updates the welcome text and marks the current screen as finished.
-     */
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-        MainApplication.currentScreen.setFinished(true);
+    private Button creditsButton;
+
+    @FXML
+    private Button quitButton;
+
+    private MainMenuScreen screen;
+
+    public void setScreen(MainMenuScreen screen) {
+        this.screen = screen;
     }
 
-    /**
-     * Initializes the Main Menu scene.
-     * This method is called when the scene is first loaded.
-     *
-     * @param url            The location used to resolve relative paths for the root object, or null if not known.
-     * @param resourceBundle The resources used to localize the root object, or null if not applicable.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // No specific initialization logic for this scene.
+    @FXML
+    private void handleStartClicked() {
+        if (screen != null) {
+            screen.onStartClicked();
+        }
     }
 
-    /**
-     * Retrieves the canvas for the scene. Since this scene does not use a canvas, it returns null.
-     *
-     * @return null, as no canvas is needed for this scene.
-     */
-    @Override
-    public Canvas getCanvas() {
-        return null;
+    @FXML
+    private Button highScoresButton;
+
+    @FXML
+    private void handleHighScoresClicked() {
+        if (screen != null) {
+            screen.onHighScoresClicked();
+        }
+    }
+
+    @FXML
+    private void handleCreditsClicked() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Credits");
+        alert.setHeaderText("Jewel Thief — Contributors");
+
+        //TODO get everyone to put their name here!!
+        String content = """
+                Developers:
+                - Iyaad
+                - Christina
+                - Meng
+                - etc..
+
+                Coursework 3 Student Project!!
+                """;
+
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void handleQuitClicked() {
+        // Cleanly exit the application
+        Platform.exit();
     }
 }
