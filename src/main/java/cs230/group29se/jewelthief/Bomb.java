@@ -74,6 +74,7 @@ public class Bomb extends Destroyable {
      * @return the task the timer will execute when finished.
      */
     public TimerTask destroy() {
+        Bomb bomb = this;
         return new TimerTask() {
             /**
              * TODO -when level exists and the array of tiles are made
@@ -82,9 +83,11 @@ public class Bomb extends Destroyable {
             @Override
             public void run() {
                 System.out.println("testing");
-                //this.remove(); // uncomment when remove is defined.
+                bomb.remove(bomb); // cant just use "this" as it refers to TimerTask.
             }
         };
+
+
     }
 
 
@@ -96,6 +99,7 @@ public class Bomb extends Destroyable {
         startTime = System.currentTimeMillis();
         timer.schedule(destroy(), timeRemaining);
         armed = true;
+        System.out.println("wooooo");
     }
 
     /**
