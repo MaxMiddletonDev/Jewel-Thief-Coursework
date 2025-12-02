@@ -67,45 +67,10 @@ public class MainApplication extends Application {
      * @throws IllegalStateException if the current screen is of an unexpected type.
      */
     public void tick(Stage stage) {
-        //TODO: Exit program if exitProgram  == true
-        switch (currentScreen) {
-            case MainMenuScreen mainMenuScreen -> {
-                //Handle main menu logic here
-                if (mainMenuScreen.isFinished()) {
-                    loadNextScreen(stage, mainMenuScreen.getNextScreen());
-                } else {
-                    mainMenuScreen.update();
-                }
-
-            }
-            case LevelSelectScreen levelSelectScreen -> {
-                // Handle level select logic here
-                if (levelSelectScreen.isFinished()) {
-                    loadNextScreen(stage, levelSelectScreen.getNextScreen());
-                } else {
-                    levelSelectScreen.update();
-                }
-            }
-            case GameScreen gameScreen -> {
-                // Handle game logic here
-                if (gameScreen.isFinished()) {
-                    loadNextScreen(stage, gameScreen.getNextScreen());
-                } else {
-                    gameScreen.update();
-                }
-            }
-            case LevelFailedScreen levelFailedScreen -> {
-                // Handle level failed logic here
-                if (levelFailedScreen.isFinished()) {
-                    loadNextScreen(stage, levelFailedScreen.getNextScreen());
-                } else {
-                    levelFailedScreen.update();
-                }
-            }
-            default -> {
-                System.out.println("unknown current screen ");
-                throw new IllegalStateException("Unexpected value: " + currentScreen);
-            }
+        if(currentScreen.isFinished()) {
+            loadNextScreen(stage, currentScreen.getNextScreen());
+        } else {
+            currentScreen.update();
         }
     }
 
