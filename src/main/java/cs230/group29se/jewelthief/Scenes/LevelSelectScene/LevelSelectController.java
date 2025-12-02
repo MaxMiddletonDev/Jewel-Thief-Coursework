@@ -12,21 +12,52 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the Level Select scene in the game.
+ * Manages the level selection buttons and handles user interactions to select a level.
+ * Implements the Initializable interface to handle initialization logic.
+ *
+ * @author Gustas Rove
+ */
 public class LevelSelectController extends BaseController implements Initializable {
 
+    /** Button for selecting level 1. */
     @FXML
     public Button level1Button;
+
+    /** Button for selecting level 2. */
     public Button level2Button;
+
+    /** Button for selecting level 4. */
     public Button level4Button;
+
+    /** Button for selecting level 5. */
     public Button level5Button;
+
+    /** Button for selecting level 3. */
     public Button level3Button;
+
+    /** Button for selecting level 6. */
     public Button level6Button;
+
+    /** Button for selecting level 7. */
     public Button level7Button;
+
+    /** Button for selecting level 8. */
     public Button level8Button;
+
+    /** Button for selecting level 9. */
     public Button level9Button;
+
+    /** Button for selecting level 10. */
     public Button level10Button;
 
-
+    /**
+     * Handles the event when a level button is clicked.
+     * Sets the current level number in the GameManager and marks the screen as finished.
+     *
+     * @param e The ActionEvent triggered by the button click.
+     */
     @FXML
     protected void selectLevel(ActionEvent e) {
         Button b = (Button) e.getSource();
@@ -35,11 +66,16 @@ public class LevelSelectController extends BaseController implements Initializab
         getScreen().setFinished(true);
     }
 
-
-
+    /**
+     * Initializes the Level Select scene by enabling or disabling level buttons
+     * based on whether the levels are unlocked.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if not known.
+     * @param resourceBundle The resources used to localize the root object, or null if not applicable.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Check safe file and enable/disable buttons accordingly
+        // Check save file and enable/disable buttons accordingly
         level1Button.setDisable(!isLevelUnlocked(1));
         level2Button.setDisable(!isLevelUnlocked(2));
         level3Button.setDisable(!isLevelUnlocked(3));
@@ -53,19 +89,27 @@ public class LevelSelectController extends BaseController implements Initializab
     }
 
     /**
-     * PLACEHOLDER METHOD. SHOULD BE A DATA PERSISTENCE METHOD
-     * Should take in a level number and return whether that level is unlocked in the save file
+     * Placeholder method to determine if a level is unlocked.
+     * This method should be replaced with a data persistence method to check the save file.
+     *
+     * @param levelNumber The level number to check.
+     * @return true if the level is unlocked, false otherwise.
      */
     private boolean isLevelUnlocked(int levelNumber) {
-        if(levelNumber == 1) {
+        if (levelNumber == 1) {
             return true;
-        }{
+        } {
             return false;
         }
     }
 
+    /**
+     * Retrieves the canvas for the scene. Since this scene does not use a canvas, it returns null.
+     *
+     * @return null, as no canvas is needed for this scene.
+     */
     @Override
     public Canvas getCanvas() {
-        return null; // No canvas needed for this scene
+        return null;
     }
 }

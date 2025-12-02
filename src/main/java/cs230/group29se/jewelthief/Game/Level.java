@@ -45,17 +45,11 @@ public class Level {
      * @param levelName      the name of the level file
      * @param gameController the game controller for updating UI elements
      */
-    public Level(String levelName, GameController gameController){
+    public Level(String levelName, GameController gameController) {
         this.gameController = gameController;
-
-        //Test Grid
-        Tile[][] grid;
-
-
-        //Populate level from file todo: ben will fix later
-        try{
+        try {
             readLevelFile(levelName);
-        }catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("Level file not found: " + levelName);
             e.printStackTrace();
         }
@@ -63,13 +57,20 @@ public class Level {
         timeRemaining = maxTime * 1000L;
         lastUpdateTime = System.nanoTime();
         gameController.scoreLabel.setText("Score: " + score);
-
-
-
     }
+
+
+    /**
+     * Updates the level state, including the timer.
+     */
     public void update() {
         updateTime();
     }
+
+    /**
+     * Updates the remaining time for the level and checks if the time has run out.
+     * Updates the timer label in the game controller.
+     */
     private void updateTime() {
         long now = System.nanoTime();
         long elapsedTime = (now - lastUpdateTime) / 1_000_000;
@@ -85,17 +86,28 @@ public class Level {
 
     }
 
+    /**
+     * Marks the level as failed and sets the reason for failure.
+     *
+     * @param failReason the reason for the level failure
+     */
     public void failLevel(String failReason) {
         failedLevel = true;
-        this.failReason = failReason;
+        setFailReason(failReason);
     }
 
+    /**
+     * Checks if the level has failed.
+     *
+     * @return true if the level has failed, false otherwise
+     */
     public boolean isLevelFailed() {
         return failedLevel;
     }
 
     /**
      * Returns the width of the grid.
+     *
      * @return the width of the grid.
      */
     public int getWidth() {
@@ -104,6 +116,7 @@ public class Level {
 
     /**
      * Returns the height of the grid.
+     *
      * @return the height of the grid.
      */
     public int getHeight() {
@@ -112,6 +125,7 @@ public class Level {
 
     /**
      * This method finds the tile at the specified (x, y) coordinates.
+     *
      * @param x the x-coordinate to retrieve.
      * @param y the y-coordinate to retrieve.
      * @return Retrieves the tile at the specified location, or null if the coordinates are out of bounds.
@@ -123,7 +137,11 @@ public class Level {
         return null;
     }
 
-    //Called every tick from GameScreen.draw()
+    /**
+     * Draws the level, including tiles, items, gates, and the player.
+     *
+     * @param gc the graphics context used for drawing
+     */
     public void draw(GraphicsContext gc) {
         // needs to go first so it doesn't draw over items or gates
         for (Tile[] row : grid) {
@@ -142,6 +160,7 @@ public class Level {
 
     /**
      * Gets the level number.
+     *
      * @return the level number
      */
     public int getLevelNumber() {
@@ -151,11 +170,12 @@ public class Level {
     /**
      * Adds time to the remaining time, up to the maximum time.
      * Unit of time is seconds.
+     *
      * @param timeToAdd
      */
-    public void addTime(int timeToAdd){
+    public void addTime(int timeToAdd) {
         timeRemaining += timeToAdd;
-        if (timeRemaining > maxTime){
+        if (timeRemaining > maxTime) {
             timeRemaining = maxTime;
         }
     }
@@ -163,39 +183,43 @@ public class Level {
     /**
      * Removes time from the remaining time, down to a minimum of 0.
      * Unit of time is seconds.
+     *
      * @param timeToRemove
      */
-    public void removeTime(int timeToRemove){
+    public void removeTime(int timeToRemove) {
         timeRemaining -= timeToRemove;
-        if (timeRemaining < 0){
+        if (timeRemaining < 0) {
             timeRemaining = 0;
         }
     }
 
     /**
      * Gets the time remaining in seconds.
+     *
      * @return time remaining in seconds
      */
-    public long getTimeRemainingTimeInSeconds(){
+    public long getTimeRemainingTimeInSeconds() {
         return timeRemaining / 1000;
     }
 
     /**
      * Adds score to the current score.
+     *
      * @param scoreToAdd the score to add
      */
-    public void addScore(int scoreToAdd){
+    public void addScore(int scoreToAdd) {
         score += scoreToAdd;
         gameController.scoreLabel.setText("Score: " + score);
     }
 
     /**
      * Removes score from the current score, down to a minimum of 0.
+     *
      * @param scoreToRemove the score to remove
      */
-    public void removeScore(int scoreToRemove){
+    public void removeScore(int scoreToRemove) {
         score -= scoreToRemove;
-        if (score < 0){
+        if (score < 0) {
             score = 0;
         }
         gameController.scoreLabel.setText("Score: " + score);
@@ -203,10 +227,24 @@ public class Level {
 
     /**
      * Gets the current score.
+     *
      * @return the current score
      */
     public int getScore() {
         return score;
+    }
+
+    public void setFailReason(String failReason) {
+        this.failReason = failReason;
+    }
+
+    /**
+     * Gets the reason for level failure.
+     *
+     * @return the reason for failure
+     */
+    public String getFailReason() {
+        return failReason;
     }
 
     /**
@@ -219,13 +257,14 @@ public class Level {
     /**
      * reads through the level file and populates the level appropriately
      * this covers map size, time limit, individual tiles, the player start location, NPCs and Items
-     * @author Ben Poole
+     *
      * @param filename the name of the level to be loaded
      * @throws FileNotFoundException if the file name entered is not found
+     * @author Ben Poole
      */
     public void readLevelFile(String filename) throws FileNotFoundException {
         int testMultiplier = 1;
-        File inputFile = new File("levels/"+filename); //TODO: save files are probs somewhere else bub
+        File inputFile = new File("levels/" + filename); //TODO: save files are probs somewhere else bub
         Scanner reader = new Scanner(inputFile);
         reader.next();
 
@@ -300,22 +339,22 @@ public class Level {
                         case "CENT" -> {
                             Loot tempLoot = new Loot(LootEnum.CENT, xPos, yPos);
                             items.add(tempLoot);
-                            grid[xPos-1][yPos-1].setOccupying(tempLoot);
+                            grid[xPos - 1][yPos - 1].setOccupying(tempLoot);
                         }
                         case "DOLLAR" -> {
                             Loot tempLoot = new Loot(LootEnum.DOLLAR, xPos, yPos);
                             items.add(tempLoot);
-                            grid[xPos-1][yPos-1].setOccupying(tempLoot);
+                            grid[xPos - 1][yPos - 1].setOccupying(tempLoot);
                         }
                         case "RUBY" -> {
                             Loot tempLoot = new Loot(LootEnum.RUBY, xPos, yPos);
                             items.add(tempLoot);
-                            grid[xPos-1][yPos-1].setOccupying(tempLoot);
+                            grid[xPos - 1][yPos - 1].setOccupying(tempLoot);
                         }
                         case "DIAMOND" -> {
-                            Loot tempLoot =new Loot(LootEnum.DIAMOND, xPos, yPos);
+                            Loot tempLoot = new Loot(LootEnum.DIAMOND, xPos, yPos);
                             items.add(tempLoot);
-                            grid[xPos-1][yPos-1].setOccupying(tempLoot);
+                            grid[xPos - 1][yPos - 1].setOccupying(tempLoot);
                         }
                     }
                 }
@@ -324,7 +363,7 @@ public class Level {
                     int yPos = reader.nextInt();
                     Bomb tempBomb = new Bomb(xPos, yPos);
                     items.add(tempBomb);
-                    grid[xPos-1][yPos-1].setOccupying(tempBomb);
+                    grid[xPos - 1][yPos - 1].setOccupying(tempBomb);
                 }
                 case "LEVER" -> {
                     int xPos = reader.nextInt();
@@ -333,7 +372,7 @@ public class Level {
                     Colour colour = colourSetter(leverColour);
                     Lever tempLever = new Lever(colour, xPos, yPos);
                     items.add(tempLever);
-                    grid[xPos-1][yPos-1].setOccupying(tempLever);
+                    grid[xPos - 1][yPos - 1].setOccupying(tempLever);
                 }
                 case "GATE" -> {
                     int xPos = reader.nextInt();
@@ -342,21 +381,21 @@ public class Level {
                     Colour colour = colourSetter(gateColour);
                     Gate tempGate = new Gate(colour, xPos, yPos);
                     gates.add(tempGate);
-                    grid[xPos-1][yPos-1].setOccupying(tempGate);
+                    grid[xPos - 1][yPos - 1].setOccupying(tempGate);
                 }
                 case "DOOR" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
                     Door tempDoor = new Door(xPos, yPos);
                     items.add(tempDoor);
-                    grid[xPos-1][yPos-1].setOccupying(tempDoor);
+                    grid[xPos - 1][yPos - 1].setOccupying(tempDoor);
                 }
                 case "CLOCK" -> {
                     int xPos = reader.nextInt();
                     int yPos = reader.nextInt();
                     Clock tempClock = new Clock(xPos, yPos);
                     items.add(tempClock);
-                    grid[xPos-1][yPos-1].setOccupying(tempClock);
+                    grid[xPos - 1][yPos - 1].setOccupying(tempClock);
                 }
                 default -> {
 
@@ -368,30 +407,48 @@ public class Level {
 
     /**
      * converts strings to direction enum values
+     *
      * @param direction the string to be converted
      * @return the appropriate direction value
      */
-    private Direction directionSetter (String direction) {
+    private Direction directionSetter(String direction) {
         switch (direction) {
-            case "UP" -> {return Direction.UP;}
-            case "DOWN" -> {return Direction.DOWN;}
-            case "LEFT" -> {return Direction.LEFT;}
-            case "RIGHT" -> {return Direction.RIGHT;}
+            case "UP" -> {
+                return Direction.UP;
+            }
+            case "DOWN" -> {
+                return Direction.DOWN;
+            }
+            case "LEFT" -> {
+                return Direction.LEFT;
+            }
+            case "RIGHT" -> {
+                return Direction.RIGHT;
+            }
         }
         return null;
     }
 
     /**
      * converts strings to colour enum values
+     *
      * @param colour the string to be converted
      * @return the appropriate colour value
      */
-    private Colour colourSetter (String colour) {
+    private Colour colourSetter(String colour) {
         switch (colour) {
-            case "R" -> { return Colour.RED; }
-            case "G" -> { return Colour.GREEN; }
-            case "B" -> { return Colour.BLUE; }
-            case "Y" -> { return Colour.YELLOW; }
+            case "R" -> {
+                return Colour.RED;
+            }
+            case "G" -> {
+                return Colour.GREEN;
+            }
+            case "B" -> {
+                return Colour.BLUE;
+            }
+            case "Y" -> {
+                return Colour.YELLOW;
+            }
         }
         return null;
     }
@@ -399,6 +456,7 @@ public class Level {
 
     /**
      * Returns a list of the current levels intact items.
+     *
      * @return the list of items un-removed in the level.
      */
     public List<Item> getItems() {
@@ -408,6 +466,7 @@ public class Level {
     /**
      * Changes the current levels intact items.
      * Allows for items to be removed from drawing.
+     *
      * @param items the new list of items.
      */
     public void setItems(List<Item> items) {
@@ -416,6 +475,7 @@ public class Level {
 
     /**
      * Adds an item to the level's list of items.
+     *
      * @param item the item to be added.
      */
     public void addItem(Item item) {
@@ -424,6 +484,7 @@ public class Level {
 
     /**
      * Removes an item from the level's list of items.
+     *
      * @param item the item to be removed.
      */
 
@@ -433,6 +494,7 @@ public class Level {
 
     /**
      * Allows tiles to be accessed
+     *
      * @return the grid of the level made of tiles.
      */
     public Tile[][] getGrid() {
@@ -441,6 +503,7 @@ public class Level {
 
     /**
      * Changes the list of intact gates in the level to be changed.
+     *
      * @param gates the gates still intact.
      */
     public void setGates(List<Gate> gates) {
@@ -449,6 +512,7 @@ public class Level {
 
     /**
      * Gets the list of intact gates.
+     *
      * @return the list of intact gates in the level.
      */
     public List<Gate> getGates() {
@@ -457,6 +521,7 @@ public class Level {
 
     /**
      * Gets the player of the level.
+     *
      * @return the player.
      */
     public Player getPlayer() {

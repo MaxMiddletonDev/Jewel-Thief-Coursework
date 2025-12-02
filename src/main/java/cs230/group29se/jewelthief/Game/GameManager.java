@@ -38,9 +38,18 @@ public final class GameManager {
         return currentLevel;
     }
 
+    /**
+     * Sets the current level number of the game.
+     * @param levelNum the new level number.
+     */
     public static void setCurrentLevelNumber(int levelNum) {
         levelNumber = levelNum;
     }
+
+    /**
+     * Gets the current level number of the game.
+     * @return current level number.
+     */
     public static int getCurrentLevelNumber() {
         return levelNumber;
     }

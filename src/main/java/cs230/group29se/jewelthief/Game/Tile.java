@@ -125,14 +125,6 @@ public class Tile {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(BORDER_WIDTH);
         gc.strokeRect(pixelX, pixelY, TILE_SIZE, TILE_SIZE);
-
-        /*
-    int px = gridX * TILE_SIZE;
-    int py = gridY * TILE_SIZE;
-
-    gc.setFill(tile.getColor());
-    gc.fillRect(px, py, TILE_SIZE, TILE_SIZE);
-         */
     }
 
 
