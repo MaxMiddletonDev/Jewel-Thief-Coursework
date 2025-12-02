@@ -63,6 +63,8 @@ public class MainApplication extends Application {
             if (tickTimeline != null) {
                 tickTimeline.stop();
             }
+            //Mainly for testing purposes
+            //TODO figure out when to actually save
             GameManager.saveCurrentGameState();
         });
     }
