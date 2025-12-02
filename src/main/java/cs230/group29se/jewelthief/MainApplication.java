@@ -65,7 +65,7 @@ public class MainApplication extends Application {
             }
             //Mainly for testing purposes
             //TODO figure out when to actually save
-            GameManager.saveCurrentGameState();
+            //GameManager.saveCurrentGameState();
         });
     }
 
