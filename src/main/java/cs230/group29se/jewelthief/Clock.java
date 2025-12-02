@@ -16,7 +16,7 @@ public class Clock extends Destroyable {
     /**
      * The amount of time (in seconds) to change when collected.
      */
-    private static final int TIME_CHANGE = 5;
+    private static final int TIME_CHANGE = 5000;
 
     private final Image image = new Image(
             getClass().getResource("/cs230/group29se/jewelthief/Images/CLOCK.png").toString()

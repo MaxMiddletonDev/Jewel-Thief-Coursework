@@ -185,8 +185,8 @@ public class Level {
      */
     public void addTime(int timeToAdd) {
         timeRemaining += timeToAdd;
-        if (timeRemaining > maxTime) {
-            timeRemaining = maxTime;
+        if (timeRemaining > maxTime*1000) {
+            timeRemaining = maxTime*1000;
         }
     }
 
@@ -413,11 +413,15 @@ public class Level {
                     grid[xPos][yPos].setOccupying(tempDoor);
                 }
                 case "CLOCK" -> {
+                    System.out.println("clock made wooo");
                     Clock tempClock = new Clock(xPos, yPos);
                     items.add(tempClock);
                     grid[xPos][yPos].setOccupying(tempClock);
+                    System.out.println("clock made wooo");
                 }
-                default -> {  }
+                default -> {
+                    System.out.println("aghhhh");
+                }
             }
         }
     }
