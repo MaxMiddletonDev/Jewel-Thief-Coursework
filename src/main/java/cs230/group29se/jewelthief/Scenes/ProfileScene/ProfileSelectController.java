@@ -1,7 +1,10 @@
 package cs230.group29se.jewelthief.Scenes.ProfileScene;
 
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
+import cs230.group29se.jewelthief.Scenes.BaseController;
+import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -9,7 +12,8 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-public class ProfileSelectController {
+public class ProfileSelectController extends BaseController {
+
     @FXML
     private Button renameButton;
 
@@ -31,19 +35,20 @@ public class ProfileSelectController {
     @FXML
     private Button backButton;
 
-    private ProfileSelectMenu screen;
-
-    // Track which profile is “selected” in this menu
+    // Track which profile is selected in this menu
     private String selectedProfile;
 
-    public void setScreen(ProfileSelectMenu screen) {
-        this.screen = screen;
+    @Override
+    public Canvas getCanvas() {
+        return null; // profile menu has no canvas
     }
 
+    // Called from ProfileSelectMenu.initialize()
     public void populateProfiles() {
         slotsContainer.getChildren().clear();
 
-        List<String> profiles = GameProfileHelper.listProfiles(); // e.g. ["save1", "save2", ...]
+        List<String> profiles = GameProfileHelper.listProfiles(); // ["save1", "save2",...]
+
         // Cap at 10
         if (profiles.size() > 10) {
             profiles = profiles.subList(0, 10);
@@ -63,6 +68,7 @@ public class ProfileSelectController {
         // Disable "Create" if we already have 10 slots
         createButton.setDisable(profiles.size() >= 10);
     }
+
     private HBox createSlotRow(int slotNumber, String profileName) {
         HBox row = new HBox(10);
         // base style for unselected slot
@@ -71,7 +77,6 @@ public class ProfileSelectController {
 
         // Remember profile name on this row
         row.setUserData(profileName);
-
 
         Label nameLabel = new Label(profileName);
         nameLabel.setStyle("-fx-text-fill: #222222; -fx-font-size: 16px;");
@@ -86,7 +91,6 @@ public class ProfileSelectController {
         numberLabel.setStyle("-fx-text-fill: #777777; -fx-font-size: 14px;");
         numberLabel.setMinWidth(30);
 
-
         row.getChildren().addAll(nameLabel, spacer, hintLabel, numberLabel);
 
         row.setOnMouseClicked(e -> {
@@ -96,13 +100,12 @@ public class ProfileSelectController {
 
         return row;
     }
+
     private void highlightSelection() {
         for (javafx.scene.Node node : slotsContainer.getChildren()) {
             if (!(node instanceof HBox row)) continue;
-
             Object data = row.getUserData();
             String name = (data instanceof String) ? (String) data : null;
-
             if (name != null && name.equals(selectedProfile)) {
                 // selected: slightly darker border / background
                 row.setStyle(
@@ -123,11 +126,11 @@ public class ProfileSelectController {
             }
         }
     }
+
     @FXML
     private void handleCreateClicked() {
         List<String> profiles = GameProfileHelper.listProfiles();
         if (profiles.size() >= 10) {
-            // Optionally show an alert
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Max Saves Reached");
             alert.setHeaderText(null);
@@ -140,7 +143,6 @@ public class ProfileSelectController {
         if (name.isEmpty()) return;
 
         GameProfileHelper.ensureProfileExists(name);
-
         populateProfiles();
         selectedProfile = name;
         highlightSelection();
@@ -149,8 +151,11 @@ public class ProfileSelectController {
 
     @FXML
     private void handleSelectClicked() {
-        if (selectedProfile != null && screen != null) {
-            screen.onProfileChosen(selectedProfile);
+        if (selectedProfile == null) return;
+
+        Screen s = getScreen();
+        if (s instanceof ProfileSelectMenu menu) {
+            menu.onProfileChosen(selectedProfile);
         }
     }
 
@@ -167,6 +172,7 @@ public class ProfileSelectController {
         if (result.isEmpty() || result.get() != ButtonType.OK) {
             return;
         }
+
         GameProfileHelper.deleteProfile(selectedProfile);
         selectedProfile = null;
         populateProfiles();
@@ -174,21 +180,18 @@ public class ProfileSelectController {
 
     @FXML
     private void handleRenameClicked() {
-        // get new name
         String newName = newProfileNameField.getText();
         if (selectedProfile == null || newName == null || newName.trim().isEmpty()) {
             showWarn("Invalid name", "Please select a profile and type a new name.");
             return;
         }
         newName = newName.trim();
-
         try {
             boolean ok = GameProfileHelper.renameProfile(selectedProfile, newName);
             if (!ok) {
                 showWarn("Name exists", "A profile with that name already exists.");
                 return;
             }
-
             selectedProfile = newName;
             populateProfiles();
             newProfileNameField.clear();
@@ -199,14 +202,14 @@ public class ProfileSelectController {
 
     @FXML
     private void handleBackClicked() {
-        if (screen != null) {
-            screen.onBackClicked();
+        Screen s = getScreen();
+        if (s instanceof ProfileSelectMenu menu) {
+            menu.onBackClicked();
         }
     }
 
     private void showWarn(String header, String msg) {
-        javafx.scene.control.Alert alert =
-                new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(header);
         alert.setContentText(msg);
         alert.showAndWait();

@@ -33,7 +33,9 @@ public class Level {
     private ArrayList<NonPlayableCharacter> enemies = new ArrayList<>();
     private Tile[][] grid;
 
+    // in Level
     private Player player;
+
 
     private int maxTime = 60; // Seconds
     private long timeRemaining; // Milliseconds
@@ -305,16 +307,26 @@ public class Level {
         // Player start
         if (saveData != null && saveData.getPlayerState() != null && saveData.getPlayerState().length >= 2) {
             Object[] ps = saveData.getPlayerState();
-            int px = ((Number) ps[0]).intValue();
+            int px = ((Number) ps[0]).intValue();  // here px/py are TILE indices, not pixels
             int py = ((Number) ps[1]).intValue();
+
+            // clamp to grid bounds just in case
+            px = Math.max(0, Math.min(px, getWidth() - 1));
+            py = Math.max(0, Math.min(py, getHeight() - 1));
+
             player = new Player(grid[px][py], this);
         } else if (def.playerStart != null) {
-            int xPos = def.playerStart.x;
-            int yPos = def.playerStart.y;
-            int tileSize = Tile.getTileSize();
-            int border = 2; // BORDER_WIDTH
-            double px = (xPos * tileSize + border);
-            double py = (yPos * tileSize + border);
+            int xPos = def.playerStart.x;  // tile index
+            int yPos = def.playerStart.y;  // tile index
+
+            // clamp to grid bounds just in case
+            xPos = Math.max(0, Math.min(xPos, getWidth() - 1));
+            yPos = Math.max(0, Math.min(yPos, getHeight() - 1));
+
+            // use tile indices directly
+            double px = xPos;  // tile index, not pixels
+            double py = yPos;  // tile index, not pixels
+
             player = new Player(grid[(int) px][(int) py], this);
         }
 

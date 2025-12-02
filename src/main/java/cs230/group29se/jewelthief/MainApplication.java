@@ -91,13 +91,17 @@ public class MainApplication extends Application {
      * @param nextScreen The next screen to be loaded, which implements the Screen interface.
      */
     private void loadNextScreen(Stage stage, Screen nextScreen) {
+        if (nextScreen == null) {
+            System.out.println("ERROR: getNextScreen() returned null for " + currentScreen);
+            return;
+        }
+
         currentScreen = nextScreen;
         stage.setTitle(nextScreen.getScreenTitle());
         scene = currentScreen.createScene();
         stage.setScene(scene);
         stage.show();
         currentScreen.initialize();
-
     }
 
     /**

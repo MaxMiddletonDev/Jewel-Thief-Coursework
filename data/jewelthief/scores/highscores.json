@@ -28,6 +28,13 @@
         "score": 2200,
         "timestamp": "2025-11-30T19:30:00Z"
       }
+    ],
+    "3": [
+      {
+        "profileName": "Amsyar",
+        "score": 1200,
+        "timestamp": "2025-12-02T05:43:17.416521800Z"
+      }
     ]
   },
   "globalRanking": [
@@ -50,6 +57,11 @@
       "profileName": "testProfile",
       "score": 1300,
       "timestamp": "2025-11-29T20:45:00Z"
+    },
+    {
+      "profileName": "Amsyar",
+      "score": 1200,
+      "timestamp": "2025-12-02T05:43:17.416521800Z"
     },
     {
       "profileName": "newProfile",

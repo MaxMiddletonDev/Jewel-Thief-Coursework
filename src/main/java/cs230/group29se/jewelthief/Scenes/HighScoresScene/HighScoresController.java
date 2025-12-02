@@ -2,7 +2,10 @@ package cs230.group29se.jewelthief.Scenes.HighScoresScene;
 
 import cs230.group29se.jewelthief.Game.GameHighScoresHelper;
 import cs230.group29se.jewelthief.Persistence.Profile.HighScoreEntry;
+import cs230.group29se.jewelthief.Scenes.BaseController;
+import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -12,7 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.List;
 import java.util.Map;
 
-public class HighScoresController {
+public class HighScoresController extends BaseController {
 
     @FXML
     private TableView<HighScoreEntry> globalTable;
@@ -22,29 +25,32 @@ public class HighScoresController {
 
     @FXML
     private Button backButton;
+
     @FXML
     private ComboBox<String> levelComboBox;
+
+    // Cache of per-level scores from PersistenceManager
     private Map<String, List<HighScoreEntry>> perLevelCache = Map.of();
 
-    private HighScoresScreen screen;
-
-    public void setScreen(HighScoresScreen screen) {
-        this.screen = screen;
+    @Override
+    public Canvas getCanvas() {
+        return null; // no canvas in this screen
     }
 
+    // Called from HighScoresScreen.initialize()
     public void loadData() {
         setupColumns();
 
-        // Global
+        // Global scores
         List<HighScoreEntry> global = GameHighScoresHelper.loadGlobalHighScores();
         globalTable.getItems().setAll(global);
 
-        // Per-level
+        // Per-level scores
         perLevelCache = GameHighScoresHelper.loadPerLevelHighScores();
 
-        // Fill ComboBox with sorted level IDs (e.g. "1", "2", "3")
+        // Fill ComboBox with sorted level IDs ("1","2","3",...)
         var levelIds = new java.util.ArrayList<>(perLevelCache.keySet());
-        java.util.Collections.sort(levelIds, java.util.Comparator.comparingInt(Integer::parseInt));
+        levelIds.sort(java.util.Comparator.comparingInt(Integer::parseInt));
 
         levelComboBox.getItems().setAll(levelIds);
 
@@ -69,7 +75,7 @@ public class HighScoresController {
             TableColumn<HighScoreEntry, Integer> scoreCol = new TableColumn<>("Score");
             scoreCol.setCellValueFactory(new PropertyValueFactory<>("score"));
 
-            TableColumn<HighScoreEntry, String> timeCol = new TableColumn<>("Time Time Achieved");
+            TableColumn<HighScoreEntry, String> timeCol = new TableColumn<>("Time Achieved");
             timeCol.setCellValueFactory(new PropertyValueFactory<>("formattedTime")); // or "timestamp"
 
             globalTable.getColumns().addAll(nameCol, scoreCol, timeCol);
@@ -105,8 +111,9 @@ public class HighScoresController {
 
     @FXML
     private void handleBackClicked() {
-        if (screen != null) {
-            screen.onBackClicked();
+        Screen s = getScreen();
+        if (s instanceof HighScoresScreen hs) {
+            hs.onBackClicked();
         }
     }
 }

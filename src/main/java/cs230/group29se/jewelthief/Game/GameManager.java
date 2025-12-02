@@ -95,19 +95,21 @@ public final class GameManager {
     public static void saveCurrentGameState() {
         if (currentLevel == null) return;
 
-        String profile = PM.getSaveData().getProfileName();
+        SaveData s = PM.getSaveData();
+        String profile = PM.getActiveProfileName(); // or s.getProfileName()
         String levelId = String.valueOf(levelNumber);
 
-        SaveData s = PM.getSaveData();
         if (s == null) {
             s = new SaveData();
             s.setProfileName(profile);
             s.setLevelId(levelId);
         }
 
-        // Example: store player x/y as first two entries in playerState
-        double px = currentLevel.dummyPlayer.getTranslateX();
-        double py = currentLevel.dummyPlayer.getTranslateY();
+        // Store tile coordinates, not pixels
+        int[] pos = currentLevel.getPlayer().getPosition(); // returns [xTile, yTile]
+        int px = pos[0];
+        int py = pos[1];
+
         s.setPlayerState(new Object[] { px, py });
 
         PM.setCachedSave(s);

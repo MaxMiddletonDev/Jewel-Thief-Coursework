@@ -1,14 +1,20 @@
 package cs230.group29se.jewelthief.Scenes.MainScene;
 
+import cs230.group29se.jewelthief.Scenes.BaseController;
+import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
-public class MainMenuController {
+public class MainMenuController extends BaseController {
 
     @FXML
     private Button startButton;
+
+    @FXML
+    private Button highScoresButton;
 
     @FXML
     private Button creditsButton;
@@ -16,26 +22,27 @@ public class MainMenuController {
     @FXML
     private Button quitButton;
 
-    private MainMenuScreen screen;
-
-    public void setScreen(MainMenuScreen screen) {
-        this.screen = screen;
+    @Override
+    public Canvas getCanvas() {
+        return null; // this screen has no Canvas
     }
 
     @FXML
     private void handleStartClicked() {
-        if (screen != null) {
-            screen.onStartClicked();
+        Screen s = getScreen();          // comes from BaseController
+        if (s instanceof MainMenuScreen menuScreen) {
+            menuScreen.onStartClicked();
+        } else {
+            System.out.println("Start clicked but screen is " + s);
         }
     }
 
     @FXML
-    private Button highScoresButton;
-
-    @FXML
     private void handleHighScoresClicked() {
-        if (screen != null) {
-            screen.onHighScoresClicked();
+        Screen s = getScreen();
+        if (s instanceof MainMenuScreen menuScreen) {
+            System.out.println("High Scores clicked"); // debug
+            menuScreen.onHighScoresClicked();
         }
     }
 
@@ -45,7 +52,6 @@ public class MainMenuController {
         alert.setTitle("Credits");
         alert.setHeaderText("Jewel Thief — Contributors");
 
-        //TODO get everyone to put their name here!!
         String content = """
                 Developers:
                 - Iyaad
@@ -62,7 +68,6 @@ public class MainMenuController {
 
     @FXML
     private void handleQuitClicked() {
-        // Cleanly exit the application
         Platform.exit();
     }
 }

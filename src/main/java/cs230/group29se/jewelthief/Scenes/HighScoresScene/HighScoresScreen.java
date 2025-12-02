@@ -1,17 +1,22 @@
 package cs230.group29se.jewelthief.Scenes.HighScoresScene;
 
+import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 
 public class HighScoresScreen extends Screen {
 
     private HighScoresController controller;
 
+    public HighScoresScreen() {
+        setScreenTitle("High Scores");
+        setScreenFXMLPath("/cs230/group29se/jewelthief/highscores-view.fxml");
+    }
+
     @Override
     public void initialize() {
-        if (controller != null) {
-            controller.loadData();
+        if (getController() instanceof HighScoresController c) {
+            controller = c;
+            c.loadData();
         }
     }
 
@@ -21,24 +26,13 @@ public class HighScoresScreen extends Screen {
     @Override
     public void draw() { }
 
-    @Override
-    public Scene createScene() {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/cs230/group29se/jewelthief/highscores-view.fxml")
-            );
-            root = loader.load();
-            controller = loader.getController();
-            controller.setScreen(this);
-            scene = new Scene(root, 500, 500);
-            return scene;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public void onBackClicked() {
+        finished = true;
     }
 
-    public void onBackClicked() {
-        this.finished = true;
+    @Override
+    public Screen getNextScreen() {
+        // Always go back to main menu when finished
+        return new MainMenuScreen();
     }
 }

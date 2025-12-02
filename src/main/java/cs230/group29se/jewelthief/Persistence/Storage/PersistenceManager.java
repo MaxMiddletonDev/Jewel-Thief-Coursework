@@ -206,10 +206,14 @@ public class PersistenceManager {
     }
 
     private HighScoresDTO loadHighScoresDTO() {
-        try { return serializer.fromJson(fileStore.read(pathHighScores()), HighScoresDTO.class); }
-        catch (RuntimeException ex) { return new HighScoresDTO(); }
+        String path = pathHighScores();
+        try {
+            String json = fileStore.read(path);
+            return serializer.fromJson(json, HighScoresDTO.class);
+        } catch (RuntimeException ex) {
+            return new HighScoresDTO();
+        }
     }
-
     /** Returns raw per-level best as a map (levelId -> list of entries). */
     public java.util.Map<String, java.util.List<HighScoreEntry>> loadPerLevelHighScores() {
         return loadHighScoresDTO().perLevelBest;

@@ -105,6 +105,7 @@ public class Player implements MoveableCharacter {
     public void move() {
         int x = currentTile.getX();
         int y = currentTile.getY();
+        System.out.println("Player at (" + x + "," + y + "), dir=" + direction);
 
         int dx = direction.getX();
         int dy = direction.getY();

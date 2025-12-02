@@ -22,8 +22,6 @@ import javafx.scene.layout.Pane;
  */
 public class GameScreen extends Screen {
 
-    private Canvas canvas;
-    private GraphicsContext gc;
     private GameController controller;
 
     /**
@@ -109,10 +107,12 @@ public class GameScreen extends Screen {
      */
     @Override
     public void draw() {
+        if (getCanvas() == null || getGraphicsContext() == null) {
+            return; // nothing to draw yet (defensive check)
+        }
         getGraphicsContext().clearRect(0, 0, getCanvas().getWidth(), getCanvas().getHeight());
         GameManager.getCurrentLevel().draw(getGraphicsContext());
     }
-
     /**
      * Loads the level failed screen and marks the current screen as finished.
      */
@@ -129,9 +129,16 @@ public class GameScreen extends Screen {
             );
             root = loader.load();
             controller = loader.getController();
+            // Binds controller to this screen
             controller.setScreen(this);
-            this.canvas = controller.gameCanvas;
-            this.gc = canvas.getGraphicsContext2D();
+
+            // Use the controllers canvas as this Screen's canvas
+            Canvas gameCanvas = controller.getCanvas();
+            setCanvas(gameCanvas);
+            if (gameCanvas != null) {
+                setGraphicsContext(gameCanvas.getGraphicsContext2D());
+            }
+
             scene = new Scene(root, 1028, 700);
             return scene;
         } catch (Exception e) {

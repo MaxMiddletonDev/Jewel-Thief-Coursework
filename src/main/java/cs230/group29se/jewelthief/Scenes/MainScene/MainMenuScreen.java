@@ -74,7 +74,6 @@ public class MainMenuScreen extends Screen {
         nextAction = NextAction.START_GAME;
         finished = true;
     }
-
     public void onHighScoresClicked() {
         nextAction = NextAction.SHOW_HIGHSCORES;
         finished = true;
@@ -93,4 +92,6 @@ public class MainMenuScreen extends Screen {
         };
 
     }
+
+
 }
