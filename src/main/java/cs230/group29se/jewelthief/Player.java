@@ -113,15 +113,15 @@ public class Player implements MoveableCharacter {
         x += dx;
         y += dy;
 
-        while (x > 0 && x <= level.getWidth() && y > 0 && y <= level.getHeight()) {
-            Tile target = level.getTile(x - 1, y - 1);
+        while (x >= 0 && x <= level.getWidth() && y >= 0 && y <= level.getHeight()) {
+            Tile target = level.getTile(x, y);
+            System.out.println(target);
             if (target != null && currentTile.isValidMove(target)) {
                 Object occupant = target.getOccupying();
                 if (occupant instanceof Gate) {
                     return;
                 }
                 this.currentTile = target;
-
                 if (occupant instanceof Item item) {
                     collectItem(item);
                     target.setOccupying(null);
