@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+
+
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="cs230.group29se.jewelthief.Scenes.LevelFinished.LevelFinishedController">
+
+            <Label fx:id="levelFinishedLabel" text="Level Finished!" style="-fx-font-size: 36px; -fx-font-weight: bold;"/>
+            <Label fx:id="levelScoreLabel" text="Your Score: " style="-fx-font-size: 24px;"/>
+            <Button fx:id="NextLevelButton" text="Next Level" onAction="#selectNextLevel"/>
+            <Button fx:id="MainMenuButton" text="Replay Level" onAction="#MainMenu"/>
+
+</VBox>
+
+        <!-- xmlns:fx="http://javafx.com/fxml"

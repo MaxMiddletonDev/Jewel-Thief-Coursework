@@ -139,7 +139,7 @@ public class GameScreen extends Screen {
                 setGraphicsContext(gameCanvas.getGraphicsContext2D());
             }
 
-            scene = new Scene(root, 1028, 700);
+            scene = new Scene(root, 1028, 900);
             return scene;
         } catch (Exception e) {
             e.printStackTrace();
