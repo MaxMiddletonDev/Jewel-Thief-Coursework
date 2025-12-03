@@ -4,7 +4,6 @@ import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
 import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -13,12 +12,22 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the Level Finished scene.
+ * Manages the UI elements and handles user interactions such as retrying the level or returning to the main menu.
+ *
+ * @author Ben Poole
+ */
 public class LevelFinishedController extends BaseController implements Initializable {
 
 
+    /** Button to go to the next level */
     public Button NextLevelButton;
+    /** Button to go back to main screen */
     public Button MainMenuButton;
+    /** Label to display the "Level Finished" message */
     public Label levelFinishedLabel;
+    /** Label for displaying the score earned during the level */
     public Label levelScoreLabel;
     private LevelFinishedScreen screen;
 
@@ -33,18 +42,29 @@ public class LevelFinishedController extends BaseController implements Initializ
         levelScoreLabel.setText(String.valueOf(GameManager.getCurrentLevel().getScore()));
     }
 
-    public void selectNextLevel(ActionEvent actionEvent) {
+    /**
+     * Starts the next level in numerical order
+     */
+    public void selectNextLevel() {
         int currentLevelNumber = GameManager.getCurrentLevel().getLevelNumber();
         GameManager.setCurrentLevelNumber(currentLevelNumber + 1);
         getScreen().setNextScreen(new GameScreen());
         getScreen().setFinished(true);
     }
 
-    public void MainMenu(ActionEvent actionEvent) {
+    /**
+     * Returns to the main menu
+     */
+    public void MainMenu() {
         getScreen().setNextScreen(new MainMenuScreen());
         getScreen().setFinished(true);
     }
 
+    /**
+     * Retrieves the canvas for the scene. Since this scene does not use a canvas, it returns null.
+     *
+     * @return null, as no canvas is needed for this scene.
+     */
     @Override
     public Canvas getCanvas() {return null;}
 }
