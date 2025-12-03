@@ -3,6 +3,8 @@ package cs230.group29se.jewelthief;
 import cs230.group29se.jewelthief.Entities.Protectable;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 /**
  * An NPC that moves following the left hand edge of their "assigned" colour, they collect items and upon coming in
@@ -23,6 +25,7 @@ public class FloorThief extends NonPlayableCharacter{
      */
     private Level level;
 
+    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/FLOORTHIEF.png").toString());
 
     public FloorThief(Colour assignedColour, Tile startingTile, Direction direction, Level level) {
         super(startingTile, direction);
@@ -83,6 +86,20 @@ public class FloorThief extends NonPlayableCharacter{
     }
 
     /**
+     * Draw Function for Floor Thief, shapes it to the tile size.
+     */
+    public void draw(GraphicsContext gc) {
+        if (!isAlive || image == null) return;
+
+        int tileSize = Tile.TILE_SIZE;
+
+        double x = (currentTile.getX() - 1) * tileSize;
+        double y = (currentTile.getY() - 1) * tileSize;
+
+        gc.drawImage(image, x, y, tileSize, tileSize);
+    }
+
+    /**
      * finds what direction the FloorThief can move in
      * @return direction to move towards
      */
@@ -126,13 +143,13 @@ public class FloorThief extends NonPlayableCharacter{
         int thiefTargetX = currentPos[0];
         int thiefTargetY = currentPos[1];
 
-        if (direction == Direction.UP) {
+        if (moveDirection == Direction.UP) {
             thiefTargetY--;
-        } else if (direction == Direction.DOWN) {
+        } else if (moveDirection == Direction.DOWN) {
             thiefTargetY++;
-        } else if (direction == Direction.LEFT) {
+        } else if (moveDirection == Direction.LEFT) {
             thiefTargetX--;
-        } else if (direction == Direction.RIGHT) {
+        } else if (moveDirection == Direction.RIGHT) {
             thiefTargetX++;
         }
 
@@ -164,8 +181,9 @@ public class FloorThief extends NonPlayableCharacter{
         }
 
         Tile targetTile = level.getTile(thiefTargetX, thiefTargetY);
-        if (targetTile != null) {}
-        currentTile = targetTile;
+        if (targetTile != null) {
+            currentTile = targetTile;
+        }
     }
 
     /**

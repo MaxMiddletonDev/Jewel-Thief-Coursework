@@ -2,6 +2,7 @@ package cs230.group29se.jewelthief;
 
 import cs230.group29se.jewelthief.Entities.Protectable;
 import cs230.group29se.jewelthief.Game.Tile;
+import javafx.scene.canvas.GraphicsContext;
 
 import java.util.List;
 
@@ -72,4 +73,7 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
 
     @Override
     public abstract void move();
+
+    public void draw(GraphicsContext gc) {
+    }
 }

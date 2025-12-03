@@ -77,6 +77,11 @@ public class Level {
      */
     public void update() {
         updateTime();
+        for (NonPlayableCharacter npc : enemies) {
+            if (npc.isAlive()) {
+                npc.move();
+            }
+        }
     }
 
     /**
@@ -166,6 +171,11 @@ public class Level {
         }
         for (Gate gate : gates) {
             gate.draw(gc);
+        }
+        for (NonPlayableCharacter npc : enemies) {
+            if (npc.isAlive()) {
+                npc.draw(gc);
+            }
         }
         player.draw(gc);
     }
@@ -365,9 +375,8 @@ public class Level {
                     Direction direction = directionSetter(npcDirection);
                     String followerColour = e.arg2;
                     Colour colour = colourSetter(followerColour);
-
-                    // FollowerEnemy followerEnemy = new FollowerEnemy(xPos, yPos, direction, colour);
-                    // grid[xPos][yPos].setOccupying(followerEnemy);
+                    FloorThief tempEnemy = new FloorThief(colour, grid[xPos][yPos], direction, this);
+                    enemies.add(tempEnemy);
                 }
 
                 case "LOOT" -> {

@@ -5,6 +5,7 @@ module cs230.group29se.jewelthief {
 
     requires com.fasterxml.jackson.databind;
     requires jdk.unsupported.desktop;
+    requires javafx.graphics;
 
     opens cs230.group29se.jewelthief to javafx.fxml;
     exports cs230.group29se.jewelthief;
