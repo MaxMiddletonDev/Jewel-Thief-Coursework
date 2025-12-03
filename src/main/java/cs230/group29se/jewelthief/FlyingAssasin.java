@@ -39,7 +39,7 @@ public class FlyingAssasin extends NonPlayableCharacter {
     @Override
     public void onCollisionWith(MoveableCharacter other) {
         if (other instanceof Player) {
-            ((Player)other).setAliveTo(false);
+            ((Player)other).getHit();
         } else if (other instanceof NonPlayableCharacter && !(other instanceof FlyingAssasin)) {
             ((NonPlayableCharacter)other).setAliveTo(false);
         }
@@ -103,5 +103,15 @@ public class FlyingAssasin extends NonPlayableCharacter {
         } else if (direction == Direction.RIGHT) {
             direction = Direction.LEFT;
         }
+    }
+
+    @Override
+    public boolean isProtected() {
+        return isProtected;
+    }
+
+    @Override
+    public void setProtected(boolean value) {
+        isProtected = value;
     }
 }

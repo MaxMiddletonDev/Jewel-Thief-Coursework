@@ -58,4 +58,6 @@ public interface MoveableCharacter {
      * @param item
      */
     void collectItem(Item item);
+
+
 }

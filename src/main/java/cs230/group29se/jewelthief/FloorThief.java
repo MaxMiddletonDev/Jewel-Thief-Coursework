@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief;
 
+import cs230.group29se.jewelthief.Entities.Protectable;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
 
@@ -10,7 +11,7 @@ import cs230.group29se.jewelthief.Game.Tile;
  *
  * @author Baba
  */
-public class FloorThief extends NonPlayableCharacter {
+public class FloorThief extends NonPlayableCharacter{
 
     /**
      * Stores a FloorThief's assigned colour
@@ -21,6 +22,7 @@ public class FloorThief extends NonPlayableCharacter {
      * Stores a Floor Thief's level
      */
     private Level level;
+
 
     public FloorThief(Colour assignedColour, Tile startingTile, Direction direction, Level level) {
         super(startingTile, direction);
@@ -51,7 +53,7 @@ public class FloorThief extends NonPlayableCharacter {
         if (other instanceof FlyingAssasin) {
             this.isAlive = false;
         } else if (other instanceof Player) {
-            ((Player)other).setAliveTo(false);
+            ((Player)other).getHit();
         }
     }
 
@@ -177,5 +179,21 @@ public class FloorThief extends NonPlayableCharacter {
         }
     }
 
+    /**
+     * Checks if the FloorThief is protected or not
+     * @return true if protected, false otherwise
+     */
+    @Override
+    public boolean isProtected() {
+        return isProtected;
+    }
 
+    /**
+     * Sets the protection status of the FloorThief
+     * @param value - true to set as protected, false otherwise
+     */
+    @Override
+    public void setProtected(boolean value) {
+        isProtected = value;
+    }
 }

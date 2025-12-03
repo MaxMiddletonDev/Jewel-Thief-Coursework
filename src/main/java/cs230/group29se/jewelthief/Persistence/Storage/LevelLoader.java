@@ -116,7 +116,7 @@ public class LevelLoader {
                 case "PLAYER" -> def.playerStart = e;
                 case "FLYING", "FOLLOWER", "SMART" -> def.npcStartStates.add(e);
                 case "GATE" -> def.gates.add(e);
-                case "LOOT", "BOMB", "LEVER","CLOCK" -> def.items.add(e);
+                case "LOOT", "BOMB", "LEVER","CLOCK","SHIELD" -> def.items.add(e);
                 default -> { /* others only in entities list */ }
             }
         }
@@ -148,7 +148,7 @@ public class LevelLoader {
         return switch (t) {
             case "PLAYER", "FLYING", "FOLLOWER", "SMART",
                  "LOOT", "BOMB", "LEVER", "GATE","CLOCK" , "DOOR",
-                 "SIZE", "TIME" -> true;
+                 "SIZE", "TIME", "SHIELD" -> true;
             default -> false;
         };
     }

@@ -1,6 +1,7 @@
 package cs230.group29se.jewelthief.Game;
 
 import cs230.group29se.jewelthief.*;
+import cs230.group29se.jewelthief.Items.Shield;
 import cs230.group29se.jewelthief.Persistence.Profile.SaveData;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameController;
 import cs230.group29se.jewelthief.Persistence.Storage.LevelLoader;
@@ -12,6 +13,8 @@ import javafx.scene.canvas.GraphicsContext;
 import java.io.File;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import jdk.swing.interop.SwingInterOpUtils;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +48,6 @@ public class Level {
 
     private boolean failedLevel = false;
     private String failReason = "";
-
 
     /**
      * Constructs a Level with the specified level name and game controller.
@@ -418,6 +420,12 @@ public class Level {
                     items.add(tempClock);
                     grid[xPos][yPos].setOccupying(tempClock);
                     System.out.println("clock made wooo");
+                }
+                case "SHIELD" ->{
+                    Shield shield = new Shield(xPos, yPos);
+                    items.add(shield);
+                    grid[xPos][yPos].setOccupying(shield);
+                    System.out.println("SHIELD created");
                 }
                 default -> {
                     System.out.println("aghhhh");

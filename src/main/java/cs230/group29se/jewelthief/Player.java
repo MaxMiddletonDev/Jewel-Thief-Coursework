@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief;
 
+import cs230.group29se.jewelthief.Entities.Protectable;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
 import javafx.scene.canvas.GraphicsContext;
@@ -8,16 +9,18 @@ import javafx.scene.image.Image;
 /**
  * This class represents a Player Character while implementing MoveableCharacter.
  * This Player will serve as the Main Character in which the User will use.
- * @author Max Middleton
+ * @author Max Middleton, Gustas Rove
  */
 
-public class Player implements MoveableCharacter {
+public class Player implements MoveableCharacter, Protectable {
     private Tile currentTile;
     private boolean isAlive;
     private Direction direction;
 
     private Level level;
     private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/PLAYER.png").toString());
+
+    private boolean isProtected;
 
     /**
      * Constructs a new Player instance.
@@ -141,5 +144,37 @@ public class Player implements MoveableCharacter {
     @Override
     public void onCollisionWith(MoveableCharacter other) {
         // Will create when enemies are created
+    }
+
+    /**
+     * This method handles when the player gets hit by an enemy.
+     * If the player is protected, the protection is removed.
+     * If not protected, the player is marked as not alive.
+     */
+    public void getHit(){
+        if(isProtected()){
+            setProtected(false);
+        }else{
+            setAliveTo(false);
+        }
+    }
+
+    /**
+     * Checks if the player is currently protected.
+     * @return True if the player is protected, false otherwise.
+     */
+    @Override
+    public boolean isProtected() {
+        return isProtected;
+    }
+
+    /**
+     * Sets the player's protection status.
+     * @param value True to protect the player, false to remove protection.
+     */
+    @Override
+    public void setProtected(boolean value) {
+        System.out.println("Player setProtected set to " + value);
+        isProtected = value;
     }
 }

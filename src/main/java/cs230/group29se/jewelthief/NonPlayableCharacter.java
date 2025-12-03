@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief;
 
+import cs230.group29se.jewelthief.Entities.Protectable;
 import cs230.group29se.jewelthief.Game.Tile;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  *
  * @author Baba & Max
  */
-public abstract class NonPlayableCharacter implements MoveableCharacter {
+public abstract class NonPlayableCharacter implements MoveableCharacter, Protectable {
 
     /**
      * Gives us an NPCs current tile on which they're on.
@@ -30,6 +31,11 @@ public abstract class NonPlayableCharacter implements MoveableCharacter {
      * Tells us what items an NPC has collected
      */
     protected List<Item> collectedItems;
+
+    /**
+     * Tells us whether an NPC is protected or not
+     */
+    protected boolean isProtected;
 
     /**
      * Constructor for creating a new instance of an NPC
