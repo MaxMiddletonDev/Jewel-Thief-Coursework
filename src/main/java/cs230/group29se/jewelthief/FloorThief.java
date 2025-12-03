@@ -93,8 +93,8 @@ public class FloorThief extends NonPlayableCharacter{
 
         int tileSize = Tile.TILE_SIZE;
 
-        double x = (currentTile.getX() - 1) * tileSize;
-        double y = (currentTile.getY() - 1) * tileSize;
+        double x = currentTile.getX() * tileSize;
+        double y = currentTile.getY() * tileSize;
 
         gc.drawImage(image, x, y, tileSize, tileSize);
     }
