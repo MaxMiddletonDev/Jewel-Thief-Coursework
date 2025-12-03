@@ -2,6 +2,9 @@ package cs230.group29se.jewelthief;
 
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
 
 /**
  * An NPC that moves in a straight line, either horizontally or vertically, upon contact (when occupying the same
@@ -13,6 +16,7 @@ import cs230.group29se.jewelthief.Game.Tile;
 public class FlyingAssasin extends NonPlayableCharacter {
 
     private Level level;
+    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/FLYINGASSASSIN.png").toString());
 
     /**
      * Constructor for creating new instance of FlyingAssasin.
@@ -103,6 +107,19 @@ public class FlyingAssasin extends NonPlayableCharacter {
         } else if (direction == Direction.RIGHT) {
             direction = Direction.LEFT;
         }
+    }
+
+    /**
+     * Draw Function for Flying Assassin, shapes it to the tile size.
+     */
+    public void draw(GraphicsContext gc) {
+
+        int tileSize = Tile.TILE_SIZE;
+
+        double x = currentTile.getX() * tileSize;
+        double y = currentTile.getY() * tileSize;
+
+        gc.drawImage(image, x, y, tileSize, tileSize);
     }
 
     @Override

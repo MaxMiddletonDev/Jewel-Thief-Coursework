@@ -1,0 +1,24 @@
+{
+  "levelId" : "1",
+  "profileName" : "testing4",
+  "playerState" : [ 0, 0 ],
+  "elapsedSeconds" : 0,
+  "npcStates" : {
+    "FOLLOWER#4#6" : "DOWN",
+    "SMART#5#7" : "LEFT",
+    "FLYING#1#1" : "RIGHT"
+  },
+  "gates" : {
+    "GATE#3#4" : "G",
+    "GATE#3#2" : "R"
+  },
+  "items" : {
+    "LEVER#5#3" : "R",
+    "LOOT#1#4" : "DOLLAR",
+    "LEVER#1#3" : "R",
+    "CLOCK#5#4" : null,
+    "LEVER#4#3" : "G",
+    "SHIELD#3#3" : null,
+    "BOMB#1#1" : null
+  }
+}

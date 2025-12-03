@@ -357,8 +357,8 @@ public class Level {
                     String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
 
-                    //FlyingAssasin enemy = new FlyingAssasin(xPos, yPos, direction);
-                    // grid[xPos][yPos].setOccupying(enemy);
+                    FlyingAssasin tempEnemy = new FlyingAssasin(grid[xPos][yPos], direction, this);
+                    enemies.add(tempEnemy);
                 }
 
                 case "SMART" -> {

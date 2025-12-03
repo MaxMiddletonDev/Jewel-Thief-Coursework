@@ -89,7 +89,6 @@ public class FloorThief extends NonPlayableCharacter{
      * Draw Function for Floor Thief, shapes it to the tile size.
      */
     public void draw(GraphicsContext gc) {
-        if (!isAlive || image == null) return;
 
         int tileSize = Tile.TILE_SIZE;
 
