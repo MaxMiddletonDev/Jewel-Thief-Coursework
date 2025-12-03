@@ -82,6 +82,21 @@ public class Level {
                 npc.move();
             }
         }
+        checkCollisions();
+    }
+
+    /**
+     * Checks if any characters are occupying the same tile and triggers interactions.
+     */
+    private void checkCollisions() {
+        for (NonPlayableCharacter npc : enemies) {
+            if (npc.isAlive()) {
+                if (npc.getPosition()[0] == player.getPosition()[0] &&
+                        npc.getPosition()[1] == player.getPosition()[1]) {
+                    npc.onCollisionWith(player);
+                }
+            }
+        }
     }
 
     /**

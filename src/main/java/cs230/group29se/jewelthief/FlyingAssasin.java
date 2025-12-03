@@ -35,7 +35,7 @@ public class FlyingAssasin extends NonPlayableCharacter {
     public void collectItem(Item item) {}
 
     /**
-     * if a flying assasin occupies the same tile as another character, that character is taken off the game, if its
+     * if a flying assassin occupies the same tile as another character, that character is taken off the game, if it's
      * a player, the player loses and is no longer in game.
      *
      * @param other - character that collides with this one
@@ -43,14 +43,15 @@ public class FlyingAssasin extends NonPlayableCharacter {
     @Override
     public void onCollisionWith(MoveableCharacter other) {
         if (other instanceof Player) {
-            ((Player)other).getHit();
-        } else if (other instanceof NonPlayableCharacter && !(other instanceof FlyingAssasin)) {
-            ((NonPlayableCharacter)other).setAliveTo(false);
+            level.failLevel("CAUGHT BY: FLYING ASSASSIN");
+        }
+        else if (other instanceof NonPlayableCharacter && !(other instanceof FlyingAssasin)) {
+            other.setAliveTo(false);
         }
     }
 
     /**
-     * moves in a straight line, either horizontally or vertically, and when at the edge, takes a 180 degree turn and
+     * moves in a straight line, either horizontally or vertically, and when at the edge, takes a 180-degree turn and
      * moves in the opposite direction.
      */
     @Override

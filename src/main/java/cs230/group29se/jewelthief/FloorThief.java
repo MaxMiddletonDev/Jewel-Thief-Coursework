@@ -56,7 +56,7 @@ public class FloorThief extends NonPlayableCharacter{
         if (other instanceof FlyingAssasin) {
             this.isAlive = false;
         } else if (other instanceof Player) {
-            ((Player)other).getHit();
+            level.failLevel("CAUGHT BY: FLOOR THIEF");
         }
     }
 
