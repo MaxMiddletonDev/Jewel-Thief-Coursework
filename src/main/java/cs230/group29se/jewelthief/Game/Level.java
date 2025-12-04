@@ -532,6 +532,22 @@ public class Level {
         }
         return null;
     }
+
+    /**
+     * Checks if the level contains no loot or levers.
+     * Used for checking if the door can be opened.
+     *
+     * @return true if there are no loot or levers, false otherwise.
+     */
+    public boolean containsNoLootAndLevers() {
+        for (Item item : items) {
+            if (item instanceof Loot || item instanceof Lever) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Returns a list of the current levels intact items.
      *

@@ -32,7 +32,7 @@ public class Door extends Item {
      * needs thief, player, and game to be implemented.
      */
     public void interact() {
-
+        
     }
 
     /**
