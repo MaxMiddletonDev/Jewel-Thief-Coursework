@@ -2,6 +2,8 @@ package cs230.group29se.jewelthief;
 
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.Level;
+import cs230.group29se.jewelthief.Items.Collectable;
+import cs230.group29se.jewelthief.Items.Gate;
 
 /**
  * Remove allows for items to be removed from the current level in play.

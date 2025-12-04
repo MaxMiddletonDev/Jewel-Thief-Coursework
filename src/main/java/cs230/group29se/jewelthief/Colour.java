@@ -11,7 +11,9 @@ public enum Colour {
     RED,
     YELLOW,
     GREEN,
-    BLUE;
+    BLUE,
+    CYAN,
+    MAGENTA;
 
     /**
      * Converts the Colour enum to a JavaFX Color.
@@ -23,6 +25,8 @@ public enum Colour {
             case YELLOW -> Color.YELLOW;
             case GREEN -> Color.GREEN;
             case BLUE -> Color.BLUE;
+            case CYAN -> Color.CYAN;
+            case MAGENTA -> Color.MAGENTA;
         };
     }
 }

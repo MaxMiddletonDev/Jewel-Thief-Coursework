@@ -1,9 +1,10 @@
-package cs230.group29se.jewelthief;
+package cs230.group29se.jewelthief.Items;
 
 //import java.net.URL; it says i added it if i did
 // i didnt mean to dont want to fully remove it incase.
 import java.util.ArrayList;
 
+import cs230.group29se.jewelthief.Colour;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 

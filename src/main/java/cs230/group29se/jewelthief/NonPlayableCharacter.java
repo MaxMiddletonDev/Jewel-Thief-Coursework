@@ -2,6 +2,7 @@ package cs230.group29se.jewelthief;
 
 import cs230.group29se.jewelthief.Entities.Protectable;
 import cs230.group29se.jewelthief.Game.Tile;
+import cs230.group29se.jewelthief.Items.Item;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.List;

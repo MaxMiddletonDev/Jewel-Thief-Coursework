@@ -1,5 +1,7 @@
-package cs230.group29se.jewelthief;
+package cs230.group29se.jewelthief.Items;
 
+import cs230.group29se.jewelthief.Game.GameManager;
+import cs230.group29se.jewelthief.Game.Level;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 /**
@@ -32,7 +34,12 @@ public class Door extends Item {
      * needs thief, player, and game to be implemented.
      */
     public void interact() {
-        
+        Level level = GameManager.getCurrentLevel();
+        if (level.containsNoLootAndLevers()) {
+            this.closed = false;
+
+
+        }
     }
 
     /**

@@ -25,6 +25,8 @@ module cs230.group29se.jewelthief {
     opens cs230.group29se.jewelthief.Persistence.Storage to com.fasterxml.jackson.databind;
     exports cs230.group29se.jewelthief.Scenes.GameScene;
     exports cs230.group29se.jewelthief.Scenes.LevelFailedScene;
+    exports cs230.group29se.jewelthief.Items;
+    opens cs230.group29se.jewelthief.Items to javafx.fxml;
 
 
 }

@@ -1,7 +1,6 @@
-package cs230.group29se.jewelthief;
+package cs230.group29se.jewelthief.Items;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
 /**
  * Item is an abstract class that allows it's children to be made with a location.

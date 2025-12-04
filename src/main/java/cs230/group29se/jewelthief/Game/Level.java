@@ -1,19 +1,21 @@
 package cs230.group29se.jewelthief.Game;
 
 import cs230.group29se.jewelthief.*;
+import cs230.group29se.jewelthief.Items.Bomb;
+import cs230.group29se.jewelthief.Items.Clock;
+import cs230.group29se.jewelthief.Items.Door;
+import cs230.group29se.jewelthief.Items.Gate;
+import cs230.group29se.jewelthief.Items.Item;
+import cs230.group29se.jewelthief.Items.Lever;
+import cs230.group29se.jewelthief.Items.Loot;
+import cs230.group29se.jewelthief.Items.LootEnum;
 import cs230.group29se.jewelthief.Items.Shield;
 import cs230.group29se.jewelthief.Persistence.Profile.SaveData;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameController;
 import cs230.group29se.jewelthief.Persistence.Storage.LevelLoader;
 import cs230.group29se.jewelthief.Persistence.Storage.LevelDef;
 import cs230.group29se.jewelthief.Persistence.Storage.EntityDef;
-import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
-
-import java.io.File;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import jdk.swing.interop.SwingInterOpUtils;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -449,20 +451,16 @@ public class Level {
                     grid[xPos][yPos].setOccupying(tempDoor);
                 }
                 case "CLOCK" -> {
-                    System.out.println("clock made wooo");
                     Clock tempClock = new Clock(xPos, yPos);
                     items.add(tempClock);
                     grid[xPos][yPos].setOccupying(tempClock);
-                    System.out.println("clock made wooo");
                 }
                 case "SHIELD" ->{
                     Shield shield = new Shield(xPos, yPos);
                     items.add(shield);
                     grid[xPos][yPos].setOccupying(shield);
-                    System.out.println("SHIELD created");
                 }
                 default -> {
-                    System.out.println("aghhhh");
                 }
             }
         }
@@ -528,6 +526,11 @@ public class Level {
             }
             case "Y" -> {
                 return Colour.YELLOW;
+            }
+            case "C" -> {
+                return Colour.CYAN;
+            } case "M" -> {
+                return Colour.MAGENTA;
             }
         }
         return null;

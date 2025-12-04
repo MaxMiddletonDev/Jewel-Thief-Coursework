@@ -1,4 +1,4 @@
-package cs230.group29se.jewelthief;
+package cs230.group29se.jewelthief.Items;
 
 import javafx.scene.image.Image;
 

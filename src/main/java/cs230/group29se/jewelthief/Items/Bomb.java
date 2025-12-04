@@ -1,5 +1,7 @@
-package cs230.group29se.jewelthief;
+package cs230.group29se.jewelthief.Items;
 
+import cs230.group29se.jewelthief.Game.GameManager;
+import cs230.group29se.jewelthief.Game.Level;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import java.util.Timer;
@@ -75,15 +77,59 @@ public class Bomb extends Destroyable {
      */
     public TimerTask destroy() {
         Bomb bomb = this;
+        Level level = GameManager.getCurrentLevel();
         return new TimerTask() {
-            /**
-             * TODO -when level exists and the array of tiles are made
-             * TODO -then run can be implemented.
-             */
             @Override
             public void run() {
-                System.out.println("testing");
-                bomb.remove(bomb); // cant just use "this" as it refers to TimerTask.
+                int explodeLeft = getX() - 1;
+                int explodeRight = getX() + 1;
+                int explodeUp = getY() - 1;
+                int explodeDown = getY() + 1;
+
+                bomb.remove(bomb);
+
+                while (explodeLeft >= 0 || explodeRight < level.getWidth() || explodeUp >= 0 || explodeDown < level.getHeight()) {
+                    try {
+                        // Left
+                        if (explodeLeft >= 0) {
+                            var tileLeft = level.getTile(explodeLeft, getY());
+                            if (tileLeft.getOccupying() instanceof Destroyable destroyable) {
+                                destroyable.remove(destroyable);
+                            }
+                        }
+
+                        // Right
+                        if (explodeRight < level.getWidth()) {
+                            var tileRight = level.getTile(explodeRight, getY());
+                            if (tileRight.getOccupying() instanceof Destroyable destroyable) {
+                                destroyable.remove(destroyable);
+                            }
+                        }
+
+                        // Up
+                        if (explodeUp >= 0) {
+                            var tileUp = level.getTile(getX(), explodeUp);
+                            if (tileUp.getOccupying() instanceof Destroyable destroyable) {
+                                destroyable.remove(destroyable);
+                            }
+                        }
+
+                        // Down
+                        if (explodeDown < level.getHeight()) {
+                            var tileDown = level.getTile(getX(), explodeDown);
+                            if (tileDown.getOccupying() instanceof Destroyable destroyable) {
+                                destroyable.remove(destroyable);
+                            }
+                        }
+
+                        explodeLeft--;
+                        explodeRight++;
+                        explodeUp--;
+                        explodeDown++;
+                    } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+                        // Optional: log e.getMessage() if needed
+                    }
+                }
             }
         };
 
@@ -99,7 +145,6 @@ public class Bomb extends Destroyable {
         startTime = System.currentTimeMillis();
         timer.schedule(destroy(), timeRemaining);
         armed = true;
-        System.out.println("wooooo");
     }
 
     /**

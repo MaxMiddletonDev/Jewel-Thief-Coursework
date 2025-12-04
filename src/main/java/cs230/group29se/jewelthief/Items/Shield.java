@@ -1,8 +1,6 @@
 package cs230.group29se.jewelthief.Items;
 
-import cs230.group29se.jewelthief.Destroyable;
 import cs230.group29se.jewelthief.Entities.Protectable;
-import cs230.group29se.jewelthief.Game.GameManager;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
