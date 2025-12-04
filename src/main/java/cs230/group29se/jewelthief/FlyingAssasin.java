@@ -17,14 +17,15 @@ public class FlyingAssasin extends NonPlayableCharacter {
 
     private Level level;
     private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/FLYINGASSASSIN.png").toString());
-    private static final int HIT_COOLDOWN_TICKS = 10;
-    private int hitCooldown = 0;
+
     /**
      * Constructor for creating new instance of FlyingAssasin.
      */
     public FlyingAssasin(Tile startingTile, Direction direction, Level level) {
         super(startingTile, direction);
         this.level = level;
+        setMoveCooldownSeconds(0.3F); // Flying Assasin moves every 2 seconds
+        setHitCooldownSeconds(1.5); // Flying Assasin can hit every 2 seconds
     }
 
     /**
@@ -44,12 +45,12 @@ public class FlyingAssasin extends NonPlayableCharacter {
     @Override
     public void onCollisionWith(MoveableCharacter other) {
         if (other instanceof Player) {
-            if(hitCooldown <= 0){
+            if(canHit()){
                 ((Player) other).getHit();
-                hitCooldown = HIT_COOLDOWN_TICKS;
+                resetHitCooldown();
                 System.out.println("Flying Assasin hit the Player!");
             }else{
-                System.out.println("Flying Assasin is on hit cooldown.");
+                System.out.println("Flying Assasin is on hit cooldown: " + hitCooldown + " ticks remaining.");
             }
         }
         else if (other instanceof NonPlayableCharacter && !(other instanceof FlyingAssasin)) {
@@ -64,6 +65,11 @@ public class FlyingAssasin extends NonPlayableCharacter {
     @Override
     public void move() {
         if (!isAlive) {
+            return;
+        }
+
+        //Only move once every X seconds
+        if(!canMove()){
             return;
         }
 
@@ -90,10 +96,7 @@ public class FlyingAssasin extends NonPlayableCharacter {
             reverseDirection();
         }
 
-        // Decrease hit cooldown if it's active
-        if(hitCooldown > 0){
-            hitCooldown--;
-        }
+
     }
 
     /**

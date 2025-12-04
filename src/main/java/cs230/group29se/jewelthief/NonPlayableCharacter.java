@@ -38,6 +38,14 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
      */
     protected boolean isProtected;
 
+    private double hitCooldownSeconds = 2;
+    private double hitCooldownTicks = hitCooldownSeconds * MainApplication.TPS;
+    protected double hitCooldown = 0;
+
+    private double moveCooldownSeconds = 1;
+    private double moveCooldownTicks = moveCooldownSeconds * MainApplication.TPS;
+    private double moveCooldownCounter = 0;
+
     /**
      * Constructor for creating a new instance of an NPC
      */
@@ -73,6 +81,68 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
 
     @Override
     public abstract void move();
+
+    /**
+     * Checks if the NPC can move based on cooldown
+     * @return true if can move, false otherwise
+     */
+    protected boolean canMove() {
+        if (moveCooldownCounter >= moveCooldownTicks) {
+            moveCooldownCounter = 0; // Reset counter after allowing movement
+            return true;
+        } else {
+            moveCooldownCounter++;
+            return false;
+        }
+    }
+
+    /**
+     * Updates the hit cooldown for the NPC
+     */
+    public void updateHitCooldown() {
+        if (hitCooldown > 0) {
+            hitCooldown--;
+        }
+    }
+
+    /**
+     * Resets the hit cooldown for the NPC
+     */
+    protected void resetHitCooldown() {
+        hitCooldown = hitCooldownTicks;
+    }
+
+    /**
+     * Checks if the NPC can hit based on cooldown
+     * @return true if can hit, false otherwise
+     */
+    protected boolean canHit() {
+        return hitCooldown <= 0;
+    }
+
+
+    /**
+     * Sets the move cooldown in seconds for the NPC
+     *
+     * Designed to be called in the NPCS constructor if different cooldown is needed.
+     * @param moveCooldownSeconds cooldown time in seconds
+     */
+    protected void setMoveCooldownSeconds(double moveCooldownSeconds) {
+        // This method can be implemented to adjust move cooldown if needed
+        this.moveCooldownSeconds = moveCooldownSeconds;
+        this.moveCooldownTicks = moveCooldownSeconds * MainApplication.TPS;
+    }
+
+    /**
+     * Sets the hit cooldown in seconds for the NPC
+     *
+     * Designed to be called in the NPCS constructor if different cooldown is needed.
+     * @param hitCooldownSeconds cooldown time in seconds
+     */
+    protected void setHitCooldownSeconds(double hitCooldownSeconds) {
+        this.hitCooldownSeconds = hitCooldownSeconds;
+        this.hitCooldownTicks = hitCooldownSeconds * MainApplication.TPS;
+    }
 
     public void draw(GraphicsContext gc) {
     }

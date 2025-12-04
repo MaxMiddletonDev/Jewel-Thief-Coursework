@@ -83,11 +83,15 @@ public class Level {
             failLevel("Player has been DIED!");
         }
         updateTime();
+
+        //Move enemies
         for (NonPlayableCharacter npc : enemies) {
             if (npc.isAlive()) {
                 npc.move();
+                npc.updateHitCooldown();
             }
         }
+
         checkCollisions();
     }
 

@@ -31,6 +31,9 @@ public class FloorThief extends NonPlayableCharacter{
         super(startingTile, direction);
         this.assignedColour = assignedColour;
         this.level = level;
+
+        setMoveCooldownSeconds(0.5f); // Floor Thief moves every 1 second
+        setHitCooldownSeconds(2); // Floor Thief can hit every 2 seconds
     }
 
     /**
@@ -56,7 +59,11 @@ public class FloorThief extends NonPlayableCharacter{
         if (other instanceof FlyingAssasin) {
             this.isAlive = false;
         } else if (other instanceof Player) {
-            ((Player) other).getHit();
+            if(canHit()){
+                ((Player) other).getHit();
+                resetHitCooldown();
+            }
+
         }
     }
 
@@ -74,6 +81,11 @@ public class FloorThief extends NonPlayableCharacter{
     @Override
     public void move(){
         if (!isAlive) {
+            return;
+        }
+
+        //Only move once every X seconds
+        if(!canMove()){
             return;
         }
 

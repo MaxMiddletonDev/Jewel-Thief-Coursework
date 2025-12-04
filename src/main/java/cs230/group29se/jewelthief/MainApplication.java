@@ -28,6 +28,16 @@ import java.io.IOException;
  */
 public class MainApplication extends Application {
     /**
+     * Ticks per second (target). Change this to adjust update rate.
+     */
+    public static final int TPS = 60;
+
+    /**
+     * Duration of each tick in milliseconds.
+     */
+    private static final double FRAME_DURATION_MS = 1000.0 / TPS;
+
+    /**
      * The timeline responsible for simulating the game loop with periodic ticks.
      */
     private Timeline tickTimeline;
@@ -53,7 +63,7 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException {
         boolean exitProgram = false;
 
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(16.6667), event -> tick(stage)));
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION_MS), event -> tick(stage)));
 
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play();
