@@ -103,7 +103,7 @@ public class Tile {
      * @param gc the GraphicsContext to draw on
      */
     public void draw(GraphicsContext gc) {
-        Arrays.sort(colours, Comparator.comparing(Colour::toString));
+//        Arrays.sort(colours, Comparator.comparing(Colour::toString));
 
         Color tlColour = colours[0].toFxColor();
         Color trColour = colours[1].toFxColor();
