@@ -124,6 +124,7 @@ public class PersistenceManager {
     public String getActiveProfileName() {
         return activeProfileName;
     }
+    public String getActiveLevelId() { return activeLevelId; }
 
     /** Appends a high score and sorts lists desc both per-level and globally*/
     public void submitScore(String profileName, String levelId, int score, String timestampIso) {
@@ -198,6 +199,18 @@ public class PersistenceManager {
         }
 
         System.out.println("Deleted profile " + profileName + " and its saves folder");
+    }
+    /**
+     * Specifically deletes the current level data.
+     */
+    public void deleteSaveForCurrentLevel() {
+        String profile = currentProfileName();
+        String levelId = currentLevelId();
+        if (profile == null || levelId == null) return;
+
+        String path = pathSave(profile, levelId); // "saves/<profile>/level-<id>.json"
+        fileStore.delete(path);                   // delete the JSON if it exists
+        cachedSave = null;
     }
     // internal DTO + loader for highscores.json
     static class HighScoresDTO {

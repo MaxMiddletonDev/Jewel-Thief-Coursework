@@ -55,6 +55,8 @@ public final class GameManager {
         PM.setActiveProfileName(profileName);
         PM.setActiveLevelId(levelId);
 
+
+
         // profiles
         ProfileData profile = PM.loadProfile();
         if (profile == null) {
@@ -69,6 +71,10 @@ public final class GameManager {
 
         // saves: THIS is the "load JSON if exists" logic
         SaveData save = PM.getSaveData();
+        // if save exists but timeRemainingMs == 0, treat as no save (reset level)
+        if (save != null && save.getTimeRemainingMs() == 0) {
+            save = null;
+        }
         if (save == null) {
             // No JSON save yet → load from txt and create initial save
             System.out.println("No save for " + profileName + " L" + levelNum + " → loading txt");

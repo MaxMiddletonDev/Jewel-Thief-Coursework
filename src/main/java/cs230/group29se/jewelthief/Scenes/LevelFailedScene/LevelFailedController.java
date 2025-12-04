@@ -1,6 +1,7 @@
 package cs230.group29se.jewelthief.Scenes.LevelFailedScene;
 
 import cs230.group29se.jewelthief.Game.GameManager;
+import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
 import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
@@ -48,9 +49,23 @@ public class LevelFailedController extends BaseController implements Initializab
      * Restarts the current level by transitioning to the GameScreen.
      */
     public void restartLevel() {
+        // Check how much time was left when we failed
+        long timeLeftSec = GameManager.getCurrentLevel().getTimeRemainingTimeInSeconds();
+
+        if (timeLeftSec <= 0) {
+            // Time-out failure: remove the save so next load is fresh
+            PersistenceManager pm = GameManager.getPersistenceManager();
+            pm.deleteSaveForCurrentLevel();
+        }
+        // For non-timeout failures, we keep the save as-is
+
+        // Transition to a new GameScreen; GameScreen.initialize()
+        // will call GameManager.loadLevelForProfile, which will either
+        // use the remaining save or reload fresh if we deleted it.
         getScreen().setNextScreen(new GameScreen());
         getScreen().setFinished(true);
     }
+
 
     /**
      * Returns to the main menu by transitioning to the MainMenuScreen.

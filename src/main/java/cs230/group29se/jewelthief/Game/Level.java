@@ -72,7 +72,7 @@ public class Level {
             e.printStackTrace();
         }
 
-        // NEW: initialize timeRemaining from SaveData if available, else from maxTime
+        // initialises timeRemaining from SaveData if available, else from maxTime
         if (saveData != null && saveData.getTimeRemainingMs() > 0) {
             timeRemaining = saveData.getTimeRemainingMs();
         } else {
