@@ -155,6 +155,7 @@ public class Player implements MoveableCharacter, Protectable {
             setProtected(false);
         }else{
             setAliveTo(false);
+            System.out.println("Player has been hit and is no longer alive.");
         }
     }
 

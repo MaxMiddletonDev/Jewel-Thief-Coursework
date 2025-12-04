@@ -36,6 +36,9 @@ public class Level {
     private ArrayList<NonPlayableCharacter> enemies = new ArrayList<>();
     private Tile[][] grid;
 
+    private static final int HIT_COOLDOWN_TICKS = 10;
+    private int hitCooldown = 0;
+
     // in Level
     private Player player;
 
@@ -76,6 +79,9 @@ public class Level {
      * Updates the level state, including the timer.
      */
     public void update() {
+        if (!getPlayer().isAlive()){
+            failLevel("Player has been DIED!");
+        }
         updateTime();
         for (NonPlayableCharacter npc : enemies) {
             if (npc.isAlive()) {

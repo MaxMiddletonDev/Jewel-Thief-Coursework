@@ -17,7 +17,8 @@ public class FlyingAssasin extends NonPlayableCharacter {
 
     private Level level;
     private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/FLYINGASSASSIN.png").toString());
-
+    private static final int HIT_COOLDOWN_TICKS = 10;
+    private int hitCooldown = 0;
     /**
      * Constructor for creating new instance of FlyingAssasin.
      */
@@ -43,7 +44,13 @@ public class FlyingAssasin extends NonPlayableCharacter {
     @Override
     public void onCollisionWith(MoveableCharacter other) {
         if (other instanceof Player) {
-            level.failLevel("CAUGHT BY: FLYING ASSASSIN");
+            if(hitCooldown <= 0){
+                ((Player) other).getHit();
+                hitCooldown = HIT_COOLDOWN_TICKS;
+                System.out.println("Flying Assasin hit the Player!");
+            }else{
+                System.out.println("Flying Assasin is on hit cooldown.");
+            }
         }
         else if (other instanceof NonPlayableCharacter && !(other instanceof FlyingAssasin)) {
             other.setAliveTo(false);
@@ -81,6 +88,11 @@ public class FlyingAssasin extends NonPlayableCharacter {
             }
         } else {
             reverseDirection();
+        }
+
+        // Decrease hit cooldown if it's active
+        if(hitCooldown > 0){
+            hitCooldown--;
         }
     }
 

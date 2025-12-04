@@ -53,7 +53,7 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException {
         boolean exitProgram = false;
 
-        tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick(stage)));
+        tickTimeline = new Timeline(new KeyFrame(Duration.millis(16.6667), event -> tick(stage)));
 
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play();
