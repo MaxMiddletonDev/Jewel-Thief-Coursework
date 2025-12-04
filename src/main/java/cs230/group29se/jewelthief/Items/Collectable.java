@@ -13,10 +13,6 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public abstract class Collectable extends Item implements Remove {
 
-    /**
-     * The character that collected this item (Player or NPC).
-     */
-    protected MoveableCharacter collector;
 
     /**
      * Allows for a collectable to be made.
@@ -31,17 +27,7 @@ public abstract class Collectable extends Item implements Remove {
      * Sets the character that collected this item.
      * @param collector the MoveableCharacter that picked up this item
      */
-    public void setCollector(MoveableCharacter collector) {
-        this.collector = collector;
-    }
 
-    /**
-     * Gets the character that collected this item.
-     * @return the MoveableCharacter that picked up this item
-     */
-    public MoveableCharacter getCollector() {
-        return collector;
-    }
 
     /**
      * Interact is used when it is picked up and its behavior is

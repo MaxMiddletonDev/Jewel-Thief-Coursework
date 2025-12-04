@@ -1,7 +1,10 @@
 package cs230.group29se.jewelthief.Items;
 
+import cs230.group29se.jewelthief.FloorThief;
+import cs230.group29se.jewelthief.FlyingAssasin;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.Level;
+import cs230.group29se.jewelthief.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 /**
@@ -37,8 +40,18 @@ public class Door extends Item {
         Level level = GameManager.getCurrentLevel();
         if (level.containsNoLootAndLevers()) {
             this.closed = false;
-
-
+            //if the player uses the door win
+            //if a theif uses the door
+            System.out.println(this.collector);
+            if (collector instanceof Player player) {
+                // win
+                System.out.println("win");
+            } else if (collector instanceof FloorThief) {
+                level.failLevel("Enemy used the door!");
+                // unsure if more is needed here screen-wise
+            }
+        } else {
+            this.setCollector(null); // the collection has failed
         }
     }
 

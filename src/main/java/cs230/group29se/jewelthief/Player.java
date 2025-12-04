@@ -42,9 +42,8 @@ public class Player implements MoveableCharacter, Protectable {
      */
     public void collectItem(Item item) {
         // If the item is collectable, record that the player collected it
-        if (item instanceof Collectable collectable) {
-            collectable.setCollector(this);
-        }
+        item.setCollector(this);
+
 
         // Then trigger the item's behaviour
         item.interact();
@@ -128,7 +127,6 @@ public class Player implements MoveableCharacter, Protectable {
                 this.currentTile = target;
                 if (occupant instanceof Item item) {
                     collectItem(item);
-                    target.setOccupying(null);
                 }
 
                 return;

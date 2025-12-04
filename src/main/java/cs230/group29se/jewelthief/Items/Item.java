@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief.Items;
 
+import cs230.group29se.jewelthief.MoveableCharacter;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
@@ -14,6 +15,23 @@ public abstract class Item {
      */
     private final int POS_X;
     private final int POS_Y;
+
+    /**
+     * The character that collected this item (Player or NPC).
+     */
+    protected MoveableCharacter collector;
+
+    public void setCollector(MoveableCharacter collector) {
+        this.collector = collector;
+    }
+
+    /**
+     * Gets the character that collected this item.
+     * @return the MoveableCharacter that picked up this item
+     */
+    public MoveableCharacter getCollector() {
+        return collector;
+    }
 
     /**
      * Allows an item to be created and its location in the level.
