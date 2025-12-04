@@ -1,6 +1,9 @@
 package cs230.group29se.jewelthief.Scenes.LevelFinished;
 
+import cs230.group29se.jewelthief.MainApplication;
 import cs230.group29se.jewelthief.Scenes.Screen;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 
 /**
  * Represents the "Level Finished" screen in the game.
@@ -16,7 +19,7 @@ public class LevelFinishedScreen extends Screen {
      */
     public LevelFinishedScreen() {
         setScreenTitle("Level Finished");
-        setScreenFXMLPath("cs230/group29se/jewelthief/level-finished.fxml");
+        setScreenFXMLPath("/cs230/group29se/jewelthief/level-finished.fxml");
     }
 
     /**

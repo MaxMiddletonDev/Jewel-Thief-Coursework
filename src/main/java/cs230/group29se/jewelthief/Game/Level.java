@@ -53,6 +53,7 @@ public class Level {
 
     private boolean failedLevel = false;
     private String failReason = "";
+    private boolean finishedLevel = false;
 
     /**
      * Constructs a Level with the specified level name and game controller.
@@ -320,7 +321,6 @@ public class Level {
      * @param filename the name of the level to be loaded
      * @throws FileNotFoundException if the file name entered is not found
      * @author Ben Poole, Iyaad
-     * @author Ben Poole
      */
     public void readLevelFile(String filename) throws FileNotFoundException {
         String levelId = extractLevelId(filename);
@@ -638,4 +638,17 @@ public class Level {
         return player;
     }
 
+    /**
+     * Gets the current GameController
+     * @return
+     */
+    public GameController getGameController() {return gameController;}
+
+    public boolean isFinishedLevel() {
+        return finishedLevel;
+    }
+
+    public void finishLevel() {
+        this.finishedLevel = true;
+    }
 }

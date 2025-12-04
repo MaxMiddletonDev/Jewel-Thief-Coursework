@@ -5,6 +5,8 @@ import cs230.group29se.jewelthief.FlyingAssasin;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Player;
+import cs230.group29se.jewelthief.Scenes.LevelFinished.LevelFinishedScreen;
+import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 /**
@@ -41,11 +43,11 @@ public class Door extends Item {
         if (level.containsNoLootAndLevers()) {
             this.closed = false;
             //if the player uses the door win
-            //if a theif uses the door
+            //if a thief uses the door
             System.out.println(this.collector);
             if (collector instanceof Player player) {
                 // win
-                System.out.println("win");
+                level.finishLevel();
             } else if (collector instanceof FloorThief) {
                 level.failLevel("Enemy used the door!");
                 // unsure if more is needed here screen-wise

@@ -1,9 +1,9 @@
 {
   "levelId" : "1",
   "profileName" : "testing6",
-  "playerState" : [ 3, 1 ],
+  "playerState" : [ 0, 1 ],
   "elapsedSeconds" : 0,
-  "timeRemainingMs" : 17393,
+  "timeRemainingMs" : 1788,
   "npcStates" : {
     "FOLLOWER#4#6" : "DOWN",
     "SMART#5#7" : "LEFT",

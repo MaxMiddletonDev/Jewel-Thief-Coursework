@@ -6,6 +6,7 @@ import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.MainApplication;
 import cs230.group29se.jewelthief.Player;
 import cs230.group29se.jewelthief.Scenes.LevelFailedScene.LevelFailedScreen;
+import cs230.group29se.jewelthief.Scenes.LevelFinished.LevelFinishedScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -99,6 +100,8 @@ public class GameScreen extends Screen {
 
         if (GameManager.getCurrentLevel().isLevelFailed()) {
             loadFailedLevelScreen();
+        } else if (GameManager.getCurrentLevel().isFinishedLevel()) {
+            loadLevelFinishedScreen();
         }
     }
 
@@ -123,6 +126,11 @@ public class GameScreen extends Screen {
             autosaveTimeline.stop();
         }
         setNextScreen(new LevelFailedScreen());
+        setFinished(true);
+    }
+
+    public  void loadLevelFinishedScreen() {
+        setNextScreen(new LevelFinishedScreen());
         setFinished(true);
     }
 
