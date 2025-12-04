@@ -12,6 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 /**
  * Represents the game screen in the game.
@@ -23,6 +27,7 @@ import javafx.scene.layout.Pane;
 public class GameScreen extends Screen {
 
     private GameController controller;
+    private Timeline autosaveTimeline;
 
     /**
      * Constructs a GameScreen and sets its title and FXML path.
@@ -72,19 +77,15 @@ public class GameScreen extends Screen {
                 }
             }
         });
-    }
-
-    /**
-     * Placeholder method for determining if the current level has saved data.
-     * This method currently always returns false.
-     *
-     * @return false, indicating no save data is available.
-     */
-    public boolean levelHasSaveData() {
-        // If you want to keep this, you can delegate to PersistenceManager
-        // once you have a reference here. For now, GameManager.loadLevelForProfile
-        // already checks for SaveData, so this method can be unused.
-        return false;
+        //Adds saving every second.
+        autosaveTimeline = new Timeline(
+                new KeyFrame(
+                        Duration.millis(1000),
+                        e -> GameManager.saveCurrentGameState()
+                )
+        );
+        autosaveTimeline.setCycleCount(Animation.INDEFINITE);
+        autosaveTimeline.play();
     }
 
     /**
@@ -117,6 +118,10 @@ public class GameScreen extends Screen {
      * Loads the level failed screen and marks the current screen as finished.
      */
     public void loadFailedLevelScreen() {
+        // Stop autosaving
+        if (autosaveTimeline != null) {
+            autosaveTimeline.stop();
+        }
         setNextScreen(new LevelFailedScreen());
         setFinished(true);
     }

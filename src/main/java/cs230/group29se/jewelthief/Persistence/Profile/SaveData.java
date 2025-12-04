@@ -32,6 +32,9 @@ public class SaveData {
      * Cumulative play time in seconds, non-negative.
      */
     private int elapsedSeconds;
+    /** Remaining time for this level in milliseconds, non-negative.
+     */
+    private int timeRemainingMs;
     /**
      * NPC states keyed by NPC identifier. Values must be JSON-serializable.
      */
@@ -47,7 +50,6 @@ public class SaveData {
     /**
      * No-arg constructor required by JSON deserializers.
      */
-
     public SaveData() {}
     /**
      * Gets the level identifier.
@@ -89,6 +91,8 @@ public class SaveData {
      * @param elapsedSeconds  non-negative seconds
      */
     public void setElapsedSeconds(int elapsedSeconds) { this.elapsedSeconds = elapsedSeconds; }
+    public int getTimeRemainingMs() { return timeRemainingMs; }
+    public void setTimeRemainingMs(int timeRemainingMs) { this.timeRemainingMs = timeRemainingMs; }
     /**
      * Gets NPC states (npcId → state).
      * @return map

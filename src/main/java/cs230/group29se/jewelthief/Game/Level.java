@@ -71,7 +71,13 @@ public class Level {
             e.printStackTrace();
         }
 
-        timeRemaining = maxTime * 1000L;
+        // NEW: initialize timeRemaining from SaveData if available, else from maxTime
+        if (saveData != null && saveData.getTimeRemainingMs() > 0) {
+            timeRemaining = saveData.getTimeRemainingMs();
+        } else {
+            timeRemaining = maxTime * 1000L;
+        }
+
         lastUpdateTime = System.nanoTime();
         gameController.scoreLabel.setText("Score: " + score);
     }
@@ -179,6 +185,10 @@ public class Level {
             return grid[x][y];
         }
         return null;
+    }
+
+    public long getTimeRemainingMs() {
+        return timeRemaining;
     }
 
     /**

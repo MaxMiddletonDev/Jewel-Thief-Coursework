@@ -18,6 +18,7 @@ public class SaveFactory {
         s.setProfileName(profileName);
         s.setLevelId(def.levelId);
         s.setElapsedSeconds(0);
+        s.setTimeRemainingMs(def.timeLimitSec * 1000);
 
         // Example simple player state: [x, y]
         if (def.playerStart != null) {

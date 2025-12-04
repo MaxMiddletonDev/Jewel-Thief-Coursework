@@ -111,7 +111,9 @@ public final class GameManager {
         int py = pos[1];
 
         s.setPlayerState(new Object[] { px, py });
-
+        // (timeRemaining is milliseconds, but via getter we convert to seconds; we want raw ms)
+        int timeMs = (int) currentLevel.getTimeRemainingMs();
+        s.setTimeRemainingMs(timeMs);
         PM.setCachedSave(s);
         PM.saveGame();
     }
