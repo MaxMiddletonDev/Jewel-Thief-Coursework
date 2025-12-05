@@ -4,6 +4,7 @@ import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
 import cs230.group29se.jewelthief.Items.Collectable;
 import cs230.group29se.jewelthief.Items.Item;
+import cs230.group29se.jewelthief.Items.Lever;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -70,6 +71,12 @@ public class FloorThief extends NonPlayableCharacter{
 
     @Override
     public void collectItem(Item item) {
+        if (item == null) {
+            return;
+        }
+
+        collectedItems.add(item);
+
         if (item instanceof Collectable collectable) {
             collectable.setCollector(this);
         }
@@ -146,7 +153,7 @@ public class FloorThief extends NonPlayableCharacter{
 
     /**
      * checks if a tile a thief wants to move in is 1) a valid tile to actually move to i.e. not an edge, and 2) shares
-     * a common colour with the thief's assigned colour.
+     * a common colour with the thief's assigned colour, 3) tile does not contain a bomb or unpassable gate
      * @param moveDirection - direction to move towards
      * @return true if conditions are met, false otherwise
      */
@@ -170,7 +177,36 @@ public class FloorThief extends NonPlayableCharacter{
         }
 
         Tile targetTile = level.getTile(thiefTargetX, thiefTargetY);
-        return targetTile != null && targetTile.containsColour(assignedColour);
+        if (targetTile == null) {
+            return false;
+        }
+
+        if (!targetTile.containsColour(assignedColour)) {
+            return false;
+        }
+
+        if (targetTile.hasBomb()) {
+            return false;
+        }
+
+        if (targetTile.hasGate()) {
+            return hasLever(targetTile.getGateColour());
+        }
+        return true;
+    }
+
+    /**
+     * Checks if an NPC has the appropriate lever colour
+     * @param colour
+     * @return
+     */
+    public boolean hasLever(Colour colour) {
+        for (Item item : collectedItems) {
+            if (item instanceof Lever && ((Lever) item).getColour() == colour) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

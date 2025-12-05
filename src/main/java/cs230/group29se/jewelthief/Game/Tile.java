@@ -148,4 +148,31 @@ public class Tile {
     public Object getOccupying(){
         return occupying;
     }
+
+    /**
+     * Checks if a tile has a bomb
+     * @return true if there is a bomb on a tile
+     */
+    public boolean hasBomb() {
+        return occupying instanceof cs230.group29se.jewelthief.Items.Bomb;
+    }
+
+    /**
+     * checks if a tile has a gate
+     * @return true if there is a gate on a tile
+     */
+    public boolean hasGate() {
+        return occupying instanceof cs230.group29se.jewelthief.Items.Gate;
+    }
+
+    /**
+     * Checks a gates colour
+     * @return gate colour
+     */
+    public Colour getGateColour() {
+        if (occupying instanceof cs230.group29se.jewelthief.Items.Gate) {
+            return ((cs230.group29se.jewelthief.Items.Gate)occupying).getColour();
+        }
+        return null;
+    }
 }

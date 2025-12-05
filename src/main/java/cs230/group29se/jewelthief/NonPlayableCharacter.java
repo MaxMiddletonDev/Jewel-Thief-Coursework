@@ -5,6 +5,7 @@ import cs230.group29se.jewelthief.Game.Tile;
 import cs230.group29se.jewelthief.Items.Item;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
     /**
      * Tells us what items an NPC has collected
      */
-    protected List<Item> collectedItems;
+    protected List<Item> collectedItems = new ArrayList<>();
 
     /**
      * Tells us whether an NPC is protected or not
