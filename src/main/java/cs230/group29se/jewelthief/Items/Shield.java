@@ -1,6 +1,7 @@
 package cs230.group29se.jewelthief.Items;
 
 import cs230.group29se.jewelthief.Entities.Protectable;
+import cs230.group29se.jewelthief.Game.Tile;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -47,6 +48,8 @@ public class Shield extends Destroyable {
      */
     @Override
     public void draw(GraphicsContext gc) {
-        gc.drawImage(image, getX() * 64, getY() * 64);
+        gc.drawImage(image, getX()* Tile.TILE_SIZE + Tile.HALF_TILE_SIZE/2,
+                getY()* Tile.TILE_SIZE + Tile.HALF_TILE_SIZE/2,
+                Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
     }
 }
