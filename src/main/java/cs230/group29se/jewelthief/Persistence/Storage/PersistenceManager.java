@@ -221,9 +221,13 @@ public class PersistenceManager {
     private HighScoresDTO loadHighScoresDTO() {
         String path = pathHighScores();
         try {
+            System.out.println("Reading highscores from: " + path
+                    + " (base dir = " + fileStore.getBaseDir() + ")");
             String json = fileStore.read(path);
+            System.out.println("JSON length = " + json.length());
             return serializer.fromJson(json, HighScoresDTO.class);
         } catch (RuntimeException ex) {
+            ex.printStackTrace();
             return new HighScoresDTO();
         }
     }

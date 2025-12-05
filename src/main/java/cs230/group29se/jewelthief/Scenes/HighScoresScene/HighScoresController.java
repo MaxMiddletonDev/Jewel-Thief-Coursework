@@ -39,26 +39,29 @@ public class HighScoresController extends BaseController {
 
     // Called from HighScoresScreen.initialize()
     public void loadData() {
+        System.out.println("[HighScoresController] loadData called");
+
         setupColumns();
 
         // Global scores
         List<HighScoreEntry> global = GameHighScoresHelper.loadGlobalHighScores();
+        System.out.println("Global highscores size = " + global.size());
+        for (HighScoreEntry e : global) {
+            System.out.println("  GLOBAL " + e.getProfileName() + " " + e.getScore());
+        }
         globalTable.getItems().setAll(global);
 
         // Per-level scores
         perLevelCache = GameHighScoresHelper.loadPerLevelHighScores();
+        System.out.println("Per-level keys = " + perLevelCache.keySet());
 
-        // Fill ComboBox with sorted level IDs ("1","2","3",...)
         var levelIds = new java.util.ArrayList<>(perLevelCache.keySet());
         levelIds.sort(java.util.Comparator.comparingInt(Integer::parseInt));
-
         levelComboBox.getItems().setAll(levelIds);
 
-        // Default selection: level "1" if present, else first available
         String defaultLevel = levelIds.contains("1")
                 ? "1"
                 : (levelIds.isEmpty() ? null : levelIds.get(0));
-
         if (defaultLevel != null) {
             levelComboBox.getSelectionModel().select(defaultLevel);
             updateLevelTable(defaultLevel);
@@ -66,7 +69,6 @@ public class HighScoresController extends BaseController {
             levelTable.getItems().clear();
         }
     }
-
     private void setupColumns() {
         if (globalTable.getColumns().isEmpty()) {
             TableColumn<HighScoreEntry, String> nameCol = new TableColumn<>("Profile");

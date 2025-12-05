@@ -49,19 +49,11 @@ public class LevelFailedController extends BaseController implements Initializab
      * Restarts the current level by transitioning to the GameScreen.
      */
     public void restartLevel() {
-        // Check how much time was left when we failed
-        long timeLeftSec = GameManager.getCurrentLevel().getTimeRemainingTimeInSeconds();
+        //  Reset level: remove save for current profile+level
+        PersistenceManager pm = GameManager.getPersistenceManager();
+        pm.deleteSaveForCurrentLevel();
 
-        if (timeLeftSec <= 0) {
-            // Time-out failure: remove the save so next load is fresh
-            PersistenceManager pm = GameManager.getPersistenceManager();
-            pm.deleteSaveForCurrentLevel();
-        }
-        // For non-timeout failures, we keep the save as-is
-
-        // Transition to a new GameScreen; GameScreen.initialize()
-        // will call GameManager.loadLevelForProfile, which will either
-        // use the remaining save or reload fresh if we deleted it.
+        // New GameScreen, load from txt
         getScreen().setNextScreen(new GameScreen());
         getScreen().setFinished(true);
     }

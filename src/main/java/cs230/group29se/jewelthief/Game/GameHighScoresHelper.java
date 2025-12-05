@@ -8,13 +8,15 @@ import java.util.Map;
 
 public class GameHighScoresHelper {
 
-    private static final PersistenceManager PM = GameManager.getPersistenceManager();
-
+    // Helper to always get current PersistenceManager
+    private static PersistenceManager pm() {
+        return GameManager.getPersistenceManager();
+    }
     public static List<HighScoreEntry> loadGlobalHighScores() {
-        return PM.loadGlobalHighScores();
+        return pm().loadGlobalHighScores();
     }
 
     public static Map<String, List<HighScoreEntry>> loadPerLevelHighScores() {
-        return PM.loadPerLevelHighScores();
+        return pm().loadPerLevelHighScores();
     }
 }

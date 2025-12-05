@@ -73,6 +73,8 @@ public class FileStore {
         }
     }
 
+    public String getBaseDir () { return baseDir.toAbsolutePath().toString(); }
+
     private Path resolve(String relative) { return baseDir.resolve(relative.replace("\\", "/")); }
     private static void ensureDir(Path d) { try { Files.createDirectories(d); } catch (IOException e) { throw new RuntimeException(e); } }
 }
