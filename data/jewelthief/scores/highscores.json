@@ -3,64 +3,68 @@
     "1" : [ {
       "profileName" : "john tester",
       "score" : 20,
-      "timestamp" : "2025-12-05T12:03:27.308841300Z",
-      "formattedTime" : "2025-12-05 12:03"
+      "formattedTime" : ""
     }, {
       "profileName" : "newertesting",
       "score" : 20,
-      "timestamp" : "2025-12-05T12:13:04.100475800Z",
-      "formattedTime" : "2025-12-05 12:13"
+      "formattedTime" : ""
     }, {
       "profileName" : "john tester",
       "score" : 20,
-      "timestamp" : "2025-12-05T12:14:25.891816Z",
-      "formattedTime" : "2025-12-05 12:14"
+      "formattedTime" : ""
     }, {
       "profileName" : "john tester",
       "score" : 20,
-      "timestamp" : "2025-12-05T12:22:51.108883100Z",
-      "formattedTime" : "2025-12-05 12:22"
+      "formattedTime" : ""
     }, {
       "profileName" : "john tester",
       "score" : 0,
-      "timestamp" : "2025-12-05T11:39:07.985590700Z",
-      "formattedTime" : "2025-12-05 11:39"
+      "formattedTime" : ""
     }, {
       "profileName" : "john tester",
       "score" : 0,
-      "timestamp" : "2025-12-05T12:21:59.857882200Z",
-      "formattedTime" : "2025-12-05 12:21"
+      "formattedTime" : ""
+    }, {
+      "profileName" : "testing7",
+      "score" : 0,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "testing7",
+      "score" : 0,
+      "formattedTime" : "2025-12-05 12:30"
     } ]
   },
   "globalRanking" : [ {
     "profileName" : "john tester",
     "score" : 20,
-    "timestamp" : "2025-12-05T12:03:27.308841300Z",
-    "formattedTime" : "2025-12-05 12:03"
+    "formattedTime" : ""
   }, {
     "profileName" : "newertesting",
     "score" : 20,
-    "timestamp" : "2025-12-05T12:13:04.100475800Z",
-    "formattedTime" : "2025-12-05 12:13"
+    "formattedTime" : ""
   }, {
     "profileName" : "john tester",
     "score" : 20,
-    "timestamp" : "2025-12-05T12:14:25.891816Z",
-    "formattedTime" : "2025-12-05 12:14"
+    "formattedTime" : ""
   }, {
     "profileName" : "john tester",
     "score" : 20,
-    "timestamp" : "2025-12-05T12:22:51.108883100Z",
-    "formattedTime" : "2025-12-05 12:22"
+    "formattedTime" : ""
   }, {
     "profileName" : "john tester",
     "score" : 0,
-    "timestamp" : "2025-12-05T11:39:07.985590700Z",
-    "formattedTime" : "2025-12-05 11:39"
+    "formattedTime" : ""
   }, {
     "profileName" : "john tester",
     "score" : 0,
-    "timestamp" : "2025-12-05T12:21:59.857882200Z",
-    "formattedTime" : "2025-12-05 12:21"
+    "formattedTime" : ""
+  }, {
+    "profileName" : "testing7",
+    "score" : 0,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "testing7",
+    "score" : 0,
+    "formattedTime" : "2025-12-05 12:30"
   } ]
 }

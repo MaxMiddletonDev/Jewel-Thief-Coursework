@@ -62,8 +62,6 @@ public class LevelFinishedController extends BaseController implements Initializ
      * Starts the next level in numerical order
      */
     public void selectNextLevel() {
-        PersistenceManager pm = GameManager.getPersistenceManager();
-        pm.deleteSaveForCurrentLevel();
         int currentLevelNumber = GameManager.getCurrentLevel().getLevelNumber();
         GameManager.setCurrentLevelNumber(currentLevelNumber + 1);
         getScreen().setNextScreen(new GameScreen());
@@ -74,8 +72,6 @@ public class LevelFinishedController extends BaseController implements Initializ
      * Returns to the main menu
      */
     public void MainMenu() {
-        PersistenceManager pm = GameManager.getPersistenceManager();
-        pm.deleteSaveForCurrentLevel();
         getScreen().setNextScreen(new MainMenuScreen());
         getScreen().setFinished(true);
     }
