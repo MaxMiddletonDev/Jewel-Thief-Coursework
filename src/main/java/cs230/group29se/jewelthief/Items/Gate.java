@@ -1,7 +1,6 @@
 package cs230.group29se.jewelthief.Items;
 
-import cs230.group29se.jewelthief.Colour;
-import cs230.group29se.jewelthief.Remove;
+import cs230.group29se.jewelthief.Game.Colour;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 

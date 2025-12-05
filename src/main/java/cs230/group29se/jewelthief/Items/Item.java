@@ -1,6 +1,6 @@
 package cs230.group29se.jewelthief.Items;
 
-import cs230.group29se.jewelthief.MoveableCharacter;
+import cs230.group29se.jewelthief.Entities.MoveableCharacter;
 import javafx.scene.canvas.GraphicsContext;
 
 /**

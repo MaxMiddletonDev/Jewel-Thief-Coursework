@@ -1,7 +1,7 @@
 package cs230.group29se.jewelthief.Game;
 
-import cs230.group29se.jewelthief.Direction;
-import cs230.group29se.jewelthief.NonPlayableCharacter;
+import cs230.group29se.jewelthief.Entities.Direction;
+import cs230.group29se.jewelthief.Entities.NonPlayableCharacter;
 import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
 import cs230.group29se.jewelthief.Persistence.Profile.SaveData;
 import cs230.group29se.jewelthief.Persistence.Profile.SaveFactory;

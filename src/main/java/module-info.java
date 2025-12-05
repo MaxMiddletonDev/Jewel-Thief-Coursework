@@ -29,6 +29,10 @@ module cs230.group29se.jewelthief {
     exports cs230.group29se.jewelthief.Scenes.LevelFinished;
     exports cs230.group29se.jewelthief.Items;
     opens cs230.group29se.jewelthief.Items to javafx.fxml;
+    exports cs230.group29se.jewelthief.Entities;
+    opens cs230.group29se.jewelthief.Entities to javafx.fxml;
+    exports cs230.group29se.jewelthief.Game;
+    opens cs230.group29se.jewelthief.Game to javafx.fxml;
 
 
 }

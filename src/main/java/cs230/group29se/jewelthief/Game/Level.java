@@ -1,6 +1,6 @@
 package cs230.group29se.jewelthief.Game;
 
-import cs230.group29se.jewelthief.*;
+import cs230.group29se.jewelthief.Entities.*;
 import cs230.group29se.jewelthief.Items.Bomb;
 import cs230.group29se.jewelthief.Items.Clock;
 import cs230.group29se.jewelthief.Items.Door;

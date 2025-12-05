@@ -1,5 +1,6 @@
-package cs230.group29se.jewelthief;
+package cs230.group29se.jewelthief.Entities;
 
+import cs230.group29se.jewelthief.Game.Colour;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
 

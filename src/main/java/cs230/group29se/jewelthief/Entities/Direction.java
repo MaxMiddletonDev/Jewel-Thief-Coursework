@@ -1,4 +1,4 @@
-package cs230.group29se.jewelthief;
+package cs230.group29se.jewelthief.Entities;
 
 /**
  * Enum to show the possible movements for Player and NPCs.

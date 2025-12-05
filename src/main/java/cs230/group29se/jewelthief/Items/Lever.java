@@ -4,7 +4,7 @@ package cs230.group29se.jewelthief.Items;
 // i didnt mean to dont want to fully remove it incase.
 import java.util.ArrayList;
 
-import cs230.group29se.jewelthief.Colour;
+import cs230.group29se.jewelthief.Game.Colour;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 

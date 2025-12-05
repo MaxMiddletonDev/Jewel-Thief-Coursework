@@ -1,8 +1,8 @@
-package cs230.group29se.jewelthief;
+package cs230.group29se.jewelthief.Entities;
 
-import cs230.group29se.jewelthief.Entities.Protectable;
 import cs230.group29se.jewelthief.Game.Tile;
 import cs230.group29se.jewelthief.Items.Item;
+import cs230.group29se.jewelthief.MainApplication;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;

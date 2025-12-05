@@ -1,5 +1,6 @@
-package cs230.group29se.jewelthief;
+package cs230.group29se.jewelthief.Entities;
 
+import cs230.group29se.jewelthief.Game.Colour;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
 import cs230.group29se.jewelthief.Items.Bomb;
@@ -16,7 +17,7 @@ import javafx.scene.image.Image;
  *
  * @author Baba
  */
-public class FloorThief extends NonPlayableCharacter{
+public class FloorThief extends NonPlayableCharacter {
 
     /**
      * Stores a FloorThief's assigned colour

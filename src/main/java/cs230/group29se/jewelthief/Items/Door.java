@@ -1,12 +1,9 @@
 package cs230.group29se.jewelthief.Items;
 
-import cs230.group29se.jewelthief.FloorThief;
-import cs230.group29se.jewelthief.FlyingAssasin;
+import cs230.group29se.jewelthief.Entities.FloorThief;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.Level;
-import cs230.group29se.jewelthief.Player;
-import cs230.group29se.jewelthief.Scenes.LevelFinished.LevelFinishedScreen;
-import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
+import cs230.group29se.jewelthief.Entities.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 /**

@@ -1,7 +1,5 @@
 package cs230.group29se.jewelthief.Items;
 
-import cs230.group29se.jewelthief.MoveableCharacter;
-import cs230.group29se.jewelthief.Remove;
 import javafx.scene.canvas.GraphicsContext;
 
 /**

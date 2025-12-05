@@ -1,11 +1,7 @@
 package cs230.group29se.jewelthief.Game;
 
-import cs230.group29se.jewelthief.Colour;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-
-import java.util.Arrays;
-import java.util.Comparator;
 
 /**
  * Represents a tile in the game, which is divided into four quadrants,
