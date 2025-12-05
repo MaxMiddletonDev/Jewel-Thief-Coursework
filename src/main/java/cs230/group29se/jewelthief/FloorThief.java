@@ -69,6 +69,10 @@ public class FloorThief extends NonPlayableCharacter{
         }
     }
 
+    /**
+     * Collects Items and calls relevant logic
+     * @param item
+     */
     @Override
     public void collectItem(Item item) {
         if (item == null) {
@@ -81,6 +85,8 @@ public class FloorThief extends NonPlayableCharacter{
             collectable.setCollector(this);
         }
         item.interact();
+
+        level.removeItem(item);
     }
 
     /**

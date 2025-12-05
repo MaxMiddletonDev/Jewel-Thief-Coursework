@@ -98,10 +98,28 @@ public class Level {
             if (npc.isAlive()) {
                 npc.move();
                 npc.updateHitCooldown();
+                checkAndCollectItem(npc);
             }
         }
 
         checkCollisions();
+    }
+
+    /**
+     * Checks if a tile has an Item and calls an NPC's collectItem method if it does
+     * @param npc
+     */
+    private void checkAndCollectItem(NonPlayableCharacter npc) {
+        int[] position = npc.getPosition();
+        Tile tile = getTile(position[0], position[1]);
+
+        if (tile != null) {
+            Object occupying = tile.getOccupying();
+            if (occupying instanceof Item) {
+                Item item = (Item) occupying;
+                npc.collectItem(item);
+            }
+        }
     }
 
     /**
