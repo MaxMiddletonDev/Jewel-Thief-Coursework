@@ -29,13 +29,26 @@ public class FloorThief extends NonPlayableCharacter{
 
     private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/FLOORTHIEF.png").toString());
 
-    public FloorThief(Colour assignedColour, Tile startingTile, Direction direction, Level level) {
+    public FloorThief(Colour assignedColour, Tile startingTile, Direction direction, Level level, String id) {
         super(startingTile, direction);
+        this.id = id;
         this.assignedColour = assignedColour;
         this.level = level;
 
         setMoveCooldownSeconds(0.5f); // Floor Thief moves every 1 second
         setHitCooldownSeconds(2); // Floor Thief can hit every 2 seconds
+    }
+
+    //FOR TESTING TO AVOID ERRORS WITH SMARTTHIEF
+    public FloorThief(Colour assignedColour,
+                      Tile startingTile,
+                      Direction direction,
+                      Level level) {
+        this(assignedColour,
+                startingTile,
+                direction,
+                level,
+                "FLOORTHIEF#" + startingTile.getX() + "#" + startingTile.getY());
     }
 
     /**

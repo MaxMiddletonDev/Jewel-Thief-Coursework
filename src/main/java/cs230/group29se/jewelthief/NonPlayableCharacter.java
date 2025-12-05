@@ -18,22 +18,27 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
     /**
      * Gives us an NPCs current tile on which they're on.
      */
-    protected Tile currentTile;
+    public Tile currentTile;
 
     /**
      * tells us if an NPC is alive or not
      */
-    protected boolean isAlive;
+    public boolean isAlive;
 
     /**
      * tells us which direction an NPC is facing
      */
-    protected Direction direction;
+    public Direction direction;
 
     /**
      * Tells us what items an NPC has collected
      */
     protected List<Item> collectedItems = new ArrayList<>();
+
+    /**
+     * Used for saving npcs name and location
+     */
+    protected String id;
 
     /**
      * Tells us whether an NPC is protected or not
@@ -56,6 +61,10 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
         this.direction = direction;
         this.isAlive = true;
     }
+
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id; }
 
     @Override
     public boolean isAlive() {

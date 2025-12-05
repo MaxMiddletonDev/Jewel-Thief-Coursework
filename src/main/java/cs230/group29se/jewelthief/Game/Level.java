@@ -344,9 +344,7 @@ public class Level {
         String levelId = extractLevelId(filename);
         java.nio.file.Path levelPath = java.nio.file.Path.of("levels", filename);
         LevelDef def = new LevelLoader().loadLevel(levelId, levelPath);
-
         maxTime = def.timeLimitSec;
-
         int x = def.width;
         int y = def.height;
         grid = new Tile[x][y];
@@ -355,7 +353,6 @@ public class Level {
         for (int row = 0; row < y; row++) {
             String rowString = def.tiles.get(row);      // e.g. "YYYY RBYG YRGB BRGY"
             String[] tileTokens = rowString.split("\\s+");
-
             for (int col = 0; col < x; col++) {
                 String sequence = tileTokens[col];      // e.g. "YYYY"
                 Colour[] colours = new Colour[4];
@@ -363,10 +360,8 @@ public class Level {
                     char colChar = sequence.charAt(z);
                     colours[z] = colourSetter(String.valueOf(colChar));
                 }
-
                 int xPos = (x - 1) - col;    // 0..x-1
-                int yPos = (y-1) - row;    // 0..y-1
-
+                int yPos = (y - 1) - row;    // 0..y-1
                 grid[xPos][yPos] = new Tile(xPos, yPos, colours);
             }
         }
@@ -374,66 +369,55 @@ public class Level {
         // Player start
         if (saveData != null && saveData.getPlayerState() != null && saveData.getPlayerState().length >= 2) {
             Object[] ps = saveData.getPlayerState();
-            int px = ((Number) ps[0]).intValue();  // here px/py are TILE indices, not pixels
+            int px = ((Number) ps[0]).intValue();  // tile indices
             int py = ((Number) ps[1]).intValue();
-
             // clamp to grid bounds just in case
             px = Math.max(0, Math.min(px, getWidth() - 1));
             py = Math.max(0, Math.min(py, getHeight() - 1));
-
             player = new Player(grid[px][py], this);
         } else if (def.playerStart != null) {
             int xPos = def.playerStart.x;  // tile index
             int yPos = def.playerStart.y;  // tile index
-
             // clamp to grid bounds just in case
             xPos = Math.max(0, Math.min(xPos, getWidth() - 1));
             yPos = Math.max(0, Math.min(yPos, getHeight() - 1));
-
             // use tile indices directly
-            double px = xPos;  // tile index, not pixels
-            double py = yPos;  // tile index, not pixels
-
+            double px = xPos;
+            double py = yPos;
             player = new Player(grid[(int) px][(int) py], this);
         }
 
-        // Items and gates
+        // Items and gates + ENEMIES
         for (EntityDef e : def.entities) {
             int rawX = e.x;
             int rawY = e.y;
-
             int xPos = rawX - 1;
-            int yPos = rawY - 1;   // flip to reflect level design
+            int yPos = rawY - 1;  // flip to reflect level design
+            String npcId = e.type + "#" + rawX + "#" + rawY;
 
             switch (e.type) {
-                //TODO add other npcs
                 case "FLYING" -> {
                     // e.arg1 = direction string ("UP","DOWN","LEFT","RIGHT")
                     String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
-
-                    FlyingAssasin tempEnemy = new FlyingAssasin(grid[xPos][yPos], direction, this);
+                    FlyingAssasin tempEnemy = new FlyingAssasin(grid[xPos][yPos], direction, this, npcId);
                     enemies.add(tempEnemy);
                 }
-
                 case "SMART" -> {
                     String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
-
-                    // SmartEnemy enemy = new SmartEnemy(xPos, yPos, direction);
+                    // SmartEnemy enemy = new SmartEnemy(xPos, yPos, direction, this, npcId);
                     // grid[xPos][yPos].setOccupying(enemy);
                 }
-
                 case "FOLLOWER" -> {
                     // e.arg1 = direction, e.arg2 = follower colour ("R","G","B","Y")
                     String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
                     String followerColour = e.arg2;
                     Colour colour = colourSetter(followerColour);
-                    FloorThief tempEnemy = new FloorThief(colour, grid[xPos][yPos], direction, this);
+                    FloorThief tempEnemy = new FloorThief(colour, grid[xPos][yPos], direction, this, npcId);
                     enemies.add(tempEnemy);
                 }
-
                 case "LOOT" -> {
                     String value = e.arg1;
                     Loot tempLoot;
@@ -465,8 +449,8 @@ public class Level {
                     Gate tempGate = new Gate(colour, xPos, yPos);
                     gates.add(tempGate);
                     grid[xPos][yPos].setOccupying(tempGate);
-                    for(Item item : items) {
-                        if(item instanceof Lever lever){
+                    for (Item item : items) {
+                        if (item instanceof Lever lever) {
                             if (tempGate.getColour() == lever.getColour()) {
                                 lever.addGate(tempGate);
                             }
@@ -483,12 +467,50 @@ public class Level {
                     items.add(tempClock);
                     grid[xPos][yPos].setOccupying(tempClock);
                 }
-                case "SHIELD" ->{
+                case "SHIELD" -> {
                     Shield shield = new Shield(xPos, yPos);
                     items.add(shield);
                     grid[xPos][yPos].setOccupying(shield);
                 }
-                default -> {
+                default -> { }
+            }
+        }
+
+        // Applying saved enemy states from saveData.npcStates
+        if (saveData != null && saveData.getNpcStates() != null) {
+            java.util.Map<String, Object> savedNpcs = saveData.getNpcStates();
+            for (NonPlayableCharacter npc : enemies) {
+                String id = npc.getId(); // npcId set in their constructors
+                Object rawState = savedNpcs.get(id);
+                if (!(rawState instanceof java.util.Map<?, ?>)) continue;
+
+                @SuppressWarnings("unchecked")
+                java.util.Map<String, Object> state = (java.util.Map<String, Object>) rawState;
+
+                Object sX = state.get("x");
+                Object sY = state.get("y");
+                Object sDir = state.get("dir");
+                Object sAlive = state.get("alive");
+
+                if (sX instanceof Number && sY instanceof Number) {
+                    int ex = ((Number) sX).intValue();
+                    int ey = ((Number) sY).intValue();
+
+                    // clamp to grid bounds
+                    if (ex >= 0 && ex < getWidth() && ey >= 0 && ey < getHeight()) {
+                        Tile target = getTile(ex, ey);
+                        if (target != null) {
+                            npc.currentTile = target; // same field used in NPC draw/move
+                        }
+                    }
+                }
+
+                if (sDir instanceof String) {
+                    npc.direction = directionSetter((String) sDir);
+                }
+
+                if (sAlive instanceof Boolean) {
+                    npc.isAlive = (Boolean) sAlive;
                 }
             }
         }
@@ -658,9 +680,17 @@ public class Level {
 
     /**
      * Gets the current GameController
-     * @return
+     * @return the game controller
      */
     public GameController getGameController() {return gameController;}
+
+    /**
+     * Gets the list of all enemies
+     * @return all the npcs.
+     */
+    public java.util.List<NonPlayableCharacter> getEnemies() {
+        return enemies;
+    }
 
     public boolean isFinishedLevel() {
         return finishedLevel;

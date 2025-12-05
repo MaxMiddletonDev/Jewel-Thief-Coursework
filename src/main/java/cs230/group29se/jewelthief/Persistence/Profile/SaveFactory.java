@@ -28,12 +28,8 @@ public class SaveFactory {
             s.setPlayerState(new Object[] { 0, 0 }); // fallback
         }
 
-        // Example: store npcStates / gates / items as simple maps keyed by "type#x#y"
+        // store npcStates / gates / items as simple maps keyed by "type#x#y" as defined in their constructors
         Map<String, Object> npcStates = new HashMap<>();
-        for (EntityDef e : def.npcStartStates) {
-            String key = e.type + "#" + e.x + "#" + e.y;
-            npcStates.put(key, e.arg1); // or a small DTO if you want
-        }
         s.setNpcStates(npcStates);
 
         Map<String, Object> gates = new HashMap<>();

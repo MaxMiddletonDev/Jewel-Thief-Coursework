@@ -1,20 +1,20 @@
 {
   "levelId" : "1",
-  "profileName" : "testing4",
-  "playerState" : [ 6, 7 ],
+  "profileName" : "testing2",
+  "playerState" : [ 0, 7 ],
   "elapsedSeconds" : 0,
-  "timeRemainingMs" : 18179,
+  "timeRemainingMs" : 6908,
   "npcStates" : {
     "FLYING#1#8" : {
       "alive" : true,
-      "x" : 5,
+      "x" : 7,
       "y" : 7,
-      "dir" : "RIGHT"
+      "dir" : "LEFT"
     },
     "FOLLOWER#1#3" : {
       "alive" : true,
       "x" : 0,
-      "y" : 5,
+      "y" : 6,
       "dir" : "DOWN"
     }
   },

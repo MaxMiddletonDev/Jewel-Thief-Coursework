@@ -22,8 +22,9 @@ public class FlyingAssasin extends NonPlayableCharacter {
     /**
      * Constructor for creating new instance of FlyingAssasin.
      */
-    public FlyingAssasin(Tile startingTile, Direction direction, Level level) {
+    public FlyingAssasin(Tile startingTile, Direction direction, Level level, String id) {
         super(startingTile, direction);
+        this.id = id;
         this.level = level;
         setMoveCooldownSeconds(0.3F); // Flying Assasin moves every 2 seconds
         setHitCooldownSeconds(1.5); // Flying Assasin can hit every 2 seconds
