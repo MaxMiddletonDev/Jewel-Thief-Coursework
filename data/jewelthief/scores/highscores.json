@@ -1,82 +1,66 @@
 {
-  "perLevelBest": {
-    "1": [
-      {
-        "profileName": "testingscore1",
-        "score": 1500,
-        "timestamp": "2025-11-30T18:15:00Z"
-      },
-      {
-        "profileName": "testingscore2",
-        "score": 1300,
-        "timestamp": "2025-11-29T20:45:00Z"
-      },
-      {
-        "profileName": "testingscore4",
-        "score": 900,
-        "timestamp": "2025-11-28T16:05:00Z"
-      },
-      {
-        "profileName": "john tester",
-        "score": 20,
-        "timestamp": "2025-12-05T10:41:19.422024800Z"
-      }
-    ],
-    "2": [
-      {
-        "profileName": "testingscore4",
-        "score": 1800,
-        "timestamp": "2025-11-30T19:00:00Z"
-      },
-      {
-        "profileName": "testingscore5",
-        "score": 2200,
-        "timestamp": "2025-11-30T19:30:00Z"
-      }
-    ],
-    "3": [
-      {
-        "profileName": "testingscore6",
-        "score": 1200,
-        "timestamp": "2025-12-02T05:43:17.416521800Z"
-      }
-    ]
+  "perLevelBest" : {
+    "1" : [ {
+      "profileName" : "john tester",
+      "score" : 20,
+      "timestamp" : "2025-12-05T12:03:27.308841300Z",
+      "formattedTime" : "2025-12-05 12:03"
+    }, {
+      "profileName" : "newertesting",
+      "score" : 20,
+      "timestamp" : "2025-12-05T12:13:04.100475800Z",
+      "formattedTime" : "2025-12-05 12:13"
+    }, {
+      "profileName" : "john tester",
+      "score" : 20,
+      "timestamp" : "2025-12-05T12:14:25.891816Z",
+      "formattedTime" : "2025-12-05 12:14"
+    }, {
+      "profileName" : "john tester",
+      "score" : 20,
+      "timestamp" : "2025-12-05T12:22:51.108883100Z",
+      "formattedTime" : "2025-12-05 12:22"
+    }, {
+      "profileName" : "john tester",
+      "score" : 0,
+      "timestamp" : "2025-12-05T11:39:07.985590700Z",
+      "formattedTime" : "2025-12-05 11:39"
+    }, {
+      "profileName" : "john tester",
+      "score" : 0,
+      "timestamp" : "2025-12-05T12:21:59.857882200Z",
+      "formattedTime" : "2025-12-05 12:21"
+    } ]
   },
-  "globalRanking": [
-    {
-      "profileName": "testingscore7",
-      "score": 2200,
-      "timestamp": "2025-11-30T19:30:00Z"
-    },
-    {
-      "profileName": "testingscore1",
-      "score": 1800,
-      "timestamp": "2025-11-30T19:00:00Z"
-    },
-    {
-      "profileName": "testingscore1",
-      "score": 1500,
-      "timestamp": "2025-11-30T18:15:00Z"
-    },
-    {
-      "profileName": "testingscore8",
-      "score": 1300,
-      "timestamp": "2025-11-29T20:45:00Z"
-    },
-    {
-      "profileName": "testingscore9",
-      "score": 1200,
-      "timestamp": "2025-12-02T05:43:17.416521800Z"
-    },
-    {
-      "profileName": "testingscore10",
-      "score": 900,
-      "timestamp": "2025-11-28T16:05:00Z"
-    },
-    {
-      "profileName": "john tester",
-      "score": 20,
-      "timestamp": "2025-12-05T10:41:19.422024800Z"
-    }
-  ]
+  "globalRanking" : [ {
+    "profileName" : "john tester",
+    "score" : 20,
+    "timestamp" : "2025-12-05T12:03:27.308841300Z",
+    "formattedTime" : "2025-12-05 12:03"
+  }, {
+    "profileName" : "newertesting",
+    "score" : 20,
+    "timestamp" : "2025-12-05T12:13:04.100475800Z",
+    "formattedTime" : "2025-12-05 12:13"
+  }, {
+    "profileName" : "john tester",
+    "score" : 20,
+    "timestamp" : "2025-12-05T12:14:25.891816Z",
+    "formattedTime" : "2025-12-05 12:14"
+  }, {
+    "profileName" : "john tester",
+    "score" : 20,
+    "timestamp" : "2025-12-05T12:22:51.108883100Z",
+    "formattedTime" : "2025-12-05 12:22"
+  }, {
+    "profileName" : "john tester",
+    "score" : 0,
+    "timestamp" : "2025-12-05T11:39:07.985590700Z",
+    "formattedTime" : "2025-12-05 11:39"
+  }, {
+    "profileName" : "john tester",
+    "score" : 0,
+    "timestamp" : "2025-12-05T12:21:59.857882200Z",
+    "formattedTime" : "2025-12-05 12:21"
+  } ]
 }

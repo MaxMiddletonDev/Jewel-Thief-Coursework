@@ -2,11 +2,10 @@ package cs230.group29se.jewelthief.Persistence.Profile;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-
 /**
  * This class stores individual high scores of a user
  * It is used for storing the player's profile.
@@ -14,7 +13,9 @@ import java.time.format.DateTimeFormatter;
  * @author Iyaad
  * @version 1.0
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HighScoreEntry {
+
     /**
      * The name of the player's profile - associated with the score.
      */
@@ -45,86 +46,59 @@ public class HighScoreEntry {
         this.score = score;
         this.timestamp = timestamp;
     }
-
-    /**
-     * This is a default no argument constructor for the high score entry.
-     */
-    public HighScoreEntry() { }
-
     /**
      * It retrieves the name of the player's profile related to HighScoreEntry.
      *
      *  @return The profile name as String.
      */
-    public String getProfileName() {
-        return profileName; }
-
+    public String getProfileName() { return profileName; }
     /**
      * It sets the name of the player's profile for the high score entry.
      *
      * @param profileName The new profile name to be assigned.
      */
-    public void setProfileName(String profileName) {
-        this.profileName = profileName; }
-
+    public void setProfileName(String profileName) { this.profileName = profileName; }
     /**
      * This method is used to retrieve the score attained by the player.
      *
      * @return The player's score as an integer; It must be null.
      */
-    public int getScore() {
-        return score; }
-
+    public int getScore() { return score; }
     /**
      * This method is used to set the score for the high score entry.
      *
      * @param score The new score to be assigned; It mustn't be negative.
      */
-    public void setScore(int score) {
-        this.score = score; }
+    public void setScore(int score) { this.score = score; }
 
-    /**
-     * This method is used to retrieve the time the player attains a score.
+    /**Derived property for the table – NOT stored in JSON
      *
-     * @return The timestamp value as String.
+     * @return The time in local timezone format
      */
-    public String getTimestamp() {
-        return timestamp; }
-
-    /**
-     * This method is used to set the timestamp for the high score entry.
-     *
-     * @param timestamp The new timestamp value to assign; it mustn't be null.
-     */
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
     public String getFormattedTime() {
         if (timestamp == null || timestamp.isEmpty()) {
             return "";
         }
         try {
-            Instant instant = Instant.parse(timestamp); // parses "2025-11-29T18:30:00Z"
+            Instant instant = Instant.parse(timestamp);
             var zoned = instant.atZone(ZoneId.systemDefault());
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             return zoned.format(fmt);
         } catch (Exception e) {
-            // If parsing fails, just show the raw string
             return timestamp;
         }
     }
-
     /**
      * It is used to return a String representation of the HighScoreEntry.
      *
      * @return String representation of the HighScoreEntry.
      */
-    @Override public String toString() {
-        return "HighScoreEntry{"
-                + "profileName='" + profileName + '\''
-                + ", score=" + score
-                + ", timestamp='" + timestamp + '\''
-                + '}';
+    @Override
+    public String toString() {
+        return "HighScoreEntry{" +
+                "profileName='" + profileName + '\'' +
+                ", score=" + score +
+                ", timestamp='" + timestamp + '\'' +
+                '}';
     }
 }

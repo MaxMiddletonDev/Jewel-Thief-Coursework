@@ -124,7 +124,7 @@ public final class GameManager {
         int timeMs = (int) currentLevel.getTimeRemainingMs();
         s.setTimeRemainingMs(timeMs);
 
-        // NEW: enemy positions & directions
+        // enemy positions & directions
         Map<String, Object> npcStates = new java.util.HashMap<>();
         for (NonPlayableCharacter npc : currentLevel.getEnemies()) {
             if (!npc.isAlive()) continue; // optionally skip dead enemies

@@ -126,7 +126,11 @@ public class GameScreen extends Screen {
         setFinished(true);
     }
 
-    public  void loadLevelFinishedScreen() {
+    public void loadLevelFinishedScreen() {
+        // Stop autosaving when finishing the level
+        if (autosaveTimeline != null) {
+            autosaveTimeline.stop();
+        }
         setNextScreen(new LevelFinishedScreen());
         setFinished(true);
     }
