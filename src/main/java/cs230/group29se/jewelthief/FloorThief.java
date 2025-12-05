@@ -2,6 +2,7 @@ package cs230.group29se.jewelthief;
 
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
+import cs230.group29se.jewelthief.Items.Bomb;
 import cs230.group29se.jewelthief.Items.Collectable;
 import cs230.group29se.jewelthief.Items.Item;
 import cs230.group29se.jewelthief.Items.Lever;
@@ -121,6 +122,30 @@ public class FloorThief extends NonPlayableCharacter{
         if (nextDirection != null) {
             moveIn(nextDirection);
             direction = nextDirection; //change direction facing to nextDirection
+        }
+    }
+
+
+    /**
+     * Checks the 4 tiles immediately surrounding the player. If a bomb is found, it is activated.
+     */
+    private void triggerAdjacentBombs() {
+        int currentX = currentTile.getX();
+        int currentY = currentTile.getY();
+
+        // These are the adjacent tiles
+        int[][] offsets = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+        for (int[] offset : offsets) {
+            int checkX = currentX + offset[0];
+            int checkY = currentY + offset[1];
+
+            if (checkX >= 0 && checkX < level.getWidth() && checkY >= 0 && checkY < level.getHeight()) {
+                Tile neighbour = level.getTile(checkX, checkY);
+                if (neighbour != null && neighbour.getOccupying() instanceof Bomb bomb) {
+                    bomb.interact();
+                }
+            }
         }
     }
 
@@ -250,6 +275,7 @@ public class FloorThief extends NonPlayableCharacter{
         Tile targetTile = level.getTile(thiefTargetX, thiefTargetY);
         if (targetTile != null) {
             currentTile = targetTile;
+            triggerAdjacentBombs();
         }
     }
 

@@ -3,6 +3,7 @@ package cs230.group29se.jewelthief;
 import cs230.group29se.jewelthief.Entities.Protectable;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
+import cs230.group29se.jewelthief.Items.Bomb;
 import cs230.group29se.jewelthief.Items.Collectable;
 import cs230.group29se.jewelthief.Items.Gate;
 import cs230.group29se.jewelthief.Items.Item;
@@ -121,18 +122,41 @@ public class Player implements MoveableCharacter, Protectable {
             Tile target = level.getTile(x, y);
             if (target != null && currentTile.isValidMove(target)) {
                 Object occupant = target.getOccupying();
-                if (occupant instanceof Gate) {
+                if (occupant instanceof Gate || occupant instanceof Bomb) {
                     return;
                 }
                 this.currentTile = target;
                 if (occupant instanceof Item item) {
                     collectItem(item);
                 }
-
+                triggerAdjacentBombs();
                 return;
             }
             x += dx;
             y += dy;
+        }
+    }
+
+    /**
+     * Checks the 4 tiles immediately surrounding the Thief. If a bomb is found, it is activated.
+     */
+    private void triggerAdjacentBombs() {
+        int currentX = currentTile.getX();
+        int currentY = currentTile.getY();
+
+        // These are the adjacent tiles
+        int[][] offsets = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+        for (int[] offset : offsets) {
+            int checkX = currentX + offset[0];
+            int checkY = currentY + offset[1];
+
+            if (checkX >= 0 && checkX < level.getWidth() && checkY >= 0 && checkY < level.getHeight()) {
+                Tile neighbour = level.getTile(checkX, checkY);
+                if (neighbour != null && neighbour.getOccupying() instanceof Bomb bomb) {
+                    bomb.interact();
+                }
+            }
         }
     }
 
