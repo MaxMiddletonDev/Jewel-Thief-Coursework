@@ -31,7 +31,11 @@
     }, {
       "profileName" : "testing7",
       "score" : 0,
-      "formattedTime" : "2025-12-05 12:30"
+      "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 0,
+      "formattedTime" : "2025-12-06 16:57"
     } ]
   },
   "globalRanking" : [ {
@@ -65,6 +69,10 @@
   }, {
     "profileName" : "testing7",
     "score" : 0,
-    "formattedTime" : "2025-12-05 12:30"
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 0,
+    "formattedTime" : "2025-12-06 16:57"
   } ]
 }

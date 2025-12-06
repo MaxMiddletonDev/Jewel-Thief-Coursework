@@ -2,7 +2,6 @@ package cs230.group29se.jewelthief.Items;
 
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.Level;
-import cs230.group29se.jewelthief.Game.Tile;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import java.util.Timer;
@@ -10,7 +9,7 @@ import java.util.TimerTask;
 
 /**
  * The bomb class destroys certain items in its pathway after being triggered.
- * @author Charlie
+ * @author Charlie, Hamza
  * @version 0.2 - //TODO can be implemented.
  */
 public class Bomb extends Destroyable {
@@ -44,6 +43,12 @@ public class Bomb extends Destroyable {
     private Image image;
 
 
+    // Add image references for each bomb stage (3,2,1,0)
+    private final Image bombStage3 = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/BOMB3.png").toString());
+    private final Image bombStage2 = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/BOMB2.png").toString());
+    private final Image bombStage1 = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/BOMB1.png").toString());
+    private final Image bombStage0 = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/BOMB0.png").toString());
+
     /**
      * Creates an active bomb with a location and time left before detonation.
      * @param x Where in tiles the item is located
@@ -59,6 +64,9 @@ public class Bomb extends Destroyable {
         startTime = System.currentTimeMillis();
         timer.schedule(destroy(), this.timeRemaining);
         armed = true;
+
+        // Set initial image to stage 3 when bomb is armed.
+        this.image = bombStage3;
     }
 
     /**
@@ -70,7 +78,6 @@ public class Bomb extends Destroyable {
         super(x, y);
         image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/BOMB0.png").toString());
     }
-
 
     /**
      * Destroys all destroyable items in the bombs horizontal and vertical path.
@@ -133,10 +140,7 @@ public class Bomb extends Destroyable {
                 }
             }
         };
-
-
     }
-
 
     /**
      * sets a timer to destroy the bomb.
@@ -146,6 +150,10 @@ public class Bomb extends Destroyable {
         startTime = System.currentTimeMillis();
         timer.schedule(destroy(), timeRemaining);
         armed = true;
+
+
+        // When armed, switch to stage 3 image.
+        image = bombStage3;
     }
 
     /**
@@ -161,24 +169,34 @@ public class Bomb extends Destroyable {
      * @return the time left before the bomb explodes.
      */
     public long getTimeRemaining() {
-        // if the bomb is armed startTime must be defined
         if (armed) {
-            // Timer doesn't have a time remaining so system time is used.
             return startTime + timeRemaining - System.currentTimeMillis();
-
         } else {
-            // full-timer of the bomb
             return timeRemaining;
         }
     }
 
     /**
-     * Draws a bomb at its position.
-     * @param gc
+     * Draw the bomb with the correct countdown image.
      */
     public void draw(GraphicsContext gc) {
-        gc.drawImage(image, getX()* Tile.TILE_SIZE + Tile.HALF_TILE_SIZE/2,
-                getY()* Tile.TILE_SIZE + Tile.HALF_TILE_SIZE/2,
-                Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
+
+
+        // Dynamically change the bomb sprite based on time remaining.
+        if (armed) {
+            long remaining = getTimeRemaining();
+
+            if (remaining <= 0) {
+                image = bombStage0; // explosion image
+            } else if (remaining <= 1000) {
+                image = bombStage1; // "1" stage
+            } else if (remaining <= 2000) {
+                image = bombStage2; // "2" stage
+            } else {
+                image = bombStage3; // "3" stage
+            }
+        }
+
+        gc.drawImage(image, getX() * 64, getY() * 64);
     }
 }
