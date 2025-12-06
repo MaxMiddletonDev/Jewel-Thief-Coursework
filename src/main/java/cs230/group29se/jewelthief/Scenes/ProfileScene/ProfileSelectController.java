@@ -142,7 +142,19 @@ public class ProfileSelectController extends BaseController {
         String name = newProfileNameField.getText().trim();
         if (name.isEmpty()) return;
 
-        GameProfileHelper.ensureProfileExists(name);
+        try {
+            GameProfileHelper.ensureProfileExists(name);
+        } catch (IllegalArgumentException ex) {
+            // Duplicate name → show message instead of crashing
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Duplicate Profile");
+            alert.setHeaderText(null);
+            alert.setContentText("Profile name '" + name + "' already exists. Duplicates are not allowed.");
+            alert.showAndWait();
+            return; // DO NOT continue with selection/highlight
+        }
+
+        //  Reached when profile successfully created
         populateProfiles();
         selectedProfile = name;
         highlightSelection();

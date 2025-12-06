@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief.Scenes.MainScene;
 
+import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.application.Platform;
@@ -31,6 +32,7 @@ public class MainMenuController extends BaseController {
     private void handleStartClicked() {
         Screen s = getScreen();          // comes from BaseController
         if (s instanceof MainMenuScreen menuScreen) {
+            GameManager.clearCurrentLevel();
             menuScreen.onStartClicked();
         } else {
             System.out.println("Start clicked but screen is " + s);

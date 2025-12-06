@@ -167,6 +167,13 @@ public final class GameManager {
         }
     }
 
+    /**
+     * Prevents game from accessing a profile when it's not supposed to
+     */
+    public static void clearCurrentLevel() {
+        currentLevel = null;
+    }
+
     // Getters/setters
 
     public static void setCurrentLevel(Level level) {

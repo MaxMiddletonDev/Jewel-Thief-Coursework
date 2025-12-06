@@ -92,16 +92,21 @@ public class GameScreen extends Screen {
      */
     @Override
     public void update() {
-        GameManager.getCurrentLevel().update();
+        Level level = GameManager.getCurrentLevel();
+        if (level == null) {
+            // No level loaded (profile just deleted) → nothing to update
+            return;
+        }
+
+        level.update();
         draw();
 
-        if (GameManager.getCurrentLevel().isLevelFailed()) {
+        if (level.isLevelFailed()) {
             loadFailedLevelScreen();
-        } else if (GameManager.getCurrentLevel().isFinishedLevel()) {
+        } else if (level.isFinishedLevel()) {
             loadLevelFinishedScreen();
         }
     }
-
     /**
      * Draws the current state of the game on the canvas.
      * Clears the canvas and renders the current level.
