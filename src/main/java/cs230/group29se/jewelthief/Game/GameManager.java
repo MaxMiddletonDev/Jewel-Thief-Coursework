@@ -215,6 +215,7 @@ public final class GameManager {
     }
 
     /**
+     * TODO: REMOVE, we draw this in GameScreen now
      * Draws the current level using the provided GraphicsContext.
      * @param gc the GraphicsContext to draw on
      */

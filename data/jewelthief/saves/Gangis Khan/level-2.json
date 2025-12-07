@@ -1,72 +1,36 @@
 {
   "levelId" : "2",
   "profileName" : "Gangis Khan",
-  "playerState" : [ 0, 0 ],
+  "playerState" : [ 10, 1 ],
   "elapsedSeconds" : 0,
-  "timeRemainingMs" : 97073,
-  "score" : 0,
+  "timeRemainingMs" : 89954,
+  "score" : 20,
   "npcStates" : {
     "FLYING" : {
       "alive" : true,
-      "x" : 9,
+      "x" : 7,
       "y" : 6,
       "dir" : "RIGHT"
     },
     "FOLLOWER" : {
       "colour" : "G",
       "alive" : true,
-      "x" : 3,
-      "y" : 4,
-      "dir" : "DOWN"
+      "x" : 1,
+      "y" : 3,
+      "dir" : "UP"
     }
   },
-  "gates" : {
-    "GATE#10#2" : {
-      "param" : "R",
-      "x" : 10,
-      "y" : 2
-    },
-    "GATE#10#6" : {
-      "param" : "G",
-      "x" : 10,
-      "y" : 6
-    }
-  },
+  "gates" : { },
   "items" : {
-    "LEVER#7#2" : {
-      "param" : "G",
-      "x" : 7,
-      "y" : 2
-    },
-    "LOOT#0#0" : {
-      "param" : "DOLLAR",
-      "x" : 0,
-      "y" : 0
-    },
     "CLOCK#2#9" : {
       "param" : "NONE",
       "x" : 2,
       "y" : 9
     },
-    "BOMB#4#10" : {
-      "param" : "NONE",
-      "x" : 4,
-      "y" : 10
-    },
     "DOOR#10#1" : {
       "param" : "NONE",
       "x" : 10,
       "y" : 1
-    },
-    "LEVER#4#8" : {
-      "param" : "R",
-      "x" : 4,
-      "y" : 8
-    },
-    "SHIELD#5#6" : {
-      "param" : "NONE",
-      "x" : 5,
-      "y" : 6
     }
   }
 }

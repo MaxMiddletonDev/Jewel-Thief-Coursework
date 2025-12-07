@@ -30,7 +30,6 @@ import java.util.Map;
  * @version 1.0
  */
 public class Level {
-    private int levelNumber = 1;
 
     private GameController gameController;
 
@@ -245,15 +244,6 @@ public class Level {
             }
         }
         player.draw(gc);
-    }
-
-    /**
-     * Gets the level number.
-     *
-     * @return the level number
-     */
-    public int getLevelNumber() {
-        return levelNumber;
     }
 
     /**
@@ -509,7 +499,7 @@ public class Level {
      * Loads the grid from the level file.
      */
     public void loadGrid() {
-        String filename = "level" + levelNumber + ".txt";
+        String filename = "level" + GameManager.getCurrentLevelNumber() + ".txt";
         String levelId = extractLevelId(filename);
         java.nio.file.Path levelPath = java.nio.file.Path.of("levels", filename);
         try {
@@ -778,21 +768,6 @@ public class Level {
             }
         }
         return true;
-    }
-
-    public void resetLevel() {
-        //Set Eevery Value back to initial
-
-
-
-        String levelId = "level" + levelNumber + ".txt";
-        java.nio.file.Path levelPath = java.nio.file.Path.of("levels", levelId);
-        try {
-            loadFreshLevel(levelId);
-        } catch (FileNotFoundException e) {
-            System.out.println("Level file not found: " + levelId);
-            e.printStackTrace();
-        }
     }
 
     /**

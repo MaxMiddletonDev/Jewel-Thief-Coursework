@@ -47,7 +47,7 @@ public class LevelFinishedController extends BaseController implements Initializ
 
         // Submit highscore for this level
         String profileName = GameProfileHelper.getActiveProfileName();
-        int levelNum = GameManager.getCurrentLevel().getLevelNumber();
+        int levelNum = GameManager.getCurrentLevelNumber();
         String levelId = String.valueOf(levelNum);
         String timestamp = java.time.Instant.now().toString();
 
@@ -62,7 +62,7 @@ public class LevelFinishedController extends BaseController implements Initializ
      * Starts the next level in numerical order
      */
     public void selectNextLevel() {
-        int currentLevelNumber = GameManager.getCurrentLevel().getLevelNumber();
+        int currentLevelNumber = GameManager.getCurrentLevelNumber();
         GameManager.setCurrentLevelNumber(currentLevelNumber + 1);
         getScreen().setNextScreen(new GameScreen());
         getScreen().setFinished(true);

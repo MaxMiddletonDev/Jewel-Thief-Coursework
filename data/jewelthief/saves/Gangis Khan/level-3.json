@@ -1,0 +1,138 @@
+{
+  "levelId" : "3",
+  "profileName" : "Gangis Khan",
+  "playerState" : [ 2, 10 ],
+  "elapsedSeconds" : 0,
+  "timeRemainingMs" : 94679,
+  "score" : 0,
+  "npcStates" : {
+    "CAMPER" : {
+      "alive" : true,
+      "x" : 6,
+      "y" : 6,
+      "dir" : "UP"
+    },
+    "FLYING" : {
+      "alive" : true,
+      "x" : 11,
+      "y" : 5,
+      "dir" : "LEFT"
+    },
+    "FOLLOWER" : {
+      "colour" : "Y",
+      "alive" : true,
+      "x" : 6,
+      "y" : 10,
+      "dir" : "DOWN"
+    }
+  },
+  "gates" : {
+    "GATE#5#2" : {
+      "param" : "R",
+      "x" : 5,
+      "y" : 2
+    },
+    "GATE#7#2" : {
+      "param" : "G",
+      "x" : 7,
+      "y" : 2
+    },
+    "GATE#2#7" : {
+      "param" : "B",
+      "x" : 2,
+      "y" : 7
+    },
+    "GATE#10#5" : {
+      "param" : "Y",
+      "x" : 10,
+      "y" : 5
+    }
+  },
+  "items" : {
+    "LOOT#1#1" : {
+      "param" : "DIAMOND",
+      "x" : 1,
+      "y" : 1
+    },
+    "SHIELD#1#10" : {
+      "param" : "NONE",
+      "x" : 1,
+      "y" : 10
+    },
+    "LEVER#2#2" : {
+      "param" : "R",
+      "x" : 2,
+      "y" : 2
+    },
+    "LOOT#9#1" : {
+      "param" : "RUBY",
+      "x" : 9,
+      "y" : 1
+    },
+    "LOOT#5#5" : {
+      "param" : "DIAMOND",
+      "x" : 5,
+      "y" : 5
+    },
+    "LOOT#7#4" : {
+      "param" : "DOLLAR",
+      "x" : 7,
+      "y" : 4
+    },
+    "LOOT#4#9" : {
+      "param" : "CENT",
+      "x" : 4,
+      "y" : 9
+    },
+    "CLOCK#5#10" : {
+      "param" : "NONE",
+      "x" : 5,
+      "y" : 10
+    },
+    "LOOT#2#6" : {
+      "param" : "DOLLAR",
+      "x" : 2,
+      "y" : 6
+    },
+    "LOOT#9#9" : {
+      "param" : "RUBY",
+      "x" : 9,
+      "y" : 9
+    },
+    "DOOR#10#11" : {
+      "param" : "NONE",
+      "x" : 10,
+      "y" : 11
+    },
+    "BOMB#3#3" : {
+      "param" : "NONE",
+      "x" : 3,
+      "y" : 3
+    },
+    "SHIELD#10#10" : {
+      "param" : "NONE",
+      "x" : 10,
+      "y" : 10
+    },
+    "BOMB#6#6" : {
+      "param" : "NONE",
+      "x" : 6,
+      "y" : 6
+    },
+    "LEVER#9#3" : {
+      "param" : "G",
+      "x" : 9,
+      "y" : 3
+    },
+    "LEVER#3#9" : {
+      "param" : "B",
+      "x" : 3,
+      "y" : 9
+    },
+    "LEVER#8#6" : {
+      "param" : "Y",
+      "x" : 8,
+      "y" : 6
+    }
+  }
+}

@@ -3,61 +3,56 @@
   "profileName" : "gustas",
   "playerState" : [ 2, 0 ],
   "elapsedSeconds" : 0,
-  "timeRemainingMs" : 40391,
+  "timeRemainingMs" : 35536,
   "score" : 20,
   "npcStates" : {
     "CAMPER" : {
       "alive" : true,
-      "x" : 8,
+      "x" : 7,
       "y" : 1,
       "dir" : "RIGHT"
     },
     "FLYING" : {
       "alive" : true,
-      "x" : 9,
+      "x" : 5,
       "y" : 6,
-      "dir" : "LEFT"
+      "dir" : "RIGHT"
     },
     "FOLLOWER" : {
       "colour" : "G",
       "alive" : true,
-      "x" : 3,
-      "y" : 8,
-      "dir" : "DOWN"
+      "x" : 1,
+      "y" : 4,
+      "dir" : "UP"
     }
   },
   "gates" : {
-    "GATE" : {
+    "GATE#10#6" : {
       "param" : "G",
       "x" : 10,
       "y" : 6
     }
   },
   "items" : {
-    "SHIELD" : {
-      "param" : "NONE",
-      "x" : 5,
-      "y" : 6
-    },
-    "LEVER" : {
+    "LEVER#7#2" : {
       "param" : "G",
       "x" : 7,
       "y" : 2
     },
-    "BOMB" : {
-      "param" : "NONE",
-      "x" : 4,
-      "y" : 10
-    },
-    "CLOCK" : {
+    "CLOCK#2#9" : {
       "param" : "NONE",
       "x" : 2,
       "y" : 9
     },
-    "DOOR" : {
+    "DOOR#10#1" : {
       "param" : "NONE",
       "x" : 10,
       "y" : 1
+    },
+    "SHIELD#5#6" : {
+      "param" : "NONE",
+      "x" : 5,
+      "y" : 6
     }
   }
 }
