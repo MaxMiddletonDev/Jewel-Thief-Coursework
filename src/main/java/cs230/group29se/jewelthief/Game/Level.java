@@ -405,8 +405,8 @@ public class Level {
                 case "SMART" -> {
                     String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
-                    // SmartEnemy enemy = new SmartEnemy(xPos, yPos, direction, this, npcId);
-                    // grid[xPos][yPos].setOccupying(enemy);
+                    SmartThief tempEnemy = new SmartThief(grid[entityXPos][entityYPos], direction, this, npcId);
+                    enemies.add(tempEnemy);
                 }
                 case "FOLLOWER" -> {
                     // e.arg1 = direction, e.arg2 = follower colour ("R","G","B","Y")

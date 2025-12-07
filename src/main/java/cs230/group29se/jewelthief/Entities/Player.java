@@ -43,7 +43,6 @@ public class Player implements MoveableCharacter, Protectable {
         // If the item is collectable, record that the player collected it
         item.setCollector(this);
 
-
         // Then trigger the item's behaviour
         item.interact();
     }
@@ -96,6 +95,7 @@ public class Player implements MoveableCharacter, Protectable {
 
     /**
      * Draw Function for Player, shapes it to the tile size.
+     * @param gc The GraphicsContext used for drawing.
      */
     public void draw(GraphicsContext gc) {
         int tileSize = Tile.TILE_SIZE;
