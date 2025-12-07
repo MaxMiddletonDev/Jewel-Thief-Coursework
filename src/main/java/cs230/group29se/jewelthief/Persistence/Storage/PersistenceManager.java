@@ -46,6 +46,14 @@ public class PersistenceManager {
         p.setProfileName(activeProfileName);
         return p;
     }
+
+    /**
+     * Returns current ProfileData without changing game state
+     *
+     * @return ProfileData of the current active profile
+     * */
+    public ProfileData getCurrentProfile() { return currentProfile(); }
+
     private String currentProfileName() { return activeProfileName; }
     private String rememberedProfileName() { return activeProfileName; }
     private SaveData currentSaveData() {
@@ -56,6 +64,8 @@ public class PersistenceManager {
         s.setPlayerState(new Object[]{});
         return s;
     }
+
+
     private String currentLevelId() { return activeLevelId; }
     private int currentRunScore() { return activeRunScore; }
     private void applySaveToGame(SaveData s) { this.cachedSave = s; }
@@ -120,6 +130,7 @@ public class PersistenceManager {
         try { return serializer.fromJson(fileStore.read(pathSave(profile, levelId)), SaveData.class); }
         catch (RuntimeException ex) { return null; }
     }
+
 
     public String getActiveProfileName() {
         return activeProfileName;

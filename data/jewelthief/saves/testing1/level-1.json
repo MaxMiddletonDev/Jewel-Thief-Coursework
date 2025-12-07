@@ -1,20 +1,20 @@
 {
   "levelId" : "1",
-  "profileName" : "gustas",
-  "playerState" : [ 2, 0 ],
+  "profileName" : "testing1",
+  "playerState" : [ 1, 0 ],
   "elapsedSeconds" : 0,
-  "timeRemainingMs" : 40391,
+  "timeRemainingMs" : 39743,
   "score" : 20,
   "npcStates" : {
     "CAMPER" : {
       "alive" : true,
-      "x" : 8,
-      "y" : 1,
+      "x" : 9,
+      "y" : 0,
       "dir" : "RIGHT"
     },
     "FLYING" : {
       "alive" : true,
-      "x" : 9,
+      "x" : 7,
       "y" : 6,
       "dir" : "LEFT"
     },
@@ -22,7 +22,7 @@
       "colour" : "G",
       "alive" : true,
       "x" : 3,
-      "y" : 8,
+      "y" : 9,
       "dir" : "DOWN"
     }
   },

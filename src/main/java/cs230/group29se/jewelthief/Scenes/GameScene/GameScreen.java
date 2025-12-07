@@ -4,6 +4,7 @@ import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Entities.Player;
+import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
 import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.LevelFailedScene.LevelFailedScreen;
 import cs230.group29se.jewelthief.Scenes.LevelFinished.LevelFinishedScreen;
@@ -151,6 +152,14 @@ public class GameScreen extends Screen {
     }
 
     public void loadLevelFinishedScreen() {
+
+        ProfileData profile = GameManager.getPersistenceManager().getCurrentProfile();
+        int maxLevelUnlocked = profile.getMaxUnlockedLvl();
+        if(GameManager.getCurrentLevelNumber() >= maxLevelUnlocked) {
+            profile.setMaxUnlockedLvl(GameManager.getCurrentLevelNumber() + 1);
+            GameManager.getPersistenceManager().saveProfile();
+        }
+
         // Stop autosaving when finishing the level
         if (autosaveTimeline != null) {
             autosaveTimeline.stop();

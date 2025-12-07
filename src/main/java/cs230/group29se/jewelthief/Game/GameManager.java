@@ -152,15 +152,15 @@ public final class GameManager {
         //item states
         Map<String, Object> itemStates = new java.util.HashMap<>();
         for (Item item : currentLevel.getItems()) {
-            String itemName = item.getClass().getSimpleName();
-
+            String itemType = item.getClass().getSimpleName();
+            String itemId = (item.getClass().getSimpleName() + "#" + item.getX() + "#" + item.getY()).toUpperCase();
             java.util.Map<String, Object> itemState = new java.util.HashMap<>();
             itemState.put("x", item.getX());
             itemState.put("y", item.getY());
 
             //The item param specific to each item. E.g for lever its the color.
             String param;
-            switch (itemName) {
+            switch (itemType) {
                 case "Lever" -> {
                     char colourLetter = ((cs230.group29se.jewelthief.Items.Lever) item).getColour().toString().charAt(0);
                     param = String.valueOf(colourLetter);
@@ -174,32 +174,25 @@ public final class GameManager {
             param = param.toUpperCase();
 
             itemState.put("param", param);
-            itemStates.put(itemName.toUpperCase(), itemState);
+            itemStates.put(itemId, itemState);
         }
 
         //gates states
         Map<String, Object> gateStates = new java.util.HashMap<>();
         for (Gate gate : currentLevel.getGates()) {
-            String gateName = gate.getClass().getSimpleName();
+            String gateId = (gate.getClass().getSimpleName() + "#" + gate.getX() + "#" + gate.getY()).toUpperCase();
 
             java.util.Map<String, Object> gateState = new java.util.HashMap<>();
             gateState.put("x", gate.getX());
             gateState.put("y", gate.getY());
 
-            //The gate param specific to each gate. E.g for gate its the color.
-            String param;
-            switch (gateName) {
-                case "Gate" -> {
-                    char colourLetter = gate.getColour().toString().charAt(0);
-                    param = String.valueOf(colourLetter);
-                }
-                default -> param = "none";
-            }
+            char colourLetter = gate.getColour().toString().charAt(0);
+            String param = String.valueOf(colourLetter);
 
             param = param.toUpperCase();
 
             gateState.put("param", param);
-            gateStates.put(gateName.toUpperCase(), gateState);
+            gateStates.put(gateId.toUpperCase(), gateState);
         }
 
         s.setNpcStates(npcStates);

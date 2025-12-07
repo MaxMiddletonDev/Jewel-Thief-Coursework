@@ -464,13 +464,13 @@ public class Level {
                     Gate tempGate = new Gate(colour, entityXPos, entityYPos);
                     gates.add(tempGate);
                     grid[entityXPos][entityYPos].setOccupying(tempGate);
-                    for (Item item : items) {
-                        if (item instanceof Lever lever) {
-                            if (tempGate.getColour() == lever.getColour()) {
-                                lever.addGate(tempGate);
-                            }
-                        }
-                    }
+//                    for (Item item : items) {
+//                        if (item instanceof Lever lever) {
+//                            if (tempGate.getColour() == lever.getColour()) {
+//                                lever.addGate(tempGate);
+//                            }
+//                        }
+//                    }
                 }
                 case "DOOR" -> {
                     Door tempDoor = new Door(entityXPos, entityYPos);
@@ -489,6 +489,17 @@ public class Level {
                 }
                 default -> {
                     System.out.println("Unknown entity type in level file: " + e.type);
+                }
+            }
+        }
+
+        //Add gates to levers
+        for (Item item : items) {
+            if (item instanceof Lever lever) {
+                for (Gate gate : gates) {
+                    if (gate.getColour() == lever.getColour()) {
+                        lever.addGate(gate);
+                    }
                 }
             }
         }
@@ -600,7 +611,7 @@ public class Level {
 
         // Set the items from save data --------------------------------------
         for (Map.Entry<String,Object> itemState : saveData.getItems().entrySet()) {
-            String itemType = itemState.getKey();
+            String itemType = itemState.getKey().split("#")[0];
             Map<String,Object> state = (Map<String,Object>)itemState.getValue();
             int xPos = (int) state.get("x");
             int yPos = (int) state.get("y");
@@ -655,7 +666,7 @@ public class Level {
 
         // Set the gates from save data --------------------------------------
         for (Map.Entry<String,Object> gateState : saveData.getGates().entrySet()) {
-            String gateType = gateState.getKey();
+            String gateType = gateState.getKey().split("#")[0];
             Map<String,Object> state = (Map<String,Object>)gateState.getValue();
             int xPos = (int) state.get("x");
             int yPos = (int) state.get("y");

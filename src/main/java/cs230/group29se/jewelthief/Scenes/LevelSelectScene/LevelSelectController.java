@@ -1,6 +1,8 @@
 package cs230.group29se.jewelthief.Scenes.LevelSelectScene;
 
 import cs230.group29se.jewelthief.Game.GameManager;
+import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
+import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -96,11 +98,9 @@ public class LevelSelectController extends BaseController implements Initializab
      * @return true if the level is unlocked, false otherwise.
      */
     private boolean isLevelUnlocked(int levelNumber) {
-        if (levelNumber == 1) {
-            return true;
-        } {
-            return false;
-        }
+        ProfileData data = GameManager.getPersistenceManager().getCurrentProfile();
+        int maxLevel = data.getMaxUnlockedLvl();
+        return levelNumber <= maxLevel;
     }
 
     /**
