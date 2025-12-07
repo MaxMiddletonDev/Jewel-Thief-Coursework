@@ -69,10 +69,10 @@ public class Loot extends Destroyable {
      * Draws this loot onto the screen at its x,y.
      * @param gc the class the loot will be drawn with.
      */
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(type.getImage(), getX()* Tile.TILE_SIZE +
-                        Tile.HALF_TILE_SIZE/2,  getY()* Tile.TILE_SIZE
-                        + Tile.HALF_TILE_SIZE/2,
+    public void draw(final GraphicsContext gc) {
+        gc.drawImage(type.getImage(), getX() * Tile.TILE_SIZE +
+                        Tile.HALF_TILE_SIZE / 2,  getY() * Tile.TILE_SIZE
+                        + Tile.HALF_TILE_SIZE / 2,
                         Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
     }
 }

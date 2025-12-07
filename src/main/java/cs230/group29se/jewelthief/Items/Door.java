@@ -9,8 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 /**
  * Door allows a player or thief to leave the level when open.
- * @author Charlie
- * @version 0.2 - interact is not implemented - needs game before implementation.
+ * @author Charlie, Hamza, Ben.
+ * @version 1.0 Door can be used as intended.
  */
 public class Door extends Item {
 
@@ -19,14 +19,18 @@ public class Door extends Item {
      */
     private boolean closed = true;
 
-    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/DOOR.png").toString());
+    /**
+     * Image of the door.
+     */
+    private final Image image = new Image(getClass().getResource(
+            "/cs230/group29se/jewelthief/Images/DOOR.png").toString());
 
     /**
      * Allows for a door to be added to a level.
      * @param x Where in tiles the item is located.
      * @param y Where in tiles the item is located.
      */
-    public Door(final int x , final int y) {
+    public Door(final int x, final int y) {
         super(x, y);
     }
 
@@ -73,11 +77,11 @@ public class Door extends Item {
 
     /**
      * Draws a door at its position.
-     * @param gc
+     * @param gc the class the door will be drawn with.
      */
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(image, getX()* Tile.TILE_SIZE + Tile.HALF_TILE_SIZE/2,
-                getY()* Tile.TILE_SIZE + Tile.HALF_TILE_SIZE/2,
+    public void draw(final GraphicsContext gc) {
+        gc.drawImage(image, getX() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
+                getY() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
                 Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
     }
 }

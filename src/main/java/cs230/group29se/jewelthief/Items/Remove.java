@@ -10,20 +10,22 @@ import cs230.group29se.jewelthief.Game.Level;
  */
 public interface Remove {
     /**
-     * remove will take an item out of the level and make it inaccessible
-     * to the characters. needs to remove from both items/gates and the tile it is on.
-     * will work based on the items co-ordinates then set that tile's item to void.
-     * will be in interact for collectables and will be triggered by it or by Bomb.destroy().
+     * Removes the selected item from the level and tile it is on.
+     * @param collectable the collectable item to be removed.
      */
-    default void remove(Collectable collectable){
+    default void remove(Collectable collectable) {
         Level level = GameManager.getCurrentLevel();
         level.removeItem(collectable);
-        level.getTile(collectable.getX(),collectable.getY()).setOccupying(null);
+        level.getTile(collectable.getX(), collectable.getY()).setOccupying(null);
     }
 
-    default void remove(Gate gate){
+    /**
+     * Removes the selected gate from the level and tile it is on.
+     * @param gate the gate to remove from the level.
+     */
+    default void remove(Gate gate) {
         Level level = GameManager.getCurrentLevel();
         level.removeGate(gate);
-        level.getTile(gate.getX(),gate.getY()).setOccupying(null);
+        level.getTile(gate.getX(), gate.getY()).setOccupying(null);
     }
 }

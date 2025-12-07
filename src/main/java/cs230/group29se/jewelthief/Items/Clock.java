@@ -56,6 +56,7 @@ public class Clock extends Destroyable {
 
     /**
      * Draws the clock at its tile position.
+     * @param gc The class used to draw the clock.
      */
     @Override
     public void draw(GraphicsContext gc) {

@@ -1,6 +1,7 @@
 package cs230.group29se.jewelthief.Items;
 
 import cs230.group29se.jewelthief.Game.Colour;
+import cs230.group29se.jewelthief.Game.Tile;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -10,7 +11,7 @@ import javafx.scene.image.Image;
  * @author Charlie
  * @version 1.1
  */
-public class Gate implements Remove {
+public final class Gate implements Remove {
     /**
      * The colour the gate is.
      */
@@ -24,9 +25,17 @@ public class Gate implements Remove {
      */
     private static final double HEIGHT = 50.0;
 
-
+    /**
+     * How far across the gate is from the left.
+     */
     private final int posX;
+    /**
+     * How far down the gate is from the top.
+     */
     private final int posY;
+    /**
+     * Image of the lever, based on the colour.
+     */
     private final Image image;
     /**
      * Allows for gates to be made in the level.
@@ -38,7 +47,9 @@ public class Gate implements Remove {
         this.colour = colour;
         posX = x;
         posY = y;
-        image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/GATE" + colour.name() + ".png").toString());
+        image = new Image(getClass().getResource(
+                "/cs230/group29se/jewelthief/Images/GATE"
+                        + colour.name() + ".png").toString());
     }
 
     /**
@@ -54,14 +65,24 @@ public class Gate implements Remove {
      * @param gc the class the gate will be drawn with.
      */
     public void draw(final GraphicsContext gc) {
-        gc.drawImage(image, posX*64, posY*64, 32 ,32);
+        gc.drawImage(image, getX() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
+                getY() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
+                Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
     }
 
+    /**
+     * Get how far from the left the gate is.
+     * @return the x position of the gate.
+     */
     public int getX() {
         return posX;
     }
 
-    public int getY (){
+    /**
+     * Get how far from the top the gate is.
+     * @return the y position of the gate.
+     */
+    public int getY() {
         return posY;
     }
 }
