@@ -17,6 +17,18 @@
       "score" : 20,
       "formattedTime" : ""
     }, {
+      "profileName" : "charlie",
+      "score" : 20,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "gustas",
+      "score" : 20,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "gustas",
+      "score" : 20,
+      "formattedTime" : "2025-12-07 07:02"
+    }, {
       "profileName" : "john tester",
       "score" : 0,
       "formattedTime" : ""
@@ -35,7 +47,7 @@
     }, {
       "profileName" : "charlie",
       "score" : 0,
-      "formattedTime" : "2025-12-06 16:57"
+      "formattedTime" : ""
     } ]
   },
   "globalRanking" : [ {
@@ -55,6 +67,18 @@
     "score" : 20,
     "formattedTime" : ""
   }, {
+    "profileName" : "charlie",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "gustas",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "gustas",
+    "score" : 20,
+    "formattedTime" : "2025-12-07 07:02"
+  }, {
     "profileName" : "john tester",
     "score" : 0,
     "formattedTime" : ""
@@ -73,6 +97,6 @@
   }, {
     "profileName" : "charlie",
     "score" : 0,
-    "formattedTime" : "2025-12-06 16:57"
+    "formattedTime" : ""
   } ]
 }

@@ -4,6 +4,7 @@ import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Entities.Player;
+import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.LevelFailedScene.LevelFailedScreen;
 import cs230.group29se.jewelthief.Scenes.LevelFinished.LevelFinishedScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
@@ -51,7 +52,6 @@ public class GameScreen extends Screen {
         String profileName = GameProfileHelper.getActiveProfileName();
         GameManager.loadLevelForProfile(profileName, levelNum, controller);
 
-        Level level = GameManager.getCurrentLevel();
         Player player = GameManager.getCurrentLevel().getPlayer();
 
         // Keyboard movement – unchanged
@@ -144,7 +144,7 @@ public class GameScreen extends Screen {
     public void restartLevel() {
         Level level = GameManager.getCurrentLevel();
         if (level != null) {
-            level.resetLevel();
+            GameManager.getPersistenceManager().deleteSaveForCurrentLevel();
             setNextScreen(new GameScreen());
             setFinished(true);
         }

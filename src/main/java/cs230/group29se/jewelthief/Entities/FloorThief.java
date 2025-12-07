@@ -308,4 +308,8 @@ public class FloorThief extends NonPlayableCharacter {
     public void setProtected(boolean value) {
         isProtected = value;
     }
+
+    public Colour getColour() {
+        return assignedColour;
+    }
 }

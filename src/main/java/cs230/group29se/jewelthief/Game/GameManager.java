@@ -1,7 +1,11 @@
 package cs230.group29se.jewelthief.Game;
 
 import cs230.group29se.jewelthief.Entities.Direction;
+import cs230.group29se.jewelthief.Entities.FloorThief;
 import cs230.group29se.jewelthief.Entities.NonPlayableCharacter;
+import cs230.group29se.jewelthief.Items.Gate;
+import cs230.group29se.jewelthief.Items.Item;
+import cs230.group29se.jewelthief.Items.Loot;
 import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
 import cs230.group29se.jewelthief.Persistence.Profile.SaveData;
 import cs230.group29se.jewelthief.Persistence.Profile.SaveFactory;
@@ -71,32 +75,22 @@ public final class GameManager {
         } else {
             PM.setCachedProfile(profile);
         }
-
         // saves: THIS is the "load JSON if exists" logic
         SaveData save = PM.getSaveData();
+
         // if save exists but timeRemainingMs == 0, treat as no save (reset level)
         if (save != null && save.getTimeRemainingMs() == 0) {
             save = null;
         }
-        if (save == null) {
-            // No JSON save yet → load from txt and create initial save
-            System.out.println("No save for " + profileName + " L" + levelNum + " → loading txt");
-            java.nio.file.Path levelPath = java.nio.file.Path.of("levels", levelFileName);
-            LevelDef def = LEVEL_LOADER.loadLevel(levelId, levelPath);
-            save = SaveFactory.fromLevelDef(def, profileName);
-            PM.setCachedSave(save);
-            PM.saveGame();  // writes saves/<profile>/level-<id>.json
-        } else {
-            // JSON save exists → use it
-            System.out.println("Using JSON save for " + profileName + " L" + levelNum);
-
-            PM.setCachedSave(save);
-        }
+        PM.setCachedSave(save);
 
         // Create the Level object (Level.readLevelFile will build grid etc.)
         Level level = new Level(levelFileName, controller, save);
         setCurrentLevel(level);
     }
+
+
+
     /**
      * Saving the game per-profile
      * @author Iyaad
@@ -124,6 +118,10 @@ public final class GameManager {
         int timeMs = (int) currentLevel.getTimeRemainingMs();
         s.setTimeRemainingMs(timeMs);
 
+        //Save score
+        int score = currentLevel.getScore();
+        s.setScore(score);
+
         // enemy positions & directions
         Map<String, Object> npcStates = new java.util.HashMap<>();
         for (NonPlayableCharacter npc : currentLevel.getEnemies()) {
@@ -140,9 +138,73 @@ public final class GameManager {
             state.put("dir", dir != null ? dir.name() : null);
             state.put("alive", npc.isAlive());
 
+            // add other NPC-specific state as needed
+            switch (npc.getClass().getSimpleName()) {
+                case "FloorThief" -> {
+                    state.put("colour" , ((FloorThief) npc).getColour().toString().charAt(0));
+                }
+                // add cases for other NPC types as needed
+            }
+
             npcStates.put(id, state);
         }
+
+        //item states
+        Map<String, Object> itemStates = new java.util.HashMap<>();
+        for (Item item : currentLevel.getItems()) {
+            String itemName = item.getClass().getSimpleName();
+
+            java.util.Map<String, Object> itemState = new java.util.HashMap<>();
+            itemState.put("x", item.getX());
+            itemState.put("y", item.getY());
+
+            //The item param specific to each item. E.g for lever its the color.
+            String param;
+            switch (itemName) {
+                case "Lever" -> {
+                    char colourLetter = ((cs230.group29se.jewelthief.Items.Lever) item).getColour().toString().charAt(0);
+                    param = String.valueOf(colourLetter);
+                }
+                case "Loot" -> {
+                    param = ((Loot)item).getType().toString();
+                }
+                default -> param = "none";
+            }
+
+            param = param.toUpperCase();
+
+            itemState.put("param", param);
+            itemStates.put(itemName.toUpperCase(), itemState);
+        }
+
+        //gates states
+        Map<String, Object> gateStates = new java.util.HashMap<>();
+        for (Gate gate : currentLevel.getGates()) {
+            String gateName = gate.getClass().getSimpleName();
+
+            java.util.Map<String, Object> gateState = new java.util.HashMap<>();
+            gateState.put("x", gate.getX());
+            gateState.put("y", gate.getY());
+
+            //The gate param specific to each gate. E.g for gate its the color.
+            String param;
+            switch (gateName) {
+                case "Gate" -> {
+                    char colourLetter = gate.getColour().toString().charAt(0);
+                    param = String.valueOf(colourLetter);
+                }
+                default -> param = "none";
+            }
+
+            param = param.toUpperCase();
+
+            gateState.put("param", param);
+            gateStates.put(gateName.toUpperCase(), gateState);
+        }
+
         s.setNpcStates(npcStates);
+        s.setItems(itemStates);
+        s.setGates(gateStates);
 
         PM.setCachedSave(s);
         PM.saveGame();

@@ -10,7 +10,7 @@ import java.util.Map;
  *
  * <b>JSON constraint:</b> Values inside {@code Object[]} and {@code Map<String,Object>} must be JSON-serializable.</p>
  *
- * @author Iyaad
+ * @author Iyaad, Gustas Rove
  * @since 1.0
  * @see cs230.group29se.jewelthief.Persistence.Storage.FileStore
  * @see cs230.group29se.jewelthief.Persistence.Storage.JsonSerializer
@@ -35,6 +35,11 @@ public class SaveData {
     /** Remaining time for this level in milliseconds, non-negative.
      */
     private int timeRemainingMs;
+
+    /**
+     * The player's score at the time of saving.
+     */
+    private int score;
     /**
      * NPC states keyed by NPC identifier. Values must be JSON-serializable.
      */
@@ -47,6 +52,10 @@ public class SaveData {
      * Item states keyed by item identifier (e.g., count, durability). Values must be JSON-serializable.
      */
     private Map<String, Object> items;
+
+
+
+
     /**
      * No-arg constructor required by JSON deserializers.
      */
@@ -123,4 +132,12 @@ public class SaveData {
      * @param items  map
      */
     public void setItems(Map<String, Object> items) { this.items = items; }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 }

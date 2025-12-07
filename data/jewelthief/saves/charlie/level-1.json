@@ -3,31 +3,66 @@
   "profileName" : "charlie",
   "playerState" : [ 0, 0 ],
   "elapsedSeconds" : 0,
-  "timeRemainingMs" : 39178,
+  "timeRemainingMs" : 44020,
+  "score" : 0,
   "npcStates" : {
-    "FLYING#1#7" : {
+    "CAMPER" : {
       "alive" : true,
-      "x" : 5,
-      "y" : 6,
-      "dir" : "LEFT"
+      "x" : 8,
+      "y" : 1,
+      "dir" : "RIGHT"
     },
-    "FOLLOWER#2#2" : {
+    "FLYING" : {
       "alive" : true,
       "x" : 3,
-      "y" : 10,
-      "dir" : "DOWN"
+      "y" : 6,
+      "dir" : "RIGHT"
+    },
+    "FOLLOWER" : {
+      "colour" : "G",
+      "alive" : true,
+      "x" : 3,
+      "y" : 1,
+      "dir" : "RIGHT"
     }
   },
   "gates" : {
-    "GATE#11#7" : "G",
-    "GATE#11#3" : "R"
+    "GATE" : {
+      "param" : "G",
+      "x" : 10,
+      "y" : 6
+    }
   },
   "items" : {
-    "SHIELD#6#7" : null,
-    "LEVER#8#3" : "G",
-    "BOMB#5#11" : null,
-    "CLOCK#3#10" : null,
-    "LEVER#5#9" : "R",
-    "LOOT#11#11" : "DOLLAR"
+    "SHIELD" : {
+      "param" : "NONE",
+      "x" : 5,
+      "y" : 6
+    },
+    "LEVER" : {
+      "param" : "G",
+      "x" : 7,
+      "y" : 2
+    },
+    "LOOT" : {
+      "param" : "DOLLAR",
+      "x" : 0,
+      "y" : 0
+    },
+    "BOMB" : {
+      "param" : "NONE",
+      "x" : 4,
+      "y" : 10
+    },
+    "CLOCK" : {
+      "param" : "NONE",
+      "x" : 2,
+      "y" : 9
+    },
+    "DOOR" : {
+      "param" : "NONE",
+      "x" : 10,
+      "y" : 1
+    }
   }
 }

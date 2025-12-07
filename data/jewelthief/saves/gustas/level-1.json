@@ -1,0 +1,68 @@
+{
+  "levelId" : "1",
+  "profileName" : "gustas",
+  "playerState" : [ 2, 6 ],
+  "elapsedSeconds" : 0,
+  "timeRemainingMs" : 36585,
+  "score" : 0,
+  "npcStates" : {
+    "CAMPER" : {
+      "alive" : true,
+      "x" : 8,
+      "y" : 3,
+      "dir" : "RIGHT"
+    },
+    "FLYING" : {
+      "alive" : true,
+      "x" : 2,
+      "y" : 6,
+      "dir" : "RIGHT"
+    },
+    "FOLLOWER" : {
+      "colour" : "G",
+      "alive" : true,
+      "x" : 1,
+      "y" : 7,
+      "dir" : "UP"
+    }
+  },
+  "gates" : {
+    "GATE" : {
+      "param" : "G",
+      "x" : 10,
+      "y" : 6
+    }
+  },
+  "items" : {
+    "SHIELD" : {
+      "param" : "NONE",
+      "x" : 5,
+      "y" : 6
+    },
+    "LEVER" : {
+      "param" : "G",
+      "x" : 7,
+      "y" : 2
+    },
+    "LOOT" : {
+      "param" : "DOLLAR",
+      "x" : 0,
+      "y" : 0
+    },
+    "BOMB" : {
+      "param" : "NONE",
+      "x" : 4,
+      "y" : 10
+    },
+    "CLOCK" : {
+      "param" : "NONE",
+      "x" : 2,
+      "y" : 9
+    },
+    "DOOR" : {
+      "param" : "NONE",
+      "x" : 10,
+      "y" : 1
+    }
+  }
+}

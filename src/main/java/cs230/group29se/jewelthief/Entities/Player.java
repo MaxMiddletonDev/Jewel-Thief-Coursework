@@ -75,6 +75,14 @@ public class Player implements MoveableCharacter, Protectable {
     }
 
     /**
+     * Sets the player's current tile.
+     * @param tile the new tile for the player to occupy.
+     */
+    public void setCurrentTile(Tile tile) {
+        this.currentTile = tile;
+    }
+
+    /**
      * Checks if the player is currently alive.
      * @return True if the player is alive, false otherwise.
      */
