@@ -18,7 +18,7 @@ public class ProfileSelectMenu extends Screen {
     }
 
     @Override
-    public void initialize() {
+    public void onInitialize() {
         if (getController() instanceof ProfileSelectController c) {
             c.populateProfiles();
         }

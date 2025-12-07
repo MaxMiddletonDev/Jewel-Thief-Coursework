@@ -1,28 +1,28 @@
 {
   "levelId" : "1",
   "profileName" : "Gangis Khan",
-  "playerState" : [ 8, 2 ],
+  "playerState" : [ 0, 0 ],
   "elapsedSeconds" : 0,
-  "timeRemainingMs" : 41107,
+  "timeRemainingMs" : 43045,
   "score" : 0,
   "npcStates" : {
     "CAMPER" : {
       "alive" : true,
       "x" : 9,
-      "y" : 2,
+      "y" : 0,
       "dir" : "RIGHT"
     },
     "FLYING" : {
       "alive" : true,
-      "x" : 11,
+      "x" : 6,
       "y" : 6,
-      "dir" : "LEFT"
+      "dir" : "RIGHT"
     },
     "FOLLOWER" : {
       "colour" : "G",
       "alive" : true,
       "x" : 3,
-      "y" : 6,
+      "y" : 2,
       "dir" : "DOWN"
     }
   },

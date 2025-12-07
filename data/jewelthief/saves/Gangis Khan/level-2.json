@@ -3,12 +3,12 @@
   "profileName" : "Gangis Khan",
   "playerState" : [ 0, 0 ],
   "elapsedSeconds" : 0,
-  "timeRemainingMs" : 98055,
+  "timeRemainingMs" : 97073,
   "score" : 0,
   "npcStates" : {
     "FLYING" : {
       "alive" : true,
-      "x" : 6,
+      "x" : 9,
       "y" : 6,
       "dir" : "RIGHT"
     },
@@ -16,7 +16,7 @@
       "colour" : "G",
       "alive" : true,
       "x" : 3,
-      "y" : 2,
+      "y" : 4,
       "dir" : "DOWN"
     }
   },

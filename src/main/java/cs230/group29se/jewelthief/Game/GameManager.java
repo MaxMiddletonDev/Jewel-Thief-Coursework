@@ -11,8 +11,10 @@ import cs230.group29se.jewelthief.Persistence.Profile.SaveData;
 import cs230.group29se.jewelthief.Persistence.Profile.SaveFactory;
 import cs230.group29se.jewelthief.Persistence.Storage.*;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameController;
+import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.awt.*;
 import java.nio.file.Path;
 import java.util.Map;
 
@@ -25,6 +27,8 @@ import java.util.Map;
 public final class GameManager {
     private static int levelNumber;
     private static Level currentLevel;
+    private static Screen currentScreen;
+    
     private GameManager() {
     }
 
@@ -261,5 +265,20 @@ public final class GameManager {
 
     public static PersistenceManager getPersistenceManager() {
         return PM;
+    }
+    
+    public static void setCurrentScreen(Screen screen) {
+         currentScreen = screen;
+    }
+    
+    public static Screen getCurrentScreen() {
+        return currentScreen;
+    }
+    
+    public GraphicsContext getGraphics() {
+        if(currentLevel != null) {
+            return currentLevel.getGameController().getCanvas().getGraphicsContext2D();
+        }
+        return null;
     }
 }

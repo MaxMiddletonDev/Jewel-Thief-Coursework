@@ -5,6 +5,7 @@ import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Entities.Player;
+import cs230.group29se.jewelthief.Items.Item;
 import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
 import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.LevelFailedScene.LevelFailedScreen;
@@ -49,7 +50,7 @@ public class GameScreen extends Screen {
     private String activeProfileName = "testProfile"; // or "Amsyar"
 
     @Override
-    public void initialize() {
+    public void onInitialize() {
         int levelNum = GameManager.getCurrentLevelNumber();
         if (levelNum == 0) {
             levelNum = 1;
@@ -228,6 +229,12 @@ public class GameScreen extends Screen {
     public void setPaused(boolean paused) {
         this.paused = paused;
         if (paused) {
+            //Pause bombs
+            for (Item item : GameManager.getCurrentLevel().getItems()) {
+                if (item instanceof cs230.group29se.jewelthief.Items.Bomb bomb) {
+                    // todo: bomb.getTimeLine().pause();
+                }
+            }
             autosaveTimeline.pause();
         } else {
             autosaveTimeline.play();

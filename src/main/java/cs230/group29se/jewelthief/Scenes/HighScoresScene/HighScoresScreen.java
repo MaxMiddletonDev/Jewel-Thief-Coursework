@@ -13,7 +13,7 @@ public class HighScoresScreen extends Screen {
     }
 
     @Override
-    public void initialize() {
+    public void onInitialize() {
         if (getController() instanceof HighScoresController c) {
             controller = c;
             c.loadData();

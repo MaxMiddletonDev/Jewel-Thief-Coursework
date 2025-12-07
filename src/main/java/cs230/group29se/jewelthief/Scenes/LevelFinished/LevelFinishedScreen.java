@@ -28,7 +28,7 @@ public class LevelFinishedScreen extends Screen {
      * Currently, no specific initialization logic is implemented.
      */
     @Override
-    public void initialize() {
+    public void onInitialize() {
         // No initialization logic for this screen.
     }
 

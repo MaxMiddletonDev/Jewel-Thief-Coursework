@@ -199,4 +199,8 @@ public class Bomb extends Destroyable {
 
         gc.drawImage(image, getX() * 64, getY() * 64);
     }
+
+    public Timer getTimer() {
+        return timer;
+    }
 }

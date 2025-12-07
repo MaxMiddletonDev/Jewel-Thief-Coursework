@@ -1,7 +1,7 @@
 package cs230.group29se.jewelthief.Scenes;
 
+import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.MainApplication;
-import cs230.group29se.jewelthief.Scenes.GameScene.GameController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -34,9 +34,20 @@ abstract public class Screen {
     private String screenTitle;
 
     /**
-     * Initialize, Scene Setup happens here
+     * Final initialize wrapper. Ensures the GameManager's current scene is set,
+     * then calls the subclass hook {@link #onInitialize()}.
      */
-    public abstract void initialize();
+    public final void initialize() {
+        // ensure GameManager always knows the active scene
+        GameManager.setCurrentScreen(this);
+        onInitialize();
+    }
+
+    /**
+     * Subclasses implement this instead of overriding {@link #initialize()}.
+     * Initialization logic for each scene goes here.
+     */
+    public abstract void onInitialize();
 
     /**
      * Update, Game Logic happens here
