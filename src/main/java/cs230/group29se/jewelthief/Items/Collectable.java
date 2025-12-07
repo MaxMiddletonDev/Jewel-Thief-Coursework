@@ -20,19 +20,15 @@ public abstract class Collectable extends Item implements Remove {
     public Collectable(final int x, final int y) {
         super(x, y);
     }
-
-    /**
-     * Sets the character that collected this item.
-     * @param collector the MoveableCharacter that picked up this item
-     */
-
-
     /**
      * Interact is used when it is picked up and its behavior is
      * different based on the child class implementing it.
      * Will be removed at some point after collection.
      */
     public abstract void interact();
-
+    /**
+     * Draws the collectable it its position.
+     * @param gc the class the item will be drawn with.
+     */
     public abstract void draw(GraphicsContext gc);
 }

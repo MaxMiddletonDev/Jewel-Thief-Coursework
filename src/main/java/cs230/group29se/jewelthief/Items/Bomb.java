@@ -2,6 +2,7 @@ package cs230.group29se.jewelthief.Items;
 
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.Level;
+import cs230.group29se.jewelthief.Game.Tile;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import java.util.Timer;
@@ -44,10 +45,16 @@ public class Bomb extends Destroyable {
 
 
     // Add image references for each bomb stage (3,2,1,0)
-    private final Image bombStage3 = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/BOMB3.png").toString());
-    private final Image bombStage2 = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/BOMB2.png").toString());
-    private final Image bombStage1 = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/BOMB1.png").toString());
-    private final Image bombStage0 = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/BOMB0.png").toString());
+    private final Image bombStage4 = new Image(getClass().getResource(
+            "/cs230/group29se/jewelthief/Images/BOMB4.png").toString());
+    private final Image bombStage3 = new Image(getClass().getResource(
+            "/cs230/group29se/jewelthief/Images/BOMB3.png").toString());
+    private final Image bombStage2 = new Image(getClass().getResource(
+            "/cs230/group29se/jewelthief/Images/BOMB2.png").toString());
+    private final Image bombStage1 = new Image(getClass().getResource(
+            "/cs230/group29se/jewelthief/Images/BOMB1.png").toString());
+    private final Image bombStage0 = new Image(getClass().getResource(
+            "/cs230/group29se/jewelthief/Images/BOMB0.png").toString());
 
     /**
      * Creates an active bomb with a location and time left before detonation.
@@ -76,7 +83,8 @@ public class Bomb extends Destroyable {
      */
     public Bomb(final int x, final int y) {
         super(x, y);
-        image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/BOMB0.png").toString());
+        image = new Image(getClass().getResource(
+                "/cs230/group29se/jewelthief/Images/BOMB0.png").toString());
     }
 
     /**
@@ -84,6 +92,7 @@ public class Bomb extends Destroyable {
      * @return the task the timer will execute when finished.
      */
     public TimerTask destroy() {
+        
         Bomb bomb = this;
         Level level = GameManager.getCurrentLevel();
         return new TimerTask() {
@@ -95,20 +104,23 @@ public class Bomb extends Destroyable {
                 int explodeDown = getY() + 1;
 
                 bomb.remove(bomb);
+                image = bombStage4;
 
-                while (explodeLeft >= 0 || explodeRight < level.getWidth() || explodeUp >= 0 || explodeDown < level.getHeight()) {
+                while (explodeLeft >= 0 || explodeRight < level.getWidth()
+                        || explodeUp >= 0 || explodeDown < level.getHeight()) {
                     try {
                         // Left
                         if (explodeLeft >= 0) {
-                            var tileLeft = level.getTile(explodeLeft, getY());
+                            Tile tileLeft = level.getTile(explodeLeft, getY());
                             if (tileLeft.getOccupying() instanceof Destroyable destroyable) {
                                 destroyable.remove(destroyable);
+                                //bomb.draw(gc, explodeLeft, getY());
                             }
                         }
 
                         // Right
                         if (explodeRight < level.getWidth()) {
-                            var tileRight = level.getTile(explodeRight, getY());
+                            Tile tileRight = level.getTile(explodeRight, getY());
                             if (tileRight.getOccupying() instanceof Destroyable destroyable) {
                                 destroyable.remove(destroyable);
                             }
@@ -116,7 +128,7 @@ public class Bomb extends Destroyable {
 
                         // Up
                         if (explodeUp >= 0) {
-                            var tileUp = level.getTile(getX(), explodeUp);
+                            Tile tileUp = level.getTile(getX(), explodeUp);
                             if (tileUp.getOccupying() instanceof Destroyable destroyable) {
                                 destroyable.remove(destroyable);
                             }
@@ -124,7 +136,7 @@ public class Bomb extends Destroyable {
 
                         // Down
                         if (explodeDown < level.getHeight()) {
-                            var tileDown = level.getTile(getX(), explodeDown);
+                            Tile tileDown = level.getTile(getX(), explodeDown);
                             if (tileDown.getOccupying() instanceof Destroyable destroyable) {
                                 destroyable.remove(destroyable);
                             }
@@ -134,8 +146,11 @@ public class Bomb extends Destroyable {
                         explodeRight++;
                         explodeUp--;
                         explodeDown++;
+                        Thread.sleep(200);
                     } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
                         // Optional: log e.getMessage() if needed
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }
@@ -147,13 +162,11 @@ public class Bomb extends Destroyable {
      * can be set to a loop to change sprites.
      */
     public void interact() {
-        startTime = System.currentTimeMillis();
-        timer.schedule(destroy(), timeRemaining);
-        armed = true;
-
-
-        // When armed, switch to stage 3 image.
-        image = bombStage3;
+        if (!armed) {
+            startTime = System.currentTimeMillis();
+            timer.schedule(destroy(), timeRemaining);
+            armed = true;
+        }
     }
 
     /**
@@ -178,26 +191,35 @@ public class Bomb extends Destroyable {
 
     /**
      * Draw the bomb with the correct countdown image.
+     * @param gc the class the bomb will be drawn with.
      */
-    public void draw(GraphicsContext gc) {
+    public void draw(final GraphicsContext gc) {
 
 
         // Dynamically change the bomb sprite based on time remaining.
         if (armed) {
             long remaining = getTimeRemaining();
 
-            if (remaining <= 0) {
-                image = bombStage0; // explosion image
-            } else if (remaining <= 1000) {
+            if (remaining <= 300) {
+                image = bombStage4; // explosion image
+            } else if (remaining <= 1300) {
                 image = bombStage1; // "1" stage
-            } else if (remaining <= 2000) {
+            } else if (remaining <= 2300) {
                 image = bombStage2; // "2" stage
             } else {
                 image = bombStage3; // "3" stage
             }
         }
 
-        gc.drawImage(image, getX() * 64, getY() * 64);
+        gc.drawImage(image, getX() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
+                getY() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
+                Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
+    }
+
+    public void draw(final GraphicsContext gc, final int x, final int y) {
+        gc.drawImage(image, x * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
+                y * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
+                Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
     }
 
     public Timer getTimer() {

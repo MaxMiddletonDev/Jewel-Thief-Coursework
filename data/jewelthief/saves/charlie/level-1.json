@@ -1,14 +1,14 @@
 {
   "levelId" : "1",
   "profileName" : "charlie",
-  "playerState" : [ 0, 0 ],
+  "playerState" : [ 11, 11 ],
   "elapsedSeconds" : 0,
-  "timeRemainingMs" : 44020,
+  "timeRemainingMs" : 0,
   "score" : 0,
   "npcStates" : {
     "CAMPER" : {
       "alive" : true,
-      "x" : 8,
+      "x" : 6,
       "y" : 1,
       "dir" : "RIGHT"
     },
@@ -16,7 +16,7 @@
       "alive" : true,
       "x" : 3,
       "y" : 6,
-      "dir" : "RIGHT"
+      "dir" : "LEFT"
     },
     "FOLLOWER" : {
       "colour" : "G",
@@ -27,42 +27,47 @@
     }
   },
   "gates" : {
-    "GATE" : {
+    "GATE#10#2" : {
+      "param" : "R",
+      "x" : 10,
+      "y" : 2
+    },
+    "GATE#10#6" : {
       "param" : "G",
       "x" : 10,
       "y" : 6
     }
   },
   "items" : {
-    "SHIELD" : {
-      "param" : "NONE",
-      "x" : 5,
-      "y" : 6
-    },
-    "LEVER" : {
+    "LEVER#7#2" : {
       "param" : "G",
       "x" : 7,
       "y" : 2
     },
-    "LOOT" : {
+    "LOOT#0#0" : {
       "param" : "DOLLAR",
       "x" : 0,
       "y" : 0
     },
-    "BOMB" : {
-      "param" : "NONE",
-      "x" : 4,
-      "y" : 10
-    },
-    "CLOCK" : {
+    "CLOCK#2#9" : {
       "param" : "NONE",
       "x" : 2,
       "y" : 9
     },
-    "DOOR" : {
+    "DOOR#10#1" : {
       "param" : "NONE",
       "x" : 10,
       "y" : 1
+    },
+    "LEVER#9#4" : {
+      "param" : "R",
+      "x" : 9,
+      "y" : 4
+    },
+    "SHIELD#5#6" : {
+      "param" : "NONE",
+      "x" : 5,
+      "y" : 6
     }
   }
 }

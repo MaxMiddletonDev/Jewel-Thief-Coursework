@@ -15,7 +15,8 @@ public class Shield extends Destroyable {
 
     /** The image representing the Shield item. */
     private final Image image = new Image(
-            getClass().getResource("/cs230/group29se/jewelthief/Images/SHIELD.png").toString()
+            getClass().getResource(
+                    "/cs230/group29se/jewelthief/Images/SHIELD.png").toString()
     );
 
     /**
@@ -24,14 +25,14 @@ public class Shield extends Destroyable {
      * @param x The x-coordinate (in tiles) where the Shield is located.
      * @param y The y-coordinate (in tiles) where the Shield is located.
      */
-    public Shield(int x, int y) {
+    public Shield(final int x, final int y) {
         super(x, y);
     }
 
     /**
      * Defines the interaction behavior of the Shield.
-     * If the collector is an instance of Protectable, it sets the entity to protected
-     * and removes the Shield from the game.
+     * If the collector is an instance of Protectable,
+     * it sets the entity to protected and removes the Shield from the game.
      */
     @Override
     public void interact() {
@@ -47,9 +48,9 @@ public class Shield extends Destroyable {
      * @param gc The GraphicsContext used to draw the Shield.
      */
     @Override
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(image, getX()* Tile.TILE_SIZE + Tile.HALF_TILE_SIZE/2,
-                getY()* Tile.TILE_SIZE + Tile.HALF_TILE_SIZE/2,
+    public void draw(final GraphicsContext gc) {
+        gc.drawImage(image, getX() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
+                getY() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
                 Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
     }
 }

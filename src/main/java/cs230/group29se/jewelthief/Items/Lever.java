@@ -32,7 +32,9 @@ public class Lever extends Destroyable {
      * Height of all levers.
      */
     private static final double HEIGHT = 50.0;
-
+    /**
+     * Image of the lever, based on the colour.
+     */
     private final Image image;
 
     /**
@@ -46,7 +48,9 @@ public class Lever extends Destroyable {
         super(x, y);
         this.colour = colour;
 
-        image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/LEVER" + colour.name() + ".png").toString());
+        image = new Image(getClass().getResource(
+                "/cs230/group29se/jewelthief/Images/LEVER"
+                        + colour.name() + ".png").toString());
     }
 
     /**
@@ -77,11 +81,11 @@ public class Lever extends Destroyable {
 
     /**
      * Draws a lever at its position.
-     * @param gc
+     * @param gc the class the lever will be drawn with.
      */
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(image, getX()* Tile.TILE_SIZE + Tile.HALF_TILE_SIZE/2,
-                getY()* Tile.TILE_SIZE + Tile.HALF_TILE_SIZE/2,
+    public void draw(final GraphicsContext gc) {
+        gc.drawImage(image, getX() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
+                getY() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
                 Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
     }
 }

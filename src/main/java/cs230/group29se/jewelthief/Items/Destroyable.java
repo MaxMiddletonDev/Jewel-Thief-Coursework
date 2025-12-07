@@ -21,10 +21,14 @@ public abstract class Destroyable extends Collectable {
     }
 
     /**
-     * Interact is used when it is picked up and its behavior is
+     * Interact is used when it is picked up and its behavior is.
      *  different based on the child class implementing it.
      */
     public abstract void interact();
 
+    /**
+     * Draws the destroyable in its position.
+     * @param gc the class the destroyable will be drawn with.
+     */
     public abstract void draw(GraphicsContext gc);
 }
