@@ -4,17 +4,11 @@ import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
 import cs230.group29se.jewelthief.MainApplication;
-import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * The bomb class destroys certain items in its pathway after being triggered.
@@ -52,25 +46,29 @@ public class Bomb extends Destroyable {
     private Image image;
 
     //timing for countdown
-    private double countDownSeconds = 1;
-    private double countDownTicks = countDownSeconds * MainApplication.TPS;
-    private double countDownahh = countDownTicks;
+    private final double countDownSeconds = 1;
+    private final double countDownTicks = countDownSeconds * MainApplication.TPS;
+    private double countdownTickProgress = countDownTicks;
+
+
+
+
+
     private int countDownLeft = 3;
 
     //timing for explosions
-    private double nextBoomSeconds = 0.2;
-    private double nextBoomTicks = nextBoomSeconds * MainApplication.TPS;
+    private final double nextBoomSeconds = 0.2;
+    private final double nextBoomTicks = nextBoomSeconds * MainApplication.TPS;
     private double nextBoomCountdown = nextBoomTicks;
+    private int explosions = 0;
+
+
+
 
 
     private ArrayList<Destroyable> destroyed = new ArrayList<>();
     private boolean exploding = false;
 
-
-    int explodeLeft = getX();
-    int explodeRight = getX();
-    int explodeUp = getY();
-    int explodeDown = getY();
 
 
 
@@ -87,28 +85,24 @@ public class Bomb extends Destroyable {
             "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB0.png").toString());
 
     /**
-     * Creates an active bomb with a location and time left before detonation.
-     * @param x Where in tiles the item is located
-     * @param y Where in tiles the item is located
-     * @param timeRemaining how long left till the bomb detonates.
+     * Allows for the creation of an active bomb.
+     * @param countDownLeft how many countdowns left before the bomb explodes.
+     * @param countdownTickProgress how far into the countdown the bomb is.
+     * @param nextBoomCountdown how long till next explosion.
+     * @param explosions how many explosions have occurred.
+     * @param armed is the bomb armed.
+     * @param exploding is the bomb exploding.
+     * @param x the x position.
+     * @param y the y position.
      */
-    public Bomb(final Long timeRemaining, final int x, final int y) {
+    public Bomb(int countDownLeft, double countdownTickProgress, double nextBoomCountdown, int explosions, boolean armed, boolean exploding, final int x, final int y) {
         super(x, y);
-
-        // Clamp to max of 3000 (your rule)
-        if (timeRemaining < this.timeRemaining) {
-            this.timeRemaining = timeRemaining;
-        }
-
-        // Mark bomb as active
-        this.armed = true;
-
-        // Record when countdown began
-        this.startTime = System.currentTimeMillis();
-
-        // Initial armed image
-        this.image = bombStage3;
-
+        this.countDownLeft = countDownLeft;
+        this.countdownTickProgress = countdownTickProgress;
+        this.nextBoomCountdown = nextBoomCountdown;
+        this.explosions = explosions;
+        this.armed = armed;
+        this.exploding = exploding;
     }
 
 
@@ -127,22 +121,18 @@ public class Bomb extends Destroyable {
 
     /**
      * Destroys all destroyable items in the bombs horizontal and vertical path.
-     * @return the task the timer will execute when finished.
      */
     public void destroy() {
         destroyed.clear();
         Level level = GameManager.getCurrentLevel();
-        explodeLeft--;
-        explodeRight++;
-        explodeUp--;
-        explodeDown++;
 
+        explosions++;
         boolean expanded = false;
 
-        expanded |= explodeDirection(level, explodeLeft, getY()); // left
-        expanded |= explodeDirection(level, explodeRight, getY()); // right
-        expanded |= explodeDirection(level, getX(), explodeUp); // up
-        expanded |= explodeDirection(level, getX(), explodeDown); // down
+        expanded |= explodeDirection(level, getX()-explosions, getY()); // left
+        expanded |= explodeDirection(level, getX()+explosions, getY()); // right
+        expanded |= explodeDirection(level, getX(), getY()-explosions); // up
+        expanded |= explodeDirection(level, getX(), getY()+explosions); // down
 
         if (!expanded) {
             destroyed.add(this);
@@ -206,27 +196,27 @@ public class Bomb extends Destroyable {
 
         if (exploding) {
             //draw left explosion
-            if (explodeLeft >= 0) {
-                gc.drawImage(bombStage4, explodeLeft * Tile.TILE_SIZE,
+            if (getX()-explosions >= 0) {
+                gc.drawImage(bombStage4, (getX()-explosions) * Tile.TILE_SIZE,
                         getY() * Tile.TILE_SIZE,
                         Tile.TILE_SIZE, Tile.TILE_SIZE);
             }
             //draw right explosion
-            if (explodeRight < level.getWidth()) {
-                gc.drawImage(bombStage4, explodeRight * Tile.TILE_SIZE,
+            if (getX()+explosions < level.getWidth()) {
+                gc.drawImage(bombStage4, (getX()+explosions) * Tile.TILE_SIZE,
                         getY() * Tile.TILE_SIZE,
                         Tile.TILE_SIZE, Tile.TILE_SIZE);
             }
             //draw up explosion
-            if (explodeUp >= 0 ) {
+            if (getY()-explosions >= 0 ) {
                 gc.drawImage(bombStage4, getX() * Tile.TILE_SIZE,
-                        explodeUp * Tile.TILE_SIZE,
+                        (getY()-explosions) * Tile.TILE_SIZE,
                         Tile.TILE_SIZE, Tile.TILE_SIZE);
             }
             //draw down explosion
-            if (explodeDown < level.getHeight()) {
+            if (getY() + explosions < level.getHeight()) {
                 gc.drawImage(bombStage4, getX() * Tile.TILE_SIZE,
-                        explodeDown * Tile.TILE_SIZE,
+                        (getY() + explosions) * Tile.TILE_SIZE,
                         Tile.TILE_SIZE, Tile.TILE_SIZE);
             }
 
@@ -269,9 +259,9 @@ public class Bomb extends Destroyable {
 
 
     public void updateCountDown() {
-        countDownahh--;
-        if (countDownahh == 0 ) {
-            countDownahh = countDownTicks;
+        countdownTickProgress--;
+        if (countdownTickProgress == 0 ) {
+            countdownTickProgress = countDownTicks;
             countDownLeft--;
 
             //explosion starts
@@ -283,5 +273,17 @@ public class Bomb extends Destroyable {
 
     public ArrayList<Destroyable> toDestroy() {
         return destroyed;
+    }
+    public int getCountDownLeft() {
+        return countDownLeft;
+    }
+    public int getExplosions() {
+        return explosions;
+    }
+    public double getNextBoomCountdown() {
+        return nextBoomCountdown;
+    }
+    public double getCountdownTickProgress() {
+        return countdownTickProgress;
     }
 }
