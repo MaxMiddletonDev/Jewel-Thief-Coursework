@@ -101,7 +101,6 @@ public class FloorThief extends NonPlayableCharacter {
         }
         item.interact();
 
-        level.removeItem(item);
     }
 
     /**
