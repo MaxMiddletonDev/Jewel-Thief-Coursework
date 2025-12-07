@@ -4,13 +4,21 @@ import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 public class MainMenuController extends BaseController {
 
+    public Button achievementsButton;
+    public Button equipablesButton;
+    public Button selectProfileButton;
+    public ImageView equippedSkinImage;
+    public Label profileNameLabel;
     @FXML
     private Button startButton;
 
@@ -71,5 +79,15 @@ public class MainMenuController extends BaseController {
     @FXML
     private void handleQuitClicked() {
         Platform.exit();
+    }
+
+    public void handleAchievementsClicked(ActionEvent actionEvent) {
+    }
+
+    public void handleEquipablesClicked(ActionEvent actionEvent) {
+
+    }
+
+    public void selectProfileClicked(ActionEvent actionEvent) {
     }
 }

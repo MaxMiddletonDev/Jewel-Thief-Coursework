@@ -24,6 +24,7 @@ public class PersistenceManager {
     private String pathProfile(String profileName) { return "profiles/" + profileName + ".json"; }
     private String pathSave(String profileName, String levelId) { return "saves/" + profileName + "/level-" + levelId + ".json"; }
     private String pathHighScores() { return "scores/highscores.json"; }
+    private String pathGenericSave() { return "./genericSave.json"; }
 
     // minimal defaults so it runs headless
     private String activeProfileName = "Amsyar";
@@ -156,6 +157,15 @@ public class PersistenceManager {
         fileStore.write(pathHighScores(), serializer.toJson(dto));
     }
 
+    static class genericSaveDTO {
+        public String selectedProfileName;
+    }
+    public void writeSelectedProfile(String profileName) {
+        fileStore.write(pathGenericSave(), serializer.toJson(new genericSaveDTO() {{
+            selectedProfileName = profileName;
+        }}));
+    }
+
     public void submitScore() {
         String profile = currentProfileName();
         int score = currentRunScore();
@@ -228,6 +238,8 @@ public class PersistenceManager {
         public java.util.Map<String, java.util.List<HighScoreEntry>> perLevelBest = new java.util.HashMap<>();
         public java.util.List<HighScoreEntry> globalRanking = new java.util.ArrayList<>();
     }
+
+
 
     private HighScoresDTO loadHighScoresDTO() {
         String path = pathHighScores();

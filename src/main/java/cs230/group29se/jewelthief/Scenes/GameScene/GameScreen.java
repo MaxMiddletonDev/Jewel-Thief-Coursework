@@ -106,6 +106,8 @@ public class GameScreen extends Screen {
         );
         autosaveTimeline.setCycleCount(Animation.INDEFINITE);
         autosaveTimeline.play();
+
+        GameManager.getPersistenceManager().writeSelectedProfile(activeProfileName);
     }
 
     /**
