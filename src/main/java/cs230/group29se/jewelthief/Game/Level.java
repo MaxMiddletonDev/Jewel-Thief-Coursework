@@ -3,6 +3,7 @@ package cs230.group29se.jewelthief.Game;
 import cs230.group29se.jewelthief.Entities.*;
 import cs230.group29se.jewelthief.Items.Bomb;
 import cs230.group29se.jewelthief.Items.Clock;
+import cs230.group29se.jewelthief.Items.Destroyable;
 import cs230.group29se.jewelthief.Items.Door;
 import cs230.group29se.jewelthief.Items.Gate;
 import cs230.group29se.jewelthief.Items.Item;
@@ -110,6 +111,28 @@ public class Level {
                 npc.updateHitCooldown();
                 checkAndCollectItem(npc);
             }
+        }
+
+        ArrayList<Destroyable> destroyed = new ArrayList<>();
+        //countsdown bombs or continues the explosion
+        for (Item item : items) {
+            if (item instanceof Bomb bomb) {
+                if (bomb.getExploding()) {
+                    bomb.updateNextBoom();
+                    ArrayList<Destroyable> temp = bomb.toDestroy();
+                    while (!temp.isEmpty()){
+                        destroyed.add(temp.getLast());
+                        temp.removeLast();
+                    }
+                } else if (bomb.getArmed()) {
+                    // do countdown stuff
+                    bomb.updateCountDown();
+                }
+            }
+        }
+        while (!destroyed.isEmpty()){
+            destroyed.getFirst().remove(destroyed.getFirst());
+            destroyed.removeFirst();
         }
 
         checkCollisions();

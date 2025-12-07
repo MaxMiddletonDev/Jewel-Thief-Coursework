@@ -100,7 +100,6 @@ public class FloorThief extends NonPlayableCharacter {
             collectable.setCollector(this);
         }
         item.interact();
-
     }
 
     /**
