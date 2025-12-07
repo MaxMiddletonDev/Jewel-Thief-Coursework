@@ -1,4 +1,5 @@
 package cs230.group29se.jewelthief.Scenes.GameScene;
+
 import cs230.group29se.jewelthief.Entities.Direction;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
@@ -15,6 +16,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 /**
@@ -29,6 +32,8 @@ public class GameScreen extends Screen {
     private GameController controller;
     private Timeline autosaveTimeline;
 
+    private boolean paused = false;
+
     /**
      * Constructs a GameScreen and sets its title and FXML path.
      */
@@ -42,6 +47,7 @@ public class GameScreen extends Screen {
      */
     // You will probably pass this in from LevelSelectScreen later
     private String activeProfileName = "testProfile"; // or "Amsyar"
+
     @Override
     public void initialize() {
         int levelNum = GameManager.getCurrentLevelNumber();
@@ -74,12 +80,15 @@ public class GameScreen extends Screen {
                     player.setDirection(Direction.RIGHT);
                     player.move();
                 }
+                case P, ESCAPE -> {
+                    setPaused(!isPaused());
+                }
             }
         });
 
         scene.setOnKeyReleased(event -> {
             switch (event.getCode()) {
-                case R ->  {
+                case R -> {
                     System.out.println("Restarting level...");
                     restartLevel();
                 }
@@ -103,6 +112,8 @@ public class GameScreen extends Screen {
      */
     @Override
     public void update() {
+        if (paused) return;
+
         Level level = GameManager.getCurrentLevel();
         if (level == null) {
             // No level loaded (profile just deleted) → nothing to update
@@ -110,7 +121,7 @@ public class GameScreen extends Screen {
         }
 
         level.update();
-        draw();
+//        draw();
 
         if (level.isLevelFailed()) {
             loadFailedLevelScreen();
@@ -118,18 +129,32 @@ public class GameScreen extends Screen {
             loadLevelFinishedScreen();
         }
     }
+
     /**
      * Draws the current state of the game on the canvas.
      * Clears the canvas and renders the current level.
      */
     @Override
     public void draw() {
-        if (getCanvas() == null || getGraphicsContext() == null) {
+        if (getCanvas() == null || getGraphicsContext() == null || GameManager.getCurrentLevel() == null) {
             return; // nothing to draw yet (defensive check)
         }
-        getGraphicsContext().clearRect(0, 0, getCanvas().getWidth(), getCanvas().getHeight());
-        GameManager.getCurrentLevel().draw(getGraphicsContext());
+
+        if (paused) {
+            getGraphicsContext().setFill(new Color(0, 0, 0, 0.5));
+            getGraphicsContext().fillRect(0, 0, getCanvas().getWidth(), getCanvas().getHeight());
+
+            getGraphicsContext().setFill(Color.WHITE);
+            getGraphicsContext().setFont(new Font(40));
+            getGraphicsContext().fillText("PAUSED", getCanvas().getWidth() / 2 - 80, getCanvas().getHeight() / 2);
+        } else {
+            getGraphicsContext().clearRect(0, 0, getCanvas().getWidth(), getCanvas().getHeight());
+            GameManager.getCurrentLevel().draw(getGraphicsContext());
+        }
+
+
     }
+
     /**
      * Loads the level failed screen and marks the current screen as finished.
      */
@@ -155,7 +180,7 @@ public class GameScreen extends Screen {
 
         ProfileData profile = GameManager.getPersistenceManager().getCurrentProfile();
         int maxLevelUnlocked = profile.getMaxUnlockedLvl();
-        if(GameManager.getCurrentLevelNumber() >= maxLevelUnlocked) {
+        if (GameManager.getCurrentLevelNumber() >= maxLevelUnlocked) {
             profile.setMaxUnlockedLvl(GameManager.getCurrentLevelNumber() + 1);
             GameManager.getPersistenceManager().saveProfile();
         }
@@ -192,5 +217,25 @@ public class GameScreen extends Screen {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * Sets the paused state of the game.
+     * If paused, the autosave timeline is paused; otherwise, it is played.
+     *
+     * @param paused true to pause the game, false to resume
+     */
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+        if (paused) {
+            autosaveTimeline.pause();
+        } else {
+            autosaveTimeline.play();
+        }
+    }
+
+    // Returns whether the game is currently paused.
+    public boolean isPaused() {
+        return paused;
     }
 }

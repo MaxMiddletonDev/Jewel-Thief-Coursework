@@ -89,6 +89,7 @@ public class MainApplication extends Application {
             loadNextScreen(stage, currentScreen.getNextScreen());
         } else {
             currentScreen.update();
+            currentScreen.draw();
         }
     }
 
