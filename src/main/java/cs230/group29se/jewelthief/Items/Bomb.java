@@ -57,7 +57,7 @@ public class Bomb extends Destroyable {
     private int countDownLeft = 3;
 
     //timing for explosions
-    private final double nextBoomSeconds = 0.2;
+    private final double nextBoomSeconds = 0.06125;
     private final double nextBoomTicks = nextBoomSeconds * MainApplication.TPS;
     private double nextBoomCountdown = nextBoomTicks;
     private int explosions = 0;
@@ -73,8 +73,12 @@ public class Bomb extends Destroyable {
 
 
     // Add image references for each bomb stage (3,2,1,0)
-    private final Image bombStage4 = new Image(getClass().getResource(
-            "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB4.png").toString());
+    private final Image bombCentre = new Image(getClass().getResource(
+            "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMBSTART.png").toString());
+    private final Image bombVertical = new Image(getClass().getResource(
+            "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMBVERTICAL.png").toString());
+    private final Image bombHorizontal = new Image(getClass().getResource(
+            "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMBHORIZONTAL.png").toString());
     private final Image bombStage3 = new Image(getClass().getResource(
             "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB3.png").toString());
     private final Image bombStage2 = new Image(getClass().getResource(
@@ -116,8 +120,6 @@ public class Bomb extends Destroyable {
         image = new Image(getClass().getResource(
                 "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB0.png").toString());
     }
-
-
 
     /**
      * Destroys all destroyable items in the bombs horizontal and vertical path.
@@ -195,28 +197,35 @@ public class Bomb extends Destroyable {
         Level level = GameManager.getCurrentLevel();
 
         if (exploding) {
-            //draw left explosion
-            if (getX()-explosions >= 0) {
-                gc.drawImage(bombStage4, (getX()-explosions) * Tile.TILE_SIZE,
+
+
+            for (int i = 1; i <= explosions; i++) {
+                //draw left explosion
+                if (getX() - i >= 0) {
+                    gc.drawImage(bombHorizontal, (getX()-i) * Tile.TILE_SIZE,
+                            getY() * Tile.TILE_SIZE,
+                            Tile.TILE_SIZE, Tile.TILE_SIZE);
+                }
+                //draw right explosion
+                if (getX() + i < level.getWidth()) {
+                    gc.drawImage(bombHorizontal, (getX()+ i) * Tile.TILE_SIZE,
+                            getY() * Tile.TILE_SIZE,
+                            Tile.TILE_SIZE, Tile.TILE_SIZE);
+                }
+                //draw up explosion
+                if (getY() - i >= 0 ) {
+                    gc.drawImage(bombVertical, getX() * Tile.TILE_SIZE,
+                            (getY()- i) * Tile.TILE_SIZE,
+                            Tile.TILE_SIZE, Tile.TILE_SIZE);
+                }
+                //draw down explosion
+                if (getY() + i < level.getHeight()) {
+                    gc.drawImage(bombVertical, getX() * Tile.TILE_SIZE,
+                            (getY() + i) * Tile.TILE_SIZE,
+                            Tile.TILE_SIZE, Tile.TILE_SIZE);
+                }
+                gc.drawImage(bombCentre, getX() * Tile.TILE_SIZE,
                         getY() * Tile.TILE_SIZE,
-                        Tile.TILE_SIZE, Tile.TILE_SIZE);
-            }
-            //draw right explosion
-            if (getX()+explosions < level.getWidth()) {
-                gc.drawImage(bombStage4, (getX()+explosions) * Tile.TILE_SIZE,
-                        getY() * Tile.TILE_SIZE,
-                        Tile.TILE_SIZE, Tile.TILE_SIZE);
-            }
-            //draw up explosion
-            if (getY()-explosions >= 0 ) {
-                gc.drawImage(bombStage4, getX() * Tile.TILE_SIZE,
-                        (getY()-explosions) * Tile.TILE_SIZE,
-                        Tile.TILE_SIZE, Tile.TILE_SIZE);
-            }
-            //draw down explosion
-            if (getY() + explosions < level.getHeight()) {
-                gc.drawImage(bombStage4, getX() * Tile.TILE_SIZE,
-                        (getY() + explosions) * Tile.TILE_SIZE,
                         Tile.TILE_SIZE, Tile.TILE_SIZE);
             }
 
@@ -251,7 +260,7 @@ public class Bomb extends Destroyable {
 
     public void updateNextBoom() {
         nextBoomCountdown--;
-        if (nextBoomCountdown == 0) {
+        if (nextBoomCountdown <= 0) {
             nextBoomCountdown = nextBoomTicks;
             destroy();
         }
@@ -260,7 +269,7 @@ public class Bomb extends Destroyable {
 
     public void updateCountDown() {
         countdownTickProgress--;
-        if (countdownTickProgress == 0 ) {
+        if (countdownTickProgress <= 0 ) {
             countdownTickProgress = countDownTicks;
             countDownLeft--;
 
