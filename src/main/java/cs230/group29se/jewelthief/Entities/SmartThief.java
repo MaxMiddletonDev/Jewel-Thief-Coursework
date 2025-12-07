@@ -24,7 +24,7 @@ import java.util.Queue;
  */
 public class SmartThief extends FloorThief {
     private Level level;
-    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/SMARTTHIEF.png").toString());
+    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/NPCs/SMARTTHIEF.png").toString());
 
     /**
      * Constructs a new SmartThief instance.

@@ -20,7 +20,7 @@ public class Player implements MoveableCharacter, Protectable {
     private Direction direction;
 
     private Level level;
-    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/PLAYER.png").toString());
+    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/Player/PLAYER.png").toString());
 
     private boolean isProtected;
 

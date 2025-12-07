@@ -46,15 +46,15 @@ public class Bomb extends Destroyable {
 
     // Add image references for each bomb stage (3,2,1,0)
     private final Image bombStage4 = new Image(getClass().getResource(
-            "/cs230/group29se/jewelthief/Images/BOMB4.png").toString());
+            "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB4.png").toString());
     private final Image bombStage3 = new Image(getClass().getResource(
-            "/cs230/group29se/jewelthief/Images/BOMB3.png").toString());
+            "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB3.png").toString());
     private final Image bombStage2 = new Image(getClass().getResource(
-            "/cs230/group29se/jewelthief/Images/BOMB2.png").toString());
+            "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB2.png").toString());
     private final Image bombStage1 = new Image(getClass().getResource(
-            "/cs230/group29se/jewelthief/Images/BOMB1.png").toString());
+            "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB1.png").toString());
     private final Image bombStage0 = new Image(getClass().getResource(
-            "/cs230/group29se/jewelthief/Images/BOMB0.png").toString());
+            "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB0.png").toString());
 
     /**
      * Creates an active bomb with a location and time left before detonation.
@@ -84,7 +84,7 @@ public class Bomb extends Destroyable {
     public Bomb(final int x, final int y) {
         super(x, y);
         image = new Image(getClass().getResource(
-                "/cs230/group29se/jewelthief/Images/BOMB0.png").toString());
+                "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB0.png").toString());
     }
 
     /**

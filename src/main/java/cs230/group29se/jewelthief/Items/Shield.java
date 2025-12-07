@@ -16,7 +16,7 @@ public class Shield extends Destroyable {
     /** The image representing the Shield item. */
     private final Image image = new Image(
             getClass().getResource(
-                    "/cs230/group29se/jewelthief/Images/SHIELD.png").toString()
+                    "/cs230/group29se/jewelthief/Images/Items/SHIELD.png").toString()
     );
 
     /**

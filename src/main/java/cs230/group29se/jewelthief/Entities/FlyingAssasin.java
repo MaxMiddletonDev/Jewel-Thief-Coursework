@@ -17,7 +17,7 @@ import javafx.scene.image.Image;
 public class FlyingAssasin extends NonPlayableCharacter {
 
     private Level level;
-    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/FLYINGASSASSIN.png").toString());
+    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/NPCs/FLYINGASSASSIN.png").toString());
 
     /**
      * Constructor for creating new instance of FlyingAssasin.

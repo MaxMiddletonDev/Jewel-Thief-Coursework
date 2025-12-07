@@ -29,7 +29,7 @@ public class FloorThief extends NonPlayableCharacter {
      */
     private Level level;
 
-    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/FLOORTHIEF.png").toString());
+    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/NPCs/FLOORTHIEF.png").toString());
 
     public FloorThief(Colour assignedColour, Tile startingTile, Direction direction, Level level, String id) {
         super(startingTile, direction);

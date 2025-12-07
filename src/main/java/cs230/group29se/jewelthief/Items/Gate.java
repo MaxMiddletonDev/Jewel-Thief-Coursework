@@ -48,7 +48,7 @@ public final class Gate implements Remove {
         posX = x;
         posY = y;
         image = new Image(getClass().getResource(
-                "/cs230/group29se/jewelthief/Images/GATE"
+                "/cs230/group29se/jewelthief/Images/Items/Gates & Levers/GATE"
                         + colour.name() + ".png").toString());
     }
 

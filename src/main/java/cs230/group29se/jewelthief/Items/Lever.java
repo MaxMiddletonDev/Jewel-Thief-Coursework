@@ -49,7 +49,7 @@ public class Lever extends Destroyable {
         this.colour = colour;
 
         image = new Image(getClass().getResource(
-                "/cs230/group29se/jewelthief/Images/LEVER"
+                "/cs230/group29se/jewelthief/Images/Items/Gates & Levers/LEVER"
                         + colour.name() + ".png").toString());
     }
 

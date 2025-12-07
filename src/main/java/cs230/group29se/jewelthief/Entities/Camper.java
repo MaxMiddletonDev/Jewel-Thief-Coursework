@@ -38,7 +38,7 @@ public class Camper extends NonPlayableCharacter {
     private final int rectHalfHeight;
     private final Random rnd = new Random();
 
-    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/CAMPER.png").toString());
+    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/NPCs/CAMPER.png").toString());
 
 
     /**

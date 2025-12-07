@@ -11,22 +11,22 @@ public enum LootEnum {
     /**
      * Lowest value loot called CENT with an image of the cent.
      */
-    CENT(10, "/cs230/group29se/jewelthief/Images/CENT.png"),
+    CENT(10, "/cs230/group29se/jewelthief/Images/Items/Loot/CENT.png"),
 
     /**
      * Second-lowest value loot called DOLLAR with an image of the dollar.
      */
-    DOLLAR(20, "/cs230/group29se/jewelthief/Images/DOLLAR.png"),
+    DOLLAR(20, "/cs230/group29se/jewelthief/Images/Items/Loot/DOLLAR.png"),
 
     /**
      * Second-highest value loot called RUBY with an image of the ruby.
      */
-     RUBY(40, "/cs230/group29se/jewelthief/Images/RUBY.png"),
+     RUBY(40, "/cs230/group29se/jewelthief/Images/Items/Loot/RUBY.png"),
 
     /**
      * Highest value loot called DIAMOND with an image of the diamond.
      */
-    DIAMOND(60, "/cs230/group29se/jewelthief/Images/DIAMOND.png");
+    DIAMOND(60, "/cs230/group29se/jewelthief/Images/Items/Loot/DIAMOND.png");
 
     /**
      * VALUE is the amount the loot will be worth.
