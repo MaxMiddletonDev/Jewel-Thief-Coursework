@@ -90,6 +90,7 @@ public class SmartThief extends FloorThief {
             Tile destination = calculateDestination(currentTile, nextMove);
             if (destination != null) {
                 this.currentTile = destination;
+                triggerAdjacentBombs();
             }
         } else {
             // Random but valid movement if path finding doesn't work
@@ -101,6 +102,7 @@ public class SmartThief extends FloorThief {
                 if (target != null) {
                     this.direction = direction;
                     this.currentTile = target;
+
                     return;
                 }
             }
@@ -237,5 +239,28 @@ public class SmartThief extends FloorThief {
         }
 
         return false;
+    }
+
+    /**
+     * Checks the 4 tiles immediately surrounding the player. If a bomb is found, it is activated.
+     */
+    private void triggerAdjacentBombs() {
+        int currentX = currentTile.getX();
+        int currentY = currentTile.getY();
+
+        // These are the adjacent tiles
+        int[][] offsets = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+        for (int[] offset : offsets) {
+            int checkX = currentX + offset[0];
+            int checkY = currentY + offset[1];
+
+            if (checkX >= 0 && checkX < level.getWidth() && checkY >= 0 && checkY < level.getHeight()) {
+                Tile neighbour = level.getTile(checkX, checkY);
+                if (neighbour != null && neighbour.getOccupying() instanceof Bomb bomb) {
+                    bomb.interact();
+                }
+            }
+        }
     }
 }
