@@ -8,13 +8,11 @@ import cs230.group29se.jewelthief.Items.Item;
 import cs230.group29se.jewelthief.Items.Loot;
 import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
 import cs230.group29se.jewelthief.Persistence.Profile.SaveData;
-import cs230.group29se.jewelthief.Persistence.Profile.SaveFactory;
 import cs230.group29se.jewelthief.Persistence.Storage.*;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameController;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.awt.*;
 import java.nio.file.Path;
 import java.util.Map;
 
@@ -270,12 +268,20 @@ public final class GameManager {
     public static void setCurrentScreen(Screen screen) {
          currentScreen = screen;
     }
-    
+
+    /**
+     * Gets the current screen of the game.
+     * @return the current Screen object
+     */
     public static Screen getCurrentScreen() {
         return currentScreen;
     }
-    
-    public GraphicsContext getGraphics() {
+
+    /**
+     * Gets the GraphicsContext from the current level's GameController.
+     * @return the GraphicsContext object, or null if no current level.
+     */
+    public GraphicsContext getGraphicsContext() {
         if(currentLevel != null) {
             return currentLevel.getGameController().getCanvas().getGraphicsContext2D();
         }
