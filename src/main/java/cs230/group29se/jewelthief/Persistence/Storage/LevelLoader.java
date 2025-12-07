@@ -146,7 +146,7 @@ public class LevelLoader {
     private boolean isEntityKeyword(String token) {
         String t = token.toUpperCase();
         return switch (t) {
-            case "PLAYER", "FLYING", "FOLLOWER", "SMART, CAMPER",
+            case "PLAYER", "FLYING", "FOLLOWER", "SMART", "CAMPER",
                  "LOOT", "BOMB", "LEVER", "GATE","CLOCK" , "DOOR",
                  "SIZE", "TIME", "SHIELD" -> true;
             default -> false;

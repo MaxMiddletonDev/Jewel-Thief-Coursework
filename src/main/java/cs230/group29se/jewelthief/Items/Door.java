@@ -23,7 +23,7 @@ public class Door extends Item {
      * Image of the door.
      */
     private final Image image = new Image(getClass().getResource(
-            "/cs230/group29se/jewelthief/Images/DOOR.png").toString());
+            "/cs230/group29se/jewelthief/Images/Items/DOOR.png").toString());
 
     /**
      * Allows for a door to be added to a level.

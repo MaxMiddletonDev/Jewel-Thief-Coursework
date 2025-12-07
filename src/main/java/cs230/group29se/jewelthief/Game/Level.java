@@ -3,6 +3,7 @@ package cs230.group29se.jewelthief.Game;
 import cs230.group29se.jewelthief.Entities.*;
 import cs230.group29se.jewelthief.Items.Bomb;
 import cs230.group29se.jewelthief.Items.Clock;
+import cs230.group29se.jewelthief.Items.Destroyable;
 import cs230.group29se.jewelthief.Items.Door;
 import cs230.group29se.jewelthief.Items.Gate;
 import cs230.group29se.jewelthief.Items.Item;
@@ -110,6 +111,28 @@ public class Level {
                 npc.updateHitCooldown();
                 checkAndCollectItem(npc);
             }
+        }
+
+        ArrayList<Destroyable> destroyed = new ArrayList<>();
+        //countsdown bombs or continues the explosion
+        for (Item item : items) {
+            if (item instanceof Bomb bomb) {
+                if (bomb.getExploding()) {
+                    bomb.updateNextBoom();
+                    ArrayList<Destroyable> temp = bomb.toDestroy();
+                    while (!temp.isEmpty()){
+                        destroyed.add(temp.getLast());
+                        temp.removeLast();
+                    }
+                } else if (bomb.getArmed()) {
+                    // do countdown stuff
+                    bomb.updateCountDown();
+                }
+            }
+        }
+        while (!destroyed.isEmpty()){
+            destroyed.getFirst().remove(destroyed.getFirst());
+            destroyed.removeFirst();
         }
 
         checkCollisions();
@@ -405,8 +428,8 @@ public class Level {
                 case "SMART" -> {
                     String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
-                    // SmartEnemy enemy = new SmartEnemy(xPos, yPos, direction, this, npcId);
-                    // grid[xPos][yPos].setOccupying(enemy);
+                    SmartThief tempEnemy = new SmartThief(grid[entityXPos][entityYPos], direction, this, npcId);
+                    enemies.add(tempEnemy);
                 }
                 case "FOLLOWER" -> {
                     // e.arg1 = direction, e.arg2 = follower colour ("R","G","B","Y")

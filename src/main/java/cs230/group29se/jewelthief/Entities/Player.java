@@ -20,7 +20,7 @@ public class Player implements MoveableCharacter, Protectable {
     private Direction direction;
 
     private Level level;
-    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/PLAYER.png").toString());
+    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/Player/PLAYER.png").toString());
 
     private boolean isProtected;
 
@@ -42,7 +42,6 @@ public class Player implements MoveableCharacter, Protectable {
     public void collectItem(Item item) {
         // If the item is collectable, record that the player collected it
         item.setCollector(this);
-
 
         // Then trigger the item's behaviour
         item.interact();
@@ -96,6 +95,7 @@ public class Player implements MoveableCharacter, Protectable {
 
     /**
      * Draw Function for Player, shapes it to the tile size.
+     * @param gc The GraphicsContext used for drawing.
      */
     public void draw(GraphicsContext gc) {
         int tileSize = Tile.TILE_SIZE;

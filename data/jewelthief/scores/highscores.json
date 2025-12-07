@@ -45,6 +45,10 @@
       "score" : 20,
       "formattedTime" : ""
     }, {
+      "profileName" : "Gangis Khan",
+      "score" : 20,
+      "formattedTime" : "2025-12-07 20:54"
+    }, {
       "profileName" : "john tester",
       "score" : 0,
       "formattedTime" : ""
@@ -68,7 +72,7 @@
     "2" : [ {
       "profileName" : "Gangis Khan",
       "score" : 20,
-      "formattedTime" : "2025-12-07 19:59"
+      "formattedTime" : ""
     } ]
   },
   "globalRanking" : [ {
@@ -118,7 +122,11 @@
   }, {
     "profileName" : "Gangis Khan",
     "score" : 20,
-    "formattedTime" : "2025-12-07 19:59"
+    "formattedTime" : ""
+  }, {
+    "profileName" : "Gangis Khan",
+    "score" : 20,
+    "formattedTime" : "2025-12-07 20:54"
   }, {
     "profileName" : "john tester",
     "score" : 0,
