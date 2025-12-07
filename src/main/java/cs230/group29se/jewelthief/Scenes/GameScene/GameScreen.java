@@ -75,6 +75,16 @@ public class GameScreen extends Screen {
                 }
             }
         });
+
+        scene.setOnKeyReleased(event -> {
+            switch (event.getCode()) {
+                case R ->  {
+                    System.out.println("Restarting level...");
+                    restartLevel();
+                }
+            }
+        });
+
         //Adds saving every second.
         autosaveTimeline = new Timeline(
                 new KeyFrame(
@@ -129,6 +139,15 @@ public class GameScreen extends Screen {
         }
         setNextScreen(new LevelFailedScreen());
         setFinished(true);
+    }
+
+    public void restartLevel() {
+        Level level = GameManager.getCurrentLevel();
+        if (level != null) {
+            level.resetLevel();
+            setNextScreen(new GameScreen());
+            setFinished(true);
+        }
     }
 
     public void loadLevelFinishedScreen() {

@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief.Game;
 
+import cs230.group29se.jewelthief.Items.Gate;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -143,6 +144,14 @@ public class Tile {
      */
     public Object getOccupying(){
         return occupying;
+    }
+
+    /**
+     * Checks if a tile is walkable
+     * @return true if the tile is walkable
+     */
+    public boolean isWalkable() {
+        return !(occupying instanceof Gate);
     }
 
     /**

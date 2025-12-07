@@ -114,7 +114,7 @@ public class LevelLoader {
 
             switch (type) {
                 case "PLAYER" -> def.playerStart = e;
-                case "FLYING", "FOLLOWER", "SMART" -> def.npcStartStates.add(e);
+                case "FLYING", "FOLLOWER", "SMART", "CAMPER" -> def.npcStartStates.add(e);
                 case "GATE" -> def.gates.add(e);
                 case "LOOT", "BOMB", "LEVER","CLOCK","SHIELD" -> def.items.add(e);
                 default -> { /* others only in entities list */ }
@@ -146,7 +146,7 @@ public class LevelLoader {
     private boolean isEntityKeyword(String token) {
         String t = token.toUpperCase();
         return switch (t) {
-            case "PLAYER", "FLYING", "FOLLOWER", "SMART",
+            case "PLAYER", "FLYING", "FOLLOWER", "SMART, CAMPER",
                  "LOOT", "BOMB", "LEVER", "GATE","CLOCK" , "DOOR",
                  "SIZE", "TIME", "SHIELD" -> true;
             default -> false;

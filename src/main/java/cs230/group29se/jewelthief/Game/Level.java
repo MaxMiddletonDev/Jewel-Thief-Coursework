@@ -418,6 +418,12 @@ public class Level {
                     FloorThief tempEnemy = new FloorThief(colour, grid[xPos][yPos], direction, this, npcId);
                     enemies.add(tempEnemy);
                 }
+                case "CAMPER" -> {
+                    String npcDirection = e.arg1;
+                    Direction direction = directionSetter(npcDirection);
+                    Camper tempEnemy = new Camper(grid[xPos][yPos], direction, this, npcId);
+                    enemies.add(tempEnemy);
+                }
                 case "LOOT" -> {
                     String value = e.arg1;
                     Loot tempLoot;
@@ -599,6 +605,17 @@ public class Level {
             }
         }
         return true;
+    }
+
+    public void resetLevel() {
+        String levelId = "level" + levelNumber + ".txt";
+        java.nio.file.Path levelPath = java.nio.file.Path.of("levels", levelId);
+        try {
+            readLevelFile(levelId);
+        } catch (FileNotFoundException e) {
+            System.out.println("Level file not found: " + levelId);
+            e.printStackTrace();
+        }
     }
 
     /**
