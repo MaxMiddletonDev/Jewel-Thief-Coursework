@@ -26,6 +26,10 @@ import java.util.ResourceBundle;
  */
 public class AchievementsController extends BaseController implements Initializable {
 
+    public static final int SPACING = 15;
+    public static final int FIT_WIDTH = 64;
+    public static final int FIT_HEIGHT = 64;
+    public static final double OPACITY = 0.5;
     // FXML-injected container for displaying achievements
     @FXML private VBox achievementsContainer;
 
@@ -58,13 +62,13 @@ public class AchievementsController extends BaseController implements Initializa
             boolean isUnlocked = unlocked.contains(a.name());
 
             // Create a row for each achievement
-            HBox row = new HBox(15);
+            HBox row = new HBox(SPACING);
             row.setAlignment(Pos.CENTER_LEFT);
 
             // Create an icon for the achievement
             ImageView icon = new ImageView(new Image(getClass().getResource(a.getIconPath()).toString()));
-            icon.setFitWidth(64);
-            icon.setFitHeight(64);
+            icon.setFitWidth(FIT_WIDTH);
+            icon.setFitHeight(FIT_HEIGHT);
 
             // Create a label for the achievement name and description
             Label text = new Label(a.getName() + ": " + a.getDescription());
@@ -75,7 +79,7 @@ public class AchievementsController extends BaseController implements Initializa
 
             // Set reduced opacity for locked achievements
             if (!isUnlocked) {
-                row.setOpacity(0.5);
+                row.setOpacity(OPACITY);
             }
 
             // Add the row to the achievements container

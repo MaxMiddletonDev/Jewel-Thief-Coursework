@@ -22,6 +22,10 @@ public class Tile {
      * Width of the border.
      */
     private static final int BORDER_WIDTH = 2;
+    public static final int FIRST_COLOUR_INDEX = 0;
+    public static final int SECOND_COLOUR_INDEX = 1;
+    public static final int THIRD_COLOUR_INDEX = 2;
+    public static final int FOURTH_COLOUR_INDEX = 3;
 
     private final int posX;
     private final int posY;
@@ -123,10 +127,10 @@ public class Tile {
      * @param gc the GraphicsContext to draw on
      */
     public void draw(final GraphicsContext gc) {
-        Color tlColour = colours[0].toFxColor();
-        Color trColour = colours[1].toFxColor();
-        Color blColour = colours[2].toFxColor();
-        Color brColour = colours[3].toFxColor();
+        Color tlColour = colours[FIRST_COLOUR_INDEX].toFxColor();
+        Color trColour = colours[SECOND_COLOUR_INDEX].toFxColor();
+        Color blColour = colours[THIRD_COLOUR_INDEX].toFxColor();
+        Color brColour = colours[FOURTH_COLOUR_INDEX].toFxColor();
 
         // Draw the four quadrants
         gc.setFill(tlColour);
