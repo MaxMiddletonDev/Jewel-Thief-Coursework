@@ -53,6 +53,14 @@
       "score" : 20,
       "formattedTime" : ""
     }, {
+      "profileName" : "charlie",
+      "score" : 20,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 20,
+      "formattedTime" : "2025-12-08 03:27"
+    }, {
       "profileName" : "john tester",
       "score" : 0,
       "formattedTime" : ""
@@ -152,7 +160,7 @@
     }, {
       "profileName" : "charlie",
       "score" : 0,
-      "formattedTime" : "2025-12-08 01:59"
+      "formattedTime" : ""
     } ],
     "7" : [ {
       "profileName" : "charlie",
@@ -278,6 +286,14 @@
     "formattedTime" : ""
   }, {
     "profileName" : "charlie",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 20,
+    "formattedTime" : "2025-12-08 03:27"
+  }, {
+    "profileName" : "charlie",
     "score" : 10,
     "formattedTime" : ""
   }, {
@@ -311,6 +327,6 @@
   }, {
     "profileName" : "charlie",
     "score" : 0,
-    "formattedTime" : "2025-12-08 01:59"
+    "formattedTime" : ""
   } ]
 }

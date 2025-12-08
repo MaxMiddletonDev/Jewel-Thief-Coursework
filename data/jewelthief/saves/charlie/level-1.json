@@ -1,0 +1,29 @@
+{
+  "levelId" : "1",
+  "profileName" : "charlie",
+  "playerState" : [ 10, 1 ],
+  "elapsedSeconds" : 0,
+  "timeRemainingMs" : 54932,
+  "score" : 20,
+  "npcStates" : {
+    "FLYING" : {
+      "alive" : true,
+      "x" : 0,
+      "y" : 6,
+      "dir" : "LEFT"
+    }
+  },
+  "gates" : { },
+  "items" : {
+    "BOMB#4#10" : {
+      "param" : "3#60.0#3.675#0#FALSE#FALSE",
+      "x" : 4,
+      "y" : 10
+    },
+    "DOOR#10#1" : {
+      "param" : "NONE",
+      "x" : 10,
+      "y" : 1
+    }
+  }
+}
