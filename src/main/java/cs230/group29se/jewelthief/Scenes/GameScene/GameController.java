@@ -18,8 +18,9 @@ import java.util.ResourceBundle;
  */
 public class GameController extends BaseController implements Initializable {
 
-    private Label timerLabel;
-    private Label scoreLabel;
+
+    public Label timerLabel;
+    public Label scoreLabel;
 
     /** Canvas for rendering the game graphics. */
     @FXML
