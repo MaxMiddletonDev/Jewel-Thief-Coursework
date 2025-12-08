@@ -16,8 +16,8 @@ import javafx.scene.layout.Pane;
  * @version 1.0
  */
 abstract public class Screen {
-    public static final int DEFAULT_SCENE_WIDTH = 800;
-    public static final int DEFAULT_SCENE_HEIGHT = 600;
+    public static final int DEFAULT_SCENE_WIDTH = 1000;
+    public static final int DEFAULT_SCENE_HEIGHT = 900;
 
     private String screenFXMLPath;
 

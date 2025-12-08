@@ -601,8 +601,8 @@ public class Level {
                 case "SMART" -> {
                     String npcDirection = (String) state.get("dir");
                     Direction direction = directionSetter(npcDirection);
-                    // SmartEnemy enemy = new SmartEnemy(xPos, yPos, direction, this, npcType);
-                    // grid[xPos][yPos].setOccupying(enemy);
+                    SmartThief tempEnemy = new SmartThief(grid[xPos][yPos], direction, this, npcType);
+                    enemies.add(tempEnemy);
                 }
                 case "CAMPER" -> {
                     String npcDirection = (String) state.get("dir");
