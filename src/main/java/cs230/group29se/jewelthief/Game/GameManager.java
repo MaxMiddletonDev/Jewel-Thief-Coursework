@@ -26,6 +26,7 @@ import java.util.Map;
  * @version 1.0
  */
 public final class GameManager {
+    public static final int LEVEL_COUNT = 10; // Total number of levels in the game
 
     // Current state information
     private static int levelNumber;
@@ -289,6 +290,10 @@ public final class GameManager {
         ProfileData data = PersistenceManager.getCurrentProfile();
         SkinId skinId = SkinId.fromString(data.getSelectedSkinId());
         return SkinRegistry.getById(skinId).getImage();
+    }
+
+    public static boolean isLastLevel() {
+        return levelNumber >= LEVEL_COUNT;
     }
 
 }

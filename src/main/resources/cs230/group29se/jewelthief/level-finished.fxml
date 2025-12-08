@@ -14,7 +14,7 @@
 
     <Label fx:id="levelFinishedLabel" text="Level Finished!" style="-fx-font-size: 36px; -fx-font-weight: bold;"/>
     <Label fx:id="levelScoreLabel" text="Your Score: " style="-fx-font-size: 24px;"/>
-    <Button fx:id="NextLevelButton" userData="" text="Next Level" onAction="#selectNextLevel"/>
-    <Button fx:id="MainMenuButton" userData="" text="Main Menu" onAction="#MainMenu"/>
+    <Button fx:id="nextLevelButton" userData="" text="Next Level" onAction="#selectNextLevel"/>
+    <Button fx:id="mainMenuButton" userData="" text="Main Menu" onAction="#MainMenu"/>
 
 </VBox>
