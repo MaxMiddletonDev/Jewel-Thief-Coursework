@@ -487,7 +487,7 @@ public class Level {
                     // e.arg1 = direction string ("UP","DOWN","LEFT","RIGHT")
                     String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
-                    FlyingAssasin tempEnemy = new FlyingAssasin(
+                    FlyingAssassin tempEnemy = new FlyingAssassin(
                             grid[entityXPos][entityYPos], direction,
                             this, npcId);
                     enemies.add(tempEnemy);
@@ -680,8 +680,8 @@ public class Level {
                 case "FLYING" -> {
                     String npcDirection = (String) state.get("dir");
                     Direction direction = directionSetter(npcDirection);
-                    FlyingAssasin tempEnemy =
-                            new FlyingAssasin(grid[xPos][yPos],
+                    FlyingAssassin tempEnemy =
+                            new FlyingAssassin(grid[xPos][yPos],
                                     direction, this, npcType);
                     enemies.add(tempEnemy);
                 }

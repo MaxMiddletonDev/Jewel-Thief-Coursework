@@ -7,7 +7,6 @@ import cs230.group29se.jewelthief.Items.Bomb;
 import cs230.group29se.jewelthief.Items.Collectable;
 import cs230.group29se.jewelthief.Items.Item;
 import cs230.group29se.jewelthief.Items.Lever;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
@@ -73,7 +72,7 @@ public class FloorThief extends NonPlayableCharacter {
             return;
         }
 
-        if (other instanceof FlyingAssasin) {
+        if (other instanceof FlyingAssassin) {
             this.isAlive = false;
         } else if (other instanceof Player) {
             if(canHit()){

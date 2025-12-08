@@ -3,7 +3,6 @@ package cs230.group29se.jewelthief.Entities;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
 import cs230.group29se.jewelthief.Items.Item;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 
@@ -14,15 +13,15 @@ import javafx.scene.image.Image;
  *
  * @author Baba
  */
-public class FlyingAssasin extends NonPlayableCharacter {
+public class FlyingAssassin extends NonPlayableCharacter {
 
     private Level level;
     private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/NPCs/FLYINGASSASSIN.png").toString());
 
     /**
-     * Constructor for creating new instance of FlyingAssasin.
+     * Constructor for creating new instance of FlyingAssassin.
      */
-    public FlyingAssasin(Tile startingTile, Direction direction, Level level, String id) {
+    public FlyingAssassin(Tile startingTile, Direction direction, Level level, String id) {
         super(startingTile, direction);
         this.id = id;
         this.level = level;
@@ -55,7 +54,7 @@ public class FlyingAssasin extends NonPlayableCharacter {
                 System.out.println("Flying Assasin is on hit cooldown: " + hitCooldown + " ticks remaining.");
             }
         }
-        else if (other instanceof NonPlayableCharacter && !(other instanceof FlyingAssasin)) {
+        else if (other instanceof NonPlayableCharacter && !(other instanceof FlyingAssassin)) {
             other.setAliveTo(false);
         }
     }

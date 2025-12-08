@@ -25,13 +25,13 @@ public class LevelFinishedController extends BaseController implements Initializ
 
 
     /** Button to go to the next level */
-    public Button NextLevelButton;
+    private Button NextLevelButton;
     /** Button to go back to main screen */
-    public Button MainMenuButton;
+    private Button MainMenuButton;
     /** Label to display the "Level Finished" message */
-    public Label levelFinishedLabel;
+    private Label levelFinishedLabel;
     /** Label for displaying the score earned during the level */
-    public Label levelScoreLabel;
+    private Label levelScoreLabel;
     private LevelFinishedScreen screen;
 
     /**

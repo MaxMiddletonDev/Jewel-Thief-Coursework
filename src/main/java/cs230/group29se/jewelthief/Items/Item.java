@@ -11,13 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
  */
 
 public abstract class Item {
-    /**
-     * How far across the gate is from the left.
-     */
     private final int POS_X;
-    /**
-     * How far down the gate is from the top.
-     */
     private final int POS_Y;
     /**
      * The character that collected this item (Player or NPC).

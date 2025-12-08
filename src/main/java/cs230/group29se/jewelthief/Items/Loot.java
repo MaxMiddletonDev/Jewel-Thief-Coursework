@@ -15,9 +15,6 @@ import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.
  */
 public class Loot extends Destroyable {
 
-    /**
-     * The type of loot that the instance will be based on.
-     */
     private final LootEnum type;
 
     /**

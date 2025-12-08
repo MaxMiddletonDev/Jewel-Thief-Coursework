@@ -13,28 +13,11 @@ import javafx.scene.image.Image;
  * @version 1.0
  */
 public class Lever extends Destroyable {
-    /**
-     * The colour of the lever.
-     */
+
     private final Colour colour;
-
-    /**
-     * A list of gates that are the same colour as the lever.
-     */
     private final ArrayList<Gate> gates = new ArrayList<Gate>();
-
-    /**
-     * Width of all levels.
-     */
     private static final double WIDTH = 50.0;
-
-    /**
-     * Height of all levers.
-     */
     private static final double HEIGHT = 50.0;
-    /**
-     * Image of the lever, based on the colour.
-     */
     private final Image image;
 
     /**

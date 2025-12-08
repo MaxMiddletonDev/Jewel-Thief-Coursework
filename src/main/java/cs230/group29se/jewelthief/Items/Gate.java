@@ -12,30 +12,12 @@ import javafx.scene.image.Image;
  * @version 1.1
  */
 public final class Gate implements Remove {
-    /**
-     * The colour the gate is.
-     */
-    private final Colour colour;
-    /**
-     * The width of all gates.
-     */
-    private static final double WIDTH = 50.0;
-    /**
-     * The height of all gates.
-     */
-    private static final double HEIGHT = 50.0;
 
-    /**
-     * How far across the gate is from the left.
-     */
+    private final Colour colour;
+    private static final double WIDTH = 50.0;
+    private static final double HEIGHT = 50.0;
     private final int posX;
-    /**
-     * How far down the gate is from the top.
-     */
     private final int posY;
-    /**
-     * Image of the lever, based on the colour.
-     */
     private final Image image;
     /**
      * Allows for gates to be made in the level.

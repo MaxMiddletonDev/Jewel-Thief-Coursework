@@ -119,7 +119,7 @@ public class GameProfileHelper {
                 return false;
             }
 
-            // 改名并缓存
+            // rename and cache
             p.setProfileName(newName);
             manager.addProfile(p);
             PersistenceManager.setCachedProfile(p);

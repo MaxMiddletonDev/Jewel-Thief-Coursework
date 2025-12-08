@@ -40,9 +40,6 @@ public class Bomb extends Destroyable {
      * How far the ticks have progressed to one countDownSeconds.
      */
     private double countdownTickProgress = countDownTicks;
-    /**
-     * How many countdowns remaining.
-     */
     private int countDownLeft = 3;
 
 
@@ -66,51 +63,27 @@ public class Bomb extends Destroyable {
      * Items to be destroyed.
      */
     private ArrayList<Destroyable> destroyed = new ArrayList<>();
-    /**
-     * Is the bomb exploding false for no.
-     */
     private boolean exploding = false;
 
 
-    /**
-     * Centre explosion image.
-     */
     private final Image bombCentre = new Image(getClass().getResource(
             "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMBSTART.png")
             .toString());
-    /**
-     * Vertical explosion image.
-     */
     private final Image bombVertical = new Image(getClass().getResource(
             "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMBVERTICAL.png")
             .toString());
-    /**
-     * Horizontal explosion image.
-     */
     private final Image bombHorizontal = new Image(getClass().getResource(
             "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMBHORIZONTAL.png")
             .toString());
-    /**
-     * 3 seconds left bomb image.
-     */
     private final Image bombStage3 = new Image(getClass().getResource(
             "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB3.png")
             .toString());
-    /**
-     * 2 seconds left bomb image.
-     */
     private final Image bombStage2 = new Image(getClass().getResource(
             "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB2.png")
             .toString());
-    /**
-     * 1 second remaining bomb image.
-     */
     private final Image bombStage1 = new Image(getClass().getResource(
             "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB1.png")
             .toString());
-    /**
-     * Un-triggered bomb.
-     */
     private final Image bombStage0 = new Image(getClass().getResource(
             "/cs230/group29se/jewelthief/Images/Items/Bomb/BOMB0.png")
             .toString());
