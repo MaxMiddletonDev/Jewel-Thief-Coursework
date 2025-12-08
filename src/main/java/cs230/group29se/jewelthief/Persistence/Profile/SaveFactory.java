@@ -13,6 +13,10 @@ import java.util.Map;
  */
 public class SaveFactory {
 
+    private static int MS_TO_SECOND = 1000;
+    private static int INITIAL_VALUE = 0;
+
+
     /**
      * Creates a fresh SaveData from a LevelDef for a given profile.
      * This is used when there is no existing JSON save yet.
@@ -25,15 +29,15 @@ public class SaveFactory {
         SaveData s = new SaveData();
         s.setProfileName(profileName);
         s.setLevelId(def.levelId);
-        s.setElapsedSeconds(0);
-        s.setTimeRemainingMs(def.timeLimitSec * 1000);
+        s.setElapsedSeconds(INITIAL_VALUE);
+        s.setTimeRemainingMs(def.timeLimitSec * MS_TO_SECOND);
 
         // Example simple player state: [x, y]
         if (def.playerStart != null) {
             Object[] playerState = new Object[] { def.playerStart.x, def.playerStart.y };
             s.setPlayerState(playerState);
         } else {
-            s.setPlayerState(new Object[] { 0, 0 }); // fallback
+            s.setPlayerState(new Object[] {INITIAL_VALUE, INITIAL_VALUE}); // fallback
         }
 
         // store npcStates / gates / items as simple maps keyed by "type#x#y" as defined in their constructors
