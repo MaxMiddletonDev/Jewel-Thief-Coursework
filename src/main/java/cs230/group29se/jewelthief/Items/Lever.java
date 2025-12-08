@@ -14,10 +14,10 @@ import javafx.scene.image.Image;
  */
 public class Lever extends Destroyable {
 
+    public static final int XPOS_TILE_ADJUSTMENT = 2;
+    public static final int YPOS_TILE_ADJUSTMENT = 1;
     private final Colour colour;
-    private final ArrayList<Gate> gates = new ArrayList<Gate>();
-    private static final double WIDTH = 50.0;
-    private static final double HEIGHT = 50.0;
+    private final ArrayList<Gate> gates = new ArrayList<>();
     private final Image image;
 
     /**
@@ -67,8 +67,8 @@ public class Lever extends Destroyable {
      * @param gc the class the lever will be drawn with.
      */
     public void draw(final GraphicsContext gc) {
-        gc.drawImage(image, getX() * Tile.TILE_SIZE + 2,
-                getY() * Tile.TILE_SIZE + 1,
+        gc.drawImage(image, getX() * Tile.TILE_SIZE + XPOS_TILE_ADJUSTMENT,
+                getY() * Tile.TILE_SIZE + YPOS_TILE_ADJUSTMENT,
                 Tile.TILE_SIZE, Tile.TILE_SIZE);
     }
 }

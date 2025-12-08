@@ -194,12 +194,12 @@ public class SmartThief extends FloorThief {
         while (x >= 0 && x < level.getWidth() && y >= 0 && y < level.getHeight()) {
             Tile target = level.getTile(x, y);
 
-            if (start.isValidMove(target)) {
-                return target;
-            }
-
             if (isBlockedPath(target)) {
                 return null;
+            }
+
+            if (start.isValidMove(target)) {
+                return target;
             }
 
             x += dx;
@@ -215,6 +215,10 @@ public class SmartThief extends FloorThief {
      */
     private boolean isBlockedPath(Tile tile) {
         if (tile.hasBomb()) {
+            return true;
+        }
+
+        if (tile.hasGate()) {
             return true;
         }
 

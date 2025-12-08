@@ -17,6 +17,8 @@ public class Clock extends Destroyable {
 
 
     private static final int TIME_CHANGE = 5000;
+    public static final int XPOS_TILE_ADJUSTMENT = 2;
+    public static final int YPOS_TILE_ADJUSTMENT = 1;
     private final Image image = new Image(
             getClass().getResource(
                     "/cs230/group29se/jewelthief/Images/Items/CLOCK.png")
@@ -63,8 +65,8 @@ public class Clock extends Destroyable {
      */
     @Override
     public void draw(final GraphicsContext gc) {
-        gc.drawImage(image, getX() * Tile.TILE_SIZE + 2,
-                getY() * Tile.TILE_SIZE + 1,
+        gc.drawImage(image, getX() * Tile.TILE_SIZE + XPOS_TILE_ADJUSTMENT,
+                getY() * Tile.TILE_SIZE + YPOS_TILE_ADJUSTMENT,
                 Tile.TILE_SIZE, Tile.TILE_SIZE);
     }
 }

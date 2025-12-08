@@ -16,6 +16,7 @@ import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.
  * @author Gustas Rove
  */
 public class Shield extends Destroyable {
+    public static final int QUARTER_TILE = 2;
     private final Image image = new Image(
             getClass().getResource(
                     "/cs230/group29se/jewelthief/Images/Items/SHIELD.png")
@@ -53,8 +54,8 @@ public class Shield extends Destroyable {
      */
     @Override
     public void draw(final GraphicsContext gc) {
-        gc.drawImage(image, getX() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
-                getY() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
+        gc.drawImage(image, getX() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / QUARTER_TILE,
+                getY() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / QUARTER_TILE,
                 Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
     }
 }

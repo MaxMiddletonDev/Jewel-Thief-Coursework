@@ -14,6 +14,8 @@ import javafx.scene.image.Image;
  */
 public class Door extends Item {
 
+    public static final int XPOS_TILE_ADJUSTMENT = 2;
+    public static final int YPOS_TILE_ADJUSTMENT = 1;
     /**
      * Door starts closed till all loot is gone.
      */
@@ -59,14 +61,6 @@ public class Door extends Item {
     }
 
     /**
-     * Gets if the door is closed (true) or open (false).
-     * @return the state of the door.
-     */
-    public boolean getClosed() {
-        return closed;
-    }
-
-    /**
      * Sets the state of the door to closed (true) or open (false).
      * @param closed closed gets set to true (closed) or false (open).
      */
@@ -80,8 +74,8 @@ public class Door extends Item {
      * @param gc the class the door will be drawn with.
      */
     public void draw(final GraphicsContext gc) {
-        gc.drawImage(image, getX() * Tile.TILE_SIZE + 2,
-                getY() * Tile.TILE_SIZE + 1,
+        gc.drawImage(image, getX() * Tile.TILE_SIZE + XPOS_TILE_ADJUSTMENT,
+                getY() * Tile.TILE_SIZE + YPOS_TILE_ADJUSTMENT,
                 Tile.TILE_SIZE, Tile.TILE_SIZE);
     }
 }
