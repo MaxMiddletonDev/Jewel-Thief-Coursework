@@ -1,17 +1,25 @@
 package cs230.group29se.jewelthief.Persistence.Profile;
 
-import cs230.group29se.jewelthief.Persistence.Profile.SaveData;
 import cs230.group29se.jewelthief.Persistence.Storage.LevelDef;
 import cs230.group29se.jewelthief.Persistence.Storage.EntityDef;
-
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Factory class for creating SaveData instances.
+ * Provides methods to create SaveData from LevelDef.
+ * @author Iyaad
+ * @version 1.0
+ */
 public class SaveFactory {
 
     /**
      * Creates a fresh SaveData from a LevelDef for a given profile.
      * This is used when there is no existing JSON save yet.
+     * @param def The LevelDef to base the SaveData on.
+     * @param profileName The profile name associated with the save.
+     *
+     * @return A new SaveData instance initialized from the LevelDef.
      */
     public static SaveData fromLevelDef(LevelDef def, String profileName) {
         SaveData s = new SaveData();

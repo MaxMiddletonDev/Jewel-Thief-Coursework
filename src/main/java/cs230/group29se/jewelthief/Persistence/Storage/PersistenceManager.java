@@ -2,17 +2,17 @@ package cs230.group29se.jewelthief.Persistence.Storage;
 
 import cs230.group29se.jewelthief.Cosmetics.Skin;
 import cs230.group29se.jewelthief.Game.Achievements;
-import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Persistence.Profile.*;
-
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Drop-in implementation of PersistenceManager for experimentation.
- * Also includes minimal default hooks so it runs without a UI.
- * @author Iyaad, Gustas
+ * Manages persistence operations for profiles, saves, and high scores.
+ * Provides methods to load, save, delete, and manipulate game data.
+ * This class acts as a central point for handling file-based storage.
+ * <p>
+ * Authors: Iyaad, Gustas
  * @version 1.0
  */
 public final class PersistenceManager {
@@ -23,27 +23,27 @@ public final class PersistenceManager {
     private PersistenceManager() {
     }
 
-    // helper/auxiliary functions
+    // Helper methods for constructing file paths
     private static String pathProfile(String profileName) { return "profiles/" + profileName + ".json"; }
     private static String pathSave(String profileName, String levelId) { return "saves/" + profileName + "/level-" + levelId + ".json"; }
     private static String pathHighScores() { return "scores/highscores.json"; }
     private static String pathGenericSave() { return "./genericSave.json"; }
 
-    // minimal defaults so it runs headless
+    // Default values for active profile and level
     private static String activeProfileName = "Amsyar";
     private static String activeLevelId = "1";
     private int activeRunScore = 0;
     private static ProfileData cachedProfile = null;
     private static SaveData cachedSave = null;
 
-    // tiny setters for tests or a main()
+    // Setters for testing or initialization
     public static void setActiveProfileName(String name) { activeProfileName = name; }
     public static void setActiveLevelId(String levelId) { activeLevelId = levelId; }
     public void setActiveRunScore(int score) { this.activeRunScore = score; }
     public static void setCachedProfile(ProfileData p) { cachedProfile = p; }
     public static void setCachedSave(SaveData s) { cachedSave = s; }
 
-    // hook implementations (replace later with real game wiring)
+    // Retrieves the current profile data, creating a default if none exists
     private static ProfileData currentProfile() {
         if (cachedProfile != null) return cachedProfile;
         ProfileData p = new ProfileData();
@@ -52,40 +52,31 @@ public final class PersistenceManager {
     }
 
     /**
-     * Loads or creates a profile with the given name. (the gustas version)
-     * @param profileName
+     * Loads or creates a profile with the given name.
+     *
+     * @param profileName The name of the profile to load or create.
      */
     public static void loadProfile(String profileName) {
-
-        String path = pathProfile(profileName); // "profiles/Amsyar.json"
+        String path = pathProfile(profileName);
         if (!fileStore.exists(path)) {
-            // No profile saved yet for this name
             System.out.println("Profile " + profileName + " does not exist. Creating new profile.");
         }
         ProfileData profile = serializer.fromJson(fileStore.read(path), ProfileData.class);
-//        if (profile == null) {
-//            profile = new ProfileData();
-//            profile.setProfileName(profileName);
-//            profile.setMaxUnlockedLvl(1);
-//            setCachedProfile(profile);
-//            saveProfile();
-//        } else {
-//
-//        }
         setCachedProfile(profile);
-        //Load the profile to ensure it exists and is valid
         PersistenceManager.setActiveProfileName(profileName);
     }
 
     /**
-     * Returns current ProfileData without changing game state
+     * Returns the current active profile data without changing the game state.
      *
-     * @return ProfileData of the current active profile
-     * */
+     * @return The current active `ProfileData`.
+     */
     public static ProfileData getCurrentProfile() { return currentProfile(); }
 
     private static String currentProfileName() { return activeProfileName; }
     private static String rememberedProfileName() { return activeProfileName; }
+
+    // Retrieves the current save data, creating a default if none exists
     private static SaveData currentSaveData() {
         if (cachedSave != null) return cachedSave;
         SaveData s = new SaveData();
@@ -95,12 +86,15 @@ public final class PersistenceManager {
         return s;
     }
 
-
     private static String currentLevelId() { return activeLevelId; }
     private int currentRunScore() { return activeRunScore; }
     private void applySaveToGame(SaveData s) { this.cachedSave = s; }
 
-    /** Saves current ProfileData */
+    /**
+     * Saves the current profile data to the file system.
+     *
+     * @return `true` if the profile was successfully saved, `false` otherwise.
+     */
     public static Boolean saveProfile() {
         ProfileData p = currentProfile();
         if (p == null || currentProfileName() == null) return false;
@@ -109,32 +103,29 @@ public final class PersistenceManager {
     }
 
     /**
-     * Loads a ProfileData.
-     * Returns null if no profile exists for the remembered name.
+     * Loads a profile from the file system.
+     *
+     * @return The loaded `ProfileData`, or `null` if no profile exists.
      */
     public static ProfileData loadProfile() {
-        String name = rememberedProfileName(); // e.g. "Amsyar"
-
+        String name = rememberedProfileName();
         if (name != null) {
-            String path = pathProfile(name); // "profiles/Amsyar.json"
+            String path = pathProfile(name);
             if (!fileStore.exists(path)) {
-                // No profile saved yet for this name
                 return null;
             }
             return serializer.fromJson(fileStore.read(path), ProfileData.class);
         }
-
-        // No remembered name: try the first existing profile in the folder
         var files = fileStore.list("profiles");
         if (files.isEmpty()) {
-            // No profiles at all
             return null;
         }
-
-        // files.get(0) is already a relative path like "profiles/Someone.json"
         return serializer.fromJson(fileStore.read(files.get(0)), ProfileData.class);
     }
-    /** Writes SaveData to saves/<profileName>/level-<levelId>.json */
+
+    /**
+     * Saves the current game state to the file system.
+     */
     public static void saveGame() {
         SaveData s = currentSaveData();
         String profile = currentProfileName();
@@ -143,7 +134,9 @@ public final class PersistenceManager {
         fileStore.write(pathSave(profile, levelId), serializer.toJson(s));
     }
 
-    /** Reads SaveData for current profile/level and applies it */
+    /**
+     * Loads the game state for the current profile and level.
+     */
     public void loadGame() {
         String profile = currentProfileName();
         String levelId = currentLevelId();
@@ -152,7 +145,11 @@ public final class PersistenceManager {
         applySaveToGame(s);
     }
 
-    /** Returns SaveData without changing game state */
+    /**
+     * Retrieves the save data for the current profile and level.
+     *
+     * @return The `SaveData`, or `null` if no save exists.
+     */
     public static SaveData getSaveData() {
         String profile = currentProfileName();
         String levelId = currentLevelId();
@@ -161,22 +158,37 @@ public final class PersistenceManager {
         catch (RuntimeException ex) { return null; }
     }
 
-
+    /**
+     * Gets the name of the currently active profile.
+     *
+     * @return The name of the active profile.
+     */
     public static String getActiveProfileName() {
         return activeProfileName;
     }
+
+    /**
+     * Gets the ID of the currently active level.
+     *
+     * @return The ID of the active level.
+     */
     public String getActiveLevelId() { return activeLevelId; }
 
-    /** Appends a high score and sorts lists desc both per-level and globally*/
+    /**
+     * Submits a high score for a profile and level.
+     *
+     * @param profileName The name of the profile.
+     * @param levelId The ID of the level.
+     * @param score The score to submit.
+     * @param timestampIso The timestamp of the score submission.
+     */
     public static void submitScore(String profileName, String levelId, int score, String timestampIso) {
         HighScoreEntry entry = new HighScoreEntry(profileName, score, timestampIso);
         HighScoresDTO dto = loadHighScoresDTO();
 
-        // Global
         dto.globalRanking.add(entry);
         dto.globalRanking.sort(java.util.Comparator.comparingInt(HighScoreEntry::getScore).reversed());
 
-        // Per-level
         if (levelId != null) {
             var list = dto.perLevelBest.computeIfAbsent(levelId, k -> new java.util.ArrayList<>());
             list.add(entry);
@@ -189,24 +201,45 @@ public final class PersistenceManager {
     static class genericSaveDTO {
         public String selectedProfileName;
     }
+
+    /**
+     * Writes the selected profile name to a generic save file.
+     *
+     * @param profileName The name of the profile to save.
+     */
     public static void writeSelectedProfile(String profileName) {
         fileStore.write(pathGenericSave(), serializer.toJson(new genericSaveDTO() {{
             selectedProfileName = profileName;
         }}));
     }
 
+    /**
+     * Updates the selected skin for the current profile.
+     *
+     * @param skin The skin to set as selected.
+     */
     public static void writeSelectedSkin(Skin skin) {
         ProfileData p = currentProfile();
         p.setSelectedSkinId(skin.getId().toString());
         saveProfile();
     }
 
+    /**
+     * Unlocks an achievement for the current profile.
+     *
+     * @param achievements The achievement to unlock.
+     */
     public static void writeUnlockedAchievement(Achievements achievements) {
         ProfileData p = currentProfile();
         p.unlockAchievement(achievements.name());
         saveProfile();
     }
 
+    /**
+     * Reads the selected profile name from the generic save file.
+     *
+     * @return The selected profile name, or `null` if not found.
+     */
     public static String readSelectedProfile() {
         try {
             String json = fileStore.read(pathGenericSave());
@@ -225,7 +258,11 @@ public final class PersistenceManager {
         submitScore(profile, levelId, score, timestamp);
     }
 
-    /** Loads highscores.json and returns a table view */
+    /**
+     * Loads the high scores and returns a table view.
+     *
+     * @return A `HighScoreTable` containing the high scores.
+     */
     public HighScoreTable loadHighScores() {
         HighScoresDTO dto = loadHighScoresDTO();
         HighScoreTable table = new HighScoreTable();
@@ -233,37 +270,40 @@ public final class PersistenceManager {
         return table;
     }
 
-    /** Lists profile names from profiles/*.json */
+    /**
+     * Lists all profile names from the profiles directory.
+     *
+     * @return A list of profile names.
+     */
     public static List<String> listProfiles() {
-        List<String> files = fileStore.list("profiles"); // e.g. ["profiles/newProfile.json", "profiles/testProfile.json"]
+        List<String> files = fileStore.list("profiles");
         List<String> out = new ArrayList<>();
 
         for (String rel : files) {
             if (!rel.endsWith(".json")) continue;
 
-            // strip directory prefixes
-            String base = rel.replace('\\', '/');              // normalize separators
-            base = base.substring(base.lastIndexOf('/') + 1);  // "newProfile.json"
+            String base = rel.replace('\\', '/');
+            base = base.substring(base.lastIndexOf('/') + 1);
 
-            // strip ".json"
-            out.add(base.substring(0, base.length() - 5));     // "newProfile"
+            out.add(base.substring(0, base.length() - 5));
         }
         return out;
     }
 
-    /** Deletes the profile JSON and all its saves */
+    /**
+     * Deletes a profile and all its associated saves.
+     *
+     * @param profileName The name of the profile to delete.
+     */
     public static void deleteProfile(String profileName) {
         if (profileName == null || profileName.isEmpty()) return;
 
-        // Delete profile JSON
-        String profilePath = pathProfile(profileName); // "profiles/<name>.json"
+        String profilePath = pathProfile(profileName);
         fileStore.delete(profilePath);
 
-        // Delete all saves folder for this profile
         String savesDir = "saves/" + profileName;
-        fileStore.deleteDirectory(savesDir);           // removes folder + contents
+        fileStore.deleteDirectory(savesDir);
 
-        // Clear active profile if it was this one
         if (profileName.equals(activeProfileName)) {
             activeProfileName = null;
             cachedProfile = null;
@@ -272,30 +312,35 @@ public final class PersistenceManager {
 
         System.out.println("Deleted profile " + profileName + " and its saves folder");
     }
+
     /**
-     * Specifically deletes the current level data.
+     * Deletes the save data for the current level.
      */
     public static void deleteSaveForCurrentLevel() {
         String profile = currentProfileName();
         String levelId = currentLevelId();
         if (profile == null || levelId == null) return;
 
-        String path = pathSave(profile, levelId); // "saves/<profile>/level-<id>.json"
-        if(!fileStore.exists(path)) {
+        String path = pathSave(profile, levelId);
+        if (!fileStore.exists(path)) {
             System.out.println("No save file exists for profile " + profile + " level " + levelId);
             return;
         }
-        fileStore.delete(path);                   // delete the JSON if it exists
+        fileStore.delete(path);
         cachedSave = null;
     }
-    // internal DTO + loader for highscores.json
+
+    // DTO for high scores
     static class HighScoresDTO {
         public java.util.Map<String, java.util.List<HighScoreEntry>> perLevelBest = new java.util.HashMap<>();
         public java.util.List<HighScoreEntry> globalRanking = new java.util.ArrayList<>();
     }
 
-
-
+    /**
+     * Loads the high scores data transfer object from the file system.
+     *
+     * @return The loaded `HighScoresDTO`.
+     */
     private static HighScoresDTO loadHighScoresDTO() {
         String path = pathHighScores();
         try {
@@ -309,12 +354,21 @@ public final class PersistenceManager {
             return new HighScoresDTO();
         }
     }
-    /** Returns raw per-level best as a map (levelId -> list of entries). */
+
+    /**
+     * Loads per-level high scores as a map.
+     *
+     * @return A map of level IDs to lists of high score entries.
+     */
     public static java.util.Map<String, java.util.List<HighScoreEntry>> loadPerLevelHighScores() {
         return loadHighScoresDTO().perLevelBest;
     }
 
-    /** Returns the global high scores list (unsliced). */
+    /**
+     * Loads the global high scores list.
+     *
+     * @return A list of global high score entries.
+     */
     public static java.util.List<HighScoreEntry> loadGlobalHighScores() {
         return loadHighScoresDTO().globalRanking;
     }
