@@ -93,7 +93,8 @@ public class Bomb extends Destroyable {
      * @param x                     the x position.
      * @param y                     the y position.
      */
-    public Bomb(int countDownLeft, double countdownTickProgress, double nextBoomCountdown, int explosions, boolean armed, boolean exploding, final int x, final int y) {
+    public Bomb(int countDownLeft, double countdownTickProgress, double nextBoomCountdown, int explosions
+            , boolean armed, boolean exploding, final int x, final int y) {
         super(x, y);
         this.countDownLeft = countDownLeft;
         this.countdownTickProgress = countdownTickProgress;
