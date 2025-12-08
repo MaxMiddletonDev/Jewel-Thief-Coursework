@@ -4,6 +4,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * statically generates all the skins on initialisation
+ * @author Gustas Rove
+ */
 public class SkinRegistry {
     private static final Map<SkinId, Skin> SKINS = new HashMap<>();
 
@@ -18,6 +22,10 @@ public class SkinRegistry {
 
     }
 
+    /**
+     *
+     * @param skin
+     */
     private static void register(Skin skin) {
         SKINS.put(skin.getId(), skin);
     }
