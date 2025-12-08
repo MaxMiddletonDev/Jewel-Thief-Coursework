@@ -19,6 +19,9 @@ public final class PersistenceManager {
     private static final Path BASE_DIR = Path.of("data", "jewelthief");
     private static final FileStore fileStore = new FileStore(BASE_DIR);
     private static final JsonSerializer serializer = new JsonSerializer();
+    private static final int PATH_DECREMENT = 5;
+    private static final int INITIAL_INDEX = 0;
+    private static final int NEXT_INDEX = 1;
 
     private PersistenceManager() {
     }
@@ -120,7 +123,7 @@ public final class PersistenceManager {
         if (files.isEmpty()) {
             return null;
         }
-        return serializer.fromJson(fileStore.read(files.get(0)), ProfileData.class);
+        return serializer.fromJson(fileStore.read(files.get(INITIAL_INDEX)), ProfileData.class);
     }
 
     /**
@@ -269,7 +272,6 @@ public final class PersistenceManager {
         for (HighScoreEntry e : dto.globalRanking) table.add(e);
         return table;
     }
-
     /**
      * Lists all profile names from the profiles directory.
      *
@@ -283,9 +285,9 @@ public final class PersistenceManager {
             if (!rel.endsWith(".json")) continue;
 
             String base = rel.replace('\\', '/');
-            base = base.substring(base.lastIndexOf('/') + 1);
+            base = base.substring(base.lastIndexOf('/') + NEXT_INDEX);
 
-            out.add(base.substring(0, base.length() - 5));
+            out.add(base.substring(INITIAL_INDEX, base.length() - PATH_DECREMENT));
         }
         return out;
     }
