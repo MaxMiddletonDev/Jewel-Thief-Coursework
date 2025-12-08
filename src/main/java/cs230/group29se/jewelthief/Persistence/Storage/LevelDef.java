@@ -8,7 +8,7 @@ import java.util.List;
  * @version 1.0
  */
 public class LevelDef {
-    public String levelId;                 // e.g. "1" for level1.txt
+    public String levelId;                 // e.g. "1" for level8.txt
     public List<String> tiles;            // tile rows
     public ArrayList<EntityDef> entities; // all entities (PLAYER, FLYING, LOOT, GATE, etc.)
     public int width;                     // SIZE w h -> w

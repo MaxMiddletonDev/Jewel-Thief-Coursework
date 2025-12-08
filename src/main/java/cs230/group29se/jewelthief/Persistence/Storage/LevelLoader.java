@@ -18,7 +18,7 @@ public class LevelLoader {
     /**
      * Parses a level definition from the given file.
      *
-     * @param levelId  logical id, e.g. "1" for level1.txt
+     * @param levelId  logical id, e.g. "1" for level8.txt
      * @param filePath path to the level text file
      * @return populated LevelDef
      */
