@@ -279,7 +279,7 @@ public final class PersistenceManager {
          * Sets the currently selected profile name.
          * @param selectedProfileName the profile name to mark as selected
          */
-        public void setSelectedProfileName(String selectedProfileName) {
+        public void setSelectedProfileName(final String selectedProfileName) {
             this.selectedProfileName = selectedProfileName;
         }    }
 
