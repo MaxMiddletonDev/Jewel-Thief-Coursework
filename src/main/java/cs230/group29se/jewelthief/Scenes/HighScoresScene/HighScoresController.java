@@ -77,10 +77,10 @@ public class HighScoresController extends BaseController {
             TableColumn<HighScoreEntry, Integer> scoreCol = new TableColumn<>("Score");
             scoreCol.setCellValueFactory(new PropertyValueFactory<>("score"));
 
-            TableColumn<HighScoreEntry, String> timeCol = new TableColumn<>("Time Achieved");
-            timeCol.setCellValueFactory(new PropertyValueFactory<>("formattedTime")); // or "timestamp"
+//            TableColumn<HighScoreEntry, String> timeCol = new TableColumn<>("Time Achieved");
+//            timeCol.setCellValueFactory(new PropertyValueFactory<>("formattedTime")); // or "timestamp"
 
-            globalTable.getColumns().addAll(nameCol, scoreCol, timeCol);
+            globalTable.getColumns().addAll(nameCol, scoreCol);
         }
 
         if (levelTable.getColumns().isEmpty()) {
@@ -90,10 +90,10 @@ public class HighScoresController extends BaseController {
             TableColumn<HighScoreEntry, Integer> scoreCol = new TableColumn<>("Score");
             scoreCol.setCellValueFactory(new PropertyValueFactory<>("score"));
 
-            TableColumn<HighScoreEntry, String> timeCol = new TableColumn<>("Time Achieved");
-            timeCol.setCellValueFactory(new PropertyValueFactory<>("formattedTime"));
+//            TableColumn<HighScoreEntry, String> timeCol = new TableColumn<>("Time Achieved");
+//            timeCol.setCellValueFactory(new PropertyValueFactory<>("formattedTime"));
 
-            levelTable.getColumns().addAll(nameCol, scoreCol, timeCol);
+            levelTable.getColumns().addAll(nameCol, scoreCol);
         }
     }
 
