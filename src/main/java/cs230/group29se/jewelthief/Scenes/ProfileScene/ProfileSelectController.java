@@ -28,16 +28,20 @@ public class ProfileSelectController extends BaseController {
     public static final int MIN_PROFILES = 0;
     public static final int NEXT_SLOT = 1;
     public static final String RADIUS = "8";
-    public static final String HIGHLIGHTED = "-fx-background-color: #e0e0e0;" +
-            "-fx-background-radius: " + RADIUS + ";" +
-            "-fx-padding: " + PADDING + ";" +
-            "-fx-border-color: #4a90e2;" +
-            "-fx-border-radius: " + RADIUS + ";" +
-            "-fx-border-width: 2;";
+    public static final String HIGHLIGHTED = "-fx-background-color: #e0e0e0;"
+            + "-fx-background-radius: " + RADIUS + ";"
+            + "-fx-padding: " + PADDING + ";"
+            + "-fx-border-color: #4a90e2;"
+            + "-fx-border-radius: " + RADIUS + ";"
+            + "-fx-border-width: 2;";
     public static final String BACKGROUND_COLOUR_PROFILE_SLOTS = "#E" + RADIUS + "E9EB";
-    public static final String UNHIGHLIGHTED = "-fx-background-color: " + BACKGROUND_COLOUR_PROFILE_SLOTS + ";" +
-            "-fx-background-radius: " + RADIUS + ";" +
-            "-fx-padding: " + PADDING + ";";
+    public static final String UNHIGHLIGHTED = "-fx-background-color: " + BACKGROUND_COLOUR_PROFILE_SLOTS + ";"
+            + "-fx-background-radius: "
+            + RADIUS
+            + ";"
+            + "-fx-padding: "
+            + PADDING
+            + ";";
     public static final String BACKGROUND_COLOUR_PROFILE_NAME = "#222222";
     public static final String LARGE_FONT = "16";
     public static final String PROFILE_SLOT = "Profile Slot";
@@ -48,7 +52,6 @@ public class ProfileSelectController extends BaseController {
     public static final int NUMLABEL_MIN_WIDTH = 30;
     public static final String MAX_SAVES_REACHED = "Max Saves Reached";
     public static final String DUPLICATE_PROFILE_MESSAGE = "Duplicate Profile";
-    public static final String DUPLICATE_PROFILE_WARNING = "Profile name '%s' already exists. Duplicates are not allowed.";
     public static final String PUBLIC_PROFILE_MESSAGE = "PublicProfile";
     public static final String CANNOT_DELETE_HEADER = "Cannot delete";
     public static final String CANNOT_DELETE_MESSAGE = "The PublicProfile cannot be deleted.";
@@ -128,7 +131,7 @@ public class ProfileSelectController extends BaseController {
      * @param profileName The name of the profile.
      * @return An HBox representing the profile slot.
      */
-    private HBox createSlotRow(int slotNumber, String profileName) {
+    private HBox createSlotRow(final int slotNumber, final String profileName) {
         HBox row = new HBox(SPACING);
         row.setStyle("-fx-background-color: " + BACKGROUND_COLOUR_PROFILE_SLOTS + "; -fx-background-radius: " + RADIUS + "; -fx-padding: " + PADDING + ";");
         row.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
@@ -307,7 +310,7 @@ public class ProfileSelectController extends BaseController {
      * @param header The header text of the alert.
      * @param msg    The message text of the alert.
      */
-    private void showWarn(String header, String msg) {
+    private void showWarn(final String header, final String msg) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(header);
         alert.setContentText(msg);

@@ -30,7 +30,7 @@ public class HighScoresScreen extends Screen {
      */
     @Override
     public void onInitialize() {
-        ((HighScoresController)getController()).loadData(); // Loads high scores data
+        ((HighScoresController) getController()).loadData(); // Loads high scores data
     }
 
     /**

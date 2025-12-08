@@ -1,6 +1,5 @@
 package cs230.group29se.jewelthief.Scenes.LevelSelectScene;
 
-import cs230.group29se.jewelthief.Game.SoundManager;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
 
