@@ -194,7 +194,7 @@ public class ProfileSelectController extends BaseController {
         }
 
         GameProfileHelper.deleteProfile(selectedProfile);
-        
+
         // If we deleted the currently active profile, switch to PublicProfile
         if(GameManager.getSelectedProfileName().equals(selectedProfile)) {
             ((ProfileSelectScreen)getScreen()).onProfileChosen("PublicProfile");

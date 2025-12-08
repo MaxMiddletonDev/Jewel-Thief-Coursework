@@ -74,9 +74,13 @@ public class MainMenuController extends BaseController implements Initializable 
 
         String content = """
                 Developers:
-                - Iyaad
-                - Christina
-                - Meng
+                - Gustas Rove
+                - Stuart
+                - Dave
+                - Kevin
+                - Bob
+                - Tim
+                - Dr. Nefario
                 - etc..
 
                 Coursework 3 Student Project!!

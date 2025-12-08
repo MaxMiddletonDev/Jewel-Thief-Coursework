@@ -1,6 +1,6 @@
 {
   "profileName" : "PublicProfile",
-  "unlockedAchievements" : [ ],
-  "maxUnlockedLvl" : 5,
+  "unlockedAchievements" : [ "SPEEDSTER", "PRO", "DEMO_MAN", "MONEY_MAN" ],
+  "maxUnlockedLvl" : 8,
   "selectedSkinId" : "DEFAULT"
 }
