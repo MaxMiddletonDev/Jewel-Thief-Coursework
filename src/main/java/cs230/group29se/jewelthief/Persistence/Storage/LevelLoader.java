@@ -12,8 +12,8 @@ import java.util.List;
  * information about the level's size, time limit, tiles, and entities.
  */
 public class LevelLoader {
-    private static int INITIAL_INDEX = 0;
-    private static int INCREASE_INDEX_BY = 1;
+    private static final int INITIAL_INDEX = 0;
+    private static final int INCREASE_INDEX_BY = 1;
 
     /**
      * Loads a level definition from the specified file.

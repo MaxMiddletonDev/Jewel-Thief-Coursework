@@ -13,8 +13,8 @@ import java.util.Map;
  */
 public class SaveFactory {
 
-    private static int MS_TO_SECOND = 1000;
-    private static int INITIAL_VALUE = 0;
+    private static final int MS_TO_SECOND = 1000;
+    private static final int INITIAL_VALUE = 0;
 
 
     /**
