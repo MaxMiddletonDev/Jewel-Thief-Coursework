@@ -18,35 +18,57 @@ package cs230.group29se.jewelthief.Persistence.Storage;
  * @version 1.0
  */
 public class EntityDef {
-
-    /** Kind of entity, e.g. PLAYER, FLYING, FOLLOWER, SMART, LOOT, BOMB, LEVER, GATE, DOOR. */
-    public String type;
-
-    /** X coordinate on the level grid (column). */
-    public int x;
-
-    /** Y coordinate on the level grid (row). */
-    public int y;
-
-    /**
-     * First extra argument from the line, if present.
-     * For example: direction ("LEFT", "RIGHT", "UP", "DOWN"),
-     * colour ("R"), or loot type ("DOLLAR").
-     */
-    public String arg1;
-
-    /**
-     * Optional second extra argument from the line, if present.
-     * Used when a level line has more than one extra value
-     * (for example an extra mode, speed, or pattern ID).
-     */
-    public String arg2;
+    private String type;
+    private int x;
+    private int y;
+    private String arg1;
+    private String arg2;
 
     public EntityDef(String type, int x, int y, String arg1, String arg2) {
+        this.setType(type);
+        this.setX(x);
+        this.setY(y);
+        this.setArg1(arg1);
+        this.setArg2(arg2);
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
         this.type = type;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
         this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
         this.y = y;
+    }
+
+    public String getArg1() {
+        return arg1;
+    }
+
+    public void setArg1(String arg1) {
         this.arg1 = arg1;
+    }
+
+    public String getArg2() {
+        return arg2;
+    }
+
+    public void setArg2(String arg2) {
         this.arg2 = arg2;
     }
 }

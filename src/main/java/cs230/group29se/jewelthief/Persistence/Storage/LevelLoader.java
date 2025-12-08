@@ -32,12 +32,12 @@ public class LevelLoader {
         int index = INITIAL_INDEX;
 
         LevelDef def = new LevelDef();
-        def.levelId = levelId;
-        def.tiles = new ArrayList<>();
-        def.entities = new ArrayList<>();
-        def.npcStartStates = new ArrayList<>();
-        def.gates = new ArrayList<>();
-        def.items = new ArrayList<>();
+        def.setLevelId(levelId);
+        def.setTiles(new ArrayList<>());
+        def.setEntities(new ArrayList<>());
+        def.setNpcStartStates(new ArrayList<>());
+        def.setGates(new ArrayList<>());
+        def.setItems(new ArrayList<>());
 
         // --- 1) SIZE w h ---
         // Parses the level's width and height.
@@ -45,8 +45,8 @@ public class LevelLoader {
             throw new IllegalArgumentException(SIZE_FAIL_MSG + filePath);
         }
         index++;
-        def.width = Integer.parseInt(tokens.get(index++));
-        def.height = Integer.parseInt(tokens.get(index++));
+        def.setWidth(Integer.parseInt(tokens.get(index++)));
+        def.setHeight(Integer.parseInt(tokens.get(index++)));
 
         // --- 2) TIME seconds ---
         // Parses the time limit for the level.
@@ -54,22 +54,22 @@ public class LevelLoader {
             throw new IllegalArgumentException(TIME_FAIL_MSG + filePath);
         }
         index++;
-        def.timeLimitSec = Integer.parseInt(tokens.get(index++));
+        def.setTimeLimitSec(Integer.parseInt(tokens.get(index++)));
 
         // --- 3) Tiles ---
         // Parses the tile layout of the level.
-        int tileCount = def.width * def.height;
+        int tileCount = def.getWidth() * def.getHeight();
         List<String> flatTiles = new ArrayList<>();
         for (int t = INITIAL_INDEX; t < tileCount && index < tokens.size(); t++) {
             flatTiles.add(tokens.get(index++));
         }
-        for (int row = INITIAL_INDEX; row < def.height; row++) {
+        for (int row = INITIAL_INDEX; row < def.getHeight(); row++) {
             StringBuilder sb = new StringBuilder();
-            for (int col = INITIAL_INDEX; col < def.width; col++) {
-                sb.append(flatTiles.get(row * def.width + col));
-                if (col < def.width - INCREASE_INDEX_BY) sb.append(" ");
+            for (int col = INITIAL_INDEX; col < def.getWidth(); col++) {
+                sb.append(flatTiles.get(row * def.getWidth() + col));
+                if (col < def.getWidth() - INCREASE_INDEX_BY) sb.append(" ");
             }
-            def.tiles.add(sb.toString());
+            def.getTiles().add(sb.toString());
         }
 
         // --- 4) Entities ---
@@ -99,13 +99,13 @@ public class LevelLoader {
             }
 
             EntityDef e = new EntityDef(type, x, y, arg1, arg2);
-            def.entities.add(e);
+            def.getEntities().add(e);
 
             switch (type) {
-                case "PLAYER" -> def.playerStart = e;
-                case "FLYING", "FOLLOWER", "SMART", "CAMPER" -> def.npcStartStates.add(e);
-                case "GATE" -> def.gates.add(e);
-                case "LOOT", "BOMB", "LEVER", "CLOCK", "SHIELD" -> def.items.add(e);
+                case "PLAYER" -> def.setPlayerStart(e);
+                case "FLYING", "FOLLOWER", "SMART", "CAMPER" -> def.getNpcStartStates().add(e);
+                case "GATE" -> def.getGates().add(e);
+                case "LOOT", "BOMB", "LEVER", "CLOCK", "SHIELD" -> def.getItems().add(e);
                 default -> { /* Other entities are only added to the entities list */ }
             }
         }

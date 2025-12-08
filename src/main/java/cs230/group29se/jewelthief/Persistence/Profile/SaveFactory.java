@@ -28,13 +28,13 @@ public class SaveFactory {
     public static SaveData fromLevelDef(LevelDef def, String profileName) {
         SaveData s = new SaveData();
         s.setProfileName(profileName);
-        s.setLevelId(def.levelId);
+        s.setLevelId(def.getLevelId());
         s.setElapsedSeconds(INITIAL_VALUE);
-        s.setTimeRemainingMs(def.timeLimitSec * MS_TO_SECOND);
+        s.setTimeRemainingMs(def.getTimeLimitSec() * MS_TO_SECOND);
 
         // Example simple player state: [x, y]
-        if (def.playerStart != null) {
-            Object[] playerState = new Object[] { def.playerStart.x, def.playerStart.y };
+        if (def.getPlayerStart() != null) {
+            Object[] playerState = new Object[] {def.getPlayerStart().getX(), def.getPlayerStart().getY()};
             s.setPlayerState(playerState);
         } else {
             s.setPlayerState(new Object[] {INITIAL_VALUE, INITIAL_VALUE}); // fallback
@@ -45,16 +45,16 @@ public class SaveFactory {
         s.setNpcStates(npcStates);
 
         Map<String, Object> gates = new HashMap<>();
-        for (EntityDef e : def.gates) {
-            String key = "GATE#" + e.x + "#" + e.y;
-            gates.put(key, e.arg1); // e.g. colour "R"
+        for (EntityDef e : def.getGates()) {
+            String key = "GATE#" + e.getX() + "#" + e.getY();
+            gates.put(key, e.getArg1()); // e.g. colour "R"
         }
         s.setGates(gates);
 
         Map<String, Object> items = new HashMap<>();
-        for (EntityDef e : def.items) {
-            String key = e.type + "#" + e.x + "#" + e.y;
-            items.put(key, e.arg1); // e.g. "DOLLAR"
+        for (EntityDef e : def.getItems()) {
+            String key = e.getType() + "#" + e.getX() + "#" + e.getY();
+            items.put(key, e.getArg1()); // e.g. "DOLLAR"
         }
         s.setItems(items);
 
