@@ -33,7 +33,7 @@ public class Tile {
     /**
      * colours of the tile.
      */
-    private Colour[] colours = new Colour[4];
+    private final Colour[] colours;
     //The item or gate or nothing occupying a tile
     /**
      * What item or gate is occupying a tile.
