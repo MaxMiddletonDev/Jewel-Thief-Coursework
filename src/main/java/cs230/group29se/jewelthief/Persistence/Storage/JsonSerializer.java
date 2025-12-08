@@ -15,10 +15,6 @@ public class JsonSerializer {
     private final ObjectMapper mapper = new ObjectMapper()
             .enable(SerializationFeature.INDENT_OUTPUT);
 
-    private final static String TO_JSON_FAIL_MSG = "toJson failed";
-    private final static String FROM_JSON_FAIL_MSG = "fromJson(Object) failed";
-    private final static String FROM_JSON_TYPED_FAIL_MSG = "fromJson typed failed";
-
     /**
      * Converts an object to its JSON string representation.
      *
@@ -26,27 +22,29 @@ public class JsonSerializer {
      * @return The JSON string representation of the object.
      * @throws RuntimeException if the conversion fails.
      */
-    public String toJson(Object o) {
+    public String toJson(final Object o) {
         try {
             return mapper.writeValueAsString(o);
         } catch (Exception e) {
-            throw new RuntimeException(TO_JSON_FAIL_MSG, e);
+            String toJsonFailMsg = "toJson failed";
+            throw new RuntimeException(toJsonFailMsg, e);
         }
     }
 
     /**
      * Parses a JSON string into a generic Java object.
-     * The resulting object can be a Map, List, Number, String, Boolean, or null.
+     * The resulting object can be a Map, List, Number, String, Boolean, null.
      *
      * @param json The JSON string to be parsed.
      * @return The parsed Java object.
      * @throws RuntimeException if the parsing fails.
      */
-    public Object fromJson(String json) {
+    public Object fromJson(final String json) {
         try {
             return mapper.readValue(json, Object.class);
         } catch (Exception e) {
-            throw new RuntimeException(FROM_JSON_FAIL_MSG, e);
+            String fromJsonFailMsg = "fromJson(Object) failed";
+            throw new RuntimeException(fromJsonFailMsg, e);
         }
     }
 
@@ -59,11 +57,12 @@ public class JsonSerializer {
      * @return The parsed object of the specified type.
      * @throws RuntimeException if the parsing fails.
      */
-    public <T> T fromJson(String json, Class<T> type) {
+    public <T> T fromJson(final String json, final Class<T> type) {
         try {
             return mapper.readValue(json, type);
         } catch (Exception e) {
-            throw new RuntimeException(FROM_JSON_TYPED_FAIL_MSG, e);
+            String fromJsonTypedFailMsg = "fromJson typed failed";
+            throw new RuntimeException(fromJsonTypedFailMsg, e);
         }
     }
 }

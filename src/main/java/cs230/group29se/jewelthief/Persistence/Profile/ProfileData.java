@@ -29,7 +29,7 @@ public class ProfileData {
      * This method sets the profile name.
      * @param profileName The new profile name.
      */
-    public void setProfileName(String profileName) {
+    public void setProfileName(final String profileName) {
         this.profileName = profileName;
     }
 
@@ -53,7 +53,7 @@ public class ProfileData {
      * This method sets the selected skin id by the player.
      * @param selectedSkinId The new selected skin id.
      */
-    public void setSelectedSkinId(String selectedSkinId) {
+    public void setSelectedSkinId(final String selectedSkinId) {
         this.selectedSkinId = selectedSkinId;
     }
 
@@ -61,7 +61,7 @@ public class ProfileData {
      *This method sets the maximum level Unlocked by the player.
      * @param maxUnlockedLvl The new maximum level Unlocked.
      */
-    public void setMaxUnlockedLvl(int maxUnlockedLvl) {
+    public void setMaxUnlockedLvl(final int maxUnlockedLvl) {
         this.maxUnlockedLvl = maxUnlockedLvl;
     }
 
@@ -70,7 +70,9 @@ public class ProfileData {
      * @return The Unlocked Achievements.
      */
     public List<String> getUnlockedAchievements() {
-        if (unlockedAchievements == null) unlockedAchievements = new ArrayList<>();
+        if (unlockedAchievements == null) {
+            unlockedAchievements = new ArrayList<>();
+        }
         return unlockedAchievements;
     }
 
@@ -78,7 +80,8 @@ public class ProfileData {
      * This method sets the unlocked achievements by the player.
      * @param unlockedAchievements The list of Unlocked Achievements.
      */
-    public void setUnlockedAchievements(List<String> unlockedAchievements) {
+    public void setUnlockedAchievements(final List<String>
+                                        unlockedAchievements) {
         this.unlockedAchievements = unlockedAchievements;
     }
 
@@ -86,7 +89,7 @@ public class ProfileData {
      * This method unlocks the achievements by the player.
      * @param achievementName The name of a specific achievement.
      */
-    public void unlockAchievement(String achievementName) {
+    public void unlockAchievement(final String achievementName) {
         if (!getUnlockedAchievements().contains(achievementName)) {
             unlockedAchievements.add(achievementName);
         }

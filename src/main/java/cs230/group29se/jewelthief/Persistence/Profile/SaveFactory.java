@@ -11,7 +11,7 @@ import java.util.Map;
  * @author Iyaad
  * @version 1.0
  */
-public class SaveFactory {
+class SaveFactory {
 
     private static final int MS_TO_SECOND = 1000;
     private static final int INITIAL_VALUE = 0;
@@ -25,36 +25,39 @@ public class SaveFactory {
      *
      * @return A new SaveData instance initialized from the LevelDef.
      */
-    public static SaveData fromLevelDef(LevelDef def, String profileName) {
+    public static SaveData fromLevelDef(final LevelDef def,
+                                        final String profileName) {
         SaveData s = new SaveData();
         s.setProfileName(profileName);
-        s.setLevelId(def.levelId);
+        s.setLevelId(def.getLevelId());
         s.setElapsedSeconds(INITIAL_VALUE);
-        s.setTimeRemainingMs(def.timeLimitSec * MS_TO_SECOND);
+        s.setTimeRemainingMs(def.getTimeLimitSec() * MS_TO_SECOND);
 
         // Example simple player state: [x, y]
-        if (def.playerStart != null) {
-            Object[] playerState = new Object[] { def.playerStart.x, def.playerStart.y };
+        if (def.getPlayerStart() != null) {
+            Object[] playerState = new Object[] {
+                    def.getPlayerStart().getX(), def.getPlayerStart().getY()};
             s.setPlayerState(playerState);
         } else {
-            s.setPlayerState(new Object[] {INITIAL_VALUE, INITIAL_VALUE}); // fallback
+            s.setPlayerState(new Object[] {INITIAL_VALUE, INITIAL_VALUE});
         }
 
-        // store npcStates / gates / items as simple maps keyed by "type#x#y" as defined in their constructors
+        // store npcStates / gates / items as simple maps
+        // keyed by "type#x#y" as defined in their constructors
         Map<String, Object> npcStates = new HashMap<>();
         s.setNpcStates(npcStates);
 
         Map<String, Object> gates = new HashMap<>();
-        for (EntityDef e : def.gates) {
-            String key = "GATE#" + e.x + "#" + e.y;
-            gates.put(key, e.arg1); // e.g. colour "R"
+        for (EntityDef e : def.getGates()) {
+            String key = "GATE#" + e.getX() + "#" + e.getY();
+            gates.put(key, e.getArg1()); // e.g. colour "R"
         }
         s.setGates(gates);
 
         Map<String, Object> items = new HashMap<>();
-        for (EntityDef e : def.items) {
-            String key = e.type + "#" + e.x + "#" + e.y;
-            items.put(key, e.arg1); // e.g. "DOLLAR"
+        for (EntityDef e : def.getItems()) {
+            String key = e.getType() + "#" + e.getX() + "#" + e.getY();
+            items.put(key, e.getArg1()); // e.g. "DOLLAR"
         }
         s.setItems(items);
 

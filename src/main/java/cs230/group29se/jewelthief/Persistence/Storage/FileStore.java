@@ -1,7 +1,9 @@
 package cs230.group29se.jewelthief.Persistence.Storage;
 
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ public class FileStore {
      *
      * @param baseDir The base directory for file operations.
      */
-    public FileStore(Path baseDir) {
+    public FileStore(final Path baseDir) {
         this.baseDir = baseDir;
         ensureDir(baseDir);
     }
@@ -33,24 +35,31 @@ public class FileStore {
      * @return The content of the file as a string.
      * @throws RuntimeException if the file cannot be read.
      */
-    public String read(String path) {
-        try { return Files.readString(resolve(path)); }
-        catch (IOException e) { throw new RuntimeException("read failed: " + path, e); }
+    public String read(final String path) {
+        try {
+            return Files.readString(resolve(path));
+        } catch (IOException e) {
+            throw new RuntimeException("read failed: "
+                + path, e);
+        }
     }
 
     /**
-     * Writes a string to a file. Creates the file and its parent directories if they do not exist.
-     *
+     * Writes a string to a file.
+     * Creates the file and its parent directories if they do not exist.
      * @param path The relative path to the file.
      * @param json The content to write to the file.
      * @throws RuntimeException if the file cannot be written.
      */
-    public void write(String path, String json) {
+    public void write(final String path, final String json) {
         try {
             var p = resolve(path);
             Files.createDirectories(p.getParent());
-            Files.writeString(p, json, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-        } catch (IOException e) { throw new RuntimeException("write failed: " + path, e); }
+            Files.writeString(p, json, StandardOpenOption.CREATE,
+            StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException("write failed: " + path, e);
+        }
     }
 
     /**
@@ -59,7 +68,7 @@ public class FileStore {
      * @param path The relative path to the file or directory.
      * @return true if the file or directory exists, false otherwise.
      */
-    public boolean exists(String path) {
+    public boolean exists(final String path) {
         return Files.exists(resolve(path));
     }
 
@@ -70,10 +79,12 @@ public class FileStore {
      * @return A list of relative paths to the files in the directory.
      * @throws RuntimeException if the directory cannot be listed.
      */
-    public List<String> list(String dir) {
+    public List<String> list(final String dir) {
         try (var s = Files.list(resolve(dir))) {
             return s.map(p -> baseDir.relativize(p).toString()).toList();
-        } catch (IOException e) { throw new RuntimeException("list failed: " + dir, e); }
+        } catch (IOException e) {
+            throw new RuntimeException("list failed: " + dir, e);
+        }
     }
 
     /**
@@ -82,34 +93,42 @@ public class FileStore {
      * @param path The relative path to the file.
      * @throws RuntimeException if the file cannot be deleted.
      */
-    public void delete(String path) {
-        try { Files.deleteIfExists(resolve(path)); }
-        catch (IOException e) { throw new RuntimeException("delete failed: " + path, e); }
+    public void delete(final String path) {
+        try {
+            Files.deleteIfExists(resolve(path));
+        } catch (IOException e) {
+            throw new RuntimeException("delete failed: " + path, e);
+        }
     }
 
     /**
      * Deletes a directory and all its contents.
      *
      * @param dir The relative path to the directory.
-     * @throws RuntimeException if the directory or its contents cannot be deleted.
+     * @throws RuntimeException if the directory
+     * or its contents cannot be deleted.
      */
-    public void deleteDirectory(String dir) {
+    public void deleteDirectory(final String dir) {
         Path dirPath = resolve(dir);
         try {
-            if (!Files.exists(dirPath)) return;
-
+            if (!Files.exists(dirPath)) {
+                return;
+            }
             // Delete children first, then the directory itself
             // walkFileTree handles nested directories if they exist.
-            Files.walkFileTree(dirPath, new java.nio.file.SimpleFileVisitor<>() {
+            Files.walkFileTree(dirPath, new java.nio.file.
+                    SimpleFileVisitor<>() {
                 @Override
-                public java.nio.file.FileVisitResult visitFile(Path file, java.nio.file.attribute.BasicFileAttributes attrs)
+                public java.nio.file.FileVisitResult visitFile(final Path file,
+                       final java.nio.file.attribute.BasicFileAttributes attrs)
                         throws IOException {
                     Files.deleteIfExists(file);
                     return java.nio.file.FileVisitResult.CONTINUE;
                 }
 
                 @Override
-                public java.nio.file.FileVisitResult postVisitDirectory(Path dir, IOException exc)
+                public java.nio.file.FileVisitResult
+                postVisitDirectory(final Path dir, final IOException exc)
                         throws IOException {
                     Files.deleteIfExists(dir);
                     return java.nio.file.FileVisitResult.CONTINUE;
@@ -135,7 +154,7 @@ public class FileStore {
      * @param relative The relative path to resolve.
      * @return The resolved absolute path.
      */
-    private Path resolve(String relative) {
+    private Path resolve(final String relative) {
         return baseDir.resolve(relative.replace("\\", "/"));
     }
 
@@ -145,8 +164,11 @@ public class FileStore {
      * @param d The path to the directory.
      * @throws RuntimeException if the directory cannot be created.
      */
-    private static void ensureDir(Path d) {
-        try { Files.createDirectories(d); }
-        catch (IOException e) { throw new RuntimeException(e); }
+    private static void ensureDir(final Path d) {
+        try {
+            Files.createDirectories(d);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -17,9 +17,6 @@ public class HighScoreTable {
 
     private static final int INITIAL_INDEX = 0;
 
-    /**
-     * This is the list of high score entries organized by the table.
-     */
     private final List<HighScoreEntry> entries = new ArrayList<>();
 
     /**
@@ -40,9 +37,10 @@ public class HighScoreTable {
      *
      * @param e the high score entry to be added.
      */
-    public void add(HighScoreEntry e) {
+    public void add(final HighScoreEntry e) {
         entries.add(e);
-        entries.sort(Comparator.comparingInt(HighScoreEntry::getScore).reversed());
+        entries.sort(Comparator.comparingInt(HighScoreEntry::getScore)
+                .reversed());
     }
 
     /**
@@ -54,7 +52,7 @@ public class HighScoreTable {
      * @param n The maximum number of entries to be returned.
      * @return A list containing up to {@code n} top high score entries.
      */
-    public List<HighScoreEntry> topN(int n) {
+    public List<HighScoreEntry> topN(final int n) {
         return entries.subList(INITIAL_INDEX, Math.min(n, entries.size()));
     }
 
