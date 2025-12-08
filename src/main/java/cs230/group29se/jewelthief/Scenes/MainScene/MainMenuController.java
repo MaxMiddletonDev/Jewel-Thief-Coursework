@@ -121,7 +121,7 @@ public class MainMenuController extends BaseController implements Initializable 
                 - Rove Gustas
                 - Poole Ben
                 - Middleton Max
-                - Hilborne Charlie
+                - Hilborne Charlie;;
                 - Syahrizal Amsyar
                 - Traore Mouhamadou Baba
                 - Al Assem Hamza
