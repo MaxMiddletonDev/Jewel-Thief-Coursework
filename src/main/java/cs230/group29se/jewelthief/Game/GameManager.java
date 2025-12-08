@@ -28,18 +28,17 @@ import java.util.Map;
  */
 public final class GameManager {
 
+    // Current state information
     private static int levelNumber;
     private static Level currentLevel;
     private static Screen currentScreen;
 
+    /**
+     * Private constructor to prevent instantiation
+     */
     private GameManager() {
     }
 
-    /**
-     * Setting the place where the JSON files are stored.
-     * edited by Iyaad
-     */
-    private static final LevelLoader LEVEL_LOADER = new LevelLoader();
     private static String selectedProfileName = PersistenceManager.readSelectedProfile();
 
     /**
@@ -48,8 +47,8 @@ public final class GameManager {
      * 2) Otherwise, load levelX.txt via LevelLoader and create initial SaveData.
      * 3) Create a new Level object and register it as currentLevel.
      *
-     * @param levelNum    level number (1, 2, 3, ...)
-     * @param controller  GameController for the new Level
+     * @param levelNum   level number (1, 2, 3, ...)
+     * @param controller GameController for the new Level
      * @author Iyaad
      */
     public static void loadLevelForProfile(int levelNum,
@@ -173,7 +172,7 @@ public final class GameManager {
             itemStates.put(itemId, itemState);
         }
 
-        //gates states
+        //Gates states
         Map<String, Object> gateStates = new java.util.HashMap<>();
         for (Gate gate : currentLevel.getGates()) {
             String gateId = (gate.getClass().getSimpleName() + "#" + gate.getX() + "#" + gate.getY()).toUpperCase();
@@ -200,35 +199,10 @@ public final class GameManager {
     }
 
     /**
-     * Ends the current game session.
-     * Handles cleanup, high score saving, and transitioning to end screens.
-     */
-    public static void gameEnd() {
-        // Logic for ending the game goes here
-        // TODO: implement end-of-game logic, e.g. submitScore + go to end screen
-    }
-
-    /**
-     * TODO: REMOVE, we draw this in GameScreen now
-     * Draws the current level using the provided GraphicsContext.
+     * Sets the current level of the game.
      *
-     * @param gc the GraphicsContext to draw on
+     * @param level the new Level object
      */
-    public static void draw(GraphicsContext gc) {
-        if (currentLevel != null) {
-            currentLevel.draw(gc);
-        }
-    }
-
-    /**
-     * Prevents game from accessing a profile when it's not supposed to
-     */
-    public static void clearCurrentLevel() {
-        currentLevel = null;
-    }
-
-    // Getters/setters
-
     public static void setCurrentLevel(Level level) {
         currentLevel = level;
     }
@@ -260,33 +234,13 @@ public final class GameManager {
         return levelNumber;
     }
 
-//    public static PersistenceManager getPersistenceManager() {
-//
-//    }
-
+    /**
+     * Sets the current screen of the game.
+     *
+     * @param screen the new Screen object
+     */
     public static void setCurrentScreen(Screen screen) {
         currentScreen = screen;
-    }
-
-    /**
-     * Gets the current screen of the game.
-     *
-     * @return the current Screen object
-     */
-    public static Screen getCurrentScreen() {
-        return currentScreen;
-    }
-
-    /**
-     * Gets the GraphicsContext from the current level's GameController.
-     *
-     * @return the GraphicsContext object, or null if no current level.
-     */
-    public GraphicsContext getGraphicsContext() {
-        if (currentLevel != null) {
-            return currentLevel.getGameController().getCanvas().getGraphicsContext2D();
-        }
-        return null;
     }
 
     public static void setSelectedProfileName(String profileName) {
@@ -295,15 +249,30 @@ public final class GameManager {
 
     }
 
+    /**
+     * Gets the current screen of the game.
+     *
+     * @return the current Screen object
+     */
     public static String getSelectedProfileName() {
         return selectedProfileName;
     }
 
+    /**
+     * Gets the selected player skin ID from the current profile.
+     *
+     * @return the selected skin ID as a String
+     */
     public static String getSelectedPlayerSkinId() {
         ProfileData data = PersistenceManager.getCurrentProfile();
         return data.getSelectedSkinId();
     }
 
+    /**
+     * Gets the selected player skin Image from the current profile.
+     *
+     * @return the selected skin Image
+     */
     public static Image getSelectedPlayerSkinImage() {
         ProfileData data = PersistenceManager.getCurrentProfile();
         SkinId skinId = SkinId.fromString(data.getSelectedSkinId());
