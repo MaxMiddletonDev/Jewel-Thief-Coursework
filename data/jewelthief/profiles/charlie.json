@@ -1,5 +1,6 @@
 {
-  "profileName" : "charlie",
-  "maxUnlockedLvl" : 2,
-  "selectedSkinId" : "CAT_CAT"
+  "profileName" : "Ben",
+  "unlockedAchievements" : [ ],
+  "maxUnlockedLvl" : 5,
+  "selectedSkinId" : "SPEED_GUY"
 }
