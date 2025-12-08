@@ -26,6 +26,42 @@ import java.util.Map;
  * @version 1.0
  */
 public final class GameManager {
+    // Level loading
+    private static final String LEVEL_FILE_PREFIX = "level";
+    private static final String LEVEL_FILE_SUFFIX = ".txt";
+
+    // JSON keys for NPC states
+    private static final String KEY_X = "x";
+    private static final String KEY_Y = "y";
+    private static final String KEY_DIR = "dir";
+    private static final String KEY_ALIVE = "alive";
+    private static final String KEY_COLOUR = "colour";
+
+    // JSON keys for items
+    private static final String KEY_PARAM = "param";
+
+    // Item param codes
+    private static final String PARAM_NONE = "NONE";
+
+    // Bomb param packing separator
+    private static final String PARAM_SEPARATOR = "#";
+
+    // Switch-on-class-name strings
+    private static final String NPC_FLOOR_THIEF = "FloorThief";
+    private static final String ITEM_LEVER = "Lever";
+    private static final String ITEM_LOOT = "Loot";
+    private static final String ITEM_BOMB = "Bomb";
+
+    // Gates
+    private static final String TYPE_GATE = "Gate";
+
+    // ID generation format
+    private static final String ITEM_ID_FORMAT = "%s#%d#%d";
+    private static final String GATE_ID_FORMAT = "%s#%d#%d";
+
+    // Failure constants
+    private static final int NO_TIME_LEFT = 0;
+
     public static final int LEVEL_COUNT = 10; // Total number of levels in the game
 
     // Current state information
@@ -56,16 +92,16 @@ public final class GameManager {
 
         setCurrentLevelNumber(levelNum);
         String levelId = String.valueOf(levelNum);
-        String levelFileName = "level" + levelId + ".txt";
+        String levelFileName = LEVEL_FILE_PREFIX + levelId + LEVEL_FILE_SUFFIX;
 
         PersistenceManager.setActiveLevelId(levelId);// keep...
 
         SaveData save = PersistenceManager.getSaveData();
 
-        // if save exists but timeRemainingMs == 0, treat as no save (reset level)
-        if (save != null && save.getTimeRemainingMs() == 0) {
+        if (save != null && save.getTimeRemainingMs() == NO_TIME_LEFT) {
             save = null;
         }
+
 
         PersistenceManager.setCachedSave(save);
 
@@ -117,17 +153,15 @@ public final class GameManager {
             Direction dir = npc.getDirection();
 
             java.util.Map<String, Object> state = new java.util.HashMap<>();
-            state.put("x", ex);
-            state.put("y", ey);
-            state.put("dir", dir != null ? dir.name() : null);
-            state.put("alive", npc.isAlive());
+            state.put(KEY_X, ex);
+            state.put(KEY_Y, ey);
+            state.put(KEY_DIR, dir != null ? dir.name() : null);
+            state.put(KEY_ALIVE, npc.isAlive());
 
-            // add other NPC-specific state as needed
             switch (npc.getClass().getSimpleName()) {
-                case "FloorThief" -> {
-                    state.put("colour", ((FloorThief) npc).getColour().toString().charAt(0));
+                case NPC_FLOOR_THIEF -> {
+                    state.put(KEY_COLOUR, ((FloorThief) npc).getColour().toString().charAt(0));
                 }
-                // add cases for other NPC types as needed
             }
 
             npcStates.put(id, state);
@@ -137,55 +171,66 @@ public final class GameManager {
         Map<String, Object> itemStates = new java.util.HashMap<>();
         for (Item item : currentLevel.getItems()) {
             String itemType = item.getClass().getSimpleName();
-            String itemId = (item.getClass().getSimpleName() + "#" + item.getX() + "#" + item.getY()).toUpperCase();
+            String itemId = String.format(
+                    ITEM_ID_FORMAT,
+                    item.getClass().getSimpleName(),
+                    item.getX(),
+                    item.getY()
+            ).toUpperCase();
             java.util.Map<String, Object> itemState = new java.util.HashMap<>();
-            itemState.put("x", item.getX());
-            itemState.put("y", item.getY());
+            itemState.put(KEY_X, item.getX());
+            itemState.put(KEY_Y, item.getY());
 
             //The item param specific to each item. E.g for lever its the color.
             String param;
             switch (itemType) {
-                case "Lever" -> {
-                    char colourLetter = ((cs230.group29se.jewelthief.Items.Lever) item).getColour().toString().charAt(0);
-                    param = String.valueOf(colourLetter);
+                case ITEM_LEVER -> {
+                    char c = ((cs230.group29se.jewelthief.Items.Lever) item)
+                            .getColour().toString().charAt(0);
+                    param = String.valueOf(c);
                 }
-                case "Loot" -> {
+                case ITEM_LOOT -> {
                     param = ((Loot) item).getType().toString();
                 }
-                case "Bomb" -> {
-                    String countDownLeft = String.valueOf(((Bomb) item).getCountDownLeft());
-                    String countdownTickProgress = String.valueOf(((Bomb) item).getCountdownTickProgress());
-                    String nextBoomCountdown = String.valueOf(((Bomb) item).getNextBoomCountdown());
-                    String explosions = String.valueOf(((Bomb) item).getExplosions());
-                    String armed = String.valueOf(((Bomb) item).getArmed());
-                    String exploding = String.valueOf(((Bomb) item).getExploding());
-                    param = countDownLeft + "#" + countdownTickProgress + "#" + nextBoomCountdown +
-                            "#" + explosions + "#" + armed + "#" + exploding;
+                case ITEM_BOMB -> {
+                    Bomb b = (Bomb) item;
+                    param = b.getCountDownLeft() + PARAM_SEPARATOR +
+                            b.getCountdownTickProgress() + PARAM_SEPARATOR +
+                            b.getNextBoomCountdown() + PARAM_SEPARATOR +
+                            b.getExplosions() + PARAM_SEPARATOR +
+                            b.getArmed() + PARAM_SEPARATOR +
+                            b.getExploding();
                 }
-                default -> param = "none";
+                default -> param = PARAM_NONE;
             }
+
 
             param = param.toUpperCase();
 
-            itemState.put("param", param);
+            itemState.put(KEY_PARAM, param.toUpperCase());
             itemStates.put(itemId, itemState);
         }
 
         //Gates states
         Map<String, Object> gateStates = new java.util.HashMap<>();
         for (Gate gate : currentLevel.getGates()) {
-            String gateId = (gate.getClass().getSimpleName() + "#" + gate.getX() + "#" + gate.getY()).toUpperCase();
+            String gateId = String.format(
+                    GATE_ID_FORMAT,
+                    gate.getClass().getSimpleName(),
+                    gate.getX(),
+                    gate.getY()
+            ).toUpperCase();
 
             java.util.Map<String, Object> gateState = new java.util.HashMap<>();
-            gateState.put("x", gate.getX());
-            gateState.put("y", gate.getY());
+            gateState.put(KEY_X, gate.getX());
+            gateState.put(KEY_Y, gate.getY());
 
             char colourLetter = gate.getColour().toString().charAt(0);
             String param = String.valueOf(colourLetter);
 
             param = param.toUpperCase();
 
-            gateState.put("param", param);
+            gateState.put(KEY_PARAM, param);
             gateStates.put(gateId.toUpperCase(), gateState);
         }
 

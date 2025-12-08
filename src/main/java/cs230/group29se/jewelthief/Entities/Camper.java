@@ -12,7 +12,6 @@ import java.util.Random;
 
 /**
  * Camper: selects a random important item and patrols a rectangular perimeter around it.
- *
  * - Patrols a rectangle around a selected item (Door, Lever preferred).
  * - If the item is removed or collected, selects a new item and builds a new patrol
  * - On collision with Player: inflicts hit if possible
@@ -23,10 +22,28 @@ import java.util.Random;
  */
 public class Camper extends NonPlayableCharacter {
 
+    public static final double MOVE_COOLDOWN_SECONDS = 0.4;
+    public static final double HIT_COOLDOWN_SECONDS = 1.5;
+    public static final int RECT_HALF_WIDTH = 2;
+    public static final int RECT_HALF_HEIGHT = 1;
+    public static final int NEXT_TILE_STEP_ADDER = 1;
+    public static final int HALF_WIDTH = 1;
+    public static final int HALF_HEIGHT = 1;
+
+    private static final String ITEM_SELECTED_FORMAT = "Camper %s selected important item %s at (%d, %d)";
+    private static final String ITEM_FALLBACK_FORMAT = "Camper %s found no important items, picked random item %s at (%d, %d)";
+    public static final int MIN_DIMENSION = 1;
+    public static final String IMAGE_PATH = "/cs230/group29se/jewelthief/Images/Entities/NPCs/CAMPER.png";
+
     private ArrayList<String> campableItemNames = new ArrayList<String>() {
+
+        public static final String DOOR = "Door";
+
+        public static final String LEVER = "Lever";
+
         {
-            add("Door");
-            add("Lever");
+            add(DOOR);
+            add(LEVER);
         }
     };
 
@@ -38,7 +55,7 @@ public class Camper extends NonPlayableCharacter {
     private final int rectHalfHeight;
     private final Random rnd = new Random();
 
-    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/NPCs/CAMPER.png").toString());
+    private final Image image = new Image(getClass().getResource(IMAGE_PATH).toString());
 
 
     /**
@@ -57,8 +74,8 @@ public class Camper extends NonPlayableCharacter {
         this.rectHalfHeight = Math.max(1, rectHalfHeight);
 
         // tune movement / hit cooldowns as desired
-        setMoveCooldownSeconds(0.4); // moves every 0.4s (adjust)
-        setHitCooldownSeconds(1.5);
+        setMoveCooldownSeconds(MOVE_COOLDOWN_SECONDS); // moves every 0.4s (adjust)
+        setHitCooldownSeconds(HIT_COOLDOWN_SECONDS);
 
         selectRandomImportantItemAndBuildPath();
     }
@@ -67,7 +84,7 @@ public class Camper extends NonPlayableCharacter {
      * Simplified constructor with default rectangle size 2x1.
      */
     public Camper(Tile startingTile, Direction direction, Level level, String id) {
-        this(startingTile, direction, level, id, 2, 1);
+        this(startingTile, direction, level, id, RECT_HALF_WIDTH, RECT_HALF_HEIGHT);
     }
 
     /**
@@ -118,7 +135,7 @@ public class Camper extends NonPlayableCharacter {
             currentTile = next;
         }
 
-        pathIndex = (pathIndex + 1) % patrolPath.size();
+        pathIndex = (pathIndex + NEXT_TILE_STEP_ADDER) % patrolPath.size();
     }
 
     /**
@@ -142,17 +159,24 @@ public class Camper extends NonPlayableCharacter {
             }
         }
 
-        // pick random important item if any
+        String logTemplate;
+
         if (!important.isEmpty()) {
             targetItem = important.get(rnd.nextInt(important.size()));
-            System.out.println("Camper " + id + " selected important item " + targetItem.getClass());
+            logTemplate = ITEM_SELECTED_FORMAT;
         } else {
-            // fallback: pick any random item
             targetItem = items.get(rnd.nextInt(items.size()));
-            System.out.println("Camper " + id + " found no important items, picked random item " + targetItem.getClass());
+            logTemplate = ITEM_FALLBACK_FORMAT;
         }
 
-        if (targetItem == null) return;
+        // Apply the format string with: ID, Item Name, X, Y
+        System.out.println(String.format(
+                logTemplate,
+                this.id,
+                targetItem.getClass().getSimpleName(), // Gets clean name like "Door"
+                targetItem.getX(),
+                targetItem.getY()
+        ));
 
         int centerX = targetItem.getX();
         int centerY = targetItem.getY();
@@ -160,8 +184,8 @@ public class Camper extends NonPlayableCharacter {
         buildPerimeterPath(centerX, centerY, rectHalfWidth, rectHalfHeight);
 
         // if built path is empty, try a smaller rectangle fallback
-        if (patrolPath.isEmpty() && (rectHalfWidth > 1 || rectHalfHeight > 1)) {
-            buildPerimeterPath(centerX, centerY, 1, 1);
+        if (patrolPath.isEmpty() && (rectHalfWidth > MIN_DIMENSION || rectHalfHeight > MIN_DIMENSION)) {
+            buildPerimeterPath(centerX, centerY, HALF_WIDTH, HALF_HEIGHT);
         }
 
         // reset path index to start near current position (choose nearest path index)
@@ -235,7 +259,6 @@ public class Camper extends NonPlayableCharacter {
         if (x < 0 || y < 0 || x >= level.getWidth() || y >= level.getHeight()) return;
         Tile t = level.getTile(x, y);
         if(!t.isWalkable()) return;
-        if (t == null) return;
         patrolPath.add(t);
     }
 

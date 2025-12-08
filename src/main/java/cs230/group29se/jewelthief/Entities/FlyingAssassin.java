@@ -15,8 +15,14 @@ import javafx.scene.image.Image;
  */
 public class FlyingAssassin extends NonPlayableCharacter {
 
+    public static final float MOVE_COOLDOWN_SECONDS = 0.3F;
+    public static final double HIT_COOLDOWN_SECONDS = 1.5;
+    public static final String IMAGE_PATH = "/cs230/group29se/jewelthief/Images/Entities/NPCs/FLYINGASSASSIN.png";
+    public static final String PLAYER_HIT_LOG = "Flying Assasin hit the Player!";
+    private static final String COOLDOWN_FORMAT_LOG = "Flying Assassin is on hit cooldown: %s ticks remaining.";
+
     private Level level;
-    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/NPCs/FLYINGASSASSIN.png").toString());
+    private final Image image = new Image(getClass().getResource(IMAGE_PATH).toString());
 
     /**
      * Constructor for creating new instance of FlyingAssassin.
@@ -31,8 +37,8 @@ public class FlyingAssassin extends NonPlayableCharacter {
         super(startingTile, direction);
         this.id = id;
         this.level = level;
-        setMoveCooldownSeconds(0.3F); // Flying Assassin moves every 2 seconds
-        setHitCooldownSeconds(1.5); // Flying Assassin can hit every 2 seconds
+        setMoveCooldownSeconds(MOVE_COOLDOWN_SECONDS); // Flying Assassin moves every 2 seconds
+        setHitCooldownSeconds(HIT_COOLDOWN_SECONDS); // Flying Assassin can hit every 2 seconds
     }
 
     /**
@@ -55,9 +61,9 @@ public class FlyingAssassin extends NonPlayableCharacter {
             if(canHit()){
                 ((Player) other).getHit();
                 resetHitCooldown();
-                System.out.println("Flying Assasin hit the Player!");
+                System.out.println(PLAYER_HIT_LOG);
             }else{
-                System.out.println("Flying Assasin is on hit cooldown: " + hitCooldown + " ticks remaining.");
+                System.out.println(String.format(COOLDOWN_FORMAT_LOG, hitCooldown));
             }
         }
         else if (other instanceof NonPlayableCharacter && !(other instanceof FlyingAssassin)) {

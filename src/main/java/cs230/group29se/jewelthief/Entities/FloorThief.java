@@ -19,6 +19,9 @@ import javafx.scene.image.Image;
  * @author Baba
  */
 public class FloorThief extends NonPlayableCharacter {
+    public static final float MOVE_COOLDOWN_SECONDS = 0.5f;
+    public static final int HIT_COOLDOWN_SECONDS = 2;
+    public static final int[][] OFFSETS = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
     private Colour assignedColour;
     private Level level;
 
@@ -41,8 +44,8 @@ public class FloorThief extends NonPlayableCharacter {
         this.assignedColour = assignedColour;
         this.level = level;
 
-        setMoveCooldownSeconds(0.5f); // Floor Thief moves every 1 second
-        setHitCooldownSeconds(2); // Floor Thief can hit every 2 seconds
+        setMoveCooldownSeconds(MOVE_COOLDOWN_SECONDS); // Floor Thief moves every 1 second
+        setHitCooldownSeconds(HIT_COOLDOWN_SECONDS); // Floor Thief can hit every 2 seconds
     }
 
     /**
@@ -128,9 +131,8 @@ public class FloorThief extends NonPlayableCharacter {
         int currentY = currentTile.getY();
 
         // These are the adjacent tiles
-        int[][] offsets = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
-        for (int[] offset : offsets) {
+        for (int[] offset : OFFSETS) {
             int checkX = currentX + offset[0];
             int checkY = currentY + offset[1];
 

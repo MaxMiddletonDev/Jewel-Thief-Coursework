@@ -17,6 +17,9 @@ import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.
  */
 
 public class Player implements MoveableCharacter, Protectable {
+    public static final int[][] OFFSETS = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    public static final String PLAYER_DEATH_LOG = "Player has been hit and is no longer alive.";
+    public static final String PLAYER_PROTECTED = "Player setProtected set to ";
     private Tile currentTile;
     private boolean isAlive;
     private Direction direction;
@@ -178,9 +181,7 @@ public class Player implements MoveableCharacter, Protectable {
         int currentY = currentTile.getY();
 
         // These are the adjacent tiles
-        int[][] offsets = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-
-        for (int[] offset : offsets) {
+        for (int[] offset : OFFSETS) {
             int checkX = currentX + offset[0];
             int checkY = currentY + offset[1];
 
@@ -216,7 +217,7 @@ public class Player implements MoveableCharacter, Protectable {
             writeUnlockedAchievement(Achievements.SURVIVOR);
         } else {
             setAliveTo(false);
-            System.out.println("Player has been hit and is no longer alive.");
+            System.out.println(PLAYER_DEATH_LOG);
         }
     }
 
@@ -237,7 +238,7 @@ public class Player implements MoveableCharacter, Protectable {
      */
     @Override
     public void setProtected(boolean value) {
-        System.out.println("Player setProtected set to " + value);
+        System.out.println(PLAYER_PROTECTED + value);
         isProtected = value;
     }
 }
