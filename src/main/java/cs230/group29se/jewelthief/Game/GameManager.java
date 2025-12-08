@@ -14,7 +14,6 @@ import cs230.group29se.jewelthief.Persistence.Profile.SaveData;
 import cs230.group29se.jewelthief.Persistence.Storage.*;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameController;
 import cs230.group29se.jewelthief.Scenes.Screen;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.Map;
@@ -23,7 +22,7 @@ import java.util.Map;
  * Manages the overall game state, including starting a new game,
  * ending the game, and rendering the current level.
  *
- * @author Gustas Rove
+ * @author Gustas Rove, Iyaad
  * @version 1.0
  */
 public final class GameManager {
@@ -73,7 +72,6 @@ public final class GameManager {
         Level level = new Level(levelFileName, controller, save);
         setCurrentLevel(level);
     }
-
 
     /**
      * Saving the game per-profile
@@ -243,6 +241,20 @@ public final class GameManager {
         currentScreen = screen;
     }
 
+    /**
+     * Gets the current screen of the game.
+     *
+     * @return the current Screen object
+     */
+    public static Screen getCurrentScreen() {
+        return currentScreen;
+    }
+
+    /**
+     * Sets the selected profile name.
+     *
+     * @param profileName the profile name to set
+     */
     public static void setSelectedProfileName(String profileName) {
         selectedProfileName = profileName;
         PersistenceManager.writeSelectedProfile(selectedProfileName);

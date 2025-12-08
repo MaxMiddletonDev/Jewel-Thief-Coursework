@@ -31,72 +31,37 @@ import java.util.Map;
  * @version 1.0
  */
 public class Level {
-    /**
-     * The game controller class.
-     */
-    private final GameController gameController;
-    /**
-     * List of items in the level.
-     */
-    private List<Item> items = new ArrayList<>();
-    /**
-     * List of gates in the level.
-     */
-    private List<Gate> gates = new ArrayList<>();
-    /**
-     * List of enemies in the level.
-     */
-    private ArrayList<NonPlayableCharacter> enemies = new ArrayList<>();
-    /**
-     * List of the levels tiles / grid.
-     */
-    private Tile[][] grid;
+    // Ids for bomb parameters in save data
+    private static final int COUNTDOWN_LEFT = 0;
+    private static final int COUNTDOWN_TICK_PROGRESS = 1;
+    private static final int NEXT_BOOM_COUNTDOWN = 2;
+    private static final int EXPLOSIONS = 3;
+    private static final int ARMED = 4;
+    private static final int EXPLODING = 5;
 
-    // in Level
-    /**
-     * The player in the level.
-     */
-    private Player player;
-    /**
-     * Max time in level default 60 - seconds.
-     */
-    private static int MAX_TIME = 60; // Seconds
-    /**
-     * Time remaining in level - milliseconds.
-     */
-    private long timeRemaining; // Milliseconds
-    /**
-     * When the last update was - nanoseconds.
-     */
-    private long lastUpdateTime; // Nanoseconds
-    /**
-     * Score of the level.
-     */
-    private int score;
-    /**
-     * To milliseconds.
-     */
+    // Time conversion constants
     private static final long MILLISECONDS = 1000;
-    /**
-     * To nanoseconds.
-     */
     private static final long NANOSECONDS = 1_000_000;
-    /**
-     * Is the level failed - default false.
-     */
+    
+    private final GameController gameController;
+    private List<Item> items = new ArrayList<>();
+    private List<Gate> gates = new ArrayList<>();
+    private ArrayList<NonPlayableCharacter> enemies = new ArrayList<>();
+    private Tile[][] grid;
+    private Player player;
+    private static int MAX_TIME = 60; // Seconds
+    private long timeRemaining; // Milliseconds
+    private long lastUpdateTime; // Nanoseconds
+    private int score;
+
     private boolean failedLevel = false;
-    /**
-     * Why the player failed.
-     */
+
+    // Reason for level failure
     private String failReason = "";
-    /**
-     * Is the level finished - default false.
-     */
+
     private boolean finishedLevel = false;
-    /**
-     * The players sava data.
-     */
     private final SaveData saveData;
+
     /**
      * Constructs a Level with the specified level name and game controller.
      * @param levelName      the name of the level file
@@ -139,7 +104,6 @@ public class Level {
         loadGrid();
         loadSaveState();
     }
-
 
     /**
      * Updates the level state, including the timer.
@@ -827,31 +791,6 @@ public class Level {
 
     }
 
-
-    /**
-     * Where countdown left is positioned in bombparams.
-     */
-    private static final int COUNTDOWN_LEFT = 0;
-    /**
-     * where the countdown tick progress is positioned in bombparams.
-     */
-    private static final int COUNTDOWN_TICK_PROGRESS = 1;
-    /**
-     * Where next boom countdown is positioned in bombparams.
-     */
-    private static final int NEXT_BOOM_COUNTDOWN = 2;
-    /**
-     * Where explosions are positioned in bombparams.
-     */
-    private static final int EXPLOSIONS = 3;
-    /**
-     * Where armed is positioned in bombparams.
-     */
-    private static final int ARMED = 4;
-    /**
-     * Where exploding is positioned in bombparams.
-     */
-    private static final int EXPLODING = 5;
     /**
      * Makes a bomb from existing sava data.
      * @param bombParams the parameters to make the bomb.
