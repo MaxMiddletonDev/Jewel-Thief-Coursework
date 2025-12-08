@@ -47,7 +47,11 @@
     }, {
       "profileName" : "Gangis Khan",
       "score" : 20,
-      "formattedTime" : "2025-12-07 20:54"
+      "formattedTime" : ""
+    }, {
+      "profileName" : "Ben",
+      "score" : 20,
+      "formattedTime" : ""
     }, {
       "profileName" : "john tester",
       "score" : 0,
@@ -73,9 +77,110 @@
       "profileName" : "Gangis Khan",
       "score" : 20,
       "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 20,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 20,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "Ben",
+      "score" : 20,
+      "formattedTime" : ""
+    } ],
+    "3" : [ {
+      "profileName" : "charlie",
+      "score" : 20,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 20,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "Ben",
+      "score" : 20,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 10,
+      "formattedTime" : ""
+    } ],
+    "4" : [ {
+      "profileName" : "charlie",
+      "score" : 60,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 60,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 60,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 60,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 60,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 20,
+      "formattedTime" : ""
+    } ],
+    "5" : [ {
+      "profileName" : "charlie",
+      "score" : 20,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 0,
+      "formattedTime" : ""
+    } ],
+    "6" : [ {
+      "profileName" : "charlie",
+      "score" : 20,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 0,
+      "formattedTime" : ""
+    }, {
+      "profileName" : "charlie",
+      "score" : 0,
+      "formattedTime" : "2025-12-08 01:59"
+    } ],
+    "7" : [ {
+      "profileName" : "charlie",
+      "score" : 20,
+      "formattedTime" : ""
     } ]
   },
   "globalRanking" : [ {
+    "profileName" : "charlie",
+    "score" : 60,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 60,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 60,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 60,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 60,
+    "formattedTime" : ""
+  }, {
     "profileName" : "john tester",
     "score" : 20,
     "formattedTime" : ""
@@ -126,7 +231,55 @@
   }, {
     "profileName" : "Gangis Khan",
     "score" : 20,
-    "formattedTime" : "2025-12-07 20:54"
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "Ben",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "Ben",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "Ben",
+    "score" : 20,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 10,
+    "formattedTime" : ""
   }, {
     "profileName" : "john tester",
     "score" : 0,
@@ -147,5 +300,17 @@
     "profileName" : "charlie",
     "score" : 0,
     "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 0,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 0,
+    "formattedTime" : ""
+  }, {
+    "profileName" : "charlie",
+    "score" : 0,
+    "formattedTime" : "2025-12-08 01:59"
   } ]
 }
