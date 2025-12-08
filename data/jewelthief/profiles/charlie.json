@@ -1,6 +1,6 @@
 {
   "profileName" : "Ben",
-  "unlockedAchievements" : [ "Professional" ],
+  "unlockedAchievements" : [ "MONEY_MAN", "TANK", "DEMO_MAN", "SPEEDSTER", "PRO", "SURVIVOR" ],
   "maxUnlockedLvl" : 5,
-  "selectedSkinId" : "DEFAULT_GUY"
+  "selectedSkinId" : "SURVIVOR"
 }

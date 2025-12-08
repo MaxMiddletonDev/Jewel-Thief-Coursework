@@ -1,23 +1,23 @@
 {
   "levelId" : "2",
   "profileName" : "charlie",
-  "playerState" : [ 0, 0 ],
+  "playerState" : [ 7, 2 ],
   "elapsedSeconds" : 0,
-  "timeRemainingMs" : 97764,
-  "score" : 0,
+  "timeRemainingMs" : 91921,
+  "score" : 20,
   "npcStates" : {
     "FLYING" : {
       "alive" : true,
-      "x" : 6,
+      "x" : 0,
       "y" : 6,
       "dir" : "RIGHT"
     },
     "FOLLOWER" : {
       "colour" : "G",
       "alive" : true,
-      "x" : 3,
-      "y" : 3,
-      "dir" : "DOWN"
+      "x" : 1,
+      "y" : 8,
+      "dir" : "UP"
     }
   },
   "gates" : {
@@ -25,31 +25,16 @@
       "param" : "R",
       "x" : 10,
       "y" : 2
-    },
-    "GATE#10#6" : {
-      "param" : "G",
-      "x" : 10,
-      "y" : 6
     }
   },
   "items" : {
-    "LEVER#7#2" : {
-      "param" : "G",
-      "x" : 7,
-      "y" : 2
-    },
-    "LOOT#0#0" : {
-      "param" : "DOLLAR",
-      "x" : 0,
-      "y" : 0
-    },
     "CLOCK#2#9" : {
       "param" : "NONE",
       "x" : 2,
       "y" : 9
     },
     "BOMB#4#10" : {
-      "param" : "3#60.0#3.675#0#FALSE#FALSE",
+      "param" : "1#32.0#3.675#0#TRUE#FALSE",
       "x" : 4,
       "y" : 10
     },

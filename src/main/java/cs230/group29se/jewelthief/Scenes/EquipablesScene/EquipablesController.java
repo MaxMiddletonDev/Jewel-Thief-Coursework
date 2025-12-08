@@ -3,6 +3,7 @@ package cs230.group29se.jewelthief.Scenes.EquipablesScene;
 import cs230.group29se.jewelthief.Cosmetics.Skin;
 import cs230.group29se.jewelthief.Cosmetics.SkinId;
 import cs230.group29se.jewelthief.Cosmetics.SkinRegistry;
+import cs230.group29se.jewelthief.Game.Achievements;
 import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import javafx.fxml.FXML;
@@ -48,11 +49,11 @@ public class EquipablesController extends BaseController implements Initializabl
     public Canvas getCanvas() {
         return null;
     }
-
+    List<String> unlockedAchievements;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        List<String> unlocked =
+        unlockedAchievements =
                 PersistenceManager.getCurrentProfile().getUnlockedAchievements();
 
         // Map skin slots:
@@ -79,16 +80,15 @@ public class EquipablesController extends BaseController implements Initializabl
 
         // Load default skin images + enable/disable buttons
         for (Skin skin : SkinRegistry.getAllSkins()) {
-            SkinId id = skin.getId();
+            SkinId skinId = skin.getId();
 
-            ImageView img = imageMap.get(id);
-            Button btn = buttonMap.get(id);
+            ImageView img = imageMap.get(skinId);
+            Button btn = buttonMap.get(skinId);
 
             if (img != null)
                 img.setImage(skin.getImage());
 
-            boolean isUnlocked =
-                    id == SkinId.DEFAULT_GUY || unlocked.contains(id.name());
+            boolean isUnlocked = isSkinUnlocked(skinId);
 
             if (btn != null) {
                 btn.setDisable(!isUnlocked);
@@ -101,6 +101,20 @@ public class EquipablesController extends BaseController implements Initializabl
     @FXML
     public void onBackClicked() {
         getScreen().setFinished(true);
+    }
+
+    public boolean isSkinUnlocked(SkinId skinId) {
+        return switch (skinId) {
+            case DEFAULT_GUY -> true;
+            case SPEEDSTER -> unlockedAchievements.contains(Achievements.SPEEDSTER.toString());
+            case SURVIVOR -> unlockedAchievements.contains(Achievements.SURVIVOR.toString());
+            case DEMO_MAN -> unlockedAchievements.contains(Achievements.DEMO_MAN.toString());
+            case MONEY_MAN -> unlockedAchievements.contains(Achievements.MONEY_MAN.toString());
+            case PRO -> unlockedAchievements.contains(Achievements.PRO.toString());
+            case TANK -> unlockedAchievements.contains(Achievements.TANK.toString());
+            default -> false;
+        };
+
     }
 
     // -------------------------------
