@@ -78,7 +78,7 @@ public class FlyingAssassin extends NonPlayableCharacter {
      */
     @Override
     public void move() {
-        if (!isAlive) {
+        if (!isAlive()) {
             return;
         }
 
@@ -91,20 +91,20 @@ public class FlyingAssassin extends NonPlayableCharacter {
         int targetX = currentPosition[0];
         int targetY = currentPosition[1];
 
-        if (direction == Direction.UP) {
+        if (getDirection() == Direction.UP) {
             targetY--;
-        } else if (direction == Direction.DOWN) {
+        } else if (getDirection() == Direction.DOWN) {
             targetY++;
-        } else if (direction == Direction.LEFT) {
+        } else if (getDirection() == Direction.LEFT) {
             targetX--;
-        } else if (direction == Direction.RIGHT) {
+        } else if (getDirection() == Direction.RIGHT) {
             targetX++;
         }
 
         if (isValidMove(targetX, targetY)) {
             Tile targetTile = level.getTile(targetX, targetY);
             if (targetTile != null) {
-                currentTile = targetTile;
+                setCurrentTile(targetTile);
             }
         } else {
             reverseDirection();
@@ -128,14 +128,14 @@ public class FlyingAssassin extends NonPlayableCharacter {
      * Reverses direction of Flying assassin
      */
     public void reverseDirection() {
-        if (direction == Direction.UP) {
-            direction = Direction.DOWN;
-        } else if (direction == Direction.DOWN) {
-            direction = Direction.UP;
-        } else if (direction == Direction.LEFT) {
-            direction = Direction.RIGHT;
-        } else if (direction == Direction.RIGHT) {
-            direction = Direction.LEFT;
+        if (getDirection() == Direction.UP) {
+            setDirection(Direction.DOWN);
+        } else if (getDirection() == Direction.DOWN) {
+            setDirection(Direction.UP);
+        } else if (getDirection() == Direction.LEFT) {
+            setDirection(Direction.RIGHT);
+        } else if (getDirection() == Direction.RIGHT) {
+            setDirection(Direction.LEFT);
         }
     }
 

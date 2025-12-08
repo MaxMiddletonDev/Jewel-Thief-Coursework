@@ -3,7 +3,6 @@ package cs230.group29se.jewelthief.Entities;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
 import cs230.group29se.jewelthief.Items.Item;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -118,7 +117,7 @@ public class Camper extends NonPlayableCharacter {
      */
     @Override
     public void move() {
-        if (!isAlive) return;
+        if (!isAlive()) return;
 
         // ensure cooldown respects NonPlayableCharacter logic
         if (!canMove()) return;
@@ -132,7 +131,7 @@ public class Camper extends NonPlayableCharacter {
         // step to next tile on the patrol path
         Tile next = patrolPath.get(pathIndex);
         if (next != null) {
-            currentTile = next;
+            setCurrentTile(next);
         }
 
         pathIndex = (pathIndex + NEXT_TILE_STEP_ADDER) % patrolPath.size();
@@ -190,7 +189,7 @@ public class Camper extends NonPlayableCharacter {
 
         // reset path index to start near current position (choose nearest path index)
         if (!patrolPath.isEmpty()) {
-            pathIndex = findNearestPathIndex(currentTile);
+            pathIndex = findNearestPathIndex(getCurrentTile());
         }
     }
 

@@ -68,7 +68,7 @@ public class SmartThief extends FloorThief {
      */
     @Override
     public void move() {
-        if (!isAlive) {
+        if (!isAlive()) {
             return;
         }
 
@@ -85,10 +85,10 @@ public class SmartThief extends FloorThief {
         }
 
         if (nextMove != null) {
-            this.direction = nextMove;
-            Tile destination = calculateDestination(currentTile, nextMove);
+            this.setDirection(nextMove);
+            Tile destination = calculateDestination(getCurrentTile(), nextMove);
             if (destination != null) {
-                this.currentTile = destination;
+                this.setCurrentTile(destination);
                 triggerAdjacentBombs();
             }
         } else {
@@ -97,10 +97,10 @@ public class SmartThief extends FloorThief {
             Collections.shuffle(directions);
 
             for (Direction direction : directions) {
-                Tile target = calculateDestination(currentTile, direction);
+                Tile target = calculateDestination(getCurrentTile(), direction);
                 if (target != null) {
-                    this.direction = direction;
-                    this.currentTile = target;
+                    this.setDirection(direction);
+                    this.setCurrentTile(target);
 
                     return;
                 }
@@ -123,7 +123,7 @@ public class SmartThief extends FloorThief {
 
         Queue<Tile> tilesToVisit = new LinkedList<>();
 
-        Tile startNode = this.currentTile;
+        Tile startNode = this.getCurrentTile();
         tilesToVisit.add(startNode);
         visitedTiles[startNode.getX()][startNode.getY()] = true;
 
@@ -235,7 +235,7 @@ public class SmartThief extends FloorThief {
 
         for (NonPlayableCharacter npc : level.getEnemies()) {
             if (npc != this && npc.isAlive()) {
-                if (npc.currentTile == tile) {
+                if (npc.getCurrentTile() == tile) {
                     return true;
                 }
             }
@@ -248,8 +248,8 @@ public class SmartThief extends FloorThief {
      * Checks the 4 tiles immediately surrounding the player. If a bomb is found, it is activated.
      */
     private void triggerAdjacentBombs() {
-        int currentX = currentTile.getX();
-        int currentY = currentTile.getY();
+        int currentX = getCurrentTile().getX();
+        int currentY = getCurrentTile().getY();
 
         // These are the adjacent tiles
         for (int[] offset : OFFSETS) {
