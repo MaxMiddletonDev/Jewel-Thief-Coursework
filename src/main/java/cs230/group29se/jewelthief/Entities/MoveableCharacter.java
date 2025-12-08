@@ -3,7 +3,7 @@ package cs230.group29se.jewelthief.Entities;
 import cs230.group29se.jewelthief.Items.Item;
 
 /**
- * This interface represents any character that moves and provides a contract for which all those characters adhere
+ * This interface represents any character that moves and provides a contract for which all those characters adhere.
  * to.
  * @author Baba
  * @author Max Middleton
@@ -18,14 +18,14 @@ public interface MoveableCharacter {
 
     /**
      * Tells us whether a character is still in the game or not
-     * Sidenote: if a character is no longer "active" in the game, they should be removed
+     * Sidenote: if a character is no longer "active" in the game, they should be removed.
      *
      * @return true, if character is still in game, false otherwise
      */
     boolean isAlive();
 
     /**
-     * When a character has collided with another character capable of removing them from the game, it set isAlive to
+     * When a character has collided with another character capable of removing them from the game, it set isAlive to.
      * false, indicating their removal from the game
      *
      * @return set to true if character is still alive, false otherwise.
