@@ -11,36 +11,34 @@ import javafx.scene.layout.Pane;
 /**
  * Abstract class representing a Screen in the application.
  * Each screen must implement methods for initialization, updating, and drawing.
+ * Provides common functionality for managing screen transitions, FXML loading, and rendering.
  *
  * @author Gustas Rove
  * @version 1.0
  */
 abstract public class Screen {
-    public static final int DEFAULT_SCENE_WIDTH = 1000;
-    public static final int DEFAULT_SCENE_HEIGHT = 900;
+    public static final int DEFAULT_SCENE_WIDTH = 1000; // Default width of the scene
+    public static final int DEFAULT_SCENE_HEIGHT = 900; // Default height of the scene
 
-    private String screenFXMLPath;
+    private String screenFXMLPath; // Path to the FXML file for this screen
+    private Screen nextScreen; // The next screen to transition to
+    private Canvas canvas; // Canvas for rendering
+    private GraphicsContext gc; // Graphics context for drawing on the canvas
+    private BaseController controller; // Controller associated with this screen
 
-    private Screen nextScreen;
+    protected Pane root; // Root pane of the screen
+    protected Scene scene; // JavaFX Scene object
+    protected boolean finished = false; // Indicates if the screen is finished
 
-    private Canvas canvas;
-    private GraphicsContext gc;
-    private BaseController controller;
-
-    protected Pane root;
-    protected Scene scene;
-    protected boolean finished = false;
-
-    private String screenTitle;
+    private String screenTitle; // Title of the screen
 
     /**
      * Final initialize wrapper. Ensures the GameManager's current scene is set,
      * then calls the subclass hook {@link #onInitialize()}.
      */
     public final void initialize() {
-        // ensure GameManager always knows the active scene
-        GameManager.setCurrentScreen(this);
-        onInitialize();
+        GameManager.setCurrentScreen(this); // Set the current screen in the GameManager
+        onInitialize(); // Call the subclass-specific initialization logic
     }
 
     /**
@@ -50,12 +48,14 @@ abstract public class Screen {
     public abstract void onInitialize();
 
     /**
-     * Update, Game Logic happens here
+     * Update method where game logic happens.
+     * Subclasses must implement this method.
      */
     public abstract void update();
 
     /**
-     * Draw, Rendering happens here
+     * Draw method where rendering happens.
+     * Subclasses must implement this method.
      */
     public abstract void draw();
 
@@ -187,51 +187,26 @@ abstract public class Screen {
         return screenFXMLPath;
     }
 
+    /**
+     * Creates and initializes the JavaFX Scene for this screen.
+     * Loads the FXML file, sets up the controller, and binds the canvas and graphics context.
+     *
+     * @return the created Scene object, or null if an error occurs
+     */
     public Scene createScene() {
-
-
         try {
-
-
-            FXMLLoader loader = new FXMLLoader(
-
-
-                    getClass().getResource(getScreenFXMLPath())
-
-
-            );
-
-
-            root = loader.load();
-
-
-            setController(loader.getController());
-
-
-            //Bind this screen to the controller
-
-
-            getController().setScreen(this);
-
-
-            setCanvas(getController().getCanvas());
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(getScreenFXMLPath()));
+            root = loader.load(); // Load the FXML file
+            setController(loader.getController()); // Set the controller
+            getController().setScreen(this); // Bind this screen to the controller
+            setCanvas(getController().getCanvas()); // Set the canvas
 
             if (getCanvas() != null) {
-
-
                 GraphicsContext gc = getCanvas().getGraphicsContext2D();
-
-
-                setGraphicsContext(gc);
-
-
+                setGraphicsContext(gc); // Set the graphics context
             }
 
-
             double x = MainApplication.getWindowWidth();
-
-
             double y = MainApplication.getWindowHeight();
 
             if (x <= 0 || y <= 0) {
@@ -239,24 +214,11 @@ abstract public class Screen {
                 y = DEFAULT_SCENE_HEIGHT;
             }
 
-
-            scene = new Scene(root, x, y);
-
-
+            scene = new Scene(root, x, y); // Create the scene with the specified dimensions
             return scene;
-
-
         } catch (Exception e) {
-
-
-            e.printStackTrace();
-
-
-            return null;
-
-
+            e.printStackTrace(); // Print the stack trace for debugging
+            return null; // Return null if an error occurs
         }
-
-
     }
 }

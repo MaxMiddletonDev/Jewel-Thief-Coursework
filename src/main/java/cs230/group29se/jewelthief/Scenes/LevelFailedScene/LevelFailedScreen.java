@@ -1,9 +1,6 @@
 package cs230.group29se.jewelthief.Scenes.LevelFailedScene;
 
-import cs230.group29se.jewelthief.MainApplication;
 import cs230.group29se.jewelthief.Scenes.Screen;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 
 /**
  * Represents the "Level Failed" screen in the game.
