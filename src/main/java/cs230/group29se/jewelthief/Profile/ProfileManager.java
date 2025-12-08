@@ -25,13 +25,15 @@ public class ProfileManager {
     /**
      * This is a default no arg constructor.
      */
-    public ProfileManager() {}
+    public ProfileManager() {
+
+    }
 
     /**
      * This accepts existing profiles.
      * @param existingProfiles The profile to be accepted.
      */
-    public ProfileManager(List<ProfileData> existingProfiles) {
+    public ProfileManager(final List<ProfileData> existingProfiles) {
         if (existingProfiles != null) {
             profiles.addAll(existingProfiles);
         }
@@ -43,10 +45,11 @@ public class ProfileManager {
      *
      * @param profile the profile to be added.
      */
-    public void addProfile(ProfileData profile) {
+    public void addProfile(final ProfileData profile) {
         if (isDuplicateName(profile.getProfileName())) {
             throw new IllegalArgumentException(
-                    String.format(ERROR_DUPLICATE_NAME, profile.getProfileName())
+                    String.format(ERROR_DUPLICATE_NAME,
+                            profile.getProfileName())
             );
         }
         profiles.add(profile);
@@ -57,7 +60,7 @@ public class ProfileManager {
      * @param name The profile name to be checked.
      * @return A list of all the profiles.
      */
-    public boolean isDuplicateName(String name) {
+    public boolean isDuplicateName(final String name) {
         for (ProfileData p : profiles) {
             if (p.getProfileName().equalsIgnoreCase(name)) {
                 return true;
@@ -74,9 +77,4 @@ public class ProfileManager {
     public List<ProfileData> getProfiles() {
         return new ArrayList<>(profiles);
     }
-    /**
-     * Allows the user to choose a profile.
-     * This method currently a placeholder and should be implemented
-     * with game specific logic for selecting a profile.
-     */
 }

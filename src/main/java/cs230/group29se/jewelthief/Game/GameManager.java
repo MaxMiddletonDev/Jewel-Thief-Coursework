@@ -62,39 +62,38 @@ public final class GameManager {
     // Failure constants
     private static final int NO_TIME_LEFT = 0;
 
-    public static final int LEVEL_COUNT = 10; // Total number of levels in the game
+    public static final int TOTAL_LEVEL_COUNT = 10;
 
     // Current state information
     private static int levelNumber;
     private static Level currentLevel;
     private static Screen currentScreen;
 
-    /**
-     * Private constructor to prevent instantiation
-     */
     private GameManager() {
     }
 
-    private static String selectedProfileName = PersistenceManager.readSelectedProfile();
+    private static String selectedProfileName =
+            PersistenceManager.readSelectedProfile();
 
     /**
      * Load a level for a given profile:
      * 1) If JSON SaveData exists for (profileName, levelNumber), use that.
-     * 2) Otherwise, load levelX.txt via LevelLoader and create initial SaveData.
+     * 2) Otherwise, load levelX.txt via LevelLoader
+     * and create initial SaveData.
      * 3) Create a new Level object and register it as currentLevel.
      *
      * @param levelNum   level number (1, 2, 3, ...)
      * @param controller GameController for the new Level
      * @author Iyaad
      */
-    public static void loadLevelForProfile(int levelNum,
-                                           GameController controller) {
+    public static void loadLevelForProfile(final int levelNum,
+                                           final GameController controller) {
 
         setCurrentLevelNumber(levelNum);
         String levelId = String.valueOf(levelNum);
         String levelFileName = LEVEL_FILE_PREFIX + levelId + LEVEL_FILE_SUFFIX;
 
-        PersistenceManager.setActiveLevelId(levelId);// keep...
+        PersistenceManager.setActiveLevelId(levelId);
 
         SaveData save = PersistenceManager.getSaveData();
 
@@ -111,15 +110,18 @@ public final class GameManager {
     }
 
     /**
-     * Saving the game per-profile
+     * Saves the current game state into PersistenceManager's cached save
+     * and writes it to disk.
      *
      * @author Iyaad
      */
     public static void saveCurrentGameState() {
-        if (currentLevel == null) return;
+        if (currentLevel == null) {
+            return;
+        }
 
         SaveData s = PersistenceManager.getSaveData();
-        String profile = PersistenceManager.getActiveProfileName(); // or s.getProfileName()
+        String profile = PersistenceManager.getActiveProfileName();
         String levelId = String.valueOf(levelNumber);
 
         if (s == null) {
@@ -129,12 +131,12 @@ public final class GameManager {
         }
 
         // Store tile coordinates, not pixels
-        int[] pos = currentLevel.getPlayer().getPosition(); // returns [xTile, yTile]
+        int[] pos = currentLevel.getPlayer().getPosition();
         int px = pos[0];
         int py = pos[1];
 
         s.setPlayerState(new Object[]{px, py});
-        // (timeRemaining is milliseconds, but via getter we convert to seconds; we want raw ms)
+        // (timeRemaining is milliseconds, but via getter we convert to seconds
         int timeMs = (int) currentLevel.getTimeRemainingMs();
         s.setTimeRemainingMs(timeMs);
 
@@ -145,7 +147,10 @@ public final class GameManager {
         // enemy positions & directions
         Map<String, Object> npcStates = new java.util.HashMap<>();
         for (NonPlayableCharacter npc : currentLevel.getEnemies()) {
-            if (!npc.isAlive()) continue; // optionally skip dead enemies
+            // optionally skip dead enemies
+            if (!npc.isAlive()) {
+                continue;
+            }
             String id = npc.getId();
             int[] npcPos = npc.getPosition();
             int ex = npcPos[0];
@@ -160,7 +165,14 @@ public final class GameManager {
 
             switch (npc.getClass().getSimpleName()) {
                 case NPC_FLOOR_THIEF -> {
-                    state.put(KEY_COLOUR, ((FloorThief) npc).getColour().toString().charAt(0));
+                    state.put(KEY_COLOUR,
+                            ((FloorThief) npc)
+                                    .getColour()
+                                    .toString()
+                                    .charAt(0));
+                }
+                default -> {
+                    // No extra params
                 }
             }
 
@@ -194,12 +206,12 @@ public final class GameManager {
                 }
                 case ITEM_BOMB -> {
                     Bomb b = (Bomb) item;
-                    param = b.getCountDownLeft() + PARAM_SEPARATOR +
-                            b.getCountdownTickProgress() + PARAM_SEPARATOR +
-                            b.getNextBoomCountdown() + PARAM_SEPARATOR +
-                            b.getExplosions() + PARAM_SEPARATOR +
-                            b.getArmed() + PARAM_SEPARATOR +
-                            b.getExploding();
+                    param = b.getCountDownLeft() + PARAM_SEPARATOR
+                            + b.getCountdownTickProgress() + PARAM_SEPARATOR
+                            + b.getNextBoomCountdown() + PARAM_SEPARATOR
+                            + b.getExplosions() + PARAM_SEPARATOR
+                            + b.getArmed() + PARAM_SEPARATOR
+                            + b.getExploding();
                 }
                 default -> param = PARAM_NONE;
             }
@@ -247,7 +259,7 @@ public final class GameManager {
      *
      * @param level the new Level object
      */
-    public static void setCurrentLevel(Level level) {
+    public static void setCurrentLevel(final Level level) {
         currentLevel = level;
     }
 
@@ -265,7 +277,7 @@ public final class GameManager {
      *
      * @param levelNum the new level number.
      */
-    public static void setCurrentLevelNumber(int levelNum) {
+    public static void setCurrentLevelNumber(final int levelNum) {
         levelNumber = levelNum;
     }
 
@@ -283,7 +295,7 @@ public final class GameManager {
      *
      * @param screen the new Screen object
      */
-    public static void setCurrentScreen(Screen screen) {
+    public static void setCurrentScreen(final Screen screen) {
         currentScreen = screen;
     }
 
@@ -301,7 +313,7 @@ public final class GameManager {
      *
      * @param profileName the profile name to set
      */
-    public static void setSelectedProfileName(String profileName) {
+    public static void setSelectedProfileName(final String profileName) {
         selectedProfileName = profileName;
         PersistenceManager.writeSelectedProfile(selectedProfileName);
 
@@ -337,8 +349,13 @@ public final class GameManager {
         return SkinRegistry.getById(skinId).getImage();
     }
 
+    /**
+     * Checks if the current level is the last level.
+     *
+     * @return true if the current level is the last level, false otherwise
+     */
     public static boolean isLastLevel() {
-        return levelNumber >= LEVEL_COUNT;
+        return levelNumber >= TOTAL_LEVEL_COUNT;
     }
 
 }

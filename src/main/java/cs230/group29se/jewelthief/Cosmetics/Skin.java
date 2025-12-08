@@ -3,8 +3,10 @@ package cs230.group29se.jewelthief.Cosmetics;
 import javafx.scene.image.Image;
 
 /**
- * Alternative sprites for the player
+ * Skin: represents a cosmetic skin for the player character.
+ *
  * @author Gustas Rove
+ * @version 1.0
  */
 public class Skin {
     private final SkinId id;       // "default", "ninja", "ghost"
@@ -12,26 +14,35 @@ public class Skin {
     private final Image image;
 
     /**
-     * sets the unique identification enum, reference name and the filepath to the matching image
-     * @param id the unique enum for the cosmetic
-     * @param displayName the name to be displayed to the player
-     * @param imagePath the location to find the image to be representing
+     * Constructor for Skin.
+     *
+     * @param id          The skin's enum identifier.
+     * @param displayName The skin's display name.
+     * @param imagePath   The path to the skin's image resource.
      */
-    public Skin(SkinId id, String displayName, String imagePath) {
+    public Skin(final SkinId id,
+                final String displayName,
+                final String imagePath) {
         this.id = id;
         this.displayName = displayName;
         this.image = new Image(getClass().getResourceAsStream(imagePath));
     }
 
     /**
-     *  gets the associated enum
-     * @return the associated enum
+     * Gets the display name of the skin.
+     *
+     * @return The skin's display name.
      */
-    public SkinId getId() { return id; }
+    public SkinId getId() {
+        return id;
+    }
 
     /**
-     * gets the associated image
-     * @return the associated image
+     * Gets the display name of the skin.
+     *
+     * @return The skin's display name.
      */
-    public Image getImage() { return image; }
+    public Image getImage() {
+        return image;
+    }
 }
