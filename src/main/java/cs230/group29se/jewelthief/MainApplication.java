@@ -53,14 +53,16 @@ public class MainApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        boolean exitProgram = false;
 
+        // Set up the game loop using a Timeline to call the tick method at regular intervals
         tickTimeline = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION_MS), event -> tick(stage)));
-
         tickTimeline.setCycleCount(Animation.INDEFINITE);
         tickTimeline.play();
 
+        // Load the initial screen (Main Menu)
         loadNextScreen(stage, new MainMenuScreen());
+
+        // Ensure the timeline stops when the application window is closed
         stage.setOnCloseRequest(event -> {
             if (tickTimeline != null) {
                 tickTimeline.stop();

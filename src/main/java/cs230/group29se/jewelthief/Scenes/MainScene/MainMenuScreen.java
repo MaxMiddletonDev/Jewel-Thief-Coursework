@@ -41,21 +41,24 @@ public class MainMenuScreen extends Screen {
 
     /**
      * Initializes the Main Menu screen.
-     * This method is called when the screen is first loaded.
-     * It retrieves the selected profile name from the GameManager.
+     * This method is called when the screen is first created.
+     * It loads the selected profile data and updates the profile name label
+     * and equipped skin image in the Main Menu controller.
      */
     @Override
     public void onInitialize() {
 
-//        PersistenceManager.setActiveProfileName(GameManager.getSelectedProfileName());
+        //Load selected profile data into PersistenceManager
         PersistenceManager.loadProfile(GameManager.getSelectedProfileName());
 
+        //Update profile name label
         String selectedProfile = GameManager.getSelectedProfileName();
-        ((MainMenuController)getController()).setProfileNameLabelText(selectedProfile);
+        ((MainMenuController) getController()).setProfileNameLabelText(selectedProfile);
 
+        //Update equipped skin image
         SkinId skinId = SkinId.fromString(GameManager.getSelectedPlayerSkinId());
         Image skinImage = SkinRegistry.getById(skinId).getImage();
-        ((MainMenuController)getController()).setEquippedSkinImage(skinImage);
+        ((MainMenuController) getController()).setEquippedSkinImage(skinImage);
     }
 
     /**
@@ -77,50 +80,6 @@ public class MainMenuScreen extends Screen {
     public void draw() {
         // No drawing logic for this screen.
     }
-
-
-    public enum NextAction {START_GAME, SHOW_HIGHSCORES, SHOW_ACHIEVEMENTS}
-
-
-    public void onStartClicked() {
-        setNextScreen(new LevelSelectScreen());
-        setFinished(true);
-    }
-    public void onHighScoresClicked() {
-        setNextScreen(new HighScoresScreen());
-        setFinished(true);
-    }
-
-    public void onAchievementsClicked() {
-        setNextScreen(new AchievementsScreen());
-        setFinished(true);
-    }
-
-//    @Override
-//    public Scene createScene() {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(
-//                    getClass().getResource("/cs230/group29se/jewelthief/game-view.fxml")
-//            );
-//            root = loader.load();
-//            controller = loader.getController();
-//            // Binds controller to this screen
-//            controller.setScreen(this);
-//
-//            // Use the controllers canvas as this Screen's canvas
-//            Canvas gameCanvas = controller.getCanvas();
-//            setCanvas(gameCanvas);
-//            if (gameCanvas != null) {
-//                setGraphicsContext(gameCanvas.getGraphicsContext2D());
-//            }
-//
-//            scene = new Scene(root, 1028, 900);
-//            return scene;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
 
 }
