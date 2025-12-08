@@ -1,13 +1,7 @@
 package cs230.group29se.jewelthief.Scenes.LevelSelectScene;
 
-import cs230.group29se.jewelthief.MainApplication;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 
 /**
  * Represents the Level Select screen in the game.
