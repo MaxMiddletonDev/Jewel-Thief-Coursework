@@ -64,6 +64,8 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
 
     /**
      * Constructor for creating a new instance of an NPC
+     * @param startingTile The beginning tile of NPC
+     * @param direction The Direction of the tile
      */
     public NonPlayableCharacter(Tile startingTile, Direction direction) {
         this.currentTile = startingTile;
@@ -71,40 +73,75 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
         this.isAlive = true;
     }
 
+    /**
+     * This gets the ID of NPC
+     * @return id
+     */
     public String getId() { return id; }
 
+    /**
+     * This sets the ID of NPC
+     * @param id ID of NPC
+     */
     public void setId(String id) { this.id = id; }
 
+    /**
+     * Checker if NPC is alive
+     * @return isAlive
+     */
     @Override
     public boolean isAlive() {
         return isAlive;
     }
 
+    /**
+     * Changes if NPC is alive or not.
+     * @param alive State of NPC
+     */
     @Override
     public void setAliveTo(boolean alive) {isAlive = alive; }
 
+    /**
+     * This gets the direction of the NPC.
+     * @return direction
+     */
     @Override
     public Direction getDirection() {
         return direction;
     }
 
+    /**
+     * This gets the position of the NPC.
+     * @return position
+     */
     @Override
     public int[] getPosition() {
         return currentTile.getPosition();
     }
 
+    /**
+     * Collect Item method for NPC to interact with items
+     * @param item Specific Item
+     */
     @Override
     public abstract void collectItem(Item item);
 
+    /**
+     * Checks a collision with Player.
+     * @param other - character that collides with this one
+     */
     @Override
     public abstract void onCollisionWith(MoveableCharacter other);
 
+    /**
+     * Move method for NPC
+     */
     @Override
     public abstract void move();
 
     /**
      * Checks if the NPC can move based on cooldown
-     * @return true if can move, false otherwise
+     * @return true if NPC can move, false otherwise
      */
     protected boolean canMove() {
         if (moveCooldownCounter >= moveCooldownTicks) {
@@ -134,7 +171,7 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
 
     /**
      * Checks if the NPC can hit based on cooldown
-     * @return true if can hit, false otherwise
+     * @return true if you can hit, false otherwise
      */
     protected boolean canHit() {
         return hitCooldown <= 0;
@@ -144,7 +181,7 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
     /**
      * Sets the move cooldown in seconds for the NPC
      *
-     * Designed to be called in the NPCS constructor if different cooldown is needed.
+     * Designed to be called in the NPCs constructor if different cooldown is needed.
      * @param moveCooldownSeconds cooldown time in seconds
      */
     protected void setMoveCooldownSeconds(double moveCooldownSeconds) {
@@ -155,8 +192,7 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
 
     /**
      * Sets the hit cooldown in seconds for the NPC
-     *
-     * Designed to be called in the NPCS constructor if different cooldown is needed.
+     * Designed to be called in the NPCs constructor if different cooldown is needed.
      * @param hitCooldownSeconds cooldown time in seconds
      */
     protected void setHitCooldownSeconds(double hitCooldownSeconds) {
@@ -164,6 +200,11 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
         this.hitCooldownTicks = hitCooldownSeconds * MainApplication.TPS;
     }
 
+
+    /**
+     * Draw function for NPCs, can show left and right images.
+     * @param gc Graphics Context
+     */
     public void draw(GraphicsContext gc) {
         if (direction == Direction.LEFT) {
             isFacingRight = false;

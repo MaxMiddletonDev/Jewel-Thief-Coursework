@@ -162,7 +162,7 @@ public class SmartThief extends FloorThief {
                             visitedTiles[nx][ny] = true;
                             tilesToVisit.add(neighbour);
 
-                            // Track the first move: if we are at start, this direction is the first move. Else, passes the first move
+                            // If we are at the start, this direction is the first move. Else, passes the first move
                             if (current == startNode) {
                                 firstMove[nx][ny] = direction;
                             } else {

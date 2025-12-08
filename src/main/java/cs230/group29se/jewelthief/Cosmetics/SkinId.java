@@ -1,5 +1,9 @@
 package cs230.group29se.jewelthief.Cosmetics;
 
+/**
+ * enum listing the only available skins
+ * @author Gustas Rove
+ */
 public enum SkinId {
     DEFAULT_GUY,
     SPEEDSTER,
@@ -9,6 +13,11 @@ public enum SkinId {
     PRO,
     TANK;
 
+    /**
+     * converts the id into a string
+     * @param selectedSkinId the id to convert into a string
+     * @return the string equivalent of the skin id
+     */
     public static SkinId fromString(String selectedSkinId) {
         for (SkinId skinId : SkinId.values()) {
             if (skinId.name().equals(selectedSkinId)) {
