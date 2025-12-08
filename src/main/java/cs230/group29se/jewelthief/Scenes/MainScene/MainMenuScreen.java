@@ -78,9 +78,6 @@ public class MainMenuScreen extends Screen {
     }
 
 
-    public enum NextAction {START_GAME, SHOW_HIGHSCORES}
-
-
     public void onStartClicked() {
         setNextScreen(new LevelSelectScreen());
         setFinished(true);

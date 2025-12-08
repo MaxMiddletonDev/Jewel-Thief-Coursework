@@ -5,6 +5,7 @@ import cs230.group29se.jewelthief.Cosmetics.SkinRegistry;
 import cs230.group29se.jewelthief.Entities.Direction;
 import cs230.group29se.jewelthief.Entities.FloorThief;
 import cs230.group29se.jewelthief.Entities.NonPlayableCharacter;
+import cs230.group29se.jewelthief.Items.Bomb;
 import cs230.group29se.jewelthief.Items.Gate;
 import cs230.group29se.jewelthief.Items.Item;
 import cs230.group29se.jewelthief.Items.Loot;
@@ -168,6 +169,16 @@ public final class GameManager {
                 }
                 case "Loot" -> {
                     param = ((Loot) item).getType().toString();
+                }
+                case "Bomb" -> {
+                    String countDownLeft = String.valueOf(((Bomb) item).getCountDownLeft());
+                    String countdownTickProgress = String.valueOf(((Bomb) item).getCountdownTickProgress());
+                    String nextBoomCountdown = String.valueOf(((Bomb) item).getNextBoomCountdown());
+                    String explosions = String.valueOf(((Bomb) item).getExplosions());
+                    String armed = String.valueOf(((Bomb) item).getArmed());
+                    String exploding = String.valueOf(((Bomb) item).getExploding());
+                    param = countDownLeft + "#" + countdownTickProgress + "#" + nextBoomCountdown +
+                            "#" + explosions + "#" + armed + "#" + exploding;
                 }
                 default -> param = "none";
             }

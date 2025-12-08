@@ -646,7 +646,16 @@ public class Level {
                     }
                 }
                 case "BOMB" -> {
-                    Bomb tempBomb = new Bomb(xPos, yPos);
+                    //TODO: load extensive bomb state (armed, countdown etc)
+                    String[] bombParams = ((String) state.get("param")).split("#");
+                    int countDownLeft = Integer.parseInt(bombParams[0]);
+                    double countdownTickProgress = Double.parseDouble(bombParams[1]);
+                    double nextBoomCountdown = Double.parseDouble(bombParams[2]);
+                    int explosions = Integer.parseInt(bombParams[3]);
+                    boolean armed = Boolean.parseBoolean(bombParams[4]);
+                    boolean exploding = Boolean.parseBoolean(bombParams[5]);
+                    Bomb tempBomb = new Bomb(countDownLeft, countdownTickProgress, nextBoomCountdown, explosions
+                            , armed, exploding, xPos, yPos);
                     items.add(tempBomb);
                     grid[xPos][yPos].setOccupying(tempBomb);
                 }
