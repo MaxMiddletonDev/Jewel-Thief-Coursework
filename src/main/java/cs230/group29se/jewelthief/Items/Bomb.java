@@ -251,16 +251,13 @@ public class Bomb extends Destroyable {
                 image = bombStage3; // "3" stage
             }
 
-        gc.drawImage(image, getX() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
-                getY() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
-                Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
+            gc.drawImage(image, getX() * Tile.TILE_SIZE,
+                    getY() * Tile.TILE_SIZE + 1,
+                    Tile.TILE_SIZE, Tile.TILE_SIZE);
         } else {
-            gc.drawImage(image, getX() * Tile.TILE_SIZE
-                            +
-                            Tile.HALF_TILE_SIZE / 2, getY() * Tile.TILE_SIZE
-                            +
-                            Tile.HALF_TILE_SIZE / 2, Tile.HALF_TILE_SIZE,
-                            Tile.HALF_TILE_SIZE);
+            gc.drawImage(image, getX() * Tile.TILE_SIZE,
+                    getY() * Tile.TILE_SIZE + 1,
+                    Tile.TILE_SIZE, Tile.TILE_SIZE);
         }
     }
 
