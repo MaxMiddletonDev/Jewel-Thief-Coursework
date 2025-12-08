@@ -15,6 +15,8 @@ import java.util.List;
  * @author Baba & Max
  */
 public abstract class NonPlayableCharacter implements MoveableCharacter, Protectable {
+    public static final int HIT_COOLDOWN = 2;
+    public static final int MOVE_COOLDOWN = 1;
     /**
      * Tracks Facing direction
      */
@@ -55,10 +57,10 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
      */
     protected boolean isProtected;
 
-    private double hitCooldownSeconds = 2;
+    private double hitCooldownSeconds = HIT_COOLDOWN;
     private double hitCooldownTicks = hitCooldownSeconds * MainApplication.TPS;
     protected double hitCooldown = 0;
-    private double moveCooldownSeconds = 1;
+    private double moveCooldownSeconds = MOVE_COOLDOWN;
     private double moveCooldownTicks = moveCooldownSeconds * MainApplication.TPS;
     private double moveCooldownCounter = 0;
 

@@ -22,6 +22,9 @@ import java.util.Queue;
  * @author Max Middleton
  */
 public class SmartThief extends FloorThief {
+    public static final int[][] OFFSETS = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    public static final String LOOT = "LOOT";
+    public static final String EXIT = "EXIT";
     private Level level;
     private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/NPCs/SMARTTHIEF.png").toString());
 
@@ -131,11 +134,11 @@ public class SmartThief extends FloorThief {
             // Check for current tile contains target
             boolean found = false;
 
-            if (targetType.equals("LOOT")) {
+            if (targetType.equals(LOOT)) {
                 if (obj instanceof Collectable && !(obj instanceof Bomb)) {
                     found = true;
                 }
-            } else if (targetType.equals("EXIT")) {
+            } else if (targetType.equals(EXIT)) {
                 if (obj instanceof Door) {
                     found = true;
                 }
@@ -249,9 +252,7 @@ public class SmartThief extends FloorThief {
         int currentY = currentTile.getY();
 
         // These are the adjacent tiles
-        int[][] offsets = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-
-        for (int[] offset : offsets) {
+        for (int[] offset : OFFSETS) {
             int checkX = currentX + offset[0];
             int checkY = currentY + offset[1];
 
