@@ -1,20 +1,26 @@
 package cs230.group29se.jewelthief.Scenes.ProfileScene;
 
+import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
+import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
+import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
 import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
 
-public class ProfileSelectMenu extends Screen {
+import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.loadProfile;
+
+public class ProfileSelectScreen extends Screen {
 
     public enum NextAction { CONTINUE, BACK }
 
     private NextAction nextAction = NextAction.CONTINUE;
     private String selectedProfile;
 
-    public ProfileSelectMenu() {
+    public ProfileSelectScreen() {
         setScreenTitle("Select Profile");
         setScreenFXMLPath("/cs230/group29se/jewelthief/profile-select-view.fxml");
+        setNextScreen(new MainMenuScreen());
     }
 
     @Override
@@ -31,14 +37,15 @@ public class ProfileSelectMenu extends Screen {
     public void draw() { }
 
     public void onProfileChosen(String profileName) {
-        this.selectedProfile = profileName;
-        this.nextAction = NextAction.CONTINUE;
-        this.finished = true;
+        GameManager.setSelectedProfileName(profileName);
+        loadProfile(profileName);
+        setFinished(true);
     }
 
+
+
     public void onBackClicked() {
-        this.nextAction = NextAction.BACK;
-        this.finished = true;
+        setFinished(true);
     }
 
     public String getSelectedProfile() {
@@ -47,17 +54,5 @@ public class ProfileSelectMenu extends Screen {
 
     public NextAction getNextAction() {
         return nextAction;
-    }
-
-    @Override
-    public Screen getNextScreen() {
-        if (nextAction == NextAction.BACK) {
-            return new MainMenuScreen();
-        }
-        // CONTINUE: go to Level Select after setting active profile
-        if (selectedProfile != null && !selectedProfile.isEmpty()) {
-            GameProfileHelper.setActiveProfileName(selectedProfile);
-        }
-        return new LevelSelectScreen();
     }
 }

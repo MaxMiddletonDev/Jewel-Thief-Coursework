@@ -98,7 +98,7 @@ public class LevelSelectController extends BaseController implements Initializab
      * @return true if the level is unlocked, false otherwise.
      */
     private boolean isLevelUnlocked(int levelNumber) {
-        ProfileData data = GameManager.getPersistenceManager().getCurrentProfile();
+        ProfileData data = PersistenceManager.getCurrentProfile();
         int maxLevel = data.getMaxUnlockedLvl();
         return levelNumber <= maxLevel;
     }

@@ -9,16 +9,16 @@ import java.util.List;
 
 public class GameProfileHelper {
 
-    private static final PersistenceManager PM = GameManager.getPersistenceManager();
+//    private static final PersistenceManager PM = GameManager.getPersistenceManager();
 
     /** Shared ProfileManager initialized with saved profiles. */
     private static final ProfileManager manager = loadManagerFromPersistence();
 
     private static ProfileManager loadManagerFromPersistence() {
         List<ProfileData> savedProfiles = new ArrayList<>();
-        for (String name : PM.listProfiles()) {
-            PM.setActiveProfileName(name);
-            ProfileData p = PM.loadProfile();
+        for (String name : PersistenceManager.listProfiles()) {
+            PersistenceManager.setActiveProfileName(name);
+            ProfileData p = PersistenceManager.loadProfile();
             if (p != null) {
                 savedProfiles.add(p);
             }
@@ -27,7 +27,7 @@ public class GameProfileHelper {
     }
 
     public static List<String> listProfiles() {
-        return PM.listProfiles();
+        return PersistenceManager.listProfiles();
     }
 
     public static void ensureProfileExists(String name) {
@@ -35,35 +35,35 @@ public class GameProfileHelper {
             throw new IllegalArgumentException("Profile name '" + name + "' already exists!");
         }
 
-        PM.setActiveProfileName(name);
-        ProfileData p = PM.loadProfile();
+        PersistenceManager.setActiveProfileName(name);
+        ProfileData p = PersistenceManager.loadProfile();
         if (p == null) {
             p = new ProfileData();
             p.setProfileName(name);
             p.setMaxUnlockedLvl(1);
             manager.addProfile(p);
-            PM.setCachedProfile(p);
-            PM.saveProfile();
+            PersistenceManager.setCachedProfile(p);
+            PersistenceManager.saveProfile();
         }
     }
 
     public static void setActiveProfileName(String name) {
-        PM.setActiveProfileName(name);
-        ProfileData p = PM.loadProfile();
+        PersistenceManager.setActiveProfileName(name);
+        ProfileData p = PersistenceManager.loadProfile();
         if (p != null) {
             if (!manager.isDuplicateName(p.getProfileName())) {
                 manager.addProfile(p);
             }
-            PM.setCachedProfile(p);
+            PersistenceManager.setCachedProfile(p);
         }
     }
 
     public static String getActiveProfileName() {
-        return PM.getActiveProfileName(); // or equivalent getter
+        return PersistenceManager.getActiveProfileName(); // or equivalent getter
     }
 
     public static void deleteProfile(String name) {
-        PM.deleteProfile(name);
+        PersistenceManager.deleteProfile(name);
         manager.getProfiles().removeIf(p -> p.getProfileName().equalsIgnoreCase(name));
         System.out.println("Deleted profile " + name);
     }
@@ -80,19 +80,19 @@ public class GameProfileHelper {
         //if (listProfiles().contains(newName)) return false;
 
         try {
-            PM.setActiveProfileName(oldName);
-            ProfileData p = PM.loadProfile();
+            PersistenceManager.setActiveProfileName(oldName);
+            ProfileData p = PersistenceManager.loadProfile();
             if (p == null) return false;
 
             // 改名并缓存
             p.setProfileName(newName);
             manager.addProfile(p);
-            PM.setCachedProfile(p);
+            PersistenceManager.setCachedProfile(p);
 
-            PM.setActiveProfileName(newName);
-            PM.saveProfile();
+            PersistenceManager.setActiveProfileName(newName);
+            PersistenceManager.saveProfile();
 
-            PM.deleteProfile(oldName);
+            PersistenceManager.deleteProfile(oldName);
             manager.getProfiles().removeIf(x -> x.getProfileName().equalsIgnoreCase(oldName));
             return true;
         } catch (Exception e) {

@@ -1,14 +1,14 @@
 {
   "levelId" : "2",
   "profileName" : "charlie",
-  "playerState" : [ 1, 0 ],
+  "playerState" : [ 6, 1 ],
   "elapsedSeconds" : 0,
-  "timeRemainingMs" : 93821,
+  "timeRemainingMs" : 88995,
   "score" : 20,
   "npcStates" : {
     "FLYING" : {
       "alive" : true,
-      "x" : 8,
+      "x" : 5,
       "y" : 6,
       "dir" : "LEFT"
     },
@@ -16,7 +16,7 @@
       "colour" : "G",
       "alive" : true,
       "x" : 3,
-      "y" : 8,
+      "y" : 3,
       "dir" : "DOWN"
     }
   },

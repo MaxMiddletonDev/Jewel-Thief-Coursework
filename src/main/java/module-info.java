@@ -21,6 +21,11 @@ module cs230.group29se.jewelthief {
     opens cs230.group29se.jewelthief.Scenes.ProfileScene to javafx.fxml;
     exports cs230.group29se.jewelthief.Scenes.HighScoresScene to javafx.fxml;
     opens cs230.group29se.jewelthief.Scenes.HighScoresScene to javafx.fxml;
+    exports cs230.group29se.jewelthief.Scenes.ProfileScene;
+    exports cs230.group29se.jewelthief.Cosmetics;
+    opens cs230.group29se.jewelthief.Cosmetics to javafx.fxml;
+    opens cs230.group29se.jewelthief.Scenes.EquipablesScene to javafx.fxml;
+
 
     opens cs230.group29se.jewelthief.Persistence.Profile to com.fasterxml.jackson.databind, javafx.base;
     opens cs230.group29se.jewelthief.Persistence.Storage to com.fasterxml.jackson.databind;

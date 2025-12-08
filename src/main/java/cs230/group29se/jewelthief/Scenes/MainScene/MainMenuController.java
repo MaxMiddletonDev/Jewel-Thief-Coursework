@@ -1,18 +1,27 @@
 package cs230.group29se.jewelthief.Scenes.MainScene;
 
+import cs230.group29se.jewelthief.Cosmetics.SkinId;
+import cs230.group29se.jewelthief.Cosmetics.SkinRegistry;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
+import cs230.group29se.jewelthief.Scenes.EquipablesScene.EquipablesScreen;
+import cs230.group29se.jewelthief.Scenes.ProfileScene.ProfileSelectScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class MainMenuController extends BaseController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class MainMenuController extends BaseController implements Initializable {
 
     public Button achievementsButton;
     public Button equipablesButton;
@@ -20,16 +29,16 @@ public class MainMenuController extends BaseController {
     public ImageView equippedSkinImage;
     public Label profileNameLabel;
     @FXML
-    private Button startButton;
+    public Button startButton;
 
     @FXML
-    private Button highScoresButton;
+    public Button highScoresButton;
 
     @FXML
-    private Button creditsButton;
+    public Button creditsButton;
 
     @FXML
-    private Button quitButton;
+    public Button quitButton;
 
     @Override
     public Canvas getCanvas() {
@@ -85,9 +94,26 @@ public class MainMenuController extends BaseController {
     }
 
     public void handleEquipablesClicked(ActionEvent actionEvent) {
-
+        getScreen().setNextScreen(new EquipablesScreen());
+        getScreen().setFinished(true);
     }
 
     public void selectProfileClicked(ActionEvent actionEvent) {
+        getScreen().setNextScreen(new ProfileSelectScreen());
+        getScreen().setFinished(true);
     }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
+    }
+    public void setProfileNameLabelText(String text) {
+        profileNameLabel.setText(text);
+    }
+
+    public void setEquippedSkinImage(Image skinImage) {
+        equippedSkinImage.setImage(skinImage);
+    }
+
 }

@@ -1,15 +1,21 @@
 package cs230.group29se.jewelthief.Scenes.MainScene;
 
-import cs230.group29se.jewelthief.MainApplication;
+import cs230.group29se.jewelthief.Cosmetics.SkinId;
+import cs230.group29se.jewelthief.Cosmetics.SkinRegistry;
+import cs230.group29se.jewelthief.Game.GameManager;
+import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
+import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
+import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
 import cs230.group29se.jewelthief.Scenes.HighScoresScene.HighScoresScreen;
 import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
-import cs230.group29se.jewelthief.Scenes.ProfileScene.ProfileSelectMenu;
+import cs230.group29se.jewelthief.Scenes.ProfileScene.ProfileSelectScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 
-import java.io.IOException;
+import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.loadProfile;
 
 /**
  * Represents the Main Menu screen in the game.
@@ -20,9 +26,6 @@ import java.io.IOException;
  * @author Gustas Rove
  */
 public class MainMenuScreen extends Screen {
-
-    private MainMenuController controller;
-
 
     /**
      * Constructs a MainMenuScreen and sets its title, FXML path, and the next screen.
@@ -38,11 +41,20 @@ public class MainMenuScreen extends Screen {
     /**
      * Initializes the Main Menu screen.
      * This method is called when the screen is first loaded.
-     * Currently, no specific initialization logic is implemented.
+     * It retrieves the selected profile name from the GameManager.
      */
     @Override
     public void onInitialize() {
-        // No initialization logic for this screen.
+
+//        PersistenceManager.setActiveProfileName(GameManager.getSelectedProfileName());
+        PersistenceManager.loadProfile(GameManager.getSelectedProfileName());
+
+        String selectedProfile = GameManager.getSelectedProfileName();
+        ((MainMenuController)getController()).setProfileNameLabelText(selectedProfile);
+
+        SkinId skinId = SkinId.fromString(GameManager.getSelectedPlayerSkinId());
+        Image skinImage = SkinRegistry.getById(skinId).getImage();
+        ((MainMenuController)getController()).setEquippedSkinImage(skinImage);
     }
 
     /**
@@ -68,30 +80,40 @@ public class MainMenuScreen extends Screen {
 
     public enum NextAction {START_GAME, SHOW_HIGHSCORES}
 
-    private NextAction nextAction = NextAction.START_GAME;
 
     public void onStartClicked() {
-        nextAction = NextAction.START_GAME;
-        finished = true;
+        setNextScreen(new LevelSelectScreen());
+        setFinished(true);
     }
     public void onHighScoresClicked() {
-        nextAction = NextAction.SHOW_HIGHSCORES;
-        finished = true;
+        setNextScreen(new HighScoresScreen());
+        setFinished(true);
     }
-
-    public NextAction getNextAction() {
-        return nextAction;
-    }
-
-    @Override
-    public Screen getNextScreen() {
-        return switch (nextAction) {
-            case START_GAME -> new ProfileSelectMenu();
-            case SHOW_HIGHSCORES -> new HighScoresScreen();
-            default -> this; // should not happen; or return new MainMenuScreen()
-        };
-
-    }
+//    @Override
+//    public Scene createScene() {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(
+//                    getClass().getResource("/cs230/group29se/jewelthief/game-view.fxml")
+//            );
+//            root = loader.load();
+//            controller = loader.getController();
+//            // Binds controller to this screen
+//            controller.setScreen(this);
+//
+//            // Use the controllers canvas as this Screen's canvas
+//            Canvas gameCanvas = controller.getCanvas();
+//            setCanvas(gameCanvas);
+//            if (gameCanvas != null) {
+//                setGraphicsContext(gameCanvas.getGraphicsContext2D());
+//            }
+//
+//            scene = new Scene(root, 1028, 900);
+//            return scene;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
 
 }
