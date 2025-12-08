@@ -1,5 +1,7 @@
 package cs230.group29se.jewelthief.Persistence.Profile;
 
+import cs230.group29se.jewelthief.Cosmetics.SkinId;
+
 import java.util.Map;
 
 /**
@@ -19,6 +21,12 @@ public class ProfileData {
      * The maximum level unlocked by the player.
      */
     private int maxUnlockedLvl;
+
+    /**
+     * The selected skin ID for the player's character.
+     */
+    private String selectedSkinId;
+
     /**
      * This method get the profile name.
      * @return The profile name.
@@ -42,6 +50,21 @@ public class ProfileData {
     public int getMaxUnlockedLvl() {
         return maxUnlockedLvl;
     }
+
+    public String getSelectedSkinId() {
+        return selectedSkinId;
+    }
+    public void setSelectedSkinId(String selectedSkinId) {
+        this.selectedSkinId = selectedSkinId;
+    }
+
+//    public void setSelectedSkinId(SkinId selectedSkinId) {
+//        this.selectedSkinId = selectedSkinId.toString();
+//    }
+//
+//    public SkinId getSelectedSkinId() {
+//        return SkinId.fromString(this.selectedSkinId);
+//    }
 
     /**
      *This method sets the maximum level Unlocked by the player.

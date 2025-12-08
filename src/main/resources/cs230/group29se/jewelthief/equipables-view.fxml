@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="cs230.group29se.jewelthief.Scenes.EquipablesScene.EquipablesController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <!-- Title -->
+    <Label fx:id="titleLabel"
+           layoutX="250.0" layoutY="20.0" text="Equipables"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+    <!-- Back button -->
+    <Button fx:id="backButton"
+            layoutX="10.0" layoutY="10.0"
+            text="Back"
+            onAction="#onBackClicked"/>
+
+    <!-- Skin Selection Grid -->
+    <GridPane layoutX="60" layoutY="80" hgap="40" vgap="20">
+        <!-- Actions for these buttons will be set in the initialize() of this controller -->
+        <!-- Skin 1 -->
+        <VBox alignment="CENTER">
+            <ImageView fx:id="skin1Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
+            <Button text="Select" fx:id="skin1Button" />
+        </VBox>
+
+        <!-- Skin 2 -->
+        <VBox alignment="CENTER" GridPane.columnIndex="1">
+            <ImageView fx:id="skin2Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
+            <Button text="Select" fx:id="skin2Button" />
+        </VBox>
+
+        <!-- Skin 3 -->
+        <VBox alignment="CENTER" GridPane.rowIndex="1">
+            <ImageView fx:id="skin3Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
+            <Button text="Select" fx:id="skin3Button" />
+        </VBox>
+
+        <!-- Skin 4 -->
+        <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ImageView fx:id="skin4Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
+            <Button text="Select" fx:id="skin4Button" />
+        </VBox>
+
+    </GridPane>
+
+</AnchorPane>

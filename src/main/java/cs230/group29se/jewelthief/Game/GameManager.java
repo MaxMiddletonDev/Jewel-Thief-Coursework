@@ -1,5 +1,7 @@
 package cs230.group29se.jewelthief.Game;
 
+import cs230.group29se.jewelthief.Cosmetics.SkinId;
+import cs230.group29se.jewelthief.Cosmetics.SkinRegistry;
 import cs230.group29se.jewelthief.Entities.Direction;
 import cs230.group29se.jewelthief.Entities.FloorThief;
 import cs230.group29se.jewelthief.Entities.NonPlayableCharacter;
@@ -12,6 +14,7 @@ import cs230.group29se.jewelthief.Persistence.Storage.*;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameController;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 import java.nio.file.Path;
 import java.util.Map;
@@ -19,6 +22,7 @@ import java.util.Map;
 /**
  * Manages the overall game state, including starting a new game,
  * ending the game, and rendering the current level.
+ *
  * @author Gustas Rove
  * @version 1.0
  */
@@ -26,7 +30,7 @@ public final class GameManager {
     private static int levelNumber;
     private static Level currentLevel;
     private static Screen currentScreen;
-    
+
     private GameManager() {
     }
 
@@ -34,13 +38,8 @@ public final class GameManager {
      * Setting the place where the JSON files are stored.
      * edited by Iyaad
      */
-    private static final Path BASE_DIR =
-            Path.of("data", "jewelthief");
-    private static final FileStore FILE_STORE = new FileStore(BASE_DIR);
-    private static final JsonSerializer JSON = new JsonSerializer();
-    private static final PersistenceManager PM =
-            new PersistenceManager(FILE_STORE, JSON);
     private static final LevelLoader LEVEL_LOADER = new LevelLoader();
+    private static String selectedProfileName = PersistenceManager.readSelectedProfile();
 
     /**
      * Load a level for a given profile:
@@ -48,9 +47,9 @@ public final class GameManager {
      * 2) Otherwise, load levelX.txt via LevelLoader and create initial SaveData.
      * 3) Create a new Level object and register it as currentLevel.
      *
-     * @param profileName   active profile name
-     * @param levelNum      level number (1, 2, 3, ...)
-     * @param controller    GameController for the new Level
+     * @param profileName active profile name
+     * @param levelNum    level number (1, 2, 3, ...)
+     * @param controller  GameController for the new Level
      * @author Iyaad
      */
     public static void loadLevelForProfile(String profileName,
@@ -61,30 +60,30 @@ public final class GameManager {
         String levelId = String.valueOf(levelNum);
         String levelFileName = "level" + levelId + ".txt";
 
-        PM.setActiveProfileName(profileName);
-        PM.setActiveLevelId(levelId);
+        PersistenceManager.setActiveProfileName(profileName);//remove
+        PersistenceManager.setActiveLevelId(levelId);// keep...
 
 
-
-        // profiles
-        ProfileData profile = PM.loadProfile();
-        if (profile == null) {
-            profile = new ProfileData();
-            profile.setProfileName(profileName);
-            profile.setMaxUnlockedLvl(1);
-            PM.setCachedProfile(profile);
-            PM.saveProfile();
-        } else {
-            PM.setCachedProfile(profile);
-        }
+//        // profiles cut to the appropriate screen
+//        ProfileData profile = PM.loadProfile();
+//        if (profile == null) {
+//            profile = new ProfileData();
+//            profile.setProfileName(profileName);
+//            profile.setMaxUnlockedLvl(1);
+//            PM.setCachedProfile(profile);
+//            PM.saveProfile();
+//        } else {
+//            PM.setCachedProfile(profile);
+//        }
         // saves: THIS is the "load JSON if exists" logic
-        SaveData save = PM.getSaveData();
+        SaveData save = PersistenceManager.getSaveData();
 
         // if save exists but timeRemainingMs == 0, treat as no save (reset level)
         if (save != null && save.getTimeRemainingMs() == 0) {
             save = null;
         }
-        PM.setCachedSave(save);
+
+        PersistenceManager.setCachedSave(save);
 
         // Create the Level object (Level.readLevelFile will build grid etc.)
         Level level = new Level(levelFileName, controller, save);
@@ -92,16 +91,16 @@ public final class GameManager {
     }
 
 
-
     /**
      * Saving the game per-profile
+     *
      * @author Iyaad
      */
     public static void saveCurrentGameState() {
         if (currentLevel == null) return;
 
-        SaveData s = PM.getSaveData();
-        String profile = PM.getActiveProfileName(); // or s.getProfileName()
+        SaveData s = PersistenceManager.getSaveData();
+        String profile = PersistenceManager.getActiveProfileName(); // or s.getProfileName()
         String levelId = String.valueOf(levelNumber);
 
         if (s == null) {
@@ -115,7 +114,7 @@ public final class GameManager {
         int px = pos[0];
         int py = pos[1];
 
-        s.setPlayerState(new Object[] { px, py });
+        s.setPlayerState(new Object[]{px, py});
         // (timeRemaining is milliseconds, but via getter we convert to seconds; we want raw ms)
         int timeMs = (int) currentLevel.getTimeRemainingMs();
         s.setTimeRemainingMs(timeMs);
@@ -143,7 +142,7 @@ public final class GameManager {
             // add other NPC-specific state as needed
             switch (npc.getClass().getSimpleName()) {
                 case "FloorThief" -> {
-                    state.put("colour" , ((FloorThief) npc).getColour().toString().charAt(0));
+                    state.put("colour", ((FloorThief) npc).getColour().toString().charAt(0));
                 }
                 // add cases for other NPC types as needed
             }
@@ -168,7 +167,7 @@ public final class GameManager {
                     param = String.valueOf(colourLetter);
                 }
                 case "Loot" -> {
-                    param = ((Loot)item).getType().toString();
+                    param = ((Loot) item).getType().toString();
                 }
                 default -> param = "none";
             }
@@ -201,8 +200,8 @@ public final class GameManager {
         s.setItems(itemStates);
         s.setGates(gateStates);
 
-        PM.setCachedSave(s);
-        PM.saveGame();
+        PersistenceManager.setCachedSave(s);
+        PersistenceManager.saveGame();
     }
 
     /**
@@ -217,6 +216,7 @@ public final class GameManager {
     /**
      * TODO: REMOVE, we draw this in GameScreen now
      * Draws the current level using the provided GraphicsContext.
+     *
      * @param gc the GraphicsContext to draw on
      */
     public static void draw(GraphicsContext gc) {
@@ -240,6 +240,7 @@ public final class GameManager {
 
     /**
      * Gets the current level of the game.
+     *
      * @return the current Level object
      */
     public static Level getCurrentLevel() {
@@ -248,6 +249,7 @@ public final class GameManager {
 
     /**
      * Sets the current level number of the game.
+     *
      * @param levelNum the new level number.
      */
     public static void setCurrentLevelNumber(int levelNum) {
@@ -256,22 +258,24 @@ public final class GameManager {
 
     /**
      * Gets the current level number of the game.
+     *
      * @return current level number.
      */
     public static int getCurrentLevelNumber() {
         return levelNumber;
     }
 
-    public static PersistenceManager getPersistenceManager() {
-        return PM;
-    }
-    
+//    public static PersistenceManager getPersistenceManager() {
+//
+//    }
+
     public static void setCurrentScreen(Screen screen) {
-         currentScreen = screen;
+        currentScreen = screen;
     }
 
     /**
      * Gets the current screen of the game.
+     *
      * @return the current Screen object
      */
     public static Screen getCurrentScreen() {
@@ -280,12 +284,35 @@ public final class GameManager {
 
     /**
      * Gets the GraphicsContext from the current level's GameController.
+     *
      * @return the GraphicsContext object, or null if no current level.
      */
     public GraphicsContext getGraphicsContext() {
-        if(currentLevel != null) {
+        if (currentLevel != null) {
             return currentLevel.getGameController().getCanvas().getGraphicsContext2D();
         }
         return null;
     }
+
+    public static void setSelectedProfileName(String profileName) {
+        selectedProfileName = profileName;
+        PersistenceManager.writeSelectedProfile(selectedProfileName);
+
+    }
+
+    public static String getSelectedProfileName() {
+        return selectedProfileName;
+    }
+
+    public static String getSelectedPlayerSkinId() {
+        ProfileData data = PersistenceManager.getCurrentProfile();
+        return data.getSelectedSkinId();
+    }
+
+    public static Image getSelectedPlayerSkinImage() {
+        ProfileData data = PersistenceManager.getCurrentProfile();
+        SkinId skinId = SkinId.fromString(data.getSelectedSkinId());
+        return SkinRegistry.getById(skinId).getImage();
+    }
+
 }

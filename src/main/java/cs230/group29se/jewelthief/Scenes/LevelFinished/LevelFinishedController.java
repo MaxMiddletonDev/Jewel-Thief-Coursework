@@ -51,11 +51,10 @@ public class LevelFinishedController extends BaseController implements Initializ
         String levelId = String.valueOf(levelNum);
         String timestamp = java.time.Instant.now().toString();
 
-        PersistenceManager pm = GameManager.getPersistenceManager();
-        pm.submitScore(profileName, levelId, score, timestamp);
+        PersistenceManager.submitScore(profileName, levelId, score, timestamp);
 
         // Reset the level by deleting the save so next run is fresh
-        pm.deleteSaveForCurrentLevel();
+        PersistenceManager.deleteSaveForCurrentLevel();
     }
 
     /**

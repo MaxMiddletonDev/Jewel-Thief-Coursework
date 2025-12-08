@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief.Entities;
 
+import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
 import cs230.group29se.jewelthief.Items.Bomb;
@@ -11,6 +12,7 @@ import javafx.scene.image.Image;
 /**
  * This class represents a Player Character while implementing MoveableCharacter.
  * This Player will serve as the Main Character in which the User will use.
+ *
  * @author Max Middleton, Gustas Rove
  */
 
@@ -20,23 +22,32 @@ public class Player implements MoveableCharacter, Protectable {
     private Direction direction;
 
     private Level level;
+<<<<<<< Updated upstream
     private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/Player/PLAYER.png").toString());
+=======
+    //    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/PLAYER.png").toString());
+    private final Image image;
+>>>>>>> Stashed changes
 
     private boolean isProtected;
 
     /**
      * Constructs a new Player instance.
+     *
      * @param startTile the tile where the player spawns at the start of the level.
-     * @param level the level instance the player belongs to, used for checking boundaries and tile data.
+     * @param level     the level instance the player belongs to, used for checking boundaries and tile data.
      */
     public Player(Tile startTile, Level level) {
         this.currentTile = startTile;
         this.level = level;
         this.direction = Direction.UP;
         this.isAlive = true;
+        this.image = GameManager.getSelectedPlayerSkinImage();
     }
+
     /**
      * Interactions with a collectable item.
+     *
      * @param item the item to interact with.
      */
     public void collectItem(Item item) {
@@ -49,6 +60,7 @@ public class Player implements MoveableCharacter, Protectable {
 
     /**
      * Updates the facing direction of the player.
+     *
      * @param direction the new direction for the player to face.
      */
     public void setDirection(Direction direction) {
@@ -57,6 +69,7 @@ public class Player implements MoveableCharacter, Protectable {
 
     /**
      * Retrieves the player's current facing direction.
+     *
      * @return direction
      */
     @Override
@@ -66,6 +79,7 @@ public class Player implements MoveableCharacter, Protectable {
 
     /**
      * Retrieves the coordinate position of the player.
+     *
      * @return an int array containing the x and y coordinates of the player's current tile.
      */
     @Override
@@ -75,6 +89,7 @@ public class Player implements MoveableCharacter, Protectable {
 
     /**
      * Sets the player's current tile.
+     *
      * @param tile the new tile for the player to occupy.
      */
     public void setCurrentTile(Tile tile) {
@@ -83,6 +98,7 @@ public class Player implements MoveableCharacter, Protectable {
 
     /**
      * Checks if the player is currently alive.
+     *
      * @return True if the player is alive, false otherwise.
      */
     @Override
@@ -91,10 +107,13 @@ public class Player implements MoveableCharacter, Protectable {
     }
 
     @Override
-    public void setAliveTo(boolean alive) {isAlive = alive; }
+    public void setAliveTo(boolean alive) {
+        isAlive = alive;
+    }
 
     /**
      * Draw Function for Player, shapes it to the tile size.
+     *
      * @param gc The GraphicsContext used for drawing.
      */
     public void draw(GraphicsContext gc) {
@@ -169,6 +188,7 @@ public class Player implements MoveableCharacter, Protectable {
     /**
      * This method is to handle player collision with enemy
      * which will end the game as player will die.
+     *
      * @param other - character that collides with this one
      */
     @Override
@@ -181,10 +201,10 @@ public class Player implements MoveableCharacter, Protectable {
      * If the player is protected, the protection is removed.
      * If not protected, the player is marked as not alive.
      */
-    public void getHit(){
-        if(isProtected()){
+    public void getHit() {
+        if (isProtected()) {
             setProtected(false);
-        }else{
+        } else {
             setAliveTo(false);
             System.out.println("Player has been hit and is no longer alive.");
         }
@@ -192,6 +212,7 @@ public class Player implements MoveableCharacter, Protectable {
 
     /**
      * Checks if the player is currently protected.
+     *
      * @return True if the player is protected, false otherwise.
      */
     @Override
@@ -201,6 +222,7 @@ public class Player implements MoveableCharacter, Protectable {
 
     /**
      * Sets the player's protection status.
+     *
      * @param value True to protect the player, false to remove protection.
      */
     @Override

@@ -1,27 +1,27 @@
 {
   "levelId" : "1",
   "profileName" : "charlie",
-  "playerState" : [ 11, 11 ],
+  "playerState" : [ 0, 2 ],
   "elapsedSeconds" : 0,
-  "timeRemainingMs" : 0,
+  "timeRemainingMs" : 33446,
   "score" : 0,
   "npcStates" : {
     "CAMPER" : {
       "alive" : true,
-      "x" : 6,
-      "y" : 1,
+      "x" : 8,
+      "y" : 3,
       "dir" : "RIGHT"
     },
     "FLYING" : {
       "alive" : true,
-      "x" : 3,
+      "x" : 10,
       "y" : 6,
       "dir" : "LEFT"
     },
     "FOLLOWER" : {
       "colour" : "G",
       "alive" : true,
-      "x" : 3,
+      "x" : 2,
       "y" : 1,
       "dir" : "RIGHT"
     }

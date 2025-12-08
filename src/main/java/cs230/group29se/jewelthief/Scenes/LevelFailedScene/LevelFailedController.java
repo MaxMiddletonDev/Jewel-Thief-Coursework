@@ -50,8 +50,7 @@ public class LevelFailedController extends BaseController implements Initializab
      */
     public void restartLevel() {
         //  Reset level: remove save for current profile+level
-        PersistenceManager pm = GameManager.getPersistenceManager();
-        pm.deleteSaveForCurrentLevel();
+        PersistenceManager.deleteSaveForCurrentLevel();
 
         // New GameScreen, load from txt
         getScreen().setNextScreen(new GameScreen());

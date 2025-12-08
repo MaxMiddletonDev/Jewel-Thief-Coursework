@@ -166,7 +166,7 @@ public class ProfileSelectController extends BaseController {
         if (selectedProfile == null) return;
 
         Screen s = getScreen();
-        if (s instanceof ProfileSelectMenu menu) {
+        if (s instanceof ProfileSelectScreen menu) {
             menu.onProfileChosen(selectedProfile);
         }
     }
@@ -215,7 +215,7 @@ public class ProfileSelectController extends BaseController {
     @FXML
     private void handleBackClicked() {
         Screen s = getScreen();
-        if (s instanceof ProfileSelectMenu menu) {
+        if (s instanceof ProfileSelectScreen menu) {
             menu.onBackClicked();
         }
     }

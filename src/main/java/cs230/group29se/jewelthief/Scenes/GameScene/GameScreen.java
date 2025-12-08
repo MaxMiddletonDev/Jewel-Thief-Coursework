@@ -31,7 +31,6 @@ import javafx.util.Duration;
  */
 public class GameScreen extends Screen {
 
-    private GameController controller;
     private Timeline autosaveTimeline;
 
     private boolean paused = false;
@@ -59,7 +58,7 @@ public class GameScreen extends Screen {
         }
 
         String profileName = GameProfileHelper.getActiveProfileName();
-        GameManager.loadLevelForProfile(profileName, levelNum, controller);
+        GameManager.loadLevelForProfile(profileName, levelNum,(GameController) getController());
 
         Player player = GameManager.getCurrentLevel().getPlayer();
 
@@ -106,8 +105,6 @@ public class GameScreen extends Screen {
         );
         autosaveTimeline.setCycleCount(Animation.INDEFINITE);
         autosaveTimeline.play();
-
-        GameManager.getPersistenceManager().writeSelectedProfile(activeProfileName);
     }
 
     /**
@@ -174,7 +171,7 @@ public class GameScreen extends Screen {
     public void restartLevel() {
         Level level = GameManager.getCurrentLevel();
         if (level != null) {
-            GameManager.getPersistenceManager().deleteSaveForCurrentLevel();
+            PersistenceManager.deleteSaveForCurrentLevel();
             setNextScreen(new GameScreen());
             setFinished(true);
         }
@@ -182,11 +179,11 @@ public class GameScreen extends Screen {
 
     public void loadLevelFinishedScreen() {
 
-        ProfileData profile = GameManager.getPersistenceManager().getCurrentProfile();
+        ProfileData profile = PersistenceManager.getCurrentProfile();
         int maxLevelUnlocked = profile.getMaxUnlockedLvl();
         if (GameManager.getCurrentLevelNumber() >= maxLevelUnlocked) {
             profile.setMaxUnlockedLvl(GameManager.getCurrentLevelNumber() + 1);
-            GameManager.getPersistenceManager().saveProfile();
+            PersistenceManager.saveProfile();
         }
 
         // Stop autosaving when finishing the level
@@ -197,31 +194,31 @@ public class GameScreen extends Screen {
         setFinished(true);
     }
 
-    @Override
-    public Scene createScene() {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/cs230/group29se/jewelthief/game-view.fxml")
-            );
-            root = loader.load();
-            controller = loader.getController();
-            // Binds controller to this screen
-            controller.setScreen(this);
-
-            // Use the controllers canvas as this Screen's canvas
-            Canvas gameCanvas = controller.getCanvas();
-            setCanvas(gameCanvas);
-            if (gameCanvas != null) {
-                setGraphicsContext(gameCanvas.getGraphicsContext2D());
-            }
-
-            scene = new Scene(root, 1028, 900);
-            return scene;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    @Override
+//    public Scene createScene() {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(
+//                    getClass().getResource("/cs230/group29se/jewelthief/game-view.fxml")
+//            );
+//            root = loader.load();
+//            controller = loader.getController();
+//            // Binds controller to this screen
+//            controller.setScreen(this);
+//
+//            // Use the controllers canvas as this Screen's canvas
+//            Canvas gameCanvas = controller.getCanvas();
+//            setCanvas(gameCanvas);
+//            if (gameCanvas != null) {
+//                setGraphicsContext(gameCanvas.getGraphicsContext2D());
+//            }
+//
+//            scene = new Scene(root, 1028, 900);
+//            return scene;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     /**
      * Sets the paused state of the game.
