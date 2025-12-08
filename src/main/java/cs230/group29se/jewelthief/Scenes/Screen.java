@@ -259,49 +259,4 @@ abstract public class Screen {
 
 
     }
-
-//    /** LINE COOKED AND BURNED
-//     * Create and return the Scene for this screen.
-//     *
-//     * @return the Scene object
-//     */
-//    public Scene createScene() {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(
-//                    getClass().getResource(getScreenFXMLPath())
-//            );
-//            root = loader.load();
-//
-//            Object controllerObj = loader.getController();
-//
-//            // Only set controller/canvas/gc if it is BaseController (was giving errors before)
-//            if (controllerObj instanceof BaseController baseController) {
-//                setController(baseController);
-//                baseController.setScreen(this);
-//
-//                setCanvas(baseController.getCanvas());
-//                if (getCanvas() != null) {
-//                    GraphicsContext gc = getCanvas().getGraphicsContext2D();
-//                    setGraphicsContext(gc);
-//                }
-//            } else {
-//                // For controllers that don't extend BaseController (e.g. MainMenuController),
-//                // can still wire manually in their own Screen subclass if needed.
-//                setController(null);
-//            }
-//
-//            double x = MainApplication.getWindowWidth();
-//            double y = MainApplication.getWindowHeight();
-//            if (x <= 0 || y <= 0) {
-//                x = DEFAULT_SCENE_WIDTH;
-//                y = DEFAULT_SCENE_HEIGHT;
-//            }
-//
-//            scene = new Scene(root, x, y);
-//            return scene;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 }

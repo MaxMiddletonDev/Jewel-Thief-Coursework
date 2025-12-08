@@ -158,5 +158,6 @@ public class EquipablesController extends BaseController implements Initializabl
 
     private void selectSkin(Skin skin) {
         PersistenceManager.writeSelectedSkin(skin);
+        getScreen().setFinished(true);
     }
 }

@@ -46,11 +46,4 @@ public class HighScoresScreen extends Screen {
         // No drawing logic required for this screen
     }
 
-    /**
-     * Handles the back button click event.
-     * Marks the screen as finished, allowing navigation back to the previous screen.
-     */
-    public void onBackClicked() {
-        finished = true; // Marks the screen as finished
-    }
 }

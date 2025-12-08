@@ -237,12 +237,6 @@ public class GameScreen extends Screen {
     public void setPaused(boolean paused) {
         this.paused = paused;
         if (paused) {
-            //Pause bombs
-            for (Item item : GameManager.getCurrentLevel().getItems()) {
-                if (item instanceof cs230.group29se.jewelthief.Items.Bomb bomb) {
-                    // todo: bomb.getTimeLine().pause();
-                }
-            }
             autosaveTimeline.pause();
         } else {
             autosaveTimeline.play();
