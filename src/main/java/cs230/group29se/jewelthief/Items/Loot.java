@@ -1,10 +1,7 @@
 package cs230.group29se.jewelthief.Items;
 
 import cs230.group29se.jewelthief.Entities.Player;
-import cs230.group29se.jewelthief.Game.Achievements;
-import cs230.group29se.jewelthief.Game.GameManager;
-import cs230.group29se.jewelthief.Game.Level;
-import cs230.group29se.jewelthief.Game.Tile;
+import cs230.group29se.jewelthief.Game.*;
 import javafx.scene.canvas.GraphicsContext;
 
 import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.writeUnlockedAchievement;
@@ -46,8 +43,9 @@ public class Loot extends Destroyable {
         // Get current level from the game manager
         Level currentLevel = GameManager.getCurrentLevel();
         if (currentLevel != null && collector instanceof Player) {
-                currentLevel.addScore(type.getValue());
-                writeUnlockedAchievement(Achievements.MONEY_MAN);
+            currentLevel.addScore(type.getValue());
+            writeUnlockedAchievement(Achievements.MONEY_MAN);
+            SoundManager.playCollect();
         }
 
         // Remove the loot from the level so it can't be reused

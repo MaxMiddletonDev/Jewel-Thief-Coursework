@@ -1,9 +1,6 @@
 package cs230.group29se.jewelthief.Entities;
 
-import cs230.group29se.jewelthief.Game.Achievements;
-import cs230.group29se.jewelthief.Game.GameManager;
-import cs230.group29se.jewelthief.Game.Level;
-import cs230.group29se.jewelthief.Game.Tile;
+import cs230.group29se.jewelthief.Game.*;
 import cs230.group29se.jewelthief.Items.Bomb;
 import cs230.group29se.jewelthief.Items.Gate;
 import cs230.group29se.jewelthief.Items.Item;
@@ -115,6 +112,9 @@ public class Player implements MoveableCharacter, Protectable {
     @Override
     public void setAliveTo(boolean alive) {
         isAlive = alive;
+        if (!isAlive) {
+            SoundManager.playDeath();
+        }
     }
 
     /**

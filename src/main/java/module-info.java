@@ -7,6 +7,7 @@ module cs230.group29se.jewelthief {
     requires jdk.unsupported.desktop;
     requires javafx.graphics;
     requires java.prefs;
+    requires javafx.media;
 
     opens cs230.group29se.jewelthief to javafx.fxml;
     exports cs230.group29se.jewelthief;

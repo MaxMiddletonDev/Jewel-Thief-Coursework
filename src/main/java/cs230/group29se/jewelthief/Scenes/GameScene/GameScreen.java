@@ -5,6 +5,7 @@ import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Entities.Player;
+import cs230.group29se.jewelthief.Game.SoundManager;
 import cs230.group29se.jewelthief.Items.Item;
 import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
 import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
@@ -51,6 +52,7 @@ public class GameScreen extends Screen {
 
     @Override
     public void onInitialize() {
+        SoundManager.playGame();
         int levelNum = GameManager.getCurrentLevelNumber();
         if (levelNum == 0) {
             levelNum = 1;
@@ -235,6 +237,7 @@ public class GameScreen extends Screen {
      * @param paused true to pause the game, false to resume
      */
     public void setPaused(boolean paused) {
+        SoundManager.playPause();
         this.paused = paused;
         if (paused) {
             autosaveTimeline.pause();

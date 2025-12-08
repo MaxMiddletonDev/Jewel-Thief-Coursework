@@ -1,9 +1,6 @@
 package cs230.group29se.jewelthief.Scenes.LevelFinished;
 
-import cs230.group29se.jewelthief.Game.Achievements;
-import cs230.group29se.jewelthief.Game.GameManager;
-import cs230.group29se.jewelthief.Game.GameProfileHelper;
-import cs230.group29se.jewelthief.Game.Level;
+import cs230.group29se.jewelthief.Game.*;
 import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
@@ -45,6 +42,7 @@ public class LevelFinishedController extends BaseController implements Initializ
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        SoundManager.playWin();
         // Show the score
         int score = GameManager.getCurrentLevel().getScore();
         levelScoreLabel.setText(String.valueOf(score));

@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief.Scenes.MainScene;
 
+import cs230.group29se.jewelthief.Game.SoundManager;
 import cs230.group29se.jewelthief.Scenes.AchievementsScene.AchievementsScreen;
 import cs230.group29se.jewelthief.Cosmetics.SkinId;
 import cs230.group29se.jewelthief.Cosmetics.SkinRegistry;
@@ -46,6 +47,7 @@ public class MainMenuScreen extends Screen {
      */
     @Override
     public void onInitialize() {
+        SoundManager.playMainMenu();
 
         //Load selected profile data into PersistenceManager
         PersistenceManager.loadProfile(GameManager.getSelectedProfileName());

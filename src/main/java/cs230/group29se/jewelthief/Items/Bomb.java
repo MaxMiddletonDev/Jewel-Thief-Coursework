@@ -1,9 +1,6 @@
 package cs230.group29se.jewelthief.Items;
 
-import cs230.group29se.jewelthief.Game.Achievements;
-import cs230.group29se.jewelthief.Game.GameManager;
-import cs230.group29se.jewelthief.Game.Level;
-import cs230.group29se.jewelthief.Game.Tile;
+import cs230.group29se.jewelthief.Game.*;
 import cs230.group29se.jewelthief.MainApplication;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -327,6 +324,7 @@ public class Bomb extends Destroyable {
             //explosion starts
             if (countDownLeft == 0) {
                 exploding = true;
+                SoundManager.playBomb();
             }
         }
     }

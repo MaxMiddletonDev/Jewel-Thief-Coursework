@@ -1,6 +1,7 @@
 package cs230.group29se.jewelthief.Scenes.LevelSelectScene;
 
 import cs230.group29se.jewelthief.Game.GameManager;
+import cs230.group29se.jewelthief.Game.SoundManager;
 import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
 import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
@@ -65,6 +66,7 @@ public class LevelSelectController extends BaseController implements Initializab
      */
     @FXML
     protected void selectLevel(ActionEvent e) {
+        SoundManager.playStart();
         Button b = (Button) e.getSource();
         int level = Integer.parseInt(b.getUserData().toString());
         GameManager.setCurrentLevelNumber(level);
