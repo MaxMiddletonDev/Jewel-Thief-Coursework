@@ -23,7 +23,7 @@ public class Player implements MoveableCharacter, Protectable {
     private Tile currentTile;
     private boolean isAlive;
     private Direction direction;
-
+    private boolean isFacingRight = true;
     private Level level;
 
     //    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/PLAYER.png").toString());
@@ -65,6 +65,12 @@ public class Player implements MoveableCharacter, Protectable {
      */
     public void setDirection(Direction direction) {
         this.direction = direction;
+
+        if (direction == Direction.RIGHT) {
+            isFacingRight = true;
+        } else if (direction == Direction.LEFT) {
+            isFacingRight = false;
+        }
     }
 
     /**
@@ -118,14 +124,17 @@ public class Player implements MoveableCharacter, Protectable {
      */
     public void draw(GraphicsContext gc) {
         int tileSize = Tile.TILE_SIZE;
-
-        int tileX = currentTile.getX();
-        int tileY = currentTile.getY();
-
-        double x = tileX * tileSize;
-        double y = tileY * tileSize;
-
-        gc.drawImage(image, x, y, tileSize, tileSize);
+        double x = currentTile.getX() * tileSize;
+        double y = currentTile.getY() * tileSize;
+        if (!isFacingRight) {
+            gc.save();
+            gc.translate(x + tileSize, y);
+            gc.scale(-1, 1);
+            gc.drawImage(image, 0, 0, tileSize, tileSize);
+            gc.restore();
+        } else {
+            gc.drawImage(image, x, y, tileSize, tileSize);
+        }
     }
 
     /**

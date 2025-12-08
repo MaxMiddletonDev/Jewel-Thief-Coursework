@@ -39,14 +39,11 @@ public class SmartThief extends FloorThief {
     }
 
     /**
-     * Draws the Smart Thief on the game canvas.
-     * @param gc The GraphicsContext used for drawing.
+     * Gets specific enemies sprite
      */
-    public void draw(GraphicsContext gc) {
-        int tileSize = Tile.TILE_SIZE;
-        double x = currentTile.getX() * tileSize;
-        double y = currentTile.getY() * tileSize;
-        gc.drawImage(image, x, y, tileSize, tileSize);
+    @Override
+    public Image getImage() {
+        return this.image;
     }
 
     /**

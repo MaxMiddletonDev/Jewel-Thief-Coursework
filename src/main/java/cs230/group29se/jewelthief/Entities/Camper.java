@@ -258,15 +258,10 @@ public class Camper extends NonPlayableCharacter {
     }
 
     /**
-     * Draw Function for Camper, shapes it to the tile size.
+     * Gets specific enemies sprite
      */
     @Override
-    public void draw(GraphicsContext gc) {
-        int tileSize = Tile.TILE_SIZE;
-
-        double x = currentTile.getX() * tileSize;
-        double y = currentTile.getY() * tileSize;
-
-        gc.drawImage(image, x, y, tileSize, tileSize);
+    public Image getImage() {
+        return this.image;
     }
 }
