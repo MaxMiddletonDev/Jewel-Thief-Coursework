@@ -24,6 +24,16 @@ import java.util.ResourceBundle;
  */
 public class LevelSelectController extends BaseController implements Initializable {
 
+    public static final int LEVEL_ONE = 1;
+    public static final int LEVEL_2 = 2;
+    public static final int LEVEL_THREE = 3;
+    public static final int LEVEL_FOUR = 4;
+    public static final int LEVEL_FIVE = 5;
+    public static final int LEVEL_SIX = 6;
+    public static final int LEVEL_SEVEN = 7;
+    public static final int LEVEL_EIGHT = 8;
+    public static final int LEVEL_NINE = 9;
+    public static final int LEVEL_TEN = 10;
     @FXML
     private Button level1Button;
     @FXML
@@ -72,16 +82,16 @@ public class LevelSelectController extends BaseController implements Initializab
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Check save file and enable/disable buttons accordingly
-        level1Button.setDisable(!isLevelUnlocked(1));
-        level2Button.setDisable(!isLevelUnlocked(2));
-        level3Button.setDisable(!isLevelUnlocked(3));
-        level4Button.setDisable(!isLevelUnlocked(4));
-        level5Button.setDisable(!isLevelUnlocked(5));
-        level6Button.setDisable(!isLevelUnlocked(6));
-        level7Button.setDisable(!isLevelUnlocked(7));
-        level8Button.setDisable(!isLevelUnlocked(8));
-        level9Button.setDisable(!isLevelUnlocked(9));
-        level10Button.setDisable(!isLevelUnlocked(10));
+        level1Button.setDisable(!isLevelUnlocked(LEVEL_ONE));
+        level2Button.setDisable(!isLevelUnlocked(LEVEL_2));
+        level3Button.setDisable(!isLevelUnlocked(LEVEL_THREE));
+        level4Button.setDisable(!isLevelUnlocked(LEVEL_FOUR));
+        level5Button.setDisable(!isLevelUnlocked(LEVEL_FIVE));
+        level6Button.setDisable(!isLevelUnlocked(LEVEL_SIX));
+        level7Button.setDisable(!isLevelUnlocked(LEVEL_SEVEN));
+        level8Button.setDisable(!isLevelUnlocked(LEVEL_EIGHT));
+        level9Button.setDisable(!isLevelUnlocked(LEVEL_NINE));
+        level10Button.setDisable(!isLevelUnlocked(LEVEL_TEN));
     }
 
     /**

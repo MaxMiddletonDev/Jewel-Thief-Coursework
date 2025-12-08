@@ -13,14 +13,17 @@ import cs230.group29se.jewelthief.Scenes.Screen;
  */
 public class LevelSelectScreen extends Screen {
 
+    public static final String LEVEL_SELECT = "Level Select";
+    public static final String LEVEL_SELECT_XML_PATH = "/cs230/group29se/jewelthief/level-select-view.fxml";
+
     /**
      * Constructs a LevelSelectScreen and sets its title, FXML path, and the next screen.
      * The screen title is set to "Level Select", and the FXML file path is specified.
      * The next screen is set to the GameScreen.
      */
     public LevelSelectScreen() {
-        setScreenTitle("Level Select");
-        setScreenFXMLPath("/cs230/group29se/jewelthief/level-select-view.fxml");
+        setScreenTitle(LEVEL_SELECT);
+        setScreenFXMLPath(LEVEL_SELECT_XML_PATH);
         setNextScreen(new GameScreen());
     }
 

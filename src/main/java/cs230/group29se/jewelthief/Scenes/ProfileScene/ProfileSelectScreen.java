@@ -12,12 +12,16 @@ import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.
  * @author Iyaad
  */
 public class ProfileSelectScreen extends Screen {
+
+    public static final String SELECT_PROFILE = "Select Profile";
+    public static final String SELECT_PROFILE_XML_PATH = "/cs230/group29se/jewelthief/profile-select-view.fxml";
+
     /**
      * Constructs a ProfileSelectScreen and sets its title, FXML path, and next screen.
      */
     public ProfileSelectScreen() {
-        setScreenTitle("Select Profile");
-        setScreenFXMLPath("/cs230/group29se/jewelthief/profile-select-view.fxml");
+        setScreenTitle(SELECT_PROFILE);
+        setScreenFXMLPath(SELECT_PROFILE_XML_PATH);
         setNextScreen(new MainMenuScreen());
     }
 

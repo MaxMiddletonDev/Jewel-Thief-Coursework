@@ -26,6 +26,14 @@ import javafx.util.Duration;
  */
 public class GameScreen extends Screen {
 
+    public static final int DURATION = 1000;
+    public static final int RGB = 0;
+    public static final int RECTANGLE_CONSTANT = 0;
+    public static final int SIZE = 40;
+    public static final int HALF = 2;
+    public static final double OPACITY = 0.5;
+    public static final int WIDTH_OFFSET = 80;
+    public static final int LEVELS_UNLOCKED = 1;
     private Timeline autosaveTimeline;
     private boolean paused = false; // Indicates whether the game is paused
 
@@ -54,7 +62,7 @@ public class GameScreen extends Screen {
         // Adds saving every second.
         autosaveTimeline = new Timeline(
                 new KeyFrame(
-                        Duration.millis(1000),
+                        Duration.millis(DURATION),
                         e -> GameManager.saveCurrentGameState()
                 )
         );
@@ -136,14 +144,14 @@ public class GameScreen extends Screen {
         }
 
         if (paused) {
-            getGraphicsContext().setFill(new Color(0, 0, 0, 0.5));
-            getGraphicsContext().fillRect(0, 0, getCanvas().getWidth(), getCanvas().getHeight());
+            getGraphicsContext().setFill(new Color(RGB, RGB, RGB, OPACITY));
+            getGraphicsContext().fillRect(RECTANGLE_CONSTANT, RECTANGLE_CONSTANT, getCanvas().getWidth(), getCanvas().getHeight());
 
             getGraphicsContext().setFill(Color.WHITE);
-            getGraphicsContext().setFont(new Font(40));
-            getGraphicsContext().fillText("PAUSED", getCanvas().getWidth() / 2 - 80, getCanvas().getHeight() / 2);
+            getGraphicsContext().setFont(new Font(SIZE));
+            getGraphicsContext().fillText("PAUSED", getCanvas().getWidth() / HALF - WIDTH_OFFSET, getCanvas().getHeight() / HALF);
         } else {
-            getGraphicsContext().clearRect(0, 0, getCanvas().getWidth(), getCanvas().getHeight());
+            getGraphicsContext().clearRect(RECTANGLE_CONSTANT, RECTANGLE_CONSTANT, getCanvas().getWidth(), getCanvas().getHeight());
             GameManager.getCurrentLevel().draw(getGraphicsContext());
         }
     }
@@ -184,7 +192,7 @@ public class GameScreen extends Screen {
         ProfileData profile = PersistenceManager.getCurrentProfile();
         int maxLevelUnlocked = profile.getMaxUnlockedLvl();
         if (GameManager.getCurrentLevelNumber() >= maxLevelUnlocked) {
-            profile.setMaxUnlockedLvl(GameManager.getCurrentLevelNumber() + 1);
+            profile.setMaxUnlockedLvl(GameManager.getCurrentLevelNumber() + LEVELS_UNLOCKED);
             PersistenceManager.saveProfile();
         }
 

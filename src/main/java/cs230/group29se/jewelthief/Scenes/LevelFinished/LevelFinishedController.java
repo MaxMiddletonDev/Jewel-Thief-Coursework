@@ -24,6 +24,9 @@ import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.
  */
 public class LevelFinishedController extends BaseController implements Initializable {
 
+    public static final int MILLISECOND_CONVERTER = 1000;
+    public static final int SPEEDSTER_THRESHOLD = 30;
+    public static final int NEXT_LEVEL = 1;
     @FXML
     private Button nextLevelButton;
     @FXML
@@ -50,7 +53,7 @@ public class LevelFinishedController extends BaseController implements Initializ
 
         Level level = GameManager.getCurrentLevel();
 
-        if (level.getTimeRemainingMs() / 1000 > 30) {
+        if (level.getTimeRemainingMs() / MILLISECOND_CONVERTER > SPEEDSTER_THRESHOLD) {
             writeUnlockedAchievement(Achievements.SPEEDSTER);
         }
 
@@ -77,7 +80,7 @@ public class LevelFinishedController extends BaseController implements Initializ
      */
     public void selectNextLevel() {
         int currentLevelNumber = GameManager.getCurrentLevelNumber();
-        GameManager.setCurrentLevelNumber(currentLevelNumber + 1);
+        GameManager.setCurrentLevelNumber(currentLevelNumber + NEXT_LEVEL);
         getScreen().setNextScreen(new GameScreen());
         getScreen().setFinished(true);
     }

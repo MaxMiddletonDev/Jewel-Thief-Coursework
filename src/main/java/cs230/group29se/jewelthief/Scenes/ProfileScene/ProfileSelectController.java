@@ -2,7 +2,6 @@ package cs230.group29se.jewelthief.Scenes.ProfileScene;
 
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
-import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXML;
@@ -14,8 +13,6 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-import static java.awt.SystemColor.menu;
-
 /**
  * Controller for the Profile Select screen.
  * Handles user interactions such as creating, selecting, renaming, and deleting profiles.
@@ -24,6 +21,44 @@ import static java.awt.SystemColor.menu;
  */
 public class ProfileSelectController extends BaseController {
 
+    public static final String PADDING = "10";
+    public static final int MAX_PROFILES = 10;
+    public static final String SAVE_LIMIT_WARNING = "You can only have up to " + MAX_PROFILES + " save slots.";
+    public static final int SPACING = 10;
+    public static final int MIN_PROFILES = 0;
+    public static final int NEXT_SLOT = 1;
+    public static final String RADIUS = "8";
+    public static final String HIGHLIGHTED = "-fx-background-color: #e0e0e0;" +
+            "-fx-background-radius: " + RADIUS + ";" +
+            "-fx-padding: " + PADDING + ";" +
+            "-fx-border-color: #4a90e2;" +
+            "-fx-border-radius: " + RADIUS + ";" +
+            "-fx-border-width: 2;";
+    public static final String BACKGROUND_COLOUR_PROFILE_SLOTS = "#E" + RADIUS + "E9EB";
+    public static final String UNHIGHLIGHTED = "-fx-background-color: " + BACKGROUND_COLOUR_PROFILE_SLOTS + ";" +
+            "-fx-background-radius: " + RADIUS + ";" +
+            "-fx-padding: " + PADDING + ";";
+    public static final String BACKGROUND_COLOUR_PROFILE_NAME = "#222222";
+    public static final String LARGE_FONT = "16";
+    public static final String PROFILE_SLOT = "Profile Slot";
+    public static final String RADIUS8 = "88888";
+    public static final String SMALL_FONT = "12";
+    public static final String TEXT_COLOUR = "#777777";
+    public static final String MEDIUM_FONT = "14";
+    public static final int NUMLABEL_MIN_WIDTH = 30;
+    public static final String MAX_SAVES_REACHED = "Max Saves Reached";
+    public static final String DUPLICATE_PROFILE_MESSAGE = "Duplicate Profile";
+    public static final String DUPLICATE_PROFILE_WARNING = "Profile name '%s' already exists. Duplicates are not allowed.";
+    public static final String PUBLIC_PROFILE_MESSAGE = "PublicProfile";
+    public static final String CANNOT_DELETE_HEADER = "Cannot delete";
+    public static final String CANNOT_DELETE_MESSAGE = "The PublicProfile cannot be deleted.";
+    public static final String DELETE_SAVE = "Delete Save";
+    public static final String DELETE_SAVE_WARNING = "This will delete the profile and its saves. This cannot be undone.";
+    public static final String INVALID_NAME_HEADER = "Invalid name";
+    public static final String INVALID_NAME_WARNING = "Please select a profile and type a new name.";
+    public static final String NAME_EXISTS_HEADER = "Name exists";
+    public static final String NAME_EXISTS_WARNING = "A profile with that name already exists.";
+    public static final String RENAME_FAILED = "Rename failed";
     @FXML
     private Button renameButton;
 
@@ -68,13 +103,13 @@ public class ProfileSelectController extends BaseController {
 
         List<String> profiles = GameProfileHelper.listProfiles();
 
-        if (profiles.size() > 10) {
-            profiles = profiles.subList(0, 10);
+        if (profiles.size() > MAX_PROFILES) {
+            profiles = profiles.subList(MIN_PROFILES, MAX_PROFILES);
         }
 
         for (int i = 0; i < profiles.size(); i++) {
             String name = profiles.get(i);
-            int slotNumber = i + 1;
+            int slotNumber = i + NEXT_SLOT;
             HBox slot = createSlotRow(slotNumber, name);
             slotsContainer.getChildren().add(slot);
         }
@@ -83,7 +118,7 @@ public class ProfileSelectController extends BaseController {
             selectedProfile = null;
         }
 
-        createButton.setDisable(profiles.size() >= 10);
+        createButton.setDisable(profiles.size() >= MAX_PROFILES);
     }
 
     /**
@@ -94,24 +129,24 @@ public class ProfileSelectController extends BaseController {
      * @return An HBox representing the profile slot.
      */
     private HBox createSlotRow(int slotNumber, String profileName) {
-        HBox row = new HBox(10);
-        row.setStyle("-fx-background-color: #E8E9EB; -fx-background-radius: 8; -fx-padding: 10;");
+        HBox row = new HBox(SPACING);
+        row.setStyle("-fx-background-color: " + BACKGROUND_COLOUR_PROFILE_SLOTS + "; -fx-background-radius: " + RADIUS + "; -fx-padding: " + PADDING + ";");
         row.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
 
         row.setUserData(profileName);
 
         Label nameLabel = new Label(profileName);
-        nameLabel.setStyle("-fx-text-fill: #222222; -fx-font-size: 16px;");
+        nameLabel.setStyle("-fx-text-fill: " + BACKGROUND_COLOUR_PROFILE_NAME + "; -fx-font-size: " + LARGE_FONT + "px;");
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
 
-        Label hintLabel = new Label("Profile Slot");
-        hintLabel.setStyle("-fx-text-fill: #888888; -fx-font-size: 12px;");
+        Label hintLabel = new Label(PROFILE_SLOT);
+        hintLabel.setStyle("-fx-text-fill: #" + RADIUS + RADIUS8 + "; -fx-font-size: " + SMALL_FONT + "px;");
 
         Label numberLabel = new Label(String.valueOf(slotNumber));
-        numberLabel.setStyle("-fx-text-fill: #777777; -fx-font-size: 14px;");
-        numberLabel.setMinWidth(30);
+        numberLabel.setStyle("-fx-text-fill: " + TEXT_COLOUR + "; -fx-font-size: " + MEDIUM_FONT + "px;");
+        numberLabel.setMinWidth(NUMLABEL_MIN_WIDTH);
 
         row.getChildren().addAll(nameLabel, spacer, hintLabel, numberLabel);
 
@@ -134,18 +169,11 @@ public class ProfileSelectController extends BaseController {
             String name = (data instanceof String) ? (String) data : null;
             if (name != null && name.equals(selectedProfile)) {
                 row.setStyle(
-                        "-fx-background-color: #e0e0e0;" +
-                                "-fx-background-radius: 8;" +
-                                "-fx-padding: 10;" +
-                                "-fx-border-color: #4a90e2;" +
-                                "-fx-border-radius: 8;" +
-                                "-fx-border-width: 2;"
+                        HIGHLIGHTED
                 );
             } else {
                 row.setStyle(
-                        "-fx-background-color: #E8E9EB;" +
-                                "-fx-background-radius: 8;" +
-                                "-fx-padding: 10;"
+                        UNHIGHLIGHTED
                 );
             }
         }
@@ -159,11 +187,11 @@ public class ProfileSelectController extends BaseController {
     @FXML
     private void handleCreateClicked() {
         List<String> profiles = GameProfileHelper.listProfiles();
-        if (profiles.size() >= 10) {
+        if (profiles.size() >= MAX_PROFILES) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Max Saves Reached");
+            alert.setTitle(MAX_SAVES_REACHED);
             alert.setHeaderText(null);
-            alert.setContentText("You can only have up to 10 save slots.");
+            alert.setContentText(SAVE_LIMIT_WARNING);
             alert.showAndWait();
             return;
         }
@@ -175,7 +203,7 @@ public class ProfileSelectController extends BaseController {
             GameProfileHelper.ensureProfileExists(name);
         } catch (IllegalArgumentException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Duplicate Profile");
+            alert.setTitle(DUPLICATE_PROFILE_MESSAGE);
             alert.setHeaderText(null);
             alert.setContentText("Profile name '" + name + "' already exists. Duplicates are not allowed.");
             alert.showAndWait();
@@ -210,15 +238,15 @@ public class ProfileSelectController extends BaseController {
     @FXML
     private void handleDeleteClicked() {
         if (selectedProfile == null) return;
-        if (selectedProfile.equals("PublicProfile")) {
-            showWarn("Cannot delete", "The PublicProfile cannot be deleted.");
+        if (selectedProfile.equals(PUBLIC_PROFILE_MESSAGE)) {
+            showWarn(CANNOT_DELETE_HEADER, CANNOT_DELETE_MESSAGE);
             return;
         }
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Save");
+        alert.setTitle(DELETE_SAVE);
         alert.setHeaderText("Delete \"" + selectedProfile + "\"?");
-        alert.setContentText("This will delete the profile and its saves. This cannot be undone.");
+        alert.setContentText(DELETE_SAVE_WARNING);
 
         var result = alert.showAndWait();
         if (result.isEmpty() || result.get() != ButtonType.OK) {
@@ -228,7 +256,7 @@ public class ProfileSelectController extends BaseController {
         GameProfileHelper.deleteProfile(selectedProfile);
 
         if (GameManager.getSelectedProfileName().equals(selectedProfile)) {
-            ((ProfileSelectScreen) getScreen()).onProfileChosen("PublicProfile");
+            ((ProfileSelectScreen) getScreen()).onProfileChosen(PUBLIC_PROFILE_MESSAGE);
         }
         selectedProfile = null;
         populateProfiles();
@@ -243,21 +271,21 @@ public class ProfileSelectController extends BaseController {
     private void handleRenameClicked() {
         String newName = newProfileNameField.getText();
         if (selectedProfile == null || newName == null || newName.trim().isEmpty()) {
-            showWarn("Invalid name", "Please select a profile and type a new name.");
+            showWarn(INVALID_NAME_HEADER, INVALID_NAME_WARNING);
             return;
         }
         newName = newName.trim();
         try {
             boolean ok = GameProfileHelper.renameProfile(selectedProfile, newName);
             if (!ok) {
-                showWarn("Name exists", "A profile with that name already exists.");
+                showWarn(NAME_EXISTS_HEADER, NAME_EXISTS_WARNING);
                 return;
             }
             selectedProfile = newName;
             populateProfiles();
             newProfileNameField.clear();
         } catch (Exception e) {
-            showWarn("Rename failed", e.getMessage());
+            showWarn(RENAME_FAILED, e.getMessage());
         }
     }
 

@@ -27,6 +27,20 @@ import java.util.ResourceBundle;
  */
 public class MainMenuController extends BaseController implements Initializable {
 
+    public static final String CREDITS = "Credits";
+    public static final String CREDITS_HEADER = "Jewel Thief — Contributors";
+    public static final String CREDITS_CONTENTS = """
+            Developed by
+            - Rove Gustas
+            - Poole Ben
+            - Middleton Max
+            - Hilborne Charlie;;
+            - Syahrizal Amsyar
+            - Traore Mouhamadou Baba
+            - Al Assem Hamza
+            - Oritsetsewundede Christiana
+            - Meng Shaohua
+            """;
     @FXML
     private Button achievementsButton;
     @FXML
@@ -83,21 +97,10 @@ public class MainMenuController extends BaseController implements Initializable 
     @FXML
     private void handleCreditsClicked() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Credits");
-        alert.setHeaderText("Jewel Thief — Contributors");
+        alert.setTitle(CREDITS);
+        alert.setHeaderText(CREDITS_HEADER);
 
-        String content = """
-                Developed by
-                - Rove Gustas
-                - Poole Ben
-                - Middleton Max
-                - Hilborne Charlie;;
-                - Syahrizal Amsyar
-                - Traore Mouhamadou Baba
-                - Al Assem Hamza
-                - Oritsetsewundede Christiana
-                - Meng Shaohua
-                """;
+        String content = CREDITS_CONTENTS;
 
         alert.setContentText(content);
         alert.showAndWait();

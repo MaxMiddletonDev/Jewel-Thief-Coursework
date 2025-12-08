@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
  */
 public class EquipablesController extends BaseController implements Initializable {
 
+    public static final String LOCKED_SKIN_MESSAGE = "Locked";
     @FXML
     private Label titleLabel;
     @FXML
@@ -125,7 +126,7 @@ public class EquipablesController extends BaseController implements Initializabl
             if (btn != null) {
                 btn.setDisable(!isUnlocked);
                 if (!isUnlocked)
-                    btn.setText("Locked");
+                    btn.setText(LOCKED_SKIN_MESSAGE);
             }
         }
     }

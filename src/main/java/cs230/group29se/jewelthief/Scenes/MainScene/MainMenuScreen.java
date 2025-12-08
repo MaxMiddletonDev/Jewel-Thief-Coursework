@@ -29,14 +29,17 @@ import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.
  */
 public class MainMenuScreen extends Screen {
 
+    public static final String MAIN_MENU = "Main Menu";
+    public static final String MAIN_MENU_XML_PATH = "/cs230/group29se/jewelthief/main-view.fxml";
+
     /**
      * Constructs a MainMenuScreen and sets its title, FXML path, and the next screen.
      * The screen title is set to "Main Menu", and the FXML file path is specified.
      * The next screen is set to the LevelSelectScreen.
      */
     public MainMenuScreen() {
-        setScreenTitle("Main Menu");
-        setScreenFXMLPath("/cs230/group29se/jewelthief/main-view.fxml");
+        setScreenTitle(MAIN_MENU);
+        setScreenFXMLPath(MAIN_MENU_XML_PATH);
     }
 
     /**
