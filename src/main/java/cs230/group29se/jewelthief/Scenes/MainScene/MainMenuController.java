@@ -1,15 +1,11 @@
 package cs230.group29se.jewelthief.Scenes.MainScene;
 
-import cs230.group29se.jewelthief.Cosmetics.SkinId;
-import cs230.group29se.jewelthief.Cosmetics.SkinRegistry;
-import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Scenes.AchievementsScene.AchievementsScreen;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import cs230.group29se.jewelthief.Scenes.EquipablesScene.EquipablesScreen;
 import cs230.group29se.jewelthief.Scenes.HighScoresScene.HighScoresScreen;
 import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
 import cs230.group29se.jewelthief.Scenes.ProfileScene.ProfileSelectScreen;
-import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +16,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -113,7 +108,7 @@ public class MainMenuController extends BaseController implements Initializable 
 
     /**
      * Handles the "Credits" button click event.
-     * Displays an alert with the credits information.
+     * Displays an alert with the credits' information.
      */
     @FXML
     private void handleCreditsClicked() {

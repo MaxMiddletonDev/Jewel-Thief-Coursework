@@ -36,7 +36,6 @@ public class MainMenuScreen extends Screen {
     public MainMenuScreen() {
         setScreenTitle("Main Menu");
         setScreenFXMLPath("/cs230/group29se/jewelthief/main-view.fxml");
-        setNextScreen(new LevelSelectScreen());
     }
 
     /**

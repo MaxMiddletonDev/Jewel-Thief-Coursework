@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -117,6 +116,11 @@ public class LevelSelectController extends BaseController implements Initializab
         return null;
     }
 
+    /**
+     * Handles the event when the back button is clicked.
+     * Transitions back to the Main Menu screen.
+     */
+    @FXML
     public void onBackClicked() {
         getScreen().setNextScreen(new MainMenuScreen());
         getScreen().setFinished(true);
