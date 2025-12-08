@@ -58,7 +58,6 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
     private double hitCooldownSeconds = 2;
     private double hitCooldownTicks = hitCooldownSeconds * MainApplication.TPS;
     protected double hitCooldown = 0;
-
     private double moveCooldownSeconds = 1;
     private double moveCooldownTicks = moveCooldownSeconds * MainApplication.TPS;
     private double moveCooldownCounter = 0;

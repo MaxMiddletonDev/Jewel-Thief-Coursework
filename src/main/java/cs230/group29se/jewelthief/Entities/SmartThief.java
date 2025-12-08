@@ -6,7 +6,6 @@ import cs230.group29se.jewelthief.Items.Bomb;
 import cs230.group29se.jewelthief.Items.Collectable;
 import cs230.group29se.jewelthief.Items.Door;
 import cs230.group29se.jewelthief.Items.Item;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
