@@ -140,7 +140,7 @@ public class Camper extends NonPlayableCharacter {
      */
     @Override
     public void move() {
-        if (!isAlive) {
+        if (!isAlive()) {
             return;
         }
 
@@ -161,7 +161,7 @@ public class Camper extends NonPlayableCharacter {
         // step to next tile on the patrol path
         Tile next = patrolPath.get(pathIndex);
         if (next != null) {
-            currentTile = next;
+            setCurrentTile(next);
         }
 
         pathIndex = (pathIndex + NEXT_TILE_STEP_ADDER) % patrolPath.size();
@@ -225,7 +225,7 @@ public class Camper extends NonPlayableCharacter {
 
         // reset path index to start near current position
         if (!patrolPath.isEmpty()) {
-            pathIndex = findNearestPathIndex(currentTile);
+            pathIndex = findNearestPathIndex(getCurrentTile());
         }
     }
 

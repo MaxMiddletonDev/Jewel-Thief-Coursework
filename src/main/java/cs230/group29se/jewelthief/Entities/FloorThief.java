@@ -71,12 +71,12 @@ public class FloorThief extends NonPlayableCharacter {
      */
     @Override
     public void onCollisionWith(final MoveableCharacter other) {
-        if (!isAlive) {
+        if (!isAlive()) {
             return;
         }
 
         if (other instanceof FlyingAssassin) {
-            this.isAlive = false;
+            this.setAlive(false);
         } else if (other instanceof Player) {
             if (canHit()) {
                 ((Player) other).getHit();
@@ -109,7 +109,7 @@ public class FloorThief extends NonPlayableCharacter {
      */
     @Override
     public void move() {
-        if (!isAlive) {
+        if (!isAlive()) {
             return;
         }
 
@@ -122,7 +122,7 @@ public class FloorThief extends NonPlayableCharacter {
 
         if (nextDirection != null) {
             moveIn(nextDirection);
-            direction = nextDirection; //change facing to nextDirection
+            setDirection(nextDirection); //change facing to nextDirection
         }
     }
 
@@ -132,8 +132,8 @@ public class FloorThief extends NonPlayableCharacter {
      * If a bomb is found, it is activated.
      */
     private void triggerAdjacentBombs() {
-        int currentX = currentTile.getX();
-        int currentY = currentTile.getY();
+        int currentX = getCurrentTile().getX();
+        int currentY = getCurrentTile().getY();
 
         // These are the adjacent tiles
 
@@ -180,22 +180,22 @@ public class FloorThief extends NonPlayableCharacter {
      * @return possible directions to move in with LHS rule in mind
      */
     public Direction[] getPossibleDirections() {
-        if (direction == Direction.UP) {
+        if (getDirection() == Direction.UP) {
             return new Direction[]{Direction.LEFT,
                     Direction.UP,
                     Direction.RIGHT,
                     Direction.DOWN};
-        } else if (direction == Direction.DOWN) {
+        } else if (getDirection() == Direction.DOWN) {
             return new Direction[]{Direction.RIGHT,
                     Direction.DOWN,
                     Direction.LEFT,
                     Direction.UP};
-        } else if (direction == Direction.LEFT) {
+        } else if (getDirection() == Direction.LEFT) {
             return new Direction[]{Direction.DOWN,
                     Direction.LEFT,
                     Direction.UP,
                     Direction.RIGHT};
-        } else if (direction == Direction.RIGHT) {
+        } else if (getDirection() == Direction.RIGHT) {
             return new Direction[]{Direction.UP,
                     Direction.RIGHT,
                     Direction.DOWN,
@@ -286,7 +286,7 @@ public class FloorThief extends NonPlayableCharacter {
 
         Tile targetTile = level.getTile(thiefTargetX, thiefTargetY);
         if (targetTile != null) {
-            currentTile = targetTile;
+            setCurrentTile(targetTile);
             triggerAdjacentBombs();
         }
     }

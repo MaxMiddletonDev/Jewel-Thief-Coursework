@@ -18,9 +18,10 @@ import java.util.ResourceBundle;
  */
 public class GameController extends BaseController implements Initializable {
 
-
-    public Label timerLabel;
-    public Label scoreLabel;
+    @FXML
+    private Label timerLabel;
+    @FXML
+    private Label scoreLabel;
 
     /** Canvas for rendering the game graphics. */
     @FXML
@@ -46,6 +47,22 @@ public class GameController extends BaseController implements Initializable {
     @Override
     public Canvas getCanvas() {
         return gameCanvas;
+    }
+    /**
+     * Updates the timer label with the given time string.
+     *
+     * @param time The time string to display on the timer label.
+     */
+    public void updateTimerLabel(final String time) {
+        timerLabel.setText(time);
+    }
+    /**
+     * Updates the score label with the given score.
+     *
+     * @param score The score to display on the score label.
+     */
+    public void updateScoreLabel(final String score) {
+        scoreLabel.setText(score);
     }
 
 

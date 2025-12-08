@@ -173,7 +173,7 @@ public class Level {
         }
 
         lastUpdateTime = System.nanoTime();
-        gameController.scoreLabel.setText(SCORE_LABEL_PREFIX + score);
+        gameController.updateScoreLabel(SCORE_LABEL_PREFIX + score);
     }
 
     /**
@@ -279,10 +279,9 @@ public class Level {
             failLevel(FAIL_TIME_UP);
         }
 
-        gameController.timerLabel
-                .setText(TIMER_LABEL_PREFIX
-                        + getTimeRemainingTimeInSeconds()
-                        + TIMER_LABEL_SUFFIX);
+        gameController.updateTimerLabel(TIMER_LABEL_PREFIX
+                + getTimeRemainingTimeInSeconds()
+                + TIMER_LABEL_SUFFIX);
 
     }
 
@@ -424,7 +423,7 @@ public class Level {
      */
     public void addScore(final int scoreToAdd) {
         score += scoreToAdd;
-        gameController.scoreLabel.setText(SCORE_LABEL_PREFIX + score);
+        gameController.updateScoreLabel(SCORE_LABEL_PREFIX + score);
     }
 
     /**
@@ -446,7 +445,7 @@ public class Level {
         if (score < 0) {
             score = 0;
         }
-        gameController.scoreLabel.setText(SCORE_LABEL_PREFIX + score);
+        gameController.updateScoreLabel(SCORE_LABEL_PREFIX + score);
     }
 
     /**
