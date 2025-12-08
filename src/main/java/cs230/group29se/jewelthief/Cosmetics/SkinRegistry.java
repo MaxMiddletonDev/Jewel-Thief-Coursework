@@ -8,9 +8,9 @@ public class SkinRegistry {
     private static final Map<SkinId, Skin> SKINS = new HashMap<>();
 
     static {
-        register(new Skin(SkinId.DEFAULT_GUY, "Default Guy", "/cs230/group29se/jewelthief/Images/PLAYER.png"));
-        register(new Skin(SkinId.SPEED_GUY, "Speed guy", "/cs230/group29se/jewelthief/Images/PLAYER_SKIN_1.png"));
-        register(new Skin(SkinId.CAT_CAT, "Cat Cat", "/cs230/group29se/jewelthief/Images/PLAYER_SKIN_2.png"));
+        register(new Skin(SkinId.DEFAULT_GUY, "Default Guy", "/cs230/group29se/jewelthief/Images/Entities/Player/PLAYER.png"));
+        register(new Skin(SkinId.SPEED_GUY, "Speed guy", "/cs230/group29se/jewelthief/Images/Entities/Player/PLAYER_SKIN_1.png"));
+        register(new Skin(SkinId.CAT_CAT, "Cat Cat", "/cs230/group29se/jewelthief/Images/Entities/Player/PLAYER_SKIN_2.png"));
     }
 
     private static void register(Skin skin) {
