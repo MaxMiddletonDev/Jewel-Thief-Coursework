@@ -22,29 +22,53 @@
 
     <!-- Skin Selection Grid -->
     <GridPane layoutX="60" layoutY="80" hgap="40" vgap="20">
-        <!-- Actions for these buttons will be set in the initialize() of this controller -->
-        <!-- Skin 1 -->
+
+        <!-- Row 1 -->
         <VBox alignment="CENTER">
             <ImageView fx:id="skin1Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
-            <Button text="Select" fx:id="skin1Button" />
+            <Button fx:id="skin1Button" text="Select" onAction="#selectSkin1"/>
         </VBox>
 
-        <!-- Skin 2 -->
         <VBox alignment="CENTER" GridPane.columnIndex="1">
             <ImageView fx:id="skin2Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
-            <Button text="Select" fx:id="skin2Button" />
+            <Button fx:id="skin2Button" text="Select" onAction="#selectSkin2"/>
         </VBox>
 
-        <!-- Skin 3 -->
-        <VBox alignment="CENTER" GridPane.rowIndex="1">
+        <VBox alignment="CENTER" GridPane.columnIndex="2">
             <ImageView fx:id="skin3Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
-            <Button text="Select" fx:id="skin3Button" />
+            <Button fx:id="skin3Button" text="Select" onAction="#selectSkin3"/>
         </VBox>
 
-        <!-- Skin 4 -->
-        <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <VBox alignment="CENTER" GridPane.columnIndex="3">
             <ImageView fx:id="skin4Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
-            <Button text="Select" fx:id="skin4Button" />
+            <Button fx:id="skin4Button" text="Select" onAction="#selectSkin4"/>
+        </VBox>
+
+        <!-- Row 2 -->
+        <VBox alignment="CENTER" GridPane.rowIndex="1">
+            <ImageView fx:id="skin5Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
+            <Button fx:id="skin5Button" text="Select" onAction="#selectSkin5"/>
+        </VBox>
+
+        <VBox alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="1">
+            <ImageView fx:id="skin6Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
+            <Button fx:id="skin6Button" text="Select" onAction="#selectSkin6"/>
+        </VBox>
+
+        <VBox alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="2">
+            <ImageView fx:id="skin7Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
+            <Button fx:id="skin7Button" text="Select" onAction="#selectSkin7"/>
+        </VBox>
+
+        <VBox alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="3">
+            <ImageView fx:id="skin8Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
+            <Button fx:id="skin8Button" text="Select" onAction="#selectSkin8"/>
+        </VBox>
+
+        <!-- Row 3 (skin9) -->
+        <VBox alignment="CENTER" GridPane.rowIndex="2">
+            <ImageView fx:id="skin9Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
+            <Button fx:id="skin9Button" text="Select" onAction="#selectSkin9"/>
         </VBox>
 
     </GridPane>
