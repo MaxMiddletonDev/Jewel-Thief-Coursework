@@ -69,8 +69,8 @@ public class Clock extends Destroyable {
      */
     @Override
     public void draw(final GraphicsContext gc) {
-        gc.drawImage(image, getX() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
-                getY() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
-                Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
+        gc.drawImage(image, getX() * Tile.TILE_SIZE + 2,
+                getY() * Tile.TILE_SIZE + 1,
+                Tile.TILE_SIZE, Tile.TILE_SIZE);
     }
 }
