@@ -18,9 +18,7 @@ public class Tile {
      * Half the tile size.
      */
     public static final int HALF_TILE_SIZE = TILE_SIZE / 2;
-    /**
-     * Width of the border.
-     */
+
     private static final int BORDER_WIDTH = 2;
     public static final int FIRST_COLOUR_INDEX = 0;
     public static final int SECOND_COLOUR_INDEX = 1;
