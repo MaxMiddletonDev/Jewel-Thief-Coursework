@@ -5,6 +5,7 @@ import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
 import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -24,13 +25,14 @@ import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.
 public class LevelFinishedController extends BaseController implements Initializable {
 
 
-    /** Button to go to the next level */
+
+    @FXML
     private Button NextLevelButton;
-    /** Button to go back to main screen */
+    @FXML
     private Button MainMenuButton;
-    /** Label to display the "Level Finished" message */
+    @FXML
     private Label levelFinishedLabel;
-    /** Label for displaying the score earned during the level */
+    @FXML
     private Label levelScoreLabel;
     private LevelFinishedScreen screen;
 

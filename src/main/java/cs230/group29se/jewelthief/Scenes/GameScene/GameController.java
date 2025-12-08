@@ -18,12 +18,7 @@ import java.util.ResourceBundle;
  */
 public class GameController extends BaseController implements Initializable {
 
-    /** Label for displaying the remaining time in the game. */
-    @FXML
     public Label timerLabel;
-
-    /** Label for displaying the current score in the game. */
-    @FXML
     public Label scoreLabel;
 
     /** Canvas for rendering the game graphics. */

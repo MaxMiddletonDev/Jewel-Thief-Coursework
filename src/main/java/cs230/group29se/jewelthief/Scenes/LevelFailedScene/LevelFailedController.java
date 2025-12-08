@@ -5,6 +5,7 @@ import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
 import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -21,17 +22,14 @@ import java.util.ResourceBundle;
  */
 public class LevelFailedController extends BaseController implements Initializable {
 
-    /** Label for displaying the "Level Failed" message. */
-    public Label levelFailedLabel;
-
-    /** Label for displaying the player's score. */
-    public Label scoreLabel;
-
-    /** Button for navigating back to the main menu. */
-    public Button backToMainMenuButton;
-
-    /** Button for retrying the current level. */
-    public Button retryLevelButton;
+    @FXML
+    private Label levelFailedLabel;
+    @FXML
+    private Label scoreLabel;
+    @FXML
+    private Button backToMainMenuButton;
+    @FXML
+    private Button retryLevelButton;
 
     /**
      * Initializes the Level Failed scene by setting the score label to the player's current score.
