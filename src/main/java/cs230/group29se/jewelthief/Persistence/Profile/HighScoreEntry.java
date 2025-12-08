@@ -16,8 +16,18 @@ import java.time.format.DateTimeFormatter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HighScoreEntry {
 
+    /**
+     * The name of the player's profile - associated with the score.
+     */
     private String profileName;
+    /**
+     * The score attained by the player.
+     */
     private int score;
+    /**
+     * The time when the score was attained.
+     * It is kept as String to match the UML diagram.
+     */
     private String timestamp;
 
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
@@ -31,9 +41,9 @@ public class HighScoreEntry {
      */
     @JsonCreator
     public HighScoreEntry(
-           final @JsonProperty("profileName") String profileName,
-           final @JsonProperty("score") int score,
-           final @JsonProperty("timestamp") String timestamp) {
+            @JsonProperty("profileName") String profileName,
+            @JsonProperty("score") int score,
+            @JsonProperty("timestamp") String timestamp) {
         this.profileName = profileName;
         this.score = score;
         this.timestamp = timestamp;
@@ -43,31 +53,27 @@ public class HighScoreEntry {
      *
      *  @return The profile name as String.
      */
-    public String getProfileName() {
-        return profileName; }
+    public String getProfileName() { return profileName; }
     /**
      * It sets the name of the player's profile for the high score entry.
      *
      * @param profileName The new profile name to be assigned.
      */
-    public void setProfileName(final String profileName) {
-        this.profileName = profileName; }
+    public void setProfileName(String profileName) { this.profileName = profileName; }
     /**
      * This method is used to retrieve the score attained by the player.
      *
      * @return The player's score as an integer; It must be null.
      */
-    public int getScore() {
-        return score; }
+    public int getScore() { return score; }
     /**
      * This method is used to set the score for the high score entry.
      *
      * @param score The new score to be assigned; It mustn't be negative.
      */
-    public void setScore(final int score) {
-        this.score = score; }
+    public void setScore(int score) { this.score = score; }
 
-    /**Derived property for the table – NOT stored in JSON.
+    /**Derived property for the table – NOT stored in JSON
      *
      * @return The time in local timezone format
      */
@@ -91,10 +97,10 @@ public class HighScoreEntry {
      */
     @Override
     public String toString() {
-        return "HighScoreEntry{"
-                + "profileName='" + profileName + '\''
-                + ", score=" + score
-                + ", timestamp='" + timestamp + '\''
-                + '}';
+        return "HighScoreEntry{" +
+                "profileName='" + profileName + '\'' +
+                ", score=" + score +
+                ", timestamp='" + timestamp + '\'' +
+                '}';
     }
 }
