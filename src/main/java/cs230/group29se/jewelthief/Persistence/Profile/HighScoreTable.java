@@ -14,6 +14,9 @@ import java.util.List;
  * @version 1.0
  */
 public class HighScoreTable {
+
+    private static final int INITIAL_INDEX = 0;
+
     /**
      * This is the list of high score entries organized by the table.
      */
@@ -52,7 +55,7 @@ public class HighScoreTable {
      * @return A list containing up to {@code n} top high score entries.
      */
     public List<HighScoreEntry> topN(int n) {
-        return entries.subList(0, Math.min(n, entries.size()));
+        return entries.subList(INITIAL_INDEX, Math.min(n, entries.size()));
     }
 
     /**
