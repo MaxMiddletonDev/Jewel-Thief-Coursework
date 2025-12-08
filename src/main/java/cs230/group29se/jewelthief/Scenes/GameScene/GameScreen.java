@@ -33,8 +33,7 @@ import javafx.util.Duration;
 public class GameScreen extends Screen {
 
     private Timeline autosaveTimeline;
-
-    private boolean paused = false;
+    private boolean paused = false; // Indicates whether the game is paused
 
     /**
      * Constructs a GameScreen and sets its title and FXML path.
@@ -47,24 +46,34 @@ public class GameScreen extends Screen {
     /**
      * Initializes the game screen by setting up the level and player movement key bindings.
      */
-    // You will probably pass this in from LevelSelectScreen later
-    private String activeProfileName = "testProfile"; // or "Amsyar"
-
     @Override
     public void onInitialize() {
         SoundManager.playGame();
         int levelNum = GameManager.getCurrentLevelNumber();
-        if (levelNum == 0) {
-            levelNum = 1;
-            GameManager.setCurrentLevelNumber(levelNum);
-        }
 
-        String profileName = GameProfileHelper.getActiveProfileName();
-        GameManager.loadLevelForProfile(profileName, levelNum,(GameController) getController());
+        GameManager.loadLevelForProfile(levelNum, (GameController) getController());
 
         Player player = GameManager.getCurrentLevel().getPlayer();
 
-        // Keyboard movement – unchanged
+        setupKeyBinds(player);
+
+        // Adds saving every second.
+        autosaveTimeline = new Timeline(
+                new KeyFrame(
+                        Duration.millis(1000),
+                        e -> GameManager.saveCurrentGameState()
+                )
+        );
+        autosaveTimeline.setCycleCount(Animation.INDEFINITE);
+        autosaveTimeline.play();
+    }
+
+    /**
+     * Sets up key bindings for player movement and game controls.
+     *
+     * @param player the player object to control
+     */
+    private void setupKeyBinds(Player player) {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case UP -> {
@@ -97,16 +106,6 @@ public class GameScreen extends Screen {
                 }
             }
         });
-
-        //Adds saving every second.
-        autosaveTimeline = new Timeline(
-                new KeyFrame(
-                        Duration.millis(1000),
-                        e -> GameManager.saveCurrentGameState()
-                )
-        );
-        autosaveTimeline.setCycleCount(Animation.INDEFINITE);
-        autosaveTimeline.play();
     }
 
     /**
@@ -124,7 +123,6 @@ public class GameScreen extends Screen {
         }
 
         level.update();
-//        draw();
 
         if (level.isLevelFailed()) {
             loadFailedLevelScreen();
@@ -154,8 +152,6 @@ public class GameScreen extends Screen {
             getGraphicsContext().clearRect(0, 0, getCanvas().getWidth(), getCanvas().getHeight());
             GameManager.getCurrentLevel().draw(getGraphicsContext());
         }
-
-
     }
 
     /**
@@ -167,13 +163,16 @@ public class GameScreen extends Screen {
             autosaveTimeline.stop();
         }
 
-        //delete save for current level
+        // Delete save for current level
         PersistenceManager.deleteSaveForCurrentLevel();
 
         setNextScreen(new LevelFailedScreen());
         setFinished(true);
     }
 
+    /**
+     * Restarts the current level by deleting its save and reloading the screen.
+     */
     public void restartLevel() {
         Level level = GameManager.getCurrentLevel();
         if (level != null) {
@@ -183,8 +182,11 @@ public class GameScreen extends Screen {
         }
     }
 
+    /**
+     * Loads the level finished screen and updates the player's progress.
+     * Marks the current screen as finished.
+     */
     public void loadLevelFinishedScreen() {
-
         ProfileData profile = PersistenceManager.getCurrentProfile();
         int maxLevelUnlocked = profile.getMaxUnlockedLvl();
         if (GameManager.getCurrentLevelNumber() >= maxLevelUnlocked) {
@@ -197,38 +199,12 @@ public class GameScreen extends Screen {
             autosaveTimeline.stop();
         }
 
-        //delete save for current level
+        // Delete save for current level
         PersistenceManager.deleteSaveForCurrentLevel();
 
         setNextScreen(new LevelFinishedScreen());
         setFinished(true);
     }
-
-//    @Override
-//    public Scene createScene() {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(
-//                    getClass().getResource("/cs230/group29se/jewelthief/game-view.fxml")
-//            );
-//            root = loader.load();
-//            controller = loader.getController();
-//            // Binds controller to this screen
-//            controller.setScreen(this);
-//
-//            // Use the controllers canvas as this Screen's canvas
-//            Canvas gameCanvas = controller.getCanvas();
-//            setCanvas(gameCanvas);
-//            if (gameCanvas != null) {
-//                setGraphicsContext(gameCanvas.getGraphicsContext2D());
-//            }
-//
-//            scene = new Scene(root, 1028, 900);
-//            return scene;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
     /**
      * Sets the paused state of the game.
@@ -243,10 +219,15 @@ public class GameScreen extends Screen {
             autosaveTimeline.pause();
         } else {
             autosaveTimeline.play();
+            GameManager.getCurrentLevel().resetLastUpdateTime();
         }
     }
 
-    // Returns whether the game is currently paused.
+    /**
+     * Returns whether the game is currently paused.
+     *
+     * @return true if the game is paused, false otherwise
+     */
     public boolean isPaused() {
         return paused;
     }

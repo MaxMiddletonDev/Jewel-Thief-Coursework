@@ -48,35 +48,19 @@ public final class GameManager {
      * 2) Otherwise, load levelX.txt via LevelLoader and create initial SaveData.
      * 3) Create a new Level object and register it as currentLevel.
      *
-     * @param profileName active profile name
      * @param levelNum    level number (1, 2, 3, ...)
      * @param controller  GameController for the new Level
      * @author Iyaad
      */
-    public static void loadLevelForProfile(String profileName,
-                                           int levelNum,
+    public static void loadLevelForProfile(int levelNum,
                                            GameController controller) {
 
         setCurrentLevelNumber(levelNum);
         String levelId = String.valueOf(levelNum);
         String levelFileName = "level" + levelId + ".txt";
 
-        PersistenceManager.setActiveProfileName(profileName);//remove
         PersistenceManager.setActiveLevelId(levelId);// keep...
 
-
-//        // profiles cut to the appropriate screen
-//        ProfileData profile = PM.loadProfile();
-//        if (profile == null) {
-//            profile = new ProfileData();
-//            profile.setProfileName(profileName);
-//            profile.setMaxUnlockedLvl(1);
-//            PM.setCachedProfile(profile);
-//            PM.saveProfile();
-//        } else {
-//            PM.setCachedProfile(profile);
-//        }
-        // saves: THIS is the "load JSON if exists" logic
         SaveData save = PersistenceManager.getSaveData();
 
         // if save exists but timeRemainingMs == 0, treat as no save (reset level)

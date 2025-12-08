@@ -160,7 +160,7 @@ public class Level {
         }
 
         ArrayList<Destroyable> destroyed = new ArrayList<>();
-        //countsdown bombs or continues the explosion
+        //countdown bombs or continues the explosion
         for (Item item : items) {
             if (item instanceof Bomb bomb) {
                 if (bomb.getExploding()) {
@@ -351,6 +351,15 @@ public class Level {
             timeRemaining = 0;
         }
     }
+
+    /**
+     * Resets the last update time to the current system time.
+     * Used when resuming from pause to prevent time jump.
+     */
+    public void resetLastUpdateTime() {
+        this.lastUpdateTime = System.nanoTime();
+    }
+
 
     /**
      * Gets the time remaining in seconds.
