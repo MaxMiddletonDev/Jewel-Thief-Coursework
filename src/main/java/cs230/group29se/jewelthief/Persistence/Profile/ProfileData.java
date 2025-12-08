@@ -1,10 +1,7 @@
 package cs230.group29se.jewelthief.Persistence.Profile;
 
-import cs230.group29se.jewelthief.Cosmetics.SkinId;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * It represents the player's profile for the game.
@@ -15,22 +12,9 @@ import java.util.Map;
  * @version 1.0
  */
 public class ProfileData {
-    /**
-     * The name of the player's profile.
-     */
     private String profileName;
-    /**
-     * A list of unlocked achievements.
-     */
     private List<String> unlockedAchievements = new ArrayList<>();
-    /**
-     * The maximum level unlocked by the player.
-     */
     private int maxUnlockedLvl;
-
-    /**
-     * The selected skin ID for the player's character.
-     */
     private String selectedSkinId;
 
     /**
@@ -57,20 +41,21 @@ public class ProfileData {
         return maxUnlockedLvl;
     }
 
+    /**
+     * This method get the selected skin id by the player.
+     * @return The selected skin id.
+     */
     public String getSelectedSkinId() {
         return selectedSkinId;
     }
+
+    /**
+     * This method sets the selected skin id by the player.
+     * @param selectedSkinId The new selected skin id.
+     */
     public void setSelectedSkinId(String selectedSkinId) {
         this.selectedSkinId = selectedSkinId;
     }
-
-//    public void setSelectedSkinId(SkinId selectedSkinId) {
-//        this.selectedSkinId = selectedSkinId.toString();
-//    }
-//
-//    public SkinId getSelectedSkinId() {
-//        return SkinId.fromString(this.selectedSkinId);
-//    }
 
     /**
      *This method sets the maximum level Unlocked by the player.
