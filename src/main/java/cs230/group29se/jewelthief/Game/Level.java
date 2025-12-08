@@ -31,6 +31,58 @@ import java.util.Map;
  * @version 1.0
  */
 public class Level {
+    // File/path constants
+    private static final String LEVEL_PREFIX = "level";
+    private static final String LEVEL_SUFFIX = ".txt";
+    private static final String LEVELS_FOLDER = "levels";
+
+    // Entity type identifiers (from level/entity files)
+    private static final String TYPE_FLYING = "FLYING";
+    private static final String TYPE_SMART = "SMART";
+    private static final String TYPE_FOLLOWER = "FOLLOWER";
+    private static final String TYPE_CAMPER = "CAMPER";
+    private static final String TYPE_LOOT = "LOOT";
+    private static final String TYPE_BOMB = "BOMB";
+    private static final String TYPE_LEVER = "LEVER";
+    private static final String TYPE_GATE = "GATE";
+    private static final String TYPE_DOOR = "DOOR";
+    private static final String TYPE_CLOCK = "CLOCK";
+    private static final String TYPE_SHIELD = "SHIELD";
+
+    // Loot types
+    private static final String LOOT_CENT = "CENT";
+    private static final String LOOT_DOLLAR = "DOLLAR";
+    private static final String LOOT_RUBY = "RUBY";
+    private static final String LOOT_DIAMOND = "DIAMOND";
+
+    // Save-data field keys
+    private static final String KEY_X = "x";
+    private static final String KEY_Y = "y";
+    private static final String KEY_DIR = "dir";
+    private static final String KEY_COLOUR = "colour";
+    private static final String KEY_PARAM = "param";
+
+    // Bomb save-data separator
+    private static final String PARAM_SEPARATOR = "#";
+
+    // Error / log messages
+    private static final String ERR_UNKNOWN_ENTITY =
+            "Unknown entity type in level file: ";
+    private static final String ERR_UNKNOWN_ENTITY_SAVE =
+            "Unknown NPC type in save data: ";
+    private static final String ERR_UNKNOWN_ITEM_SAVE =
+            "Unknown Item type in save data: ";
+    private static final String ERR_UNKNOWN_GATE_SAVE =
+            "Unknown Gate type in save data: ";
+    private static final String ERR_LOAD_GRID =
+            "Failed to load grid for ";
+    private static final String ERR_LEVEL_NOT_FOUND =
+            "Level file not found: ";
+
+    // Fail messages
+    private static final String FAIL_TIME_UP = "Time's up!";
+    private static final String FAIL_PLAYER_DIED = "Player has DIED!";
+
     // Ids for bomb parameters in save data
     private static final int COUNTDOWN_LEFT = 0;
     private static final int COUNTDOWN_TICK_PROGRESS = 1;
@@ -42,14 +94,40 @@ public class Level {
     // Time conversion constants
     private static final long MILLISECONDS = 1000;
     private static final long NANOSECONDS = 1_000_000;
-    
+
+    private static final int TILE_COLOUR_COUNT = 4;
+
+    private static final int DEFAULT_MAX_TIME_SECONDS = 60;
+
+    private static final int COORD_OFFSET = 1;
+
+    // UI label prefixes/suffixes
+    public static final String SCORE_LABEL_PREFIX = "Score: ";
+    private static final String TIMER_LABEL_PREFIX = "Time: ";
+    private static final String TIMER_LABEL_SUFFIX = "s";
+
+    // Direction strings
+    private static final String DIR_UP = "UP";
+    private static final String DIR_DOWN = "DOWN";
+    private static final String DIR_LEFT = "LEFT";
+    private static final String DIR_RIGHT = "RIGHT";
+
+    // Colour strings
+    private static final String COLOUR_RED = "R";
+    private static final String COLOUR_GREEN = "G";
+    private static final String COLOUR_BLUE = "B";
+    private static final String COLOUR_YELLOW = "Y";
+    private static final String COLOUR_CYAN = "C";
+    private static final String COLOUR_MAGENTA = "M";
+
+
     private final GameController gameController;
     private List<Item> items = new ArrayList<>();
     private List<Gate> gates = new ArrayList<>();
     private ArrayList<NonPlayableCharacter> enemies = new ArrayList<>();
     private Tile[][] grid;
     private Player player;
-    private static int MAX_TIME = 60; // Seconds
+    private static int MAX_TIME = DEFAULT_MAX_TIME_SECONDS; // Seconds
     private long timeRemaining; // Milliseconds
     private long lastUpdateTime; // Nanoseconds
     private int score;
@@ -64,6 +142,7 @@ public class Level {
 
     /**
      * Constructs a Level with the specified level name and game controller.
+     *
      * @param levelName      the name of the level file
      * @param gameController the game controller for updating UI elements
      * @param saveData       the players save data
@@ -81,7 +160,7 @@ public class Level {
                 loadFreshLevel(levelName);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Level file not found: " + levelName);
+            System.out.println(ERR_LEVEL_NOT_FOUND + levelName);
             e.printStackTrace();
         }
 
@@ -94,7 +173,7 @@ public class Level {
         }
 
         lastUpdateTime = System.nanoTime();
-        gameController.scoreLabel.setText("Score: " + score);
+        gameController.scoreLabel.setText(SCORE_LABEL_PREFIX + score);
     }
 
     /**
@@ -110,7 +189,7 @@ public class Level {
      */
     public void update() {
         if (!getPlayer().isAlive()) {
-            failLevel("Player has been DIED!");
+            failLevel(FAIL_PLAYER_DIED);
         }
         updateTime();
 
@@ -151,6 +230,7 @@ public class Level {
     /**
      * Checks if a tile has an Item and calls an NPC's collectItem
      * method if it does.
+     *
      * @param npc the npc to try collect an item.
      */
     private void checkAndCollectItem(final NonPlayableCharacter npc) {
@@ -196,11 +276,10 @@ public class Level {
 
         if (timeRemaining <= 0) {
             timeRemaining = 0;
-            failLevel("Time's up!");
+            failLevel(FAIL_TIME_UP);
         }
-        gameController.timerLabel.setText("Time: "
-                +
-                getTimeRemainingTimeInSeconds() + "s");
+
+        gameController.timerLabel.setText(TIMER_LABEL_PREFIX + getTimeRemainingTimeInSeconds() + TIMER_LABEL_SUFFIX);
 
     }
 
@@ -247,7 +326,7 @@ public class Level {
      * @param x the x-coordinate to retrieve.
      * @param y the y-coordinate to retrieve.
      * @return Retrieves the tile at the specified location,
-     *         or null if the coordinates are out of bounds.
+     * or null if the coordinates are out of bounds.
      */
     public Tile getTile(final int x, final int y) {
         if (x >= 0 && x < getWidth() && y >= 0 && y < getHeight()) {
@@ -258,6 +337,7 @@ public class Level {
 
     /**
      * Get the time remaining in the level from milliseconds.
+     *
      * @return the time remaining in the level in milliseconds.
      */
     public long getTimeRemainingMs() {
@@ -341,7 +421,7 @@ public class Level {
      */
     public void addScore(final int scoreToAdd) {
         score += scoreToAdd;
-        gameController.scoreLabel.setText("Score: " + score);
+        gameController.scoreLabel.setText(SCORE_LABEL_PREFIX + score);
     }
 
     /**
@@ -363,7 +443,7 @@ public class Level {
         if (score < 0) {
             score = 0;
         }
-        gameController.scoreLabel.setText("Score: " + score);
+        gameController.scoreLabel.setText(SCORE_LABEL_PREFIX + score);
     }
 
     /**
@@ -377,6 +457,7 @@ public class Level {
 
     /**
      * Sets the reason why the player failed the level.
+     *
      * @param failReason the reason of failure.
      */
     public void setFailReason(final String failReason) {
@@ -391,6 +472,7 @@ public class Level {
     public String getFailReason() {
         return failReason;
     }
+
     /**
      * Reads through the level file and populates the level appropriately.
      * This covers map size, time limit, individual tiles,
@@ -403,7 +485,7 @@ public class Level {
     public void loadFreshLevel(final String filename)
             throws FileNotFoundException {
         String levelId = extractLevelId(filename);
-        java.nio.file.Path levelPath = java.nio.file.Path.of("levels",
+        java.nio.file.Path levelPath = java.nio.file.Path.of(LEVELS_FOLDER,
                 filename);
         LevelDef def = new LevelLoader().loadLevel(levelId, levelPath);
         MAX_TIME = def.timeLimitSec;
@@ -417,13 +499,13 @@ public class Level {
             String[] tileTokens = rowString.split("\\s+");
             for (int col = 0; col < x; col++) {
                 String sequence = tileTokens[col];      // e.g. "YYYY"
-                Colour[] colours = new Colour[4];
-                for (int z = 0; z < colours.length; z++) {
+                Colour[] colours = new Colour[TILE_COLOUR_COUNT];
+                for (int z = 0; z < TILE_COLOUR_COUNT; z++) {
                     char colChar = sequence.charAt(z);
                     colours[z] = colourSetter(String.valueOf(colChar));
                 }
-                int xPos = (x - 1) - col;    // 0..x-1
-                int yPos = (y - 1) - row;    // 0..y-1
+                int xPos = (x - COORD_OFFSET) - col;    // 0..x-1
+                int yPos = (y - COORD_OFFSET) - row;    // 0..y-1
                 grid[xPos][yPos] = new Tile(xPos, yPos, colours);
             }
         }
@@ -431,8 +513,8 @@ public class Level {
         int xPos = def.playerStart.x;  // tile index
         int yPos = def.playerStart.y;  // tile index
         // clamp to grid bounds just in case
-        xPos = Math.max(0, Math.min(xPos, getWidth() - 1));
-        yPos = Math.max(0, Math.min(yPos, getHeight() - 1));
+        xPos = Math.max(0, Math.min(xPos, getWidth() - COORD_OFFSET));
+        yPos = Math.max(0, Math.min(yPos, getHeight() - COORD_OFFSET));
         // use tile indices directly
         double px = xPos;
         double py = yPos;
@@ -442,12 +524,12 @@ public class Level {
         for (EntityDef e : def.entities) {
             int rawX = e.x;
             int rawY = e.y;
-            int entityXPos = rawX - 1;
-            int entityYPos = rawY - 1;  // flip to reflect level design
+            int entityXPos = rawX - COORD_OFFSET;
+            int entityYPos = rawY - COORD_OFFSET;
             String npcId = e.type;
 
             switch (e.type) {
-                case "FLYING" -> {
+                case TYPE_FLYING -> {
                     // e.arg1 = direction string ("UP","DOWN","LEFT","RIGHT")
                     String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
@@ -456,7 +538,7 @@ public class Level {
                             this, npcId);
                     enemies.add(tempEnemy);
                 }
-                case "SMART" -> {
+                case TYPE_SMART -> {
                     String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
                     SmartThief tempEnemy = new SmartThief(
@@ -464,7 +546,7 @@ public class Level {
                             this, npcId);
                     enemies.add(tempEnemy);
                 }
-                case "FOLLOWER" -> {
+                case TYPE_FOLLOWER -> {
                     // e.arg1 = direction,
                     // e.arg2 = follower colour ("R","G","B","Y")
                     String npcDirection = e.arg1;
@@ -476,7 +558,7 @@ public class Level {
                             this, npcId);
                     enemies.add(tempEnemy);
                 }
-                case "CAMPER" -> {
+                case TYPE_CAMPER -> {
                     String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
                     Camper tempEnemy = new Camper(
@@ -484,76 +566,64 @@ public class Level {
                             this, npcId);
                     enemies.add(tempEnemy);
                 }
-                case "LOOT" -> {
+                case TYPE_LOOT -> {
                     String value = e.arg1;
                     Loot tempLoot;
                     switch (value) {
-                        case "CENT"    ->
-                                tempLoot = new Loot(
-                                        LootEnum.CENT,
-                                        entityXPos, entityYPos);
-                        case "DOLLAR"  ->
-                                tempLoot = new Loot(
-                                        LootEnum.DOLLAR,
-                                        entityXPos, entityYPos);
-                        case "RUBY"    ->
-                                tempLoot = new Loot(
-                                        LootEnum.RUBY,
-                                        entityXPos, entityYPos);
-                        case "DIAMOND" ->
-                                tempLoot = new Loot(
-                                        LootEnum.DIAMOND,
-                                        entityXPos, entityYPos);
-                        default        ->
-                                tempLoot = null;
+                        case LOOT_CENT -> tempLoot = new Loot(
+                                LootEnum.CENT,
+                                entityXPos, entityYPos);
+                        case LOOT_DOLLAR -> tempLoot = new Loot(
+                                LootEnum.DOLLAR,
+                                entityXPos, entityYPos);
+                        case LOOT_RUBY -> tempLoot = new Loot(
+                                LootEnum.RUBY,
+                                entityXPos, entityYPos);
+                        case LOOT_DIAMOND -> tempLoot = new Loot(
+                                LootEnum.DIAMOND,
+                                entityXPos, entityYPos);
+                        default -> tempLoot = null;
                     }
                     if (tempLoot != null) {
                         items.add(tempLoot);
                         grid[entityXPos][entityYPos].setOccupying(tempLoot);
                     }
                 }
-                case "BOMB" -> {
+                case TYPE_BOMB -> {
                     Bomb tempBomb = new Bomb(entityXPos, entityYPos);
                     items.add(tempBomb);
                     grid[entityXPos][entityYPos].setOccupying(tempBomb);
                 }
-                case "LEVER" -> {
+                case TYPE_LEVER -> {
                     Colour colour = colourSetter(e.arg1);
                     Lever tempLever = new Lever(colour, entityXPos, entityYPos);
                     items.add(tempLever);
                     grid[entityXPos][entityYPos].setOccupying(tempLever);
                 }
-                case "GATE" -> {
+                case TYPE_GATE -> {
                     Colour colour = colourSetter(e.arg1);
                     Gate tempGate = new Gate(colour, entityXPos, entityYPos);
                     gates.add(tempGate);
                     grid[entityXPos][entityYPos].setOccupying(tempGate);
-//                    for (Item item : items) {
-//                        if (item instanceof Lever lever) {
-//                            if (tempGate.getColour() == lever.getColour()) {
-//                                lever.addGate(tempGate);
-//                            }
-//                        }
-//                    }
                 }
-                case "DOOR" -> {
+                case TYPE_DOOR -> {
                     Door tempDoor = new Door(entityXPos, entityYPos);
                     items.add(tempDoor);
                     grid[entityXPos][entityYPos].setOccupying(tempDoor);
                 }
-                case "CLOCK" -> {
+                case TYPE_CLOCK -> {
                     Clock tempClock = new Clock(entityXPos, entityYPos);
                     items.add(tempClock);
                     grid[entityXPos][entityYPos].setOccupying(tempClock);
                 }
-                case "SHIELD" -> {
+                case TYPE_SHIELD -> {
                     Shield shield = new Shield(entityXPos, entityYPos);
                     items.add(shield);
                     grid[entityXPos][entityYPos].setOccupying(shield);
                 }
                 default -> {
                     System.out.println(
-                            "Unknown entity type in level file: " + e.type);
+                            ERR_UNKNOWN_ENTITY + e.type);
                 }
             }
         }
@@ -574,11 +644,9 @@ public class Level {
      * Loads the grid from the level file.
      */
     public void loadGrid() {
-        String filename = "level"
-                + GameManager.getCurrentLevelNumber() + ".txt";
+        String filename = LEVEL_PREFIX + GameManager.getCurrentLevelNumber() + LEVEL_SUFFIX;
         String levelId = extractLevelId(filename);
-        java.nio.file.Path levelPath =
-                java.nio.file.Path.of("levels", filename);
+        java.nio.file.Path levelPath = java.nio.file.Path.of(LEVELS_FOLDER, filename);
         try {
             LevelDef def = new LevelLoader().loadLevel(levelId, levelPath);
             int x = def.width;
@@ -596,16 +664,17 @@ public class Level {
                         char colChar = sequence.charAt(z);
                         colours[z] = colourSetter(String.valueOf(colChar));
                     }
-                    int xPos = (x - 1) - col;
-                    int yPos = (y - 1) - row;
+                    int xPos = (x - COORD_OFFSET) - col;
+                    int yPos = (y - COORD_OFFSET) - row;
                     grid[xPos][yPos] = new Tile(xPos, yPos, colours);
                 }
             }
         } catch (Exception e) {
-            System.out.println("Failed to load grid for " + filename);
+            System.out.println(ERR_LOAD_GRID + filename);
             e.printStackTrace();
         }
     }
+
     /**
      * Loads the saved state into the level,
      * including player position, NPCs, time remaining, score, and items.
@@ -635,40 +704,40 @@ public class Level {
             Map<String, Object> state =
                     (Map<String, Object>) npcState.getValue();
             String npcType = npcState.getKey();
-            int rawX = (int) state.get("x");
-            int rawY = (int) state.get("y");
+            int rawX = (int) state.get(KEY_X);
+            int rawY = (int) state.get(KEY_Y);
             int xPos = rawX;
             int yPos = rawY;
 
             switch (npcType) {
-                case "FLYING" -> {
-                    String npcDirection = (String) state.get("dir");
+                case TYPE_FLYING -> {
+                    String npcDirection = (String) state.get(KEY_DIR);
                     Direction direction = directionSetter(npcDirection);
                     FlyingAssassin tempEnemy =
                             new FlyingAssassin(grid[xPos][yPos],
                                     direction, this, npcType);
                     enemies.add(tempEnemy);
                 }
-                case "FOLLOWER" -> {
-                    String npcDirection = (String) state.get("dir");
+                case TYPE_FOLLOWER -> {
+                    String npcDirection = (String) state.get(KEY_DIR);
                     Direction direction = directionSetter(npcDirection);
-                    String followerColour = (String) state.get("colour");
+                    String followerColour = (String) state.get(KEY_COLOUR);
                     Colour colour = colourSetter(followerColour);
                     FloorThief tempEnemy =
                             new FloorThief(colour, grid[xPos][yPos],
                                     direction, this, npcType);
                     enemies.add(tempEnemy);
                 }
-                case "SMART" -> {
-                    String npcDirection = (String) state.get("dir");
+                case TYPE_SMART -> {
+                    String npcDirection = (String) state.get(KEY_DIR);
                     Direction direction = directionSetter(npcDirection);
                     SmartThief tempEnemy =
                             new SmartThief(grid[xPos][yPos],
                                     direction, this, npcType);
                     enemies.add(tempEnemy);
                 }
-                case "CAMPER" -> {
-                    String npcDirection = (String) state.get("dir");
+                case TYPE_CAMPER -> {
+                    String npcDirection = (String) state.get(KEY_DIR);
                     Direction direction = directionSetter(npcDirection);
                     Camper tempEnemy =
                             new Camper(grid[xPos][yPos],
@@ -676,7 +745,7 @@ public class Level {
                     enemies.add(tempEnemy);
                 }
                 default -> {
-                    System.out.println("Unknown NPC type in save data: "
+                    System.out.println(ERR_UNKNOWN_ENTITY_SAVE
                             + npcType);
                 }
             }
@@ -691,67 +760,62 @@ public class Level {
         // Set the items from save data --------------------------------------
         for (Map.Entry<String, Object> itemState
                 : saveData.getItems().entrySet()) {
-            String itemType = itemState.getKey().split("#")[0];
+            String itemType = itemState.getKey().split(PARAM_SEPARATOR)[0];
             Map<String, Object> state =
                     (Map<String, Object>) itemState.getValue();
-            int xPos = (int) state.get("x");
-            int yPos = (int) state.get("y");
+            int xPos = (int) state.get(KEY_X);
+            int yPos = (int) state.get(KEY_Y);
 
             switch (itemType) {
-                case "LOOT" -> {
-                    String value = (String) state.get("param");
+                case TYPE_LOOT -> {
+                    String value = (String) state.get(KEY_PARAM);
                     Loot tempLoot;
                     switch (value) {
-                        case "CENT"    ->
-                                tempLoot = new Loot(
-                                        LootEnum.CENT,    xPos, yPos);
-                        case "DOLLAR"  ->
-                                tempLoot = new Loot(
-                                        LootEnum.DOLLAR,  xPos, yPos);
-                        case "RUBY"    ->
-                                tempLoot = new Loot(
-                                        LootEnum.RUBY,    xPos, yPos);
-                        case "DIAMOND" ->
-                                tempLoot = new Loot(
-                                        LootEnum.DIAMOND, xPos, yPos);
-                        default        ->
-                                tempLoot = null;
+                        case LOOT_CENT -> tempLoot = new Loot(
+                                LootEnum.CENT, xPos, yPos);
+                        case LOOT_DOLLAR -> tempLoot = new Loot(
+                                LootEnum.DOLLAR, xPos, yPos);
+                        case LOOT_RUBY -> tempLoot = new Loot(
+                                LootEnum.RUBY, xPos, yPos);
+                        case LOOT_DIAMOND -> tempLoot = new Loot(
+                                LootEnum.DIAMOND, xPos, yPos);
+                        default -> tempLoot = null;
                     }
                     if (tempLoot != null) {
                         items.add(tempLoot);
                         grid[xPos][yPos].setOccupying(tempLoot);
                     }
                 }
-                case "BOMB" -> {
+                case TYPE_BOMB -> {
                     String[] bombParams = ((String)
-                            state.get("param")).split("#");
+                            state.get(KEY_PARAM)).split(PARAM_SEPARATOR);
                     Bomb tempBomb = getBombFromSave(bombParams, xPos, yPos);
                     items.add(tempBomb);
                     grid[xPos][yPos].setOccupying(tempBomb);
                 }
-                case "LEVER" -> {
-                    Colour colour = colourSetter((String) state.get("param"));
+                case TYPE_LEVER -> {
+                    Colour colour = colourSetter((String) state.get(KEY_PARAM));
                     Lever tempLever = new Lever(colour, xPos, yPos);
                     items.add(tempLever);
                     grid[xPos][yPos].setOccupying(tempLever);
                 }
-                case "DOOR" -> {
+                case TYPE_DOOR -> {
                     Door tempDoor = new Door(xPos, yPos);
                     items.add(tempDoor);
                     grid[xPos][yPos].setOccupying(tempDoor);
                 }
-                case "CLOCK" -> {
+                case TYPE_CLOCK -> {
                     Clock tempClock = new Clock(xPos, yPos);
                     items.add(tempClock);
                     grid[xPos][yPos].setOccupying(tempClock);
                 }
-                case "SHIELD" -> {
+                case TYPE_SHIELD -> {
                     Shield shield = new Shield(xPos, yPos);
                     items.add(shield);
                     grid[xPos][yPos].setOccupying(shield);
                 }
                 default -> {
-                    System.out.println("Unknown Item type in save data: "
+                    System.out.println(ERR_UNKNOWN_ITEM_SAVE
                             + itemType);
                 }
             }
@@ -760,15 +824,15 @@ public class Level {
         // Set the gates from save data --------------------------------------
         for (Map.Entry<String, Object> gateState
                 : saveData.getGates().entrySet()) {
-            String gateType = gateState.getKey().split("#")[0];
+            String gateType = gateState.getKey().split(PARAM_SEPARATOR)[0];
             Map<String, Object> state = (Map<String, Object>)
                     gateState.getValue();
-            int xPos = (int) state.get("x");
-            int yPos = (int) state.get("y");
+            int xPos = (int) state.get(KEY_X);
+            int yPos = (int) state.get(KEY_Y);
 
             switch (gateType) {
-                case "GATE" -> {
-                    Colour colour = colourSetter((String) state.get("param"));
+                case TYPE_GATE -> {
+                    Colour colour = colourSetter((String) state.get(KEY_PARAM));
                     Gate tempGate = new Gate(colour, xPos, yPos);
                     gates.add(tempGate);
                     grid[xPos][yPos].setOccupying(tempGate);
@@ -781,7 +845,7 @@ public class Level {
                     }
                 }
                 default -> {
-                    System.out.println("Unknown Gate type in save data: "
+                    System.out.println(ERR_UNKNOWN_GATE_SAVE
                             + gateType);
                 }
             }
@@ -793,9 +857,10 @@ public class Level {
 
     /**
      * Makes a bomb from existing sava data.
+     *
      * @param bombParams the parameters to make the bomb.
-     * @param xPos its x location
-     * @param yPos its y location
+     * @param xPos       its x location
+     * @param yPos       its y location
      * @return the bomb made.
      */
     private static Bomb getBombFromSave(String[] bombParams, int xPos, int yPos) {
@@ -811,7 +876,6 @@ public class Level {
     }
 
 
-
     /**
      * Quick helper method to find the levelID.
      *
@@ -821,32 +885,33 @@ public class Level {
     private String extractLevelId(final String filename) {
         // very basic: strip "level" prefix and ".txt" suffix if present
         String name = filename;
-        if (name.startsWith("level")) {
-            name = name.substring("level".length());
+        if (name.startsWith(LEVEL_PREFIX)) {
+            name = name.substring(LEVEL_PREFIX.length());
         }
-        if (name.endsWith(".txt")) {
-            name = name.substring(0, name.length() - 4);
+        if (name.endsWith(LEVEL_SUFFIX)) {
+            name = name.substring(0, name.length() - LEVEL_SUFFIX.length());
         }
         return name;
     }
 
     /**
      * converts strings to direction enum values.
+     *
      * @param direction the string to be converted
      * @return the appropriate direction value
      */
     private Direction directionSetter(final String direction) {
         switch (direction) {
-            case "UP" -> {
+            case DIR_UP -> {
                 return Direction.UP;
             }
-            case "DOWN" -> {
+            case DIR_DOWN -> {
                 return Direction.DOWN;
             }
-            case "LEFT" -> {
+            case DIR_LEFT -> {
                 return Direction.LEFT;
             }
-            case "RIGHT" -> {
+            case DIR_RIGHT -> {
                 return Direction.RIGHT;
             }
             default -> {
@@ -857,26 +922,28 @@ public class Level {
 
     /**
      * converts strings to colour enum values.
+     *
      * @param colour the string to be converted
      * @return the appropriate colour value
      */
     private Colour colourSetter(final String colour) {
         switch (colour) {
-            case "R" -> {
+            case COLOUR_RED -> {
                 return Colour.RED;
             }
-            case "G" -> {
+            case COLOUR_GREEN -> {
                 return Colour.GREEN;
             }
-            case "B" -> {
+            case COLOUR_BLUE -> {
                 return Colour.BLUE;
             }
-            case "Y" -> {
+            case COLOUR_YELLOW -> {
                 return Colour.YELLOW;
             }
-            case "C" -> {
+            case COLOUR_CYAN -> {
                 return Colour.CYAN;
-            } case "M" -> {
+            }
+            case COLOUR_MAGENTA -> {
                 return Colour.MAGENTA;
             }
             default -> {
@@ -884,8 +951,6 @@ public class Level {
             }
         }
     }
-
-
 
 
     /**
@@ -915,6 +980,7 @@ public class Level {
     /**
      * Changes the current levels intact items.
      * Allows for items to be removed from drawing.
+     *
      * @param items the new list of items.
      */
     public void setItems(final List<Item> items) {
@@ -923,6 +989,7 @@ public class Level {
 
     /**
      * Adds an item to the level's list of items.
+     *
      * @param item the item to be added.
      */
     public void addItem(final Item item) {
@@ -931,6 +998,7 @@ public class Level {
 
     /**
      * Removes an item from the level's list of items.
+     *
      * @param item the item to be removed.
      */
     public void removeItem(final Item item) {
@@ -939,6 +1007,7 @@ public class Level {
 
     /**
      * Allows tiles to be accessed.
+     *
      * @return the grid of the level made of tiles.
      */
     public Tile[][] getGrid() {
@@ -947,6 +1016,7 @@ public class Level {
 
     /**
      * Changes the list of intact gates in the level to be changed.
+     *
      * @param gates the gates still intact.
      */
     public void setGates(final List<Gate> gates) {
@@ -964,13 +1034,16 @@ public class Level {
 
     /**
      * Removes a gate from the level.
+     *
      * @param gate to remove from level.
      */
     public void removeGate(final Gate gate) {
         gates.remove(gate);
     }
+
     /**
      * Gets the player of the level.
+     *
      * @return the player.
      */
     public Player getPlayer() {
@@ -979,13 +1052,16 @@ public class Level {
 
     /**
      * Gets the current GameController.
+     *
      * @return the game controller.
      */
     public GameController getGameController() {
-        return gameController; }
+        return gameController;
+    }
 
     /**
      * Gets the list of all enemies.
+     *
      * @return all the npcs.
      */
     public java.util.List<NonPlayableCharacter> getEnemies() {
@@ -994,6 +1070,7 @@ public class Level {
 
     /**
      * Says if the level is finished.
+     *
      * @return true if the level is finished.
      */
     public boolean isFinishedLevel() {
