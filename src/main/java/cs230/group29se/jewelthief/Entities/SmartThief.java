@@ -35,7 +35,7 @@ public class SmartThief extends FloorThief {
      * @param level The game level instance.
      * @param id The unique identifier for this entity.
      */
-    public SmartThief(Tile startingTile, Direction direction, Level level, String id) {
+    public SmartThief(final Tile startingTile, final Direction direction, final Level level, final String id) {
         super(null, startingTile, direction, level, id);
         this.level = level;
     }
@@ -113,7 +113,7 @@ public class SmartThief extends FloorThief {
      * @param targetType The type of object to search for items or doors.
      * @return The Direction to move in to start the path, or null if no path exists.
      */
-    private Direction findPathTo(String targetType) {
+    private Direction findPathTo(final String targetType) {
         int width = level.getWidth();
         int height = level.getHeight();
 
@@ -185,7 +185,7 @@ public class SmartThief extends FloorThief {
      * @param direction The direction of movement.
      * @return the final tile destination.
      */
-    private Tile calculateDestination(Tile start, Direction direction) {
+    private Tile calculateDestination(final Tile start, final Direction direction) {
         int x = start.getX();
         int y = start.getY();
         int dx = direction.getX();
@@ -216,7 +216,7 @@ public class SmartThief extends FloorThief {
      * @param tile The tile to check.
      * @return true if the tile is occupied by a Bomb, Player, or another Enemy; false otherwise.
      */
-    private boolean isBlockedPath(Tile tile) {
+    private boolean isBlockedPath(final Tile tile) {
         if (tile.hasBomb()) {
             return true;
         }

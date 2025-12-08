@@ -3,7 +3,6 @@ package cs230.group29se.jewelthief.Entities;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
 import cs230.group29se.jewelthief.Items.Item;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -66,7 +65,7 @@ public class Camper extends NonPlayableCharacter {
      * @param rectHalfWidth  half-width of patrol rectangle in tiles (>=1)
      * @param rectHalfHeight half-height of patrol rectangle in tiles (>=1)
      */
-    public Camper(Tile startingTile, Direction direction, Level level, String id, int rectHalfWidth, int rectHalfHeight) {
+    public Camper(final Tile startingTile, final Direction direction, final Level level, final String id, int rectHalfWidth, final int rectHalfHeight) {
         super(startingTile, direction);
         this.id = id;
         this.level = level;
@@ -83,7 +82,7 @@ public class Camper extends NonPlayableCharacter {
     /**
      * Simplified constructor with default rectangle size 2x1.
      */
-    public Camper(Tile startingTile, Direction direction, Level level, String id) {
+    public Camper(final Tile startingTile, final Direction direction, final Level level, final String id) {
         this(startingTile, direction, level, id, RECT_HALF_WIDTH, RECT_HALF_HEIGHT);
     }
 
@@ -91,7 +90,7 @@ public class Camper extends NonPlayableCharacter {
      * Camper does not collect items.
      */
     @Override
-    public void collectItem(Item item) {
+    public void collectItem(final Item item) {
         // Camper does not pick up items
     }
 
@@ -199,7 +198,7 @@ public class Camper extends NonPlayableCharacter {
      * @param from tile to measure from
      * @return index of nearest tile in patrolPath
      */
-    private int findNearestPathIndex(Tile from) {
+    private int findNearestPathIndex(final Tile from) {
         if (from == null || patrolPath.isEmpty()) return 0;
         int best = 0;
         int bestDist = Integer.MAX_VALUE;
@@ -220,7 +219,7 @@ public class Camper extends NonPlayableCharacter {
     /**
      * Builds the perimeter path around center tile. Adds tiles in clockwise order.
      */
-    private void buildPerimeterPath(int centerX, int centerY, int halfW, int halfH) {
+    private void buildPerimeterPath(final int centerX, final int centerY, final int halfW, int halfH) {
         patrolPath.clear();
 
         int minX = Math.max(0, centerX - halfW);
@@ -255,10 +254,10 @@ public class Camper extends NonPlayableCharacter {
      * @param x tile x-coordinate
      * @param y tile y-coordinate
      */
-    private void addTileIfWalkable(int x, int y) {
+    private void addTileIfWalkable(final int x, final int y) {
         if (x < 0 || y < 0 || x >= level.getWidth() || y >= level.getHeight()) return;
         Tile t = level.getTile(x, y);
-        if(!t.isWalkable()) return;
+        if (!t.isWalkable()) return;
         patrolPath.add(t);
     }
 
@@ -276,7 +275,7 @@ public class Camper extends NonPlayableCharacter {
      * @param value true to set as protected, false otherwise
      */
     @Override
-    public void setProtected(boolean value) {
+    public void setProtected(final boolean value) {
         isProtected = value;
     }
 
