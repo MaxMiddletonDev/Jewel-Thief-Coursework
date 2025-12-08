@@ -4,118 +4,98 @@ import javafx.scene.media.AudioClip;
 import java.net.URL;
 
 /**
- * Sound Manager to handle all the Sound Effects and Music within the Game
- * This allows for sound to be played in specific points where needed.
+ * Sound Manager to handle all sound effects and music within the game.
+ * This centralizes all audio loading and playback logic.
  *
  * @author Max Middleton
  */
 public class SoundManager {
-    private static final double VOLUME = 0.1;
-    private static final String BASE_PATH = "/cs230/group29se/jewelthief/Audios/";
+    private static final double DEFAULT_VOLUME = 0.1;
+    private static final String AUDIO_BASE_PATH = "/cs230/group29se/jewelthief/Audios/";
 
-    // End File path for Audios
-    public static final AudioClip COLLECT = load("Collect.mp3");
-    public static final AudioClip BOMB = load("Bomb.mp3");
-    public static final AudioClip DEATH = load("Death.mp3");
-    public static final AudioClip GAME = load("Game.mp3");
-    public static final AudioClip MAINMENU = load("MainMenu.mp3");
-    public static final AudioClip PAUSE = load("Pause.mp3");
-    public static final AudioClip START = load("Start.mp3");
-    public static final AudioClip WIN = load("Win.mp3");
+    // Filenames for audio clipS
+    private static final String FILE_COLLECT = "Collect.mp3";
+    private static final String FILE_BOMB = "Bomb.mp3";
+    private static final String FILE_DEATH = "Death.mp3";
+    private static final String FILE_GAME = "Game.mp3";
+    private static final String FILE_MAINMENU = "MainMenu.mp3";
+    private static final String FILE_PAUSE = "Pause.mp3";
+    private static final String FILE_START = "Start.mp3";
+    private static final String FILE_WIN = "Win.mp3";
 
+    // AudioClip instances
+    public static final AudioClip COLLECT = load(FILE_COLLECT);
+    public static final AudioClip BOMB = load(FILE_BOMB);
+    public static final AudioClip DEATH = load(FILE_DEATH);
+    public static final AudioClip GAME = load(FILE_GAME);
+    public static final AudioClip MAINMENU = load(FILE_MAINMENU);
+    public static final AudioClip PAUSE = load(FILE_PAUSE);
+    public static final AudioClip START = load(FILE_START);
+    public static final AudioClip WIN = load(FILE_WIN);
+
+    public static final String MSG_MISSING = "Missing sound file: ";
+    public static final String MSG_ERROR_LOADING = "Error loading %s: %s";
     /**
-     * Load Method Concatenates the base path and filename.
-     * Has a catch for incorrect files
-     * @param filename Audio Files to be added
-     * @return null;
+     * Loads an AudioClip from resources.
+     *
+     * @param filename the name of the audio file to load
+     * @return the AudioClip, or null if loading fails
      */
     private static AudioClip load(String filename) {
         try {
-            URL resource = SoundManager.class.getResource(BASE_PATH + filename);
+            URL resource = SoundManager.class.getResource(AUDIO_BASE_PATH + filename);
             if (resource == null) {
-                System.out.println("Missing sound file: " + filename);
+                System.err.println(MSG_MISSING + filename);
                 return null;
             }
             return new AudioClip(resource.toString());
         } catch (Exception e) {
-            System.out.println("Error loading " + filename + ": " + e.getMessage());
+            System.err.println(String.format(MSG_ERROR_LOADING, filename, e.getMessage()));
             return null;
         }
     }
 
-    /**
-     * Plays a sound that represents Collect.
-     */
+    // -------------------------------
+    // Playback Methods (No magic nums)
+    // -------------------------------
+
     public static void playCollect() {
-        if (COLLECT != null) {
-            COLLECT.play();
-        }
+        if (COLLECT != null) COLLECT.play();
     }
 
-    /**
-     * Plays a sound that represents Bomb.
-     */
     public static void playBomb() {
-        if (BOMB != null) {
-            BOMB.play();
-        }
+        if (BOMB != null) BOMB.play();
     }
 
-    /**
-     * Plays a sound that represents Death.
-     */
     public static void playDeath() {
-        if (DEATH != null) {
-            DEATH.play();
-        }
+        if (DEATH != null) DEATH.play();
     }
 
-    /**
-     * Plays a sound that represents Game.
-     */
     public static void playGame() {
         if (GAME != null) {
             GAME.stop();
             MAINMENU.stop();
-            GAME.play(VOLUME);
+            GAME.play(DEFAULT_VOLUME);
         }
     }
 
-    /**
-     * Plays a sound that represents Main Menu.
-     */
     public static void playMainMenu() {
         if (MAINMENU != null) {
             MAINMENU.stop();
             GAME.stop();
-            MAINMENU.play(VOLUME);
+            MAINMENU.play(DEFAULT_VOLUME);
         }
     }
 
-    /**
-     * Plays a sound that represents Pause.
-     */
     public static void playPause() {
-        if (PAUSE != null) {
-            PAUSE.play();
-        }
+        if (PAUSE != null) PAUSE.play();
     }
 
-    /**
-     * Plays a sound that represents Start.
-     */
     public static void playStart() {
-        if (START != null) {
-            START.play(VOLUME);
-        }
+        if (START != null) START.play(DEFAULT_VOLUME);
     }
 
-    /**
-     * Plays a sound that represents Win.
-     */
     public static void playWin() {
-        if (WIN != null) {
-            WIN.play();
-        }
+        if (WIN != null) WIN.play();
     }
 }
