@@ -22,22 +22,13 @@ public class Tile {
      * Width of the border.
      */
     private static final int BORDER_WIDTH = 2;
-    /**
-     * x position of the tile.
-     */
+
     private final int posX;
-    /**
-     * y position of the tile.
-     */
     private final int posY;
-    /**
-     * colours of the tile.
-     */
+
     private final Colour[] colours;
-    //The item or gate or nothing occupying a tile
-    /**
-     * What item or gate is occupying a tile.
-     */
+
+    // The object occupying the tile (e.g., loot, gate), null if unoccupied.
     private Object occupying = null;
 
     /**
@@ -132,8 +123,6 @@ public class Tile {
      * @param gc the GraphicsContext to draw on
      */
     public void draw(final GraphicsContext gc) {
-//        Arrays.sort(colours, Comparator.comparing(Colour::toString));
-
         Color tlColour = colours[0].toFxColor();
         Color trColour = colours[1].toFxColor();
         Color blColour = colours[2].toFxColor();
