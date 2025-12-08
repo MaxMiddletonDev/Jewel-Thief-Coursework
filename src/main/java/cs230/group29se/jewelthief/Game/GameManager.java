@@ -17,7 +17,6 @@ import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import java.nio.file.Path;
 import java.util.Map;
 
 /**
@@ -28,6 +27,7 @@ import java.util.Map;
  * @version 1.0
  */
 public final class GameManager {
+
     private static int levelNumber;
     private static Level currentLevel;
     private static Screen currentScreen;

@@ -7,15 +7,18 @@ import java.util.List;
 import java.util.Map;
 
 public class GameHighScoresHelper {
-
-    // Helper to always get current PersistenceManager
-//    private static PersistenceManager pm() {
-//        return GameManager.getPersistenceManager();
-//    }
+    /**
+     * Returns the top 10 high-scores.
+     * @return List of high-scores.
+     */
     public static List<HighScoreEntry> loadGlobalHighScores() {
         return PersistenceManager.loadGlobalHighScores();
     }
 
+    /**
+     * Returns a map of players and their high scores.
+     * @return a map of names and their high scores
+     */
     public static Map<String, List<HighScoreEntry>> loadPerLevelHighScores() {
         return PersistenceManager.loadPerLevelHighScores();
     }

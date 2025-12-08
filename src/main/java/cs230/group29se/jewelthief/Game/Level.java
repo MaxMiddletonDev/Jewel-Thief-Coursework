@@ -97,7 +97,7 @@ public class Level {
      */
 
     public Level(final String levelName, final GameController gameController,
-                  final SaveData saveData) {
+                 final SaveData saveData) {
         this.gameController = gameController;
         this.saveData = saveData;
         try {
@@ -744,22 +744,7 @@ public class Level {
                 case "BOMB" -> {
                     String[] bombParams = ((String)
                             state.get("param")).split("#");
-                    int countDownLeft =
-                            Integer.parseInt(bombParams[0]);
-                    double countdownTickProgress =
-                            Double.parseDouble(bombParams[1]);
-                    double nextBoomCountdown =
-                            Double.parseDouble(bombParams[2]);
-                    int explosions =
-                            Integer.parseInt(bombParams[3]);
-                    boolean armed =
-                            Boolean.parseBoolean(bombParams[4]);
-                    boolean exploding =
-                            Boolean.parseBoolean(bombParams[5]);
-                    Bomb tempBomb =
-                            new Bomb(countDownLeft, countdownTickProgress,
-                                    nextBoomCountdown, explosions,
-                                    armed, exploding, xPos, yPos);
+                    Bomb tempBomb = getBombFromSave(bombParams, xPos, yPos);
                     items.add(tempBomb);
                     grid[xPos][yPos].setOccupying(tempBomb);
                 }
@@ -824,6 +809,29 @@ public class Level {
         // Re-link gates to levers after all items are loaded ----------------
 
     }
+
+
+    /**
+     * Makes a bomb from existing sava data.
+     * @param bombParams the paramaters to make the bomb.
+     * @param xPos its x location
+     * @param yPos its y location
+     * @return the bomb made.
+     */
+    private static Bomb getBombFromSave(String[] bombParams, int xPos, int yPos) {
+        int countDownLeft = Integer.parseInt(bombParams[0]);
+        double countdownTickProgress = Double.parseDouble(bombParams[1]);
+        double nextBoomCountdown = Double.parseDouble(bombParams[2]);
+        int explosions = Integer.parseInt(bombParams[3]);
+        boolean armed = Boolean.parseBoolean(bombParams[4]);
+        boolean exploding = Boolean.parseBoolean(bombParams[5]);
+        Bomb tempBomb = new Bomb(countDownLeft, countdownTickProgress, nextBoomCountdown, explosions
+                , armed, exploding, xPos, yPos);
+        return tempBomb;
+    }
+
+
+
     /**
      * Quick helper method to find the levelID.
      *
@@ -896,6 +904,9 @@ public class Level {
             }
         }
     }
+
+
+
 
     /**
      * Checks if the level contains no loot or levers.
