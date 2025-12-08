@@ -512,14 +512,9 @@ public class Level {
             }
         }
 
-<<<<<<< Updated upstream
-        int xPos = def.playerStart.x;  // tile index
-        int yPos = def.playerStart.y;  // tile index
-=======
         int xPos = def.getPlayerStart().getX();  // tile index
         int yPos = def.getPlayerStart().getY();  // tile index
         // clamp to grid bounds just in case
->>>>>>> Stashed changes
         xPos = Math.max(0, Math.min(xPos, getWidth() - COORD_OFFSET));
         yPos = Math.max(0, Math.min(yPos, getHeight() - COORD_OFFSET));
         double px = xPos;
@@ -531,14 +526,9 @@ public class Level {
             int rawY = e.getY();
             int entityXPos = rawX - COORD_OFFSET;
             int entityYPos = rawY - COORD_OFFSET;
-<<<<<<< Updated upstream
-            String npcId = e.type;
-            switch (e.type) {
-=======
             String npcId = e.getType();
 
             switch (e.getType()) {
->>>>>>> Stashed changes
                 case TYPE_FLYING -> {
                     // e.arg1 = direction string ("UP","DOWN","LEFT","RIGHT")
                     String npcDirection = e.getArg1();
@@ -632,12 +622,8 @@ public class Level {
                     grid[entityXPos][entityYPos].setOccupying(shield);
                 }
                 default -> {
-<<<<<<< Updated upstream
-                    System.out.println(ERR_UNKNOWN_ENTITY + e.type);
-=======
                     System.out.println(
                             ERR_UNKNOWN_ENTITY + e.getType());
->>>>>>> Stashed changes
                 }
             }
         }
