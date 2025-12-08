@@ -17,9 +17,7 @@ public class Lever extends Destroyable {
     public static final int XPOS_TILE_ADJUSTMENT = 2;
     public static final int YPOS_TILE_ADJUSTMENT = 1;
     private final Colour colour;
-    private final ArrayList<Gate> gates = new ArrayList<Gate>();
-    private static final double WIDTH = 50.0;
-    private static final double HEIGHT = 50.0;
+    private final ArrayList<Gate> gates = new ArrayList<>();
     private final Image image;
 
     /**

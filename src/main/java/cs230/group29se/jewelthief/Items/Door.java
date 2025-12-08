@@ -61,14 +61,6 @@ public class Door extends Item {
     }
 
     /**
-     * Gets if the door is closed (true) or open (false).
-     * @return the state of the door.
-     */
-    public boolean getClosed() {
-        return closed;
-    }
-
-    /**
      * Sets the state of the door to closed (true) or open (false).
      * @param closed closed gets set to true (closed) or false (open).
      */

@@ -16,8 +16,6 @@ public final class Gate implements Remove {
     public static final int XPOS_TILE_ADJUSTMENT = 2;
     public static final int YPOS_TILE_ADJUSTMENT = 1;
     private final Colour colour;
-    private static final double WIDTH = 50.0;
-    private static final double HEIGHT = 50.0;
     private final int posX;
     private final int posY;
     private final Image image;
