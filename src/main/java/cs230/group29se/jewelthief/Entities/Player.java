@@ -36,7 +36,7 @@ public class Player implements MoveableCharacter, Protectable {
      * @param startTile the tile where the player spawns at the start of the level.
      * @param level     the level instance the player belongs to, used for checking boundaries and tile data.
      */
-    public Player(Tile startTile, Level level) {
+    public Player(final Tile startTile, final Level level) {
         this.currentTile = startTile;
         this.level = level;
         this.direction = Direction.UP;
@@ -49,7 +49,7 @@ public class Player implements MoveableCharacter, Protectable {
      *
      * @param item the item to interact with.
      */
-    public void collectItem(Item item) {
+    public void collectItem(final Item item) {
         // If the item is collectable, record that the player collected it
         item.setCollector(this);
 
@@ -62,7 +62,7 @@ public class Player implements MoveableCharacter, Protectable {
      *
      * @param direction the new direction for the player to face.
      */
-    public void setDirection(Direction direction) {
+    public void setDirection(final Direction direction) {
         this.direction = direction;
 
         if (direction == Direction.RIGHT) {
@@ -93,15 +93,6 @@ public class Player implements MoveableCharacter, Protectable {
     }
 
     /**
-     * Sets the player's current tile.
-     *
-     * @param tile the new tile for the player to occupy.
-     */
-    public void setCurrentTile(Tile tile) {
-        this.currentTile = tile;
-    }
-
-    /**
      * Checks if the player is currently alive.
      *
      * @return True if the player is alive, false otherwise.
@@ -112,7 +103,7 @@ public class Player implements MoveableCharacter, Protectable {
     }
 
     @Override
-    public void setAliveTo(boolean alive) {
+    public void setAliveTo(final boolean alive) {
         isAlive = alive;
         if (!isAlive) {
             SoundManager.playDeath();
@@ -124,7 +115,7 @@ public class Player implements MoveableCharacter, Protectable {
      *
      * @param gc The GraphicsContext used for drawing.
      */
-    public void draw(GraphicsContext gc) {
+    public void draw(final GraphicsContext gc) {
         int tileSize = Tile.TILE_SIZE;
         double x = currentTile.getX() * tileSize;
         double y = currentTile.getY() * tileSize;
@@ -202,7 +193,7 @@ public class Player implements MoveableCharacter, Protectable {
      * @param other - character that collides with this one
      */
     @Override
-    public void onCollisionWith(MoveableCharacter other) {
+    public void onCollisionWith(final MoveableCharacter other) {
         // Will create when enemies are created
     }
 
@@ -237,7 +228,7 @@ public class Player implements MoveableCharacter, Protectable {
      * @param value True to protect the player, false to remove protection.
      */
     @Override
-    public void setProtected(boolean value) {
+    public void setProtected(final boolean value) {
         System.out.println(PLAYER_PROTECTED + value);
         isProtected = value;
     }

@@ -16,17 +16,17 @@ public enum Direction {
     private final int y;
 
     /**
-     * Constructs new direction in an array called directionFinder
-     * @param x
-     * @param y
+     * Constructs new direction in an array called directionFinder.
+     * @param x used to find the tile along x
+     * @param y used to find the tile along y
      */
-    Direction(int x, int y) {
+    Direction(final int x, final int y) {
         this.x = x;
         this.y = y;
     }
 
     /**
-     * Get Method to get the X Direction
+     * Get Method to get the X Direction.
      * @return x
      */
     public int getX() {
@@ -34,7 +34,7 @@ public enum Direction {
     }
 
     /**
-     * Get Method to get the Y Direction
+     * Get Method to get the Y Direction.
      * @return y
      */
     public int getY() {
