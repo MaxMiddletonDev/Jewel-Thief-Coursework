@@ -3,36 +3,54 @@ package cs230.group29se.jewelthief.Scenes.HighScoresScene;
 import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
 
+/**
+ * Represents the High Scores screen in the game.
+ * This screen displays the high scores and allows navigation back to the main menu.
+ *
+ * @author Iyaad, Gustas Rove
+ */
 public class HighScoresScreen extends Screen {
 
-    private HighScoresController controller;
-
+    /**
+     * Constructs a new HighScoresScreen instance.
+     * Sets the screen title, FXML path, and the next screen to navigate to.
+     */
     public HighScoresScreen() {
-        setScreenTitle("High Scores");
-        setScreenFXMLPath("/cs230/group29se/jewelthief/highscores-view.fxml");
+        setScreenTitle("High Scores"); // Sets the title of the screen
+        setScreenFXMLPath("/cs230/group29se/jewelthief/highscores-view.fxml"); // Path to the FXML file
+        setNextScreen(new MainMenuScreen()); // Sets the next screen to the main menu
     }
 
+    /**
+     * Called when the screen is initialized.
+     * Loads the high scores data using the controller.
+     */
     @Override
     public void onInitialize() {
-        if (getController() instanceof HighScoresController c) {
-            controller = c;
-            c.loadData();
-        }
+        ((HighScoresController)getController()).loadData(); // Loads high scores data
     }
 
+    /**
+     * Updates the screen. Currently, no update logic is implemented.
+     */
     @Override
-    public void update() { }
+    public void update() {
+        // No update logic required for this screen
+    }
 
+    /**
+     * Draws the screen. Currently, no drawing logic is implemented.
+     */
     @Override
-    public void draw() { }
+    public void draw() {
+        // No drawing logic required for this screen
+    }
 
+    /**
+     * Handles the back button click event.
+     * Marks the screen as finished, allowing navigation back to the previous screen.
+     */
     public void onBackClicked() {
-        finished = true;
-    }
-
-    @Override
-    public Screen getNextScreen() {
-        // Always go back to main menu when finished
-        return new MainMenuScreen();
+        finished = true; // Marks the screen as finished
     }
 }

@@ -194,6 +194,10 @@ public class GameScreen extends Screen {
         if (autosaveTimeline != null) {
             autosaveTimeline.stop();
         }
+
+        //delete save for current level
+        PersistenceManager.deleteSaveForCurrentLevel();
+
         setNextScreen(new LevelFinishedScreen());
         setFinished(true);
     }

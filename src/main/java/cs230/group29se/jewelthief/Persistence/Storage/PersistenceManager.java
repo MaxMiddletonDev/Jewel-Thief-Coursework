@@ -281,6 +281,10 @@ public final class PersistenceManager {
         if (profile == null || levelId == null) return;
 
         String path = pathSave(profile, levelId); // "saves/<profile>/level-<id>.json"
+        if(!fileStore.exists(path)) {
+            System.out.println("No save file exists for profile " + profile + " level " + levelId);
+            return;
+        }
         fileStore.delete(path);                   // delete the JSON if it exists
         cachedSave = null;
     }
