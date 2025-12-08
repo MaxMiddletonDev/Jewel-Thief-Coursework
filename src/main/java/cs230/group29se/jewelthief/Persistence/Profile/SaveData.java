@@ -4,12 +4,12 @@ import java.util.Map;
 
 /**
  * SaveData — Data model representing a snapshot of the current game save.
- * A mutable DTO (data holder only) used by the persistence layer to read/write,
- * typically serialized to JSON.
- * No business logic lives here;
- * reading/writing is handled by {@code FileStore}/{@code JsonSerializer}.
- * <b>JSON constraint:</b> Values inside {@code Object[]}
- * and {@code Map<String,Object>} must be JSON-serializable.
+ * This is a mutable DTO (data holder only) used by the persistence layer to read/write,
+ * typically serialized to JSON.</p>
+ * <p>
+ * No business logic lives here; reading/writing is handled by {@code FileStore}/{@code JsonSerializer}.</p>
+ *
+ * <b>JSON constraint:</b> Values inside {@code Object[]} and {@code Map<String,Object>} must be JSON-serializable.</p>
  *
  * @author Iyaad, Gustas Rove
  * @see cs230.group29se.jewelthief.Persistence.Storage.FileStore
@@ -20,13 +20,23 @@ public class SaveData {
     private String levelId;
     private String profileName;
 
+    // Heterogeneous snapshot of the player at save time (position, HP, inventory, etc.). Elements must be JSON-serializable.
     private Object[] playerState;
     private int elapsedSeconds;
     private int timeRemainingMs;
 
     private int score;
+    /**
+     * NPC states keyed by NPC identifier. Values must be JSON-serializable.
+     */
     private Map<String, Object> npcStates;
+    /**
+     * Gate/door states keyed by gate identifier. Values must be JSON-serializable.
+     */
     private Map<String, Object> gates;
+    /**
+     * Item states keyed by item identifier (e.g., count, durability). Values must be JSON-serializable.
+     */
     private Map<String, Object> items;
 
 
@@ -50,7 +60,7 @@ public class SaveData {
      *
      * @param levelId valid level/scene id
      */
-    public void setLevelId(final String levelId) {
+    public void setLevelId(String levelId) {
         this.levelId = levelId;
     }
 
@@ -68,12 +78,12 @@ public class SaveData {
      *
      * @param profileName non-null profile name
      */
-    public void setProfileName(final String profileName) {
+    public void setProfileName(String profileName) {
         this.profileName = profileName;
     }
 
     /**
-     * Gets the heterogeneous player snapshot.
+     * Gets the heterogeneous player snapshot. Elements must be JSON-serializable.
      *
      * @return snapshot array
      */
@@ -82,11 +92,11 @@ public class SaveData {
     }
 
     /**
-     * Sets the heterogeneous player snapshot.
+     * Sets the heterogeneous player snapshot. Elements must be JSON-serializable.
      *
      * @param playerState snapshot array
      */
-    public void setPlayerState(final Object[] playerState) {
+    public void setPlayerState(Object[] playerState) {
         this.playerState = playerState;
     }
 
@@ -104,7 +114,7 @@ public class SaveData {
      *
      * @param elapsedSeconds non-negative seconds
      */
-    public void setElapsedSeconds(final int elapsedSeconds) {
+    public void setElapsedSeconds(int elapsedSeconds) {
         this.elapsedSeconds = elapsedSeconds;
     }
 
@@ -122,7 +132,7 @@ public class SaveData {
      *
      * @param timeRemainingMs non-negative milliseconds
      */
-    public void setTimeRemainingMs(final int timeRemainingMs) {
+    public void setTimeRemainingMs(int timeRemainingMs) {
         this.timeRemainingMs = timeRemainingMs;
     }
 
@@ -140,7 +150,7 @@ public class SaveData {
      *
      * @param npcStates map
      */
-    public void setNpcStates(final Map<String, Object> npcStates) {
+    public void setNpcStates(Map<String, Object> npcStates) {
         this.npcStates = npcStates;
     }
 
@@ -158,7 +168,7 @@ public class SaveData {
      *
      * @param gates map
      */
-    public void setGates(final Map<String, Object> gates) {
+    public void setGates(Map<String, Object> gates) {
         this.gates = gates;
     }
 
@@ -172,11 +182,11 @@ public class SaveData {
     }
 
     /**
-     * Sets item states (itemId → state/count).
+     * Sets item states (itemId → state/count). Values must be JSON-serializable.
      *
      * @param items map
      */
-    public void setItems(final Map<String, Object> items) {
+    public void setItems(Map<String, Object> items) {
         this.items = items;
     }
 
@@ -194,7 +204,7 @@ public class SaveData {
      *
      * @param score The new score to be assigned; It mustn't be negative.
      */
-    public void setScore(final int score) {
+    public void setScore(int score) {
         this.score = score;
     }
 }

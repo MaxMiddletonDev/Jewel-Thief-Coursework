@@ -490,14 +490,14 @@ public class Level {
         java.nio.file.Path levelPath = java.nio.file.Path.of(LEVELS_FOLDER,
                 filename);
         LevelDef def = new LevelLoader().loadLevel(levelId, levelPath);
-        MAX_TIME = def.getTimeLimitSec();
-        int x = def.getWidth();
-        int y = def.getHeight();
+        MAX_TIME = def.timeLimitSec;
+        int x = def.width;
+        int y = def.height;
         grid = new Tile[x][y];
 
         // Tiles: row 0 = top, row y-1 = bottom
         for (int row = 0; row < y; row++) {
-            String rowString = def.getTiles().get(row); //e.g. "YYYY RBYG YRGB BRGY"
+            String rowString = def.tiles.get(row); //e.g. "YYYY RBYG YRGB BRGY"
             String[] tileTokens = rowString.split("\\s+");
             for (int col = 0; col < x; col++) {
                 String sequence = tileTokens[col];      // e.g. "YYYY"
@@ -521,9 +521,9 @@ public class Level {
         double py = yPos;
         player = new Player(grid[(int) px][(int) py], this);
         // Items and gates + ENEMIES
-        for (EntityDef e : def.getEntities()) {
-            int rawX = e.getX();
-            int rawY = e.getY();
+        for (EntityDef e : def.entities) {
+            int rawX = e.x;
+            int rawY = e.y;
             int entityXPos = rawX - COORD_OFFSET;
             int entityYPos = rawY - COORD_OFFSET;
             String npcId = e.getType();
@@ -531,7 +531,7 @@ public class Level {
             switch (e.getType()) {
                 case TYPE_FLYING -> {
                     // e.arg1 = direction string ("UP","DOWN","LEFT","RIGHT")
-                    String npcDirection = e.getArg1();
+                    String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
                     FlyingAssassin tempEnemy = new FlyingAssassin(
                             grid[entityXPos][entityYPos], direction,
@@ -539,7 +539,7 @@ public class Level {
                     enemies.add(tempEnemy);
                 }
                 case TYPE_SMART -> {
-                    String npcDirection = e.getArg1();
+                    String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
                     SmartThief tempEnemy = new SmartThief(
                             grid[entityXPos][entityYPos], direction,
@@ -549,9 +549,9 @@ public class Level {
                 case TYPE_FOLLOWER -> {
                     // e.arg1 = direction,
                     // e.arg2 = follower colour ("R","G","B","Y")
-                    String npcDirection = e.getArg1();
+                    String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
-                    String followerColour = e.getArg2();
+                    String followerColour = e.arg2;
                     Colour colour = colourSetter(followerColour);
                     FloorThief tempEnemy = new FloorThief(colour,
                             grid[entityXPos][entityYPos], direction,
@@ -559,7 +559,7 @@ public class Level {
                     enemies.add(tempEnemy);
                 }
                 case TYPE_CAMPER -> {
-                    String npcDirection = e.getArg1();
+                    String npcDirection = e.arg1;
                     Direction direction = directionSetter(npcDirection);
                     Camper tempEnemy = new Camper(
                             grid[entityXPos][entityYPos], direction,
@@ -567,7 +567,7 @@ public class Level {
                     enemies.add(tempEnemy);
                 }
                 case TYPE_LOOT -> {
-                    String value = e.getArg1();
+                    String value = e.arg1;
                     Loot tempLoot;
                     switch (value) {
                         case LOOT_CENT -> tempLoot = new Loot(
@@ -595,13 +595,13 @@ public class Level {
                     grid[entityXPos][entityYPos].setOccupying(tempBomb);
                 }
                 case TYPE_LEVER -> {
-                    Colour colour = colourSetter(e.getArg1());
+                    Colour colour = colourSetter(e.arg1);
                     Lever tempLever = new Lever(colour, entityXPos, entityYPos);
                     items.add(tempLever);
                     grid[entityXPos][entityYPos].setOccupying(tempLever);
                 }
                 case TYPE_GATE -> {
-                    Colour colour = colourSetter(e.getArg1());
+                    Colour colour = colourSetter(e.arg1);
                     Gate tempGate = new Gate(colour, entityXPos, entityYPos);
                     gates.add(tempGate);
                     grid[entityXPos][entityYPos].setOccupying(tempGate);
@@ -651,13 +651,13 @@ public class Level {
                 java.nio.file.Path.of(LEVELS_FOLDER, filename);
         try {
             LevelDef def = new LevelLoader().loadLevel(levelId, levelPath);
-            int x = def.getWidth();
-            int y = def.getHeight();
+            int x = def.width;
+            int y = def.height;
             grid = new Tile[x][y];
 
             // Tiles: row 0 = top, row y-1 = bottom
             for (int row = 0; row < y; row++) {
-                String rowString = def.getTiles().get(row);
+                String rowString = def.tiles.get(row);
                 String[] tileTokens = rowString.split("\\s+");
                 for (int col = 0; col < x; col++) {
                     String sequence = tileTokens[col];
