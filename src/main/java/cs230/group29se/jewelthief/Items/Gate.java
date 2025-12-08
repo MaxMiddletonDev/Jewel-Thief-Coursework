@@ -13,6 +13,8 @@ import javafx.scene.image.Image;
  */
 public final class Gate implements Remove {
 
+    public static final int XPOS_TILE_ADJUSTMENT = 2;
+    public static final int YPOS_TILE_ADJUSTMENT = 1;
     private final Colour colour;
     private static final double WIDTH = 50.0;
     private static final double HEIGHT = 50.0;
@@ -47,8 +49,8 @@ public final class Gate implements Remove {
      * @param gc the class the gate will be drawn with.
      */
     public void draw(final GraphicsContext gc) {
-        gc.drawImage(image, getX() * Tile.TILE_SIZE + 2,
-                getY() * Tile.TILE_SIZE + 1,
+        gc.drawImage(image, getX() * Tile.TILE_SIZE + XPOS_TILE_ADJUSTMENT,
+                getY() * Tile.TILE_SIZE + YPOS_TILE_ADJUSTMENT,
                 Tile.TILE_SIZE, Tile.TILE_SIZE);
     }
 

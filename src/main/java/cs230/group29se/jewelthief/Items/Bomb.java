@@ -15,6 +15,7 @@ import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.
  * @version 0.2 - //TODO can be implemented.
  */
 public class Bomb extends Destroyable {
+    public static final int YPOS_TILE_ADJUSTMENT = 1;
     /**
      * By default, all bombs are not set to explode if you wanted to create
      * a bomb at the start of exploding you'd pass in time remaining as 3000.
@@ -252,11 +253,11 @@ public class Bomb extends Destroyable {
             }
 
             gc.drawImage(image, getX() * Tile.TILE_SIZE,
-                    getY() * Tile.TILE_SIZE + 1,
+                    getY() * Tile.TILE_SIZE + YPOS_TILE_ADJUSTMENT,
                     Tile.TILE_SIZE, Tile.TILE_SIZE);
         } else {
             gc.drawImage(image, getX() * Tile.TILE_SIZE,
-                    getY() * Tile.TILE_SIZE + 1,
+                    getY() * Tile.TILE_SIZE + YPOS_TILE_ADJUSTMENT,
                     Tile.TILE_SIZE, Tile.TILE_SIZE);
         }
     }
