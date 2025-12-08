@@ -15,6 +15,10 @@ public class JsonSerializer {
     private final ObjectMapper mapper = new ObjectMapper()
             .enable(SerializationFeature.INDENT_OUTPUT);
 
+    private final static String TO_JSON_FAIL_MSG = "toJson failed";
+    private final static String FROM_JSON_FAIL_MSG = "fromJson(Object) failed";
+    private final static String FROM_JSON_TYPED_FAIL_MSG = "fromJson typed failed";
+
     /**
      * Converts an object to its JSON string representation.
      *
@@ -26,7 +30,7 @@ public class JsonSerializer {
         try {
             return mapper.writeValueAsString(o);
         } catch (Exception e) {
-            throw new RuntimeException("toJson failed", e);
+            throw new RuntimeException(TO_JSON_FAIL_MSG, e);
         }
     }
 
@@ -42,7 +46,7 @@ public class JsonSerializer {
         try {
             return mapper.readValue(json, Object.class);
         } catch (Exception e) {
-            throw new RuntimeException("fromJson(Object) failed", e);
+            throw new RuntimeException(FROM_JSON_FAIL_MSG, e);
         }
     }
 
@@ -59,7 +63,7 @@ public class JsonSerializer {
         try {
             return mapper.readValue(json, type);
         } catch (Exception e) {
-            throw new RuntimeException("fromJson typed failed", e);
+            throw new RuntimeException(FROM_JSON_TYPED_FAIL_MSG, e);
         }
     }
 }

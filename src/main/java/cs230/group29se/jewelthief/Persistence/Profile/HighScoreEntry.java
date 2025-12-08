@@ -30,6 +30,8 @@ public class HighScoreEntry {
      */
     private String timestamp;
 
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
+
     /**
      * This method is used to construct a new High Score Entry.
      *
@@ -82,7 +84,7 @@ public class HighScoreEntry {
         try {
             Instant instant = Instant.parse(timestamp);
             var zoned = instant.atZone(ZoneId.systemDefault());
-            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern(DATE_FORMAT);
             return zoned.format(fmt);
         } catch (Exception e) {
             return timestamp;

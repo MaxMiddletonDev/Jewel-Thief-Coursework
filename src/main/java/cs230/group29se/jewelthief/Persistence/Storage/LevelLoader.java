@@ -14,6 +14,10 @@ import java.util.List;
 public class LevelLoader {
     private static final int INITIAL_INDEX = 0;
     private static final int INCREASE_INDEX_BY = 1;
+    private static final String READ_LVL_FAIL_MSG = "Failed to read level file: ";
+    private static final String SIZE_FAIL_MSG = "Expected SIZE at start of ";
+    private static final String TIME_FAIL_MSG = "Expected TIME after SIZE in ";
+
 
     /**
      * Loads a level definition from the specified file.
@@ -38,7 +42,7 @@ public class LevelLoader {
         // --- 1) SIZE w h ---
         // Parses the level's width and height.
         if (!tokens.get(index).equalsIgnoreCase("SIZE")) {
-            throw new IllegalArgumentException("Expected SIZE at start of " + filePath);
+            throw new IllegalArgumentException(SIZE_FAIL_MSG + filePath);
         }
         index++;
         def.width = Integer.parseInt(tokens.get(index++));
@@ -47,7 +51,7 @@ public class LevelLoader {
         // --- 2) TIME seconds ---
         // Parses the time limit for the level.
         if (!tokens.get(index).equalsIgnoreCase("TIME")) {
-            throw new IllegalArgumentException("Expected TIME after SIZE in " + filePath);
+            throw new IllegalArgumentException(TIME_FAIL_MSG + filePath);
         }
         index++;
         def.timeLimitSec = Integer.parseInt(tokens.get(index++));
@@ -128,7 +132,7 @@ public class LevelLoader {
             }
             return tokens;
         } catch (IOException e) {
-            throw new RuntimeException("Failed to read level file: " + filePath, e);
+            throw new RuntimeException(READ_LVL_FAIL_MSG + filePath, e);
         }
     }
 

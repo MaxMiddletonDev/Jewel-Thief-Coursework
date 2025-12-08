@@ -17,11 +17,15 @@ import java.util.List;
  */
 public final class PersistenceManager {
     private static final Path BASE_DIR = Path.of("data", "jewelthief");
-    private static final FileStore fileStore = new FileStore(BASE_DIR);
-    private static final JsonSerializer serializer = new JsonSerializer();
+    private static final FileStore FILE_STORE = new FileStore(BASE_DIR);
+    private static final JsonSerializer JSON_SERIALIZER = new JsonSerializer();
     private static final int PATH_DECREMENT = 5;
     private static final int INITIAL_INDEX = 0;
     private static final int NEXT_INDEX = 1;
+    private static final String PROFILE_FAIL_MSG = "Profile '%s' does not exist. Creating new profile.";
+    private static final String PROFILE_DEL_MSG = "Deleted profile '%s' and its saves folder";
+    private static final String SAVE_FAIL_MSG = "No save file exists for profile '%s' level '%s'";
+
 
     private PersistenceManager() {
     }
@@ -61,10 +65,10 @@ public final class PersistenceManager {
      */
     public static void loadProfile(String profileName) {
         String path = pathProfile(profileName);
-        if (!fileStore.exists(path)) {
-            System.out.println("Profile " + profileName + " does not exist. Creating new profile.");
+        if (!FILE_STORE.exists(path)) {
+            System.out.printf((PROFILE_FAIL_MSG) + "%n", profileName);
         }
-        ProfileData profile = serializer.fromJson(fileStore.read(path), ProfileData.class);
+        ProfileData profile = JSON_SERIALIZER.fromJson(FILE_STORE.read(path), ProfileData.class);
         setCachedProfile(profile);
         PersistenceManager.setActiveProfileName(profileName);
     }
@@ -101,7 +105,7 @@ public final class PersistenceManager {
     public static Boolean saveProfile() {
         ProfileData p = currentProfile();
         if (p == null || currentProfileName() == null) return false;
-        fileStore.write(pathProfile(currentProfileName()), serializer.toJson(p));
+        FILE_STORE.write(pathProfile(currentProfileName()), JSON_SERIALIZER.toJson(p));
         return true;
     }
 
@@ -114,16 +118,16 @@ public final class PersistenceManager {
         String name = rememberedProfileName();
         if (name != null) {
             String path = pathProfile(name);
-            if (!fileStore.exists(path)) {
+            if (!FILE_STORE.exists(path)) {
                 return null;
             }
-            return serializer.fromJson(fileStore.read(path), ProfileData.class);
+            return JSON_SERIALIZER.fromJson(FILE_STORE.read(path), ProfileData.class);
         }
-        var files = fileStore.list("profiles");
+        var files = FILE_STORE.list("profiles");
         if (files.isEmpty()) {
             return null;
         }
-        return serializer.fromJson(fileStore.read(files.get(INITIAL_INDEX)), ProfileData.class);
+        return JSON_SERIALIZER.fromJson(FILE_STORE.read(files.get(INITIAL_INDEX)), ProfileData.class);
     }
 
     /**
@@ -134,7 +138,7 @@ public final class PersistenceManager {
         String profile = currentProfileName();
         String levelId = currentLevelId();
         if (profile == null || levelId == null || s == null) return;
-        fileStore.write(pathSave(profile, levelId), serializer.toJson(s));
+        FILE_STORE.write(pathSave(profile, levelId), JSON_SERIALIZER.toJson(s));
     }
 
     /**
@@ -144,7 +148,7 @@ public final class PersistenceManager {
         String profile = currentProfileName();
         String levelId = currentLevelId();
         if (profile == null || levelId == null) return;
-        SaveData s = serializer.fromJson(fileStore.read(pathSave(profile, levelId)), SaveData.class);
+        SaveData s = JSON_SERIALIZER.fromJson(FILE_STORE.read(pathSave(profile, levelId)), SaveData.class);
         applySaveToGame(s);
     }
 
@@ -157,7 +161,7 @@ public final class PersistenceManager {
         String profile = currentProfileName();
         String levelId = currentLevelId();
         if (profile == null || levelId == null) return null;
-        try { return serializer.fromJson(fileStore.read(pathSave(profile, levelId)), SaveData.class); }
+        try { return JSON_SERIALIZER.fromJson(FILE_STORE.read(pathSave(profile, levelId)), SaveData.class); }
         catch (RuntimeException ex) { return null; }
     }
 
@@ -198,7 +202,7 @@ public final class PersistenceManager {
             list.sort(java.util.Comparator.comparingInt(HighScoreEntry::getScore).reversed());
         }
 
-        fileStore.write(pathHighScores(), serializer.toJson(dto));
+        FILE_STORE.write(pathHighScores(), JSON_SERIALIZER.toJson(dto));
     }
 
     static class genericSaveDTO {
@@ -211,7 +215,7 @@ public final class PersistenceManager {
      * @param profileName The name of the profile to save.
      */
     public static void writeSelectedProfile(String profileName) {
-        fileStore.write(pathGenericSave(), serializer.toJson(new genericSaveDTO() {{
+        FILE_STORE.write(pathGenericSave(), JSON_SERIALIZER.toJson(new genericSaveDTO() {{
             selectedProfileName = profileName;
         }}));
     }
@@ -245,8 +249,8 @@ public final class PersistenceManager {
      */
     public static String readSelectedProfile() {
         try {
-            String json = fileStore.read(pathGenericSave());
-            genericSaveDTO dto = serializer.fromJson(json, genericSaveDTO.class);
+            String json = FILE_STORE.read(pathGenericSave());
+            genericSaveDTO dto = JSON_SERIALIZER.fromJson(json, genericSaveDTO.class);
             return dto.selectedProfileName;
         } catch (RuntimeException ex) {
             return null;
@@ -278,7 +282,7 @@ public final class PersistenceManager {
      * @return A list of profile names.
      */
     public static List<String> listProfiles() {
-        List<String> files = fileStore.list("profiles");
+        List<String> files = FILE_STORE.list("profiles");
         List<String> out = new ArrayList<>();
 
         for (String rel : files) {
@@ -301,10 +305,10 @@ public final class PersistenceManager {
         if (profileName == null || profileName.isEmpty()) return;
 
         String profilePath = pathProfile(profileName);
-        fileStore.delete(profilePath);
+        FILE_STORE.delete(profilePath);
 
         String savesDir = "saves/" + profileName;
-        fileStore.deleteDirectory(savesDir);
+        FILE_STORE.deleteDirectory(savesDir);
 
         if (profileName.equals(activeProfileName)) {
             activeProfileName = null;
@@ -312,7 +316,7 @@ public final class PersistenceManager {
             cachedSave = null;
         }
 
-        System.out.println("Deleted profile " + profileName + " and its saves folder");
+        System.out.printf(PROFILE_DEL_MSG, profileName);
     }
 
     /**
@@ -324,11 +328,11 @@ public final class PersistenceManager {
         if (profile == null || levelId == null) return;
 
         String path = pathSave(profile, levelId);
-        if (!fileStore.exists(path)) {
-            System.out.println("No save file exists for profile " + profile + " level " + levelId);
+        if (!FILE_STORE.exists(path)) {
+            System.out.printf(SAVE_FAIL_MSG, profile, levelId);
             return;
         }
-        fileStore.delete(path);
+        FILE_STORE.delete(path);
         cachedSave = null;
     }
 
@@ -346,11 +350,8 @@ public final class PersistenceManager {
     private static HighScoresDTO loadHighScoresDTO() {
         String path = pathHighScores();
         try {
-            System.out.println("Reading highscores from: " + path
-                    + " (base dir = " + fileStore.getBaseDir() + ")");
-            String json = fileStore.read(path);
-            System.out.println("JSON length = " + json.length());
-            return serializer.fromJson(json, HighScoresDTO.class);
+            String json = FILE_STORE.read(path);
+            return JSON_SERIALIZER.fromJson(json, HighScoresDTO.class);
         } catch (RuntimeException ex) {
             ex.printStackTrace();
             return new HighScoresDTO();
