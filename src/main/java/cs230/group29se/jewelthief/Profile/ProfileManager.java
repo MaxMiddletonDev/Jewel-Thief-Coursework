@@ -78,7 +78,4 @@ public class ProfileManager {
      * This method currently a placeholder and should be implemented
      * with game specific logic for selecting a profile.
      */
-    public static void chooseProfile() {
-        // Logic for choosing a profile goes here
-    }
 }
