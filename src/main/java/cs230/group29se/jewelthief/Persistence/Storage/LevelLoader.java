@@ -12,6 +12,8 @@ import java.util.List;
  * information about the level's size, time limit, tiles, and entities.
  */
 public class LevelLoader {
+    private static int INITIAL_INDEX = 0;
+    private static int INCREASE_INDEX_BY = 1;
 
     /**
      * Loads a level definition from the specified file.
@@ -23,7 +25,7 @@ public class LevelLoader {
      */
     public LevelDef loadLevel(String levelId, Path filePath) {
         List<String> tokens = tokenize(filePath);
-        int index = 0;
+        int index = INITIAL_INDEX;
 
         LevelDef def = new LevelDef();
         def.levelId = levelId;
@@ -54,14 +56,14 @@ public class LevelLoader {
         // Parses the tile layout of the level.
         int tileCount = def.width * def.height;
         List<String> flatTiles = new ArrayList<>();
-        for (int t = 0; t < tileCount && index < tokens.size(); t++) {
+        for (int t = INITIAL_INDEX; t < tileCount && index < tokens.size(); t++) {
             flatTiles.add(tokens.get(index++));
         }
-        for (int row = 0; row < def.height; row++) {
+        for (int row = INITIAL_INDEX; row < def.height; row++) {
             StringBuilder sb = new StringBuilder();
-            for (int col = 0; col < def.width; col++) {
+            for (int col = INITIAL_INDEX; col < def.width; col++) {
                 sb.append(flatTiles.get(row * def.width + col));
-                if (col < def.width - 1) sb.append(" ");
+                if (col < def.width - INCREASE_INDEX_BY) sb.append(" ");
             }
             def.tiles.add(sb.toString());
         }
@@ -71,7 +73,7 @@ public class LevelLoader {
         while (index < tokens.size()) {
             String type = tokens.get(index++).toUpperCase();
 
-            if (index + 1 >= tokens.size()) break;
+            if (index + INCREASE_INDEX_BY >= tokens.size()) break;
 
             int x = Integer.parseInt(tokens.get(index++));
             int y = Integer.parseInt(tokens.get(index++));
