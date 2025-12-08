@@ -2,10 +2,14 @@ package cs230.group29se.jewelthief.Game;
 
 import cs230.group29se.jewelthief.Persistence.Profile.HighScoreEntry;
 import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
-
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Helper class for loading game high scores.
+ * @author Iyaad
+ * @version 1.0
+ */
 public class GameHighScoresHelper {
     /**
      * Returns the top 10 high-scores.

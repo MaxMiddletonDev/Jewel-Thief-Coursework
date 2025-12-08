@@ -16,16 +16,22 @@ import java.util.List;
 
 import static java.awt.SystemColor.menu;
 
+/**
+ * Controller for the Profile Select screen.
+ * Handles user interactions such as creating, selecting, renaming, and deleting profiles.
+ *
+ * @author Iyaad
+ */
 public class ProfileSelectController extends BaseController {
 
     @FXML
     private Button renameButton;
 
     @FXML
-    private VBox slotsContainer;
+    private VBox slotsContainer; // Container for displaying profile slots
 
     @FXML
-    private TextField newProfileNameField;
+    private TextField newProfileNameField; // Text field for entering a new profile name
 
     @FXML
     private Button createButton;
@@ -39,28 +45,36 @@ public class ProfileSelectController extends BaseController {
     @FXML
     private Button backButton;
 
-    // Track which profile is selected in this menu
     private String selectedProfile;
 
+    /**
+     * Returns the canvas associated with this controller.
+     * The profile menu does not use a canvas, so this method returns null.
+     *
+     * @return null as the profile menu has no canvas
+     */
     @Override
     public Canvas getCanvas() {
-        return null; // profile menu has no canvas
+        return null;
     }
 
-    // Called from ProfileSelectMenu.initialize()
+    /**
+     * Populates the profile slots in the UI.
+     * Clears the current slots and loads up to 10 profiles from the GameProfileHelper.
+     * Disables the "Create" button if the maximum number of profiles is reached.
+     */
     public void populateProfiles() {
         slotsContainer.getChildren().clear();
 
-        List<String> profiles = GameProfileHelper.listProfiles(); // ["save1", "save2",...]
+        List<String> profiles = GameProfileHelper.listProfiles();
 
-        // Cap at 10
         if (profiles.size() > 10) {
             profiles = profiles.subList(0, 10);
         }
 
         for (int i = 0; i < profiles.size(); i++) {
             String name = profiles.get(i);
-            int slotNumber = i + 1;  // 1..10 from top to bottom
+            int slotNumber = i + 1;
             HBox slot = createSlotRow(slotNumber, name);
             slotsContainer.getChildren().add(slot);
         }
@@ -69,17 +83,21 @@ public class ProfileSelectController extends BaseController {
             selectedProfile = null;
         }
 
-        // Disable "Create" if we already have 10 slots
         createButton.setDisable(profiles.size() >= 10);
     }
 
+    /**
+     * Creates a row for a profile slot.
+     *
+     * @param slotNumber  The slot number to display.
+     * @param profileName The name of the profile.
+     * @return An HBox representing the profile slot.
+     */
     private HBox createSlotRow(int slotNumber, String profileName) {
         HBox row = new HBox(10);
-        // base style for unselected slot
         row.setStyle("-fx-background-color: #E8E9EB; -fx-background-radius: 8; -fx-padding: 10;");
         row.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
 
-        // Remember profile name on this row
         row.setUserData(profileName);
 
         Label nameLabel = new Label(profileName);
@@ -105,13 +123,16 @@ public class ProfileSelectController extends BaseController {
         return row;
     }
 
+    /**
+     * Highlights the currently selected profile slot.
+     * Updates the styles of all slots to indicate the selected one.
+     */
     private void highlightSelection() {
         for (javafx.scene.Node node : slotsContainer.getChildren()) {
             if (!(node instanceof HBox row)) continue;
             Object data = row.getUserData();
             String name = (data instanceof String) ? (String) data : null;
             if (name != null && name.equals(selectedProfile)) {
-                // selected: slightly darker border / background
                 row.setStyle(
                         "-fx-background-color: #e0e0e0;" +
                                 "-fx-background-radius: 8;" +
@@ -121,7 +142,6 @@ public class ProfileSelectController extends BaseController {
                                 "-fx-border-width: 2;"
                 );
             } else {
-                // unselected: subtle grey card
                 row.setStyle(
                         "-fx-background-color: #E8E9EB;" +
                                 "-fx-background-radius: 8;" +
@@ -131,6 +151,11 @@ public class ProfileSelectController extends BaseController {
         }
     }
 
+    /**
+     * Handles the "Create" button click event.
+     * Creates a new profile if the maximum number of profiles has not been reached.
+     * Displays an alert if the profile name is invalid or already exists.
+     */
     @FXML
     private void handleCreateClicked() {
         List<String> profiles = GameProfileHelper.listProfiles();
@@ -149,22 +174,24 @@ public class ProfileSelectController extends BaseController {
         try {
             GameProfileHelper.ensureProfileExists(name);
         } catch (IllegalArgumentException ex) {
-            // Duplicate name → show message instead of crashing
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Duplicate Profile");
             alert.setHeaderText(null);
             alert.setContentText("Profile name '" + name + "' already exists. Duplicates are not allowed.");
             alert.showAndWait();
-            return; // DO NOT continue with selection/highlight
+            return;
         }
 
-        //  Reached when profile successfully created
         populateProfiles();
         selectedProfile = name;
         highlightSelection();
         newProfileNameField.clear();
     }
 
+    /**
+     * Handles the "Select" button click event.
+     * Marks the selected profile as chosen and transitions to the next screen.
+     */
     @FXML
     private void handleSelectClicked() {
         if (selectedProfile == null) return;
@@ -175,10 +202,15 @@ public class ProfileSelectController extends BaseController {
         }
     }
 
+    /**
+     * Handles the "Delete" button click event.
+     * Deletes the selected profile after user confirmation.
+     * Prevents deletion of the "PublicProfile".
+     */
     @FXML
     private void handleDeleteClicked() {
         if (selectedProfile == null) return;
-        if(selectedProfile.equals("PublicProfile")) {
+        if (selectedProfile.equals("PublicProfile")) {
             showWarn("Cannot delete", "The PublicProfile cannot be deleted.");
             return;
         }
@@ -195,14 +227,18 @@ public class ProfileSelectController extends BaseController {
 
         GameProfileHelper.deleteProfile(selectedProfile);
 
-        // If we deleted the currently active profile, switch to PublicProfile
-        if(GameManager.getSelectedProfileName().equals(selectedProfile)) {
-            ((ProfileSelectScreen)getScreen()).onProfileChosen("PublicProfile");
+        if (GameManager.getSelectedProfileName().equals(selectedProfile)) {
+            ((ProfileSelectScreen) getScreen()).onProfileChosen("PublicProfile");
         }
         selectedProfile = null;
         populateProfiles();
     }
 
+    /**
+     * Handles the "Rename" button click event.
+     * Renames the selected profile to the new name entered in the text field.
+     * Displays warnings if the new name is invalid or already exists.
+     */
     @FXML
     private void handleRenameClicked() {
         String newName = newProfileNameField.getText();
@@ -225,6 +261,10 @@ public class ProfileSelectController extends BaseController {
         }
     }
 
+    /**
+     * Handles the "Back" button click event.
+     * Navigates back to the previous screen.
+     */
     @FXML
     private void handleBackClicked() {
         Screen s = getScreen();
@@ -233,6 +273,12 @@ public class ProfileSelectController extends BaseController {
         }
     }
 
+    /**
+     * Displays a warning alert with the specified header and message.
+     *
+     * @param header The header text of the alert.
+     * @param msg    The message text of the alert.
+     */
     private void showWarn(String header, String msg) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(header);
