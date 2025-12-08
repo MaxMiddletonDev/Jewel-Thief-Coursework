@@ -1,9 +1,12 @@
 package cs230.group29se.jewelthief.Items;
 
 import cs230.group29se.jewelthief.Entities.Protectable;
+import cs230.group29se.jewelthief.Game.Achievements;
 import cs230.group29se.jewelthief.Game.Tile;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+
+import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.writeUnlockedAchievement;
 
 /**
  * Represents a Shield item in the Jewel Thief game.
@@ -40,6 +43,7 @@ public class Shield extends Destroyable {
     public void interact() {
         if (collector instanceof Protectable protectable) {
             protectable.setProtected(true);
+            writeUnlockedAchievement(Achievements.TANK);
             remove(this);
         }
     }

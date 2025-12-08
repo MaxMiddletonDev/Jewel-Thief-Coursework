@@ -1,7 +1,9 @@
 package cs230.group29se.jewelthief.Scenes.LevelFinished;
 
+import cs230.group29se.jewelthief.Game.Achievements;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
+import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
@@ -13,6 +15,8 @@ import javafx.scene.control.Label;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.writeUnlockedAchievement;
 
 /**
  * Controller class for the Level Finished scene.
@@ -44,6 +48,14 @@ public class LevelFinishedController extends BaseController implements Initializ
         // Show the score
         int score = GameManager.getCurrentLevel().getScore();
         levelScoreLabel.setText(String.valueOf(score));
+
+        Level level = GameManager.getCurrentLevel();
+
+        if (level.getTimeRemainingMs() / 1000 > 30) {
+            writeUnlockedAchievement(Achievements.SPEEDSTER);
+        }
+
+        writeUnlockedAchievement(Achievements.PRO);
 
         // Submit highscore for this level
         String profileName = GameProfileHelper.getActiveProfileName();

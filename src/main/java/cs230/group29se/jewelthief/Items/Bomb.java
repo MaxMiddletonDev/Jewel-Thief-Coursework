@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief.Items;
 
+import cs230.group29se.jewelthief.Game.Achievements;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
@@ -8,6 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+
+import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.writeUnlockedAchievement;
 
 /**
  * The bomb class destroys certain items in its pathway after being triggered.

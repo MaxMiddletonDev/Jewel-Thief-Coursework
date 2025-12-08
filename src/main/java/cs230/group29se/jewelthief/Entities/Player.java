@@ -10,6 +10,8 @@ import cs230.group29se.jewelthief.Items.Item;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.writeUnlockedAchievement;
+
 /**
  * This class represents a Player Character while implementing MoveableCharacter.
  * This Player will serve as the Main Character in which the User will use.
@@ -178,6 +180,7 @@ public class Player implements MoveableCharacter, Protectable {
                 Tile neighbour = level.getTile(checkX, checkY);
                 if (neighbour != null && neighbour.getOccupying() instanceof Bomb bomb) {
                     bomb.interact();
+                    writeUnlockedAchievement(Achievements.DEMO_MAN);
                 }
             }
         }
@@ -202,7 +205,7 @@ public class Player implements MoveableCharacter, Protectable {
     public void getHit() {
         if (isProtected()) {
             setProtected(false);
-            cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.writeUnlockedAchievement(Achievements.SURVIVOR);
+            writeUnlockedAchievement(Achievements.SURVIVOR);
         } else {
             setAliveTo(false);
             System.out.println("Player has been hit and is no longer alive.");
