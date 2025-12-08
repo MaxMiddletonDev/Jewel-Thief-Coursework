@@ -4,6 +4,7 @@ import cs230.group29se.jewelthief.Game.Tile;
 import cs230.group29se.jewelthief.Items.Item;
 import cs230.group29se.jewelthief.MainApplication;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,15 @@ import java.util.List;
  * @author Baba & Max
  */
 public abstract class NonPlayableCharacter implements MoveableCharacter, Protectable {
+    /**
+     * Tracks Facing direction
+     */
+    protected boolean isFacingRight = true;
+
+    /**
+     * Gets specific enemies sprite
+     */
+    public abstract Image getImage();
 
     /**
      * Gives us an NPCs current tile on which they're on.
@@ -156,5 +166,27 @@ public abstract class NonPlayableCharacter implements MoveableCharacter, Protect
     }
 
     public void draw(GraphicsContext gc) {
+        if (direction == Direction.LEFT) {
+            isFacingRight = false;
+        } else if (direction == Direction.RIGHT) {
+            isFacingRight = true;
+        }
+
+        Image img = getImage();
+        if (img == null) return;
+
+        int tileSize = Tile.TILE_SIZE;
+        double x = currentTile.getX() * tileSize;
+        double y = currentTile.getY() * tileSize;
+
+        if (!isFacingRight) {
+            gc.save();
+            gc.translate(x + tileSize, y);
+            gc.scale(-1, 1);
+            gc.drawImage(img, 0, 0, tileSize, tileSize);
+            gc.restore();
+        } else {
+            gc.drawImage(img, x, y, tileSize, tileSize);
+        }
     }
 }

@@ -128,16 +128,11 @@ public class FlyingAssasin extends NonPlayableCharacter {
     }
 
     /**
-     * Draw Function for Flying Assassin, shapes it to the tile size.
+     * Gets specific enemies sprite
      */
-    public void draw(GraphicsContext gc) {
-
-        int tileSize = Tile.TILE_SIZE;
-
-        double x = currentTile.getX() * tileSize;
-        double y = currentTile.getY() * tileSize;
-
-        gc.drawImage(image, x, y, tileSize, tileSize);
+    @Override
+    public Image getImage() {
+        return this.image;
     }
 
     @Override
