@@ -4,6 +4,7 @@ import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
 import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
+import cs230.group29se.jewelthief.Scenes.MainScene.MainMenuScreen;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,6 +54,9 @@ public class LevelSelectController extends BaseController implements Initializab
 
     /** Button for selecting level 10. */
     public Button level10Button;
+
+    /** Button to go back to the main menu. */
+    public Button backButton;
 
     /**
      * Handles the event when a level button is clicked.
@@ -111,5 +115,10 @@ public class LevelSelectController extends BaseController implements Initializab
     @Override
     public Canvas getCanvas() {
         return null;
+    }
+
+    public void onBackClicked() {
+        getScreen().setNextScreen(new MainMenuScreen());
+        getScreen().setFinished(true);
     }
 }
