@@ -8,7 +8,6 @@ public enum Achievements {
     PRO("Professional", "Complete a level", "/cs230/group29se/jewelthief/Images/Achievements/Pro.png"),
     TANK("Tank", "Picked up shield", "/cs230/group29se/jewelthief/Images/Achievements/Tank.png");
 
-
     private final String name;
     private final String description;
     private final String iconPath;
