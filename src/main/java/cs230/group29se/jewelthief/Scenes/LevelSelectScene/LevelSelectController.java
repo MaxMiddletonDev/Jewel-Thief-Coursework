@@ -64,7 +64,7 @@ public class LevelSelectController extends BaseController implements Initializab
      * @param e The ActionEvent triggered by the button click.
      */
     @FXML
-    protected void selectLevel(ActionEvent e) {
+    protected void selectLevel(final ActionEvent e) {
         SoundManager.playStart();
         Button b = (Button) e.getSource();
         int level = Integer.parseInt(b.getUserData().toString());
@@ -80,18 +80,18 @@ public class LevelSelectController extends BaseController implements Initializab
      * @param resourceBundle The resources used to localize the root object, or null if not applicable.
      */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(final URL url, final ResourceBundle resourceBundle) {
         // Check save file and enable/disable buttons accordingly
-        level1Button.setDisable(!isLevelUnlocked(LEVEL_ONE));
-        level2Button.setDisable(!isLevelUnlocked(LEVEL_2));
-        level3Button.setDisable(!isLevelUnlocked(LEVEL_THREE));
-        level4Button.setDisable(!isLevelUnlocked(LEVEL_FOUR));
-        level5Button.setDisable(!isLevelUnlocked(LEVEL_FIVE));
-        level6Button.setDisable(!isLevelUnlocked(LEVEL_SIX));
-        level7Button.setDisable(!isLevelUnlocked(LEVEL_SEVEN));
-        level8Button.setDisable(!isLevelUnlocked(LEVEL_EIGHT));
-        level9Button.setDisable(!isLevelUnlocked(LEVEL_NINE));
-        level10Button.setDisable(!isLevelUnlocked(LEVEL_TEN));
+        level1Button.setDisable(isLevelUnlocked(LEVEL_ONE));
+        level2Button.setDisable(isLevelUnlocked(LEVEL_2));
+        level3Button.setDisable(isLevelUnlocked(LEVEL_THREE));
+        level4Button.setDisable(isLevelUnlocked(LEVEL_FOUR));
+        level5Button.setDisable(isLevelUnlocked(LEVEL_FIVE));
+        level6Button.setDisable(isLevelUnlocked(LEVEL_SIX));
+        level7Button.setDisable(isLevelUnlocked(LEVEL_SEVEN));
+        level8Button.setDisable(isLevelUnlocked(LEVEL_EIGHT));
+        level9Button.setDisable(isLevelUnlocked(LEVEL_NINE));
+        level10Button.setDisable(isLevelUnlocked(LEVEL_TEN));
     }
 
     /**
@@ -101,10 +101,10 @@ public class LevelSelectController extends BaseController implements Initializab
      * @param levelNumber The level number to check.
      * @return true if the level is unlocked, false otherwise.
      */
-    private boolean isLevelUnlocked(int levelNumber) {
+    private boolean isLevelUnlocked(final int levelNumber) {
         ProfileData data = PersistenceManager.getCurrentProfile();
         int maxLevel = data.getMaxUnlockedLvl();
-        return levelNumber <= maxLevel;
+        return levelNumber > maxLevel;
     }
 
     /**

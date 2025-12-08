@@ -3,7 +3,6 @@ package cs230.group29se.jewelthief.Scenes.HighScoresScene;
 import cs230.group29se.jewelthief.Game.GameHighScoresHelper;
 import cs230.group29se.jewelthief.Persistence.Profile.HighScoreEntry;
 import cs230.group29se.jewelthief.Scenes.BaseController;
-import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -147,7 +146,7 @@ public class HighScoresController extends BaseController {
      *
      * @param levelId the ID of the level whose scores should be displayed
      */
-    private void updateLevelTable(String levelId) {
+    private void updateLevelTable(final String levelId) {
         if (perLevelCache == null) return;
         List<HighScoreEntry> entries = perLevelCache.getOrDefault(levelId, List.of());
         levelTable.getItems().setAll(entries);

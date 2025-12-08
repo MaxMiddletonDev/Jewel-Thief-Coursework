@@ -1,7 +1,6 @@
 package cs230.group29se.jewelthief.Scenes.AchievementsScene;
 
 import cs230.group29se.jewelthief.Game.Achievements;
-import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import javafx.fxml.FXML;
@@ -104,7 +103,7 @@ public class AchievementsController extends BaseController implements Initializa
      * @param resourceBundle the resources used to localize the root object
      */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(final URL url, final ResourceBundle resourceBundle) {
         loadAchievements();
     }
 }

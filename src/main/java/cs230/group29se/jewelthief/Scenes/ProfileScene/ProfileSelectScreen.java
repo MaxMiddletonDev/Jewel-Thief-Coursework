@@ -58,7 +58,7 @@ public class ProfileSelectScreen extends Screen {
      *
      * @param profileName The name of the selected profile.
      */
-    public void onProfileChosen(String profileName) {
+    public void onProfileChosen(final String profileName) {
         GameManager.setSelectedProfileName(profileName);
         loadProfile(profileName);
         setFinished(true);

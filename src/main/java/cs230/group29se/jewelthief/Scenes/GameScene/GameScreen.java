@@ -75,7 +75,7 @@ public class GameScreen extends Screen {
      *
      * @param player the player object to control
      */
-    private void setupKeyBinds(Player player) {
+    private void setupKeyBinds(final Player player) {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case UP -> {
@@ -97,6 +97,7 @@ public class GameScreen extends Screen {
                 case P, ESCAPE -> {
                     setPaused(!isPaused());
                 }
+
             }
         });
 
@@ -106,6 +107,7 @@ public class GameScreen extends Screen {
                     System.out.println("Restarting level...");
                     restartLevel();
                 }
+
             }
         });
     }
@@ -214,7 +216,7 @@ public class GameScreen extends Screen {
      *
      * @param paused true to pause the game, false to resume
      */
-    public void setPaused(boolean paused) {
+    public void setPaused(final boolean paused) {
         SoundManager.playPause();
         this.paused = paused;
         if (paused) {

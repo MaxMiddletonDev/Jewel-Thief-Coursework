@@ -38,14 +38,14 @@ public class LevelFinishedController extends BaseController implements Initializ
     @FXML
     private LevelFinishedScreen screen;
 
-    /**
+    /**.
      * Initializes the Level Complete scene by setting the score label's value to the player's score for the level
      *
      * @param url The location used to resolve relative paths for the root object, or null if not known.
      * @param resourceBundle The resources used to localize the root object, or null if not applicable.
      */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(final URL url, ResourceBundle resourceBundle) {
         SoundManager.playWin();
         // Show the score
         int score = GameManager.getCurrentLevel().getScore();
@@ -99,5 +99,7 @@ public class LevelFinishedController extends BaseController implements Initializ
      * @return null, as no canvas is needed for this scene.
      */
     @Override
-    public Canvas getCanvas() {return null;}
+    public Canvas getCanvas() {
+        return null;
+    }
 }

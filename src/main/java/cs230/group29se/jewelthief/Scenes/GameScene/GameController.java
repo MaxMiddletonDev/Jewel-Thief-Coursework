@@ -18,12 +18,12 @@ import java.util.ResourceBundle;
  */
 public class GameController extends BaseController implements Initializable {
 
-    public Label timerLabel;
-    public Label scoreLabel;
+    private Label timerLabel;
+    private Label scoreLabel;
 
     /** Canvas for rendering the game graphics. */
     @FXML
-    Canvas gameCanvas;
+    private Canvas gameCanvas;
 
     /**
      * Initializes the game controller. This method is called automatically
@@ -33,7 +33,7 @@ public class GameController extends BaseController implements Initializable {
      * @param resourceBundle The resources used to localize the root object, or null if not applicable.
      */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(final URL url, final ResourceBundle resourceBundle) {
         // Initialization logic can be added here if needed.
     }
 
@@ -46,4 +46,6 @@ public class GameController extends BaseController implements Initializable {
     public Canvas getCanvas() {
         return gameCanvas;
     }
+
+
 }
