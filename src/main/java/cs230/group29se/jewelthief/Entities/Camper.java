@@ -140,7 +140,7 @@ public class Camper extends NonPlayableCharacter {
      */
     @Override
     public void move() {
-        if (!isAlive) {
+        if (!isAlive()) {
             return;
         }
 

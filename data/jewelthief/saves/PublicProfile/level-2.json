@@ -3,12 +3,12 @@
   "profileName" : "PublicProfile",
   "playerState" : [ 3, 0 ],
   "elapsedSeconds" : 0,
-  "timeRemainingMs" : 96626,
+  "timeRemainingMs" : 97072,
   "score" : 20,
   "npcStates" : {
     "FLYING" : {
       "alive" : true,
-      "x" : 10,
+      "x" : 9,
       "y" : 6,
       "dir" : "RIGHT"
     },
@@ -16,7 +16,7 @@
       "colour" : "G",
       "alive" : true,
       "x" : 3,
-      "y" : 5,
+      "y" : 4,
       "dir" : "DOWN"
     }
   },
