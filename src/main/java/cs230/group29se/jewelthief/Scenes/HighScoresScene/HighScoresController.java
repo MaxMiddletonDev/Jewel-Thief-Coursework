@@ -3,7 +3,6 @@ package cs230.group29se.jewelthief.Scenes.HighScoresScene;
 import cs230.group29se.jewelthief.Game.GameHighScoresHelper;
 import cs230.group29se.jewelthief.Persistence.Profile.HighScoreEntry;
 import cs230.group29se.jewelthief.Scenes.BaseController;
-import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -29,6 +28,11 @@ import java.util.Map;
 public class HighScoresController extends BaseController {
 
 
+    public static final int FIRST = 0;
+    public static final String PROFILE_HEADER = "Profile";
+    public static final String PROFILE_NAME = "profileName";
+    public static final String SCORE_HEADER = "Score";
+    public static final String SCORE = "score";
     @FXML
     private TableView<HighScoreEntry> globalTable;
     @FXML
@@ -84,7 +88,7 @@ public class HighScoresController extends BaseController {
         // Select default level (prefer level 1)
         String defaultLevel = levelIds.contains("1")
                 ? "1"
-                : (levelIds.isEmpty() ? null : levelIds.get(0));
+                : (levelIds.isEmpty() ? null : levelIds.get(FIRST));
 
         if (defaultLevel != null) {
             levelComboBox.getSelectionModel().select(defaultLevel);
@@ -105,21 +109,21 @@ public class HighScoresController extends BaseController {
      */
     private void setupColumns() {
         if (globalTable.getColumns().isEmpty()) {
-            TableColumn<HighScoreEntry, String> nameCol = new TableColumn<>("Profile");
-            nameCol.setCellValueFactory(new PropertyValueFactory<>("profileName"));
+            TableColumn<HighScoreEntry, String> nameCol = new TableColumn<>(PROFILE_HEADER);
+            nameCol.setCellValueFactory(new PropertyValueFactory<>(PROFILE_NAME));
 
-            TableColumn<HighScoreEntry, Integer> scoreCol = new TableColumn<>("Score");
-            scoreCol.setCellValueFactory(new PropertyValueFactory<>("score"));
+            TableColumn<HighScoreEntry, Integer> scoreCol = new TableColumn<>(SCORE_HEADER);
+            scoreCol.setCellValueFactory(new PropertyValueFactory<>(SCORE));
 
             globalTable.getColumns().addAll(nameCol, scoreCol);
         }
 
         if (levelTable.getColumns().isEmpty()) {
-            TableColumn<HighScoreEntry, String> nameCol = new TableColumn<>("Profile");
-            nameCol.setCellValueFactory(new PropertyValueFactory<>("profileName"));
+            TableColumn<HighScoreEntry, String> nameCol = new TableColumn<>(PROFILE_HEADER);
+            nameCol.setCellValueFactory(new PropertyValueFactory<>(PROFILE_NAME));
 
-            TableColumn<HighScoreEntry, Integer> scoreCol = new TableColumn<>("Score");
-            scoreCol.setCellValueFactory(new PropertyValueFactory<>("score"));
+            TableColumn<HighScoreEntry, Integer> scoreCol = new TableColumn<>(SCORE_HEADER);
+            scoreCol.setCellValueFactory(new PropertyValueFactory<>(SCORE));
 
             levelTable.getColumns().addAll(nameCol, scoreCol);
         }
@@ -142,7 +146,7 @@ public class HighScoresController extends BaseController {
      *
      * @param levelId the ID of the level whose scores should be displayed
      */
-    private void updateLevelTable(String levelId) {
+    private void updateLevelTable(final String levelId) {
         if (perLevelCache == null) return;
         List<HighScoreEntry> entries = perLevelCache.getOrDefault(levelId, List.of());
         levelTable.getItems().setAll(entries);

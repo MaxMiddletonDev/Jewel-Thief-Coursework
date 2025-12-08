@@ -38,7 +38,7 @@ public class LevelFailedController extends BaseController implements Initializab
      * @param resourceBundle The resources used to localize the root object, or null if not applicable.
      */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(final URL url, final ResourceBundle resourceBundle) {
         scoreLabel.setText(String.valueOf(GameManager.getCurrentLevel().getScore()));
     }
 

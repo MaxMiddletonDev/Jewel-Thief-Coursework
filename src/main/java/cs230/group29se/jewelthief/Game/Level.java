@@ -173,7 +173,7 @@ public class Level {
         }
 
         lastUpdateTime = System.nanoTime();
-        gameController.scoreLabel.setText(SCORE_LABEL_PREFIX + score);
+        gameController.updateScoreLabel(SCORE_LABEL_PREFIX + score);
     }
 
     /**
@@ -279,7 +279,9 @@ public class Level {
             failLevel(FAIL_TIME_UP);
         }
 
-        gameController.timerLabel.setText(TIMER_LABEL_PREFIX + getTimeRemainingTimeInSeconds() + TIMER_LABEL_SUFFIX);
+        gameController.updateTimerLabel(TIMER_LABEL_PREFIX
+                + getTimeRemainingTimeInSeconds()
+                + TIMER_LABEL_SUFFIX);
 
     }
 
@@ -421,7 +423,7 @@ public class Level {
      */
     public void addScore(final int scoreToAdd) {
         score += scoreToAdd;
-        gameController.scoreLabel.setText(SCORE_LABEL_PREFIX + score);
+        gameController.updateScoreLabel(SCORE_LABEL_PREFIX + score);
     }
 
     /**
@@ -443,7 +445,7 @@ public class Level {
         if (score < 0) {
             score = 0;
         }
-        gameController.scoreLabel.setText(SCORE_LABEL_PREFIX + score);
+        gameController.updateScoreLabel(SCORE_LABEL_PREFIX + score);
     }
 
     /**
@@ -512,14 +514,11 @@ public class Level {
 
         int xPos = def.playerStart.x;  // tile index
         int yPos = def.playerStart.y;  // tile index
-        // clamp to grid bounds just in case
         xPos = Math.max(0, Math.min(xPos, getWidth() - COORD_OFFSET));
         yPos = Math.max(0, Math.min(yPos, getHeight() - COORD_OFFSET));
-        // use tile indices directly
         double px = xPos;
         double py = yPos;
         player = new Player(grid[(int) px][(int) py], this);
-
         // Items and gates + ENEMIES
         for (EntityDef e : def.entities) {
             int rawX = e.x;
@@ -527,7 +526,6 @@ public class Level {
             int entityXPos = rawX - COORD_OFFSET;
             int entityYPos = rawY - COORD_OFFSET;
             String npcId = e.type;
-
             switch (e.type) {
                 case TYPE_FLYING -> {
                     // e.arg1 = direction string ("UP","DOWN","LEFT","RIGHT")
@@ -622,12 +620,10 @@ public class Level {
                     grid[entityXPos][entityYPos].setOccupying(shield);
                 }
                 default -> {
-                    System.out.println(
-                            ERR_UNKNOWN_ENTITY + e.type);
+                    System.out.println(ERR_UNKNOWN_ENTITY + e.type);
                 }
             }
         }
-
         //Add gates to levers
         for (Item item : items) {
             if (item instanceof Lever lever) {
@@ -644,9 +640,12 @@ public class Level {
      * Loads the grid from the level file.
      */
     public void loadGrid() {
-        String filename = LEVEL_PREFIX + GameManager.getCurrentLevelNumber() + LEVEL_SUFFIX;
+        String filename =
+                LEVEL_PREFIX
+                + GameManager.getCurrentLevelNumber() + LEVEL_SUFFIX;
         String levelId = extractLevelId(filename);
-        java.nio.file.Path levelPath = java.nio.file.Path.of(LEVELS_FOLDER, filename);
+        java.nio.file.Path levelPath =
+                java.nio.file.Path.of(LEVELS_FOLDER, filename);
         try {
             LevelDef def = new LevelLoader().loadLevel(levelId, levelPath);
             int x = def.width;
@@ -659,7 +658,7 @@ public class Level {
                 String[] tileTokens = rowString.split("\\s+");
                 for (int col = 0; col < x; col++) {
                     String sequence = tileTokens[col];
-                    Colour[] colours = new Colour[4];
+                    Colour[] colours = new Colour[TILE_COLOUR_COUNT];
                     for (int z = 0; z < colours.length; z++) {
                         char colChar = sequence.charAt(z);
                         colours[z] = colourSetter(String.valueOf(colChar));
@@ -680,7 +679,6 @@ public class Level {
      * including player position, NPCs, time remaining, score, and items.
      */
     public void loadSaveState() {
-
         // Initialize player position from save data ------------------------
         Object[] ps = saveData.getPlayerState();
         Object pxObj = ps[0];
@@ -863,10 +861,13 @@ public class Level {
      * @param yPos       its y location
      * @return the bomb made.
      */
-    private static Bomb getBombFromSave(String[] bombParams, int xPos, int yPos) {
+    private static Bomb getBombFromSave(final String[] bombParams,
+                                        final int xPos, final int yPos) {
         int countDownLeft = Integer.parseInt(bombParams[COUNTDOWN_LEFT]);
-        double countdownTickProgress = Double.parseDouble(bombParams[COUNTDOWN_TICK_PROGRESS]);
-        double nextBoomCountdown = Double.parseDouble(bombParams[NEXT_BOOM_COUNTDOWN]);
+        double countdownTickProgress =
+                Double.parseDouble(bombParams[COUNTDOWN_TICK_PROGRESS]);
+        double nextBoomCountdown =
+                Double.parseDouble(bombParams[NEXT_BOOM_COUNTDOWN]);
         int explosions = Integer.parseInt(bombParams[EXPLOSIONS]);
         boolean armed = Boolean.parseBoolean(bombParams[ARMED]);
         boolean exploding = Boolean.parseBoolean(bombParams[EXPLODING]);

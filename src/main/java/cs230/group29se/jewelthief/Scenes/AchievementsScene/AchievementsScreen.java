@@ -11,13 +11,16 @@ import cs230.group29se.jewelthief.Scenes.Screen;
  */
 public class AchievementsScreen extends Screen {
 
+    public static final String ACHIEVEMENTS = "Achievements";
+    public static final String ACHIEVEMENTS_XML_PATH = "/cs230/group29se/jewelthief/achievements-view.fxml";
+
     /**
      * Constructs a new AchievementsScreen instance.
      * Sets the screen title and the FXML path for the achievements view.
      */
     public AchievementsScreen() {
-        setScreenTitle("Achievements"); // Sets the title of the screen
-        setScreenFXMLPath("/cs230/group29se/jewelthief/achievements-view.fxml"); // Path to the FXML file
+        setScreenTitle(ACHIEVEMENTS); // Sets the title of the screen
+        setScreenFXMLPath(ACHIEVEMENTS_XML_PATH); // Path to the FXML file
     }
 
     /**

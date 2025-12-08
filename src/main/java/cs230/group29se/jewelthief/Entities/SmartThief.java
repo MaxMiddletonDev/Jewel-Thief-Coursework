@@ -22,6 +22,9 @@ import java.util.Queue;
  * @author Max Middleton
  */
 public class SmartThief extends FloorThief {
+    public static final int[][] OFFSETS = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    public static final String LOOT = "LOOT";
+    public static final String EXIT = "EXIT";
     private Level level;
     private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/NPCs/SMARTTHIEF.png").toString());
 
@@ -32,7 +35,7 @@ public class SmartThief extends FloorThief {
      * @param level The game level instance.
      * @param id The unique identifier for this entity.
      */
-    public SmartThief(Tile startingTile, Direction direction, Level level, String id) {
+    public SmartThief(final Tile startingTile, final Direction direction, final Level level, final String id) {
         super(null, startingTile, direction, level, id);
         this.level = level;
     }
@@ -65,7 +68,7 @@ public class SmartThief extends FloorThief {
      */
     @Override
     public void move() {
-        if (!isAlive) {
+        if (!isAlive()) {
             return;
         }
 
@@ -82,10 +85,10 @@ public class SmartThief extends FloorThief {
         }
 
         if (nextMove != null) {
-            this.direction = nextMove;
-            Tile destination = calculateDestination(currentTile, nextMove);
+            this.setDirection(nextMove);
+            Tile destination = calculateDestination(getCurrentTile(), nextMove);
             if (destination != null) {
-                this.currentTile = destination;
+                this.setCurrentTile(destination);
                 triggerAdjacentBombs();
             }
         } else {
@@ -94,10 +97,10 @@ public class SmartThief extends FloorThief {
             Collections.shuffle(directions);
 
             for (Direction direction : directions) {
-                Tile target = calculateDestination(currentTile, direction);
+                Tile target = calculateDestination(getCurrentTile(), direction);
                 if (target != null) {
-                    this.direction = direction;
-                    this.currentTile = target;
+                    this.setDirection(direction);
+                    this.setCurrentTile(target);
 
                     return;
                 }
@@ -110,7 +113,7 @@ public class SmartThief extends FloorThief {
      * @param targetType The type of object to search for items or doors.
      * @return The Direction to move in to start the path, or null if no path exists.
      */
-    private Direction findPathTo(String targetType) {
+    private Direction findPathTo(final String targetType) {
         int width = level.getWidth();
         int height = level.getHeight();
 
@@ -120,7 +123,7 @@ public class SmartThief extends FloorThief {
 
         Queue<Tile> tilesToVisit = new LinkedList<>();
 
-        Tile startNode = this.currentTile;
+        Tile startNode = this.getCurrentTile();
         tilesToVisit.add(startNode);
         visitedTiles[startNode.getX()][startNode.getY()] = true;
 
@@ -131,11 +134,11 @@ public class SmartThief extends FloorThief {
             // Check for current tile contains target
             boolean found = false;
 
-            if (targetType.equals("LOOT")) {
+            if (targetType.equals(LOOT)) {
                 if (obj instanceof Collectable && !(obj instanceof Bomb)) {
                     found = true;
                 }
-            } else if (targetType.equals("EXIT")) {
+            } else if (targetType.equals(EXIT)) {
                 if (obj instanceof Door) {
                     found = true;
                 }
@@ -182,7 +185,7 @@ public class SmartThief extends FloorThief {
      * @param direction The direction of movement.
      * @return the final tile destination.
      */
-    private Tile calculateDestination(Tile start, Direction direction) {
+    private Tile calculateDestination(final Tile start, final Direction direction) {
         int x = start.getX();
         int y = start.getY();
         int dx = direction.getX();
@@ -213,7 +216,7 @@ public class SmartThief extends FloorThief {
      * @param tile The tile to check.
      * @return true if the tile is occupied by a Bomb, Player, or another Enemy; false otherwise.
      */
-    private boolean isBlockedPath(Tile tile) {
+    private boolean isBlockedPath(final Tile tile) {
         if (tile.hasBomb()) {
             return true;
         }
@@ -232,7 +235,7 @@ public class SmartThief extends FloorThief {
 
         for (NonPlayableCharacter npc : level.getEnemies()) {
             if (npc != this && npc.isAlive()) {
-                if (npc.currentTile == tile) {
+                if (npc.getCurrentTile() == tile) {
                     return true;
                 }
             }
@@ -245,13 +248,11 @@ public class SmartThief extends FloorThief {
      * Checks the 4 tiles immediately surrounding the player. If a bomb is found, it is activated.
      */
     private void triggerAdjacentBombs() {
-        int currentX = currentTile.getX();
-        int currentY = currentTile.getY();
+        int currentX = getCurrentTile().getX();
+        int currentY = getCurrentTile().getY();
 
         // These are the adjacent tiles
-        int[][] offsets = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-
-        for (int[] offset : offsets) {
+        for (int[] offset : OFFSETS) {
             int checkX = currentX + offset[0];
             int checkY = currentY + offset[1];
 

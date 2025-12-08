@@ -11,13 +11,16 @@ import cs230.group29se.jewelthief.Scenes.Screen;
  */
 public class EquipablesScreen extends Screen {
 
+    public static final String EQUIPABLES = "Equipables";
+    public static final String EQUIPABLES_XML_PATH = "/cs230/group29se/jewelthief/equipables-view.fxml";
+
     /**
      * Constructs a new EquipablesScreen instance.
      * Sets the screen title, FXML path, and the next screen to navigate to.
      */
     public EquipablesScreen() {
-        setScreenTitle("Equipables"); // Sets the title of the screen
-        setScreenFXMLPath("/cs230/group29se/jewelthief/equipables-view.fxml"); // Path to the FXML file
+        setScreenTitle(EQUIPABLES); // Sets the title of the screen
+        setScreenFXMLPath(EQUIPABLES_XML_PATH); // Path to the FXML file
         setNextScreen(new MainMenuScreen()); // Sets the next screen to the main menu
     }
 

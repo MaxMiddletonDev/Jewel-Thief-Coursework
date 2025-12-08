@@ -24,6 +24,9 @@ import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.
  */
 public class LevelFinishedController extends BaseController implements Initializable {
 
+    public static final int MILLISECOND_CONVERTER = 1000;
+    public static final int SPEEDSTER_THRESHOLD = 30;
+    public static final int NEXT_LEVEL = 1;
     @FXML
     private Button nextLevelButton;
     @FXML
@@ -35,14 +38,14 @@ public class LevelFinishedController extends BaseController implements Initializ
     @FXML
     private LevelFinishedScreen screen;
 
-    /**
+    /**.
      * Initializes the Level Complete scene by setting the score label's value to the player's score for the level
      *
      * @param url The location used to resolve relative paths for the root object, or null if not known.
      * @param resourceBundle The resources used to localize the root object, or null if not applicable.
      */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(final URL url, ResourceBundle resourceBundle) {
         SoundManager.playWin();
         // Show the score
         int score = GameManager.getCurrentLevel().getScore();
@@ -50,7 +53,7 @@ public class LevelFinishedController extends BaseController implements Initializ
 
         Level level = GameManager.getCurrentLevel();
 
-        if (level.getTimeRemainingMs() / 1000 > 30) {
+        if (level.getTimeRemainingMs() / MILLISECOND_CONVERTER > SPEEDSTER_THRESHOLD) {
             writeUnlockedAchievement(Achievements.SPEEDSTER);
         }
 
@@ -77,7 +80,7 @@ public class LevelFinishedController extends BaseController implements Initializ
      */
     public void selectNextLevel() {
         int currentLevelNumber = GameManager.getCurrentLevelNumber();
-        GameManager.setCurrentLevelNumber(currentLevelNumber + 1);
+        GameManager.setCurrentLevelNumber(currentLevelNumber + NEXT_LEVEL);
         getScreen().setNextScreen(new GameScreen());
         getScreen().setFinished(true);
     }
@@ -96,5 +99,7 @@ public class LevelFinishedController extends BaseController implements Initializ
      * @return null, as no canvas is needed for this scene.
      */
     @Override
-    public Canvas getCanvas() {return null;}
+    public Canvas getCanvas() {
+        return null;
+    }
 }

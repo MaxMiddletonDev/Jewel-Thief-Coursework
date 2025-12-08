@@ -1,23 +1,11 @@
 package cs230.group29se.jewelthief.Scenes.MainScene;
-
 import cs230.group29se.jewelthief.Game.SoundManager;
-import cs230.group29se.jewelthief.Scenes.AchievementsScene.AchievementsScreen;
 import cs230.group29se.jewelthief.Cosmetics.SkinId;
 import cs230.group29se.jewelthief.Cosmetics.SkinRegistry;
 import cs230.group29se.jewelthief.Game.GameManager;
-import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
 import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
-import cs230.group29se.jewelthief.Scenes.GameScene.GameScreen;
-import cs230.group29se.jewelthief.Scenes.HighScoresScene.HighScoresScreen;
-import cs230.group29se.jewelthief.Scenes.LevelSelectScene.LevelSelectScreen;
-import cs230.group29se.jewelthief.Scenes.ProfileScene.ProfileSelectScreen;
 import cs230.group29se.jewelthief.Scenes.Screen;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
-
-import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.loadProfile;
 
 /**
  * Represents the Main Menu screen in the game.
@@ -29,14 +17,17 @@ import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.
  */
 public class MainMenuScreen extends Screen {
 
+    public static final String MAIN_MENU = "Main Menu";
+    public static final String MAIN_MENU_XML_PATH = "/cs230/group29se/jewelthief/main-view.fxml";
+
     /**
      * Constructs a MainMenuScreen and sets its title, FXML path, and the next screen.
      * The screen title is set to "Main Menu", and the FXML file path is specified.
      * The next screen is set to the LevelSelectScreen.
      */
     public MainMenuScreen() {
-        setScreenTitle("Main Menu");
-        setScreenFXMLPath("/cs230/group29se/jewelthief/main-view.fxml");
+        setScreenTitle(MAIN_MENU);
+        setScreenFXMLPath(MAIN_MENU_XML_PATH);
     }
 
     /**
@@ -81,6 +72,4 @@ public class MainMenuScreen extends Screen {
     public void draw() {
         // No drawing logic for this screen.
     }
-
-
 }

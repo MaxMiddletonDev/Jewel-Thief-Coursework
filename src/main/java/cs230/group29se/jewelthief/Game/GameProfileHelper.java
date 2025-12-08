@@ -9,7 +9,8 @@ import java.util.List;
 
 /**
  * Helper class for managing game profiles.
- * Provides utility methods for listing, creating, renaming, and deleting profiles.
+ * Provides utility methods for listing, creating, renaming,
+ * and deleting profiles.
  *
  * @author Iyaad
  */
@@ -31,7 +32,7 @@ public class GameProfileHelper {
     /**
      * Shared ProfileManager initialized with saved profiles.
      */
-    private static final ProfileManager manager = loadManagerFromPersistence();
+    private static final ProfileManager MANAGER = loadManagerFromPersistence();
 
     /**
      * Loads the ProfileManager with profiles from persistence storage.
@@ -67,7 +68,7 @@ public class GameProfileHelper {
      * @throws IllegalArgumentException if the profile name already exists.
      */
     public static void ensureProfileExists(final String name) {
-        if (manager.isDuplicateName(name)) {
+        if (MANAGER.isDuplicateName(name)) {
             throw new IllegalArgumentException(
                     String.format(ERROR_DUPLICATE_PROFILE, name)
             );
@@ -80,7 +81,7 @@ public class GameProfileHelper {
             p = new ProfileData();
             p.setProfileName(name);
             p.setMaxUnlockedLvl(DEFAULT_MAX_UNLOCKED_LEVEL);
-            manager.addProfile(p);
+            MANAGER.addProfile(p);
             PersistenceManager.setCachedProfile(p);
             PersistenceManager.saveProfile();
         }
@@ -102,7 +103,7 @@ public class GameProfileHelper {
      */
     public static void deleteProfile(final String name) {
         PersistenceManager.deleteProfile(name);
-        manager.getProfiles().removeIf(p ->
+        MANAGER.getProfiles().removeIf(p ->
                 p.getProfileName().equalsIgnoreCase(name));
         System.out.println(String.format(LOG_PROFILE_DELETED, name));
     }
@@ -114,7 +115,8 @@ public class GameProfileHelper {
      * @param newName The desired new name for the profile.
      * @return true if the rename operation was successful, false otherwise.
      */
-    public static boolean renameProfile(String oldName, String newName) {
+    public static boolean renameProfile(final String oldName,
+                                        String newName) {
         if (oldName == null || newName == null) {
             return false;
         }
@@ -126,7 +128,7 @@ public class GameProfileHelper {
             return true;
         }
 
-        if (manager.isDuplicateName(newName)) {
+        if (MANAGER.isDuplicateName(newName)) {
             return false;
         }
 
@@ -139,18 +141,19 @@ public class GameProfileHelper {
 
             // Rename and cache the profile
             p.setProfileName(newName);
-            manager.addProfile(p);
+            MANAGER.addProfile(p);
             PersistenceManager.setCachedProfile(p);
 
             PersistenceManager.setActiveProfileName(newName);
             PersistenceManager.saveProfile();
 
             PersistenceManager.deleteProfile(oldName);
-            manager.getProfiles().removeIf(x ->
+            MANAGER.getProfiles().removeIf(x ->
                     x.getProfileName().equalsIgnoreCase(oldName));
             return true;
         } catch (Exception e) {
-            System.out.println(String.format(LOG_RENAME_FAILED, e.getMessage()));
+            System.out.println(String.format(LOG_RENAME_FAILED,
+                    e.getMessage()));
             return false;
         }
     }

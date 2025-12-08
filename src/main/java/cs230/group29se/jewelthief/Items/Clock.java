@@ -16,10 +16,10 @@ import javafx.scene.image.Image;
 public class Clock extends Destroyable {
 
 
-    private static final int TIME_CHANGE = 5000;
+    public static final int TIME_CHANGE = 5000;
     public static final int XPOS_TILE_ADJUSTMENT = 2;
     public static final int YPOS_TILE_ADJUSTMENT = 1;
-    private final Image image = new Image(
+    public final Image image = new Image(
             getClass().getResource(
                     "/cs230/group29se/jewelthief/Images/Items/CLOCK.png")
                     .toString()

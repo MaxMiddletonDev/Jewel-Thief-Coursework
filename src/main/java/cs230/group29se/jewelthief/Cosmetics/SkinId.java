@@ -1,8 +1,9 @@
 package cs230.group29se.jewelthief.Cosmetics;
 
 /**
- * enum listing the only available skins
- * @author Gustas Rove
+ * An enum representing different skin IDs for the game characters.
+ * @author Gustas
+ * @version 1.0
  */
 public enum SkinId {
     DEFAULT_GUY,
@@ -14,11 +15,12 @@ public enum SkinId {
     TANK;
 
     /**
-     * converts the id into a string
-     * @param selectedSkinId the id to convert into a string
-     * @return the string equivalent of the skin id
+     * Converts a string to the corresponding SkinId enum value.
+     * @param selectedSkinId The string representation of the skin ID.
+     * @return The corresponding SkinId enum value,
+     * or DEFAULT_GUY if no match is found.
      */
-    public static SkinId fromString(String selectedSkinId) {
+    public static SkinId fromString(final String selectedSkinId) {
         for (SkinId skinId : SkinId.values()) {
             if (skinId.name().equals(selectedSkinId)) {
                 return skinId;

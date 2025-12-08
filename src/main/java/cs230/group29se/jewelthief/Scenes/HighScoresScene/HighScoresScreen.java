@@ -11,13 +11,16 @@ import cs230.group29se.jewelthief.Scenes.Screen;
  */
 public class HighScoresScreen extends Screen {
 
+    public static final String HIGH_SCORES = "High Scores";
+    public static final String HIGHSCORE_XML_PATH = "/cs230/group29se/jewelthief/highscores-view.fxml";
+
     /**
      * Constructs a new HighScoresScreen instance.
      * Sets the screen title, FXML path, and the next screen to navigate to.
      */
     public HighScoresScreen() {
-        setScreenTitle("High Scores"); // Sets the title of the screen
-        setScreenFXMLPath("/cs230/group29se/jewelthief/highscores-view.fxml"); // Path to the FXML file
+        setScreenTitle(HIGH_SCORES); // Sets the title of the screen
+        setScreenFXMLPath(HIGHSCORE_XML_PATH); // Path to the FXML file
         setNextScreen(new MainMenuScreen()); // Sets the next screen to the main menu
     }
 
@@ -27,7 +30,7 @@ public class HighScoresScreen extends Screen {
      */
     @Override
     public void onInitialize() {
-        ((HighScoresController)getController()).loadData(); // Loads high scores data
+        ((HighScoresController) getController()).loadData(); // Loads high scores data
     }
 
     /**

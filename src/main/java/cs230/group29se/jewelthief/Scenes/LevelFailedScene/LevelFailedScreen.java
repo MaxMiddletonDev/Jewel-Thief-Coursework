@@ -11,13 +11,16 @@ import cs230.group29se.jewelthief.Scenes.Screen;
  */
 public class LevelFailedScreen extends Screen {
 
+    public static final String LEVEL_FAILED = "Level Failed";
+    public static final String LEVEL_FAILED_XML_PATH = "/cs230/group29se/jewelthief/level-failed-view.fxml";
+
     /**
      * Constructs a LevelFailedScreen and sets its title and FXML path.
      * The screen title is set to "Level Failed" and the FXML file path is specified.
      */
     public LevelFailedScreen() {
-        setScreenTitle("Level Failed");
-        setScreenFXMLPath("/cs230/group29se/jewelthief/level-failed-view.fxml");
+        setScreenTitle(LEVEL_FAILED);
+        setScreenFXMLPath(LEVEL_FAILED_XML_PATH);
     }
 
     /**

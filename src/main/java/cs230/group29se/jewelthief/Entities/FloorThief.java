@@ -19,6 +19,10 @@ import javafx.scene.image.Image;
  * @author Baba
  */
 public class FloorThief extends NonPlayableCharacter {
+    public static final float MOVE_COOLDOWN_SECONDS = 0.5f;
+    public static final int HIT_COOLDOWN_SECONDS = 2;
+    public static final int[][] OFFSETS =
+            new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
     private Colour assignedColour;
     private Level level;
 
@@ -35,14 +39,18 @@ public class FloorThief extends NonPlayableCharacter {
      * @param level The level the Thief will be instantiated on
      * @param id Thief's ID
      */
-    public FloorThief(Colour assignedColour, Tile startingTile, Direction direction, Level level, String id) {
+    public FloorThief(final Colour assignedColour,
+                      final Tile startingTile,
+                      final Direction direction,
+                      final Level level,
+                      final String id) {
         super(startingTile, direction);
         this.id = id;
         this.assignedColour = assignedColour;
         this.level = level;
 
-        setMoveCooldownSeconds(0.5f); // Floor Thief moves every 1 second
-        setHitCooldownSeconds(2); // Floor Thief can hit every 2 seconds
+        setMoveCooldownSeconds(MOVE_COOLDOWN_SECONDS);
+        setHitCooldownSeconds(HIT_COOLDOWN_SECONDS);
     }
 
     /**
@@ -62,15 +70,15 @@ public class FloorThief extends NonPlayableCharacter {
      * @param other - character that collides with this one
      */
     @Override
-    public void onCollisionWith(MoveableCharacter other) {
-        if (!isAlive) {
+    public void onCollisionWith(final MoveableCharacter other) {
+        if (!isAlive()) {
             return;
         }
 
         if (other instanceof FlyingAssassin) {
-            this.isAlive = false;
+            this.setAlive(false);
         } else if (other instanceof Player) {
-            if(canHit()){
+            if (canHit()) {
                 ((Player) other).getHit();
                 resetHitCooldown();
             }
@@ -79,11 +87,11 @@ public class FloorThief extends NonPlayableCharacter {
     }
 
     /**
-     * Collects Items and calls relevant logic
+     * Collects Items and calls relevant logic.
      * @param item Specific Item
      */
     @Override
-    public void collectItem(Item item) {
+    public void collectItem(final Item item) {
         if (item == null) {
             return;
         }
@@ -100,13 +108,13 @@ public class FloorThief extends NonPlayableCharacter {
      * Handles Floor thief movements on the tiles and validates it's movements.
      */
     @Override
-    public void move(){
-        if (!isAlive) {
+    public void move() {
+        if (!isAlive()) {
             return;
         }
 
         //Only move once every X seconds
-        if(!canMove()){
+        if (!canMove()) {
             return;
         }
 
@@ -114,7 +122,7 @@ public class FloorThief extends NonPlayableCharacter {
 
         if (nextDirection != null) {
             moveIn(nextDirection);
-            direction = nextDirection; //change direction facing to nextDirection
+            setDirection(nextDirection); //change facing to nextDirection
         }
     }
 
@@ -124,26 +132,27 @@ public class FloorThief extends NonPlayableCharacter {
      * If a bomb is found, it is activated.
      */
     private void triggerAdjacentBombs() {
-        int currentX = currentTile.getX();
-        int currentY = currentTile.getY();
+        int currentX = getCurrentTile().getX();
+        int currentY = getCurrentTile().getY();
 
         // These are the adjacent tiles
-        int[][] offsets = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
-        for (int[] offset : offsets) {
+        for (int[] offset : OFFSETS) {
             int checkX = currentX + offset[0];
             int checkY = currentY + offset[1];
 
-            if (checkX >= 0 && checkX < level.getWidth() && checkY >= 0 && checkY < level.getHeight()) {
+            if (checkX >= 0 && checkX < level.getWidth()
+                    && checkY >= 0 && checkY < level.getHeight()) {
                 Tile neighbour = level.getTile(checkX, checkY);
-                if (neighbour != null && neighbour.getOccupying() instanceof Bomb bomb) {
+                if (neighbour != null
+                        && neighbour.getOccupying() instanceof Bomb bomb) {
                     bomb.interact();
                 }
             }
         }
     }
     /**
-     * Gets specific enemies sprite
+     * Gets specific enemies sprite.
      */
     @Override
     public Image getImage() {
@@ -151,7 +160,7 @@ public class FloorThief extends NonPlayableCharacter {
     }
 
     /**
-     * finds what direction the FloorThief can move in
+     * finds what direction the FloorThief can move in.
      * @return direction to move towards
      */
     public Direction findNextDirection() {
@@ -166,30 +175,45 @@ public class FloorThief extends NonPlayableCharacter {
     }
 
     /**
-     * Provides the possible directions a floor thief can move in, keeping in mind that the LHS has greater priority
+     * Provides the possible directions a floor thief can move in,
+     * keeping in mind that the LHS has greater priority.
      * @return possible directions to move in with LHS rule in mind
      */
     public Direction[] getPossibleDirections() {
-        if (direction == Direction.UP) {
-            return new Direction[]{Direction.LEFT, Direction.UP, Direction.RIGHT, Direction.DOWN};
-        } else if (direction == Direction.DOWN) {
-            return new Direction[]{Direction.RIGHT, Direction.DOWN, Direction.LEFT, Direction.UP};
-        } else if (direction == Direction.LEFT) {
-            return new Direction[]{Direction.DOWN, Direction.LEFT, Direction.UP, Direction.RIGHT};
-        } else if (direction == Direction.RIGHT) {
-            return new Direction[]{Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT};
+        if (getDirection() == Direction.UP) {
+            return new Direction[]{Direction.LEFT,
+                    Direction.UP,
+                    Direction.RIGHT,
+                    Direction.DOWN};
+        } else if (getDirection() == Direction.DOWN) {
+            return new Direction[]{Direction.RIGHT,
+                    Direction.DOWN,
+                    Direction.LEFT,
+                    Direction.UP};
+        } else if (getDirection() == Direction.LEFT) {
+            return new Direction[]{Direction.DOWN,
+                    Direction.LEFT,
+                    Direction.UP,
+                    Direction.RIGHT};
+        } else if (getDirection() == Direction.RIGHT) {
+            return new Direction[]{Direction.UP,
+                    Direction.RIGHT,
+                    Direction.DOWN,
+                    Direction.LEFT};
         } else {
             return new Direction[0];
         }
     }
 
     /**
-     * checks if a tile a thief wants to move in is 1) a valid tile to actually move to i.e. not an edge, and 2) shares
-     * a common colour with the thief's assigned colour, 3) tile does not contain a bomb or unpassable gate
+     * checks if a tile a thief wants to move in is
+     * 1) a valid tile to actually move to i.e. not an edge,
+     * 2) shares a common colour with the thief's assigned colour,
+     * 3) tile does not contain a bomb or unpassable gate
      * @param moveDirection - direction to move towards
      * @return true if conditions are met, false otherwise
      */
-    public boolean isValidColorTile(Direction moveDirection) {
+    public boolean isValidColorTile(final Direction moveDirection) {
         int[] currentPos = getPosition();
         int thiefTargetX = currentPos[0];
         int thiefTargetY = currentPos[1];
@@ -228,11 +252,11 @@ public class FloorThief extends NonPlayableCharacter {
     }
 
     /**
-     * Checks if an NPC has the appropriate lever colour
-     * @param colour
-     * @return
+     * Checks if an NPC has the appropriate lever colour.
+     * @param colour States the colour of the lever
+     * @return false or true if lever is the same colour.
      */
-    public boolean hasLever(Colour colour) {
+    public boolean hasLever(final Colour colour) {
         for (Item item : collectedItems) {
             if (item instanceof Lever && ((Lever) item).getColour() == colour) {
                 return true;
@@ -242,10 +266,10 @@ public class FloorThief extends NonPlayableCharacter {
     }
 
     /**
-     * Makes the move to the nextDirection
+     * Makes the move to the nextDirection.
      * @param direction to move towards
      */
-    public void moveIn(Direction direction) {
+    public void moveIn(final Direction direction) {
         int[] currentPos = getPosition();
         int thiefTargetX = currentPos[0];
         int thiefTargetY = currentPos[1];
@@ -262,16 +286,20 @@ public class FloorThief extends NonPlayableCharacter {
 
         Tile targetTile = level.getTile(thiefTargetX, thiefTargetY);
         if (targetTile != null) {
-            currentTile = targetTile;
+            setCurrentTile(targetTile);
             triggerAdjacentBombs();
         }
     }
 
     /**
-     * Checks if a floor thief is at an edge or not
+     * Checks if a floor thief is at an edge or not.
+     * @param targetX states the edge x
+     * @param targetY states the edge y
+     * @return true or false based on if it's a valid move.
      */
-    public boolean isValidMove(int targetX, int targetY) {
-        if (targetX >= 0 && targetY >= 0 && targetX < level.getWidth() && targetY < level.getHeight()) {
+    public boolean isValidMove(final int targetX, final int targetY) {
+        if (targetX >= 0 && targetY >= 0
+                && targetX < level.getWidth() && targetY < level.getHeight()) {
             return true;
         } else {
             return false;
@@ -279,8 +307,8 @@ public class FloorThief extends NonPlayableCharacter {
     }
 
     /**
-     * Checks if the FloorThief is protected or not
-     * @return true if protected, false otherwise
+     * Checks if the FloorThief is protected or not.
+     * @return true if protected, false otherwise.
      */
     @Override
     public boolean isProtected() {
@@ -288,11 +316,11 @@ public class FloorThief extends NonPlayableCharacter {
     }
 
     /**
-     * Sets the protection status of the FloorThief
-     * @param value - true to set as protected, false otherwise
+     * Sets the protection status of the FloorThief.
+     * @param value - true to set as protected, false otherwise.
      */
     @Override
-    public void setProtected(boolean value) {
+    public void setProtected(final boolean value) {
         isProtected = value;
     }
 

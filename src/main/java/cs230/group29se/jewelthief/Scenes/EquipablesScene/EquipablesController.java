@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
@@ -26,10 +25,7 @@ import java.util.ResourceBundle;
  */
 public class EquipablesController extends BaseController implements Initializable {
 
-    @FXML
-    private Label titleLabel;
-    @FXML
-    private Button backButton;
+    public static final String LOCKED_SKIN_MESSAGE = "Locked";
     @FXML
     private ImageView skin1Image;
     @FXML
@@ -84,7 +80,7 @@ public class EquipablesController extends BaseController implements Initializabl
      * @param resourceBundle the resources used to localize the root object
      */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(final URL url, final ResourceBundle resourceBundle) {
 
         unlockedAchievements =
                 PersistenceManager.getCurrentProfile().getUnlockedAchievements();
@@ -125,7 +121,7 @@ public class EquipablesController extends BaseController implements Initializabl
             if (btn != null) {
                 btn.setDisable(!isUnlocked);
                 if (!isUnlocked)
-                    btn.setText("Locked");
+                    btn.setText(LOCKED_SKIN_MESSAGE);
             }
         }
     }
@@ -145,7 +141,7 @@ public class EquipablesController extends BaseController implements Initializabl
      * @param skinId the ID of the skin to check
      * @return true if the skin is unlocked, false otherwise
      */
-    public boolean isSkinUnlocked(SkinId skinId) {
+    public boolean isSkinUnlocked(final SkinId skinId) {
         return switch (skinId) {
             case DEFAULT_GUY -> true;
             case SPEEDSTER -> unlockedAchievements.contains(Achievements.SPEEDSTER.toString());
@@ -154,7 +150,6 @@ public class EquipablesController extends BaseController implements Initializabl
             case MONEY_MAN -> unlockedAchievements.contains(Achievements.MONEY_MAN.toString());
             case PRO -> unlockedAchievements.contains(Achievements.PRO.toString());
             case TANK -> unlockedAchievements.contains(Achievements.TANK.toString());
-            default -> false;
         };
     }
 
@@ -219,7 +214,7 @@ public class EquipablesController extends BaseController implements Initializabl
      *
      * @param skin the skin to select
      */
-    private void selectSkin(Skin skin) {
+    private void selectSkin(final Skin skin) {
         PersistenceManager.writeSelectedSkin(skin);
         getScreen().setFinished(true);
     }

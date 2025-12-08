@@ -27,6 +27,20 @@ import java.util.ResourceBundle;
  */
 public class MainMenuController extends BaseController implements Initializable {
 
+    public static final String CREDITS = "Credits";
+    public static final String CREDITS_HEADER = "Jewel Thief — Contributors";
+    public static final String CREDITS_CONTENTS = """
+            Developed by
+            - Rove Gustas
+            - Poole Ben
+            - Middleton Max
+            - Hilborne Charlie;;
+            - Syahrizal Amsyar
+            - Traore Mouhamadou Baba
+            - Al Assem Hamza
+            - Oritsetsewundede Christiana
+            - Meng Shaohua
+            """;
     @FXML
     private Button achievementsButton;
     @FXML
@@ -83,21 +97,10 @@ public class MainMenuController extends BaseController implements Initializable 
     @FXML
     private void handleCreditsClicked() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Credits");
-        alert.setHeaderText("Jewel Thief — Contributors");
+        alert.setTitle(CREDITS);
+        alert.setHeaderText(CREDITS_HEADER);
 
-        String content = """
-                Developed by
-                - Rove Gustas
-                - Poole Ben
-                - Middleton Max
-                - Hilborne Charlie;;
-                - Syahrizal Amsyar
-                - Traore Mouhamadou Baba
-                - Al Assem Hamza
-                - Oritsetsewundede Christiana
-                - Meng Shaohua
-                """;
+        String content = CREDITS_CONTENTS;
 
         alert.setContentText(content);
         alert.showAndWait();
@@ -118,7 +121,7 @@ public class MainMenuController extends BaseController implements Initializable 
      *
      * @param actionEvent the event triggered by the button click
      */
-    public void handleAchievementsClicked(ActionEvent actionEvent) {
+    public void handleAchievementsClicked(final ActionEvent actionEvent) {
         getScreen().setNextScreen(new AchievementsScreen());
         getScreen().setFinished(true);
     }
@@ -129,7 +132,7 @@ public class MainMenuController extends BaseController implements Initializable 
      *
      * @param actionEvent the event triggered by the button click
      */
-    public void handleEquipablesClicked(ActionEvent actionEvent) {
+    public void handleEquipablesClicked(final ActionEvent actionEvent) {
         getScreen().setNextScreen(new EquipablesScreen());
         getScreen().setFinished(true);
     }
@@ -140,7 +143,7 @@ public class MainMenuController extends BaseController implements Initializable 
      *
      * @param actionEvent the event triggered by the button click
      */
-    public void selectProfileClicked(ActionEvent actionEvent) {
+    public void selectProfileClicked(final ActionEvent actionEvent) {
         getScreen().setNextScreen(new ProfileSelectScreen());
         getScreen().setFinished(true);
     }
@@ -152,7 +155,7 @@ public class MainMenuController extends BaseController implements Initializable 
      * @param resourceBundle the resources used to localize the root object
      */
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(final URL url, final ResourceBundle resourceBundle) {
         // Initialization logic if needed
     }
 
@@ -161,7 +164,7 @@ public class MainMenuController extends BaseController implements Initializable 
      *
      * @param text the text to set
      */
-    public void setProfileNameLabelText(String text) {
+    public void setProfileNameLabelText(final String text) {
         profileNameLabel.setText(text);
     }
 
@@ -170,7 +173,7 @@ public class MainMenuController extends BaseController implements Initializable 
      *
      * @param skinImage the image to set
      */
-    public void setEquippedSkinImage(Image skinImage) {
+    public void setEquippedSkinImage(final Image skinImage) {
         equippedSkinImage.setImage(skinImage);
     }
 }

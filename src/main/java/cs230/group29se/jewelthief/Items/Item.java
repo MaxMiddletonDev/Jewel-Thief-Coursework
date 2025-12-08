@@ -11,8 +11,8 @@ import javafx.scene.canvas.GraphicsContext;
  */
 
 public abstract class Item {
-    private final int POS_X;
-    private final int POS_Y;
+    public final int POS_X;
+    public final int POS_Y;
     /**
      * The character that collected this item (Player or NPC).
      */

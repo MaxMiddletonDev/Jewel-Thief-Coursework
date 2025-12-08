@@ -10,13 +10,16 @@ import cs230.group29se.jewelthief.Scenes.Screen;
  */
 public class LevelFinishedScreen extends Screen {
 
+    public static final String LEVEL_FINISHED = "Level Finished";
+    public static final String LEVEL_FINISHED_XML_PATH = "/cs230/group29se/jewelthief/level-finished.fxml";
+
     /**
      * Constructs a LevelFinishedScreen and sets its title and FXML path.
      * The screen title is set to "Level Finished" and the FXML path is specified.
      */
     public LevelFinishedScreen() {
-        setScreenTitle("Level Finished");
-        setScreenFXMLPath("/cs230/group29se/jewelthief/level-finished.fxml");
+        setScreenTitle(LEVEL_FINISHED);
+        setScreenFXMLPath(LEVEL_FINISHED_XML_PATH);
     }
 
     /**

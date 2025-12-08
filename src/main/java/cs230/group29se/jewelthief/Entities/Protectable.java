@@ -2,7 +2,8 @@ package cs230.group29se.jewelthief.Entities;
 
 /**
  * Interface representing a Protectable entity in the Jewel Thief game.
- * A Protectable entity can be protected or unprotected, and its protection status
+ * A Protectable entity can be protected or unprotected,
+ * and its protection status
  * can be queried or modified.
  *
  * A protected entity shouldn't die.
