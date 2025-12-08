@@ -23,7 +23,6 @@ public class Player implements MoveableCharacter, Protectable {
     private boolean isFacingRight = true;
     private Level level;
 
-    //    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/PLAYER.png").toString());
     private final Image image;
 
     private boolean isProtected;

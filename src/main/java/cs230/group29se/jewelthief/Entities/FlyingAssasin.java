@@ -3,7 +3,6 @@ package cs230.group29se.jewelthief.Entities;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
 import cs230.group29se.jewelthief.Items.Item;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 
@@ -20,18 +19,23 @@ public class FlyingAssasin extends NonPlayableCharacter {
     private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/NPCs/FLYINGASSASSIN.png").toString());
 
     /**
-     * Constructor for creating new instance of FlyingAssasin.
+     * Creates a new Flying Assassin instance.
+     *
+     * @param startingTile The tile the Assassin starts on
+     * @param direction The direction the Assassin starts
+     * @param level The level the Assassin will be instantiated on
+     * @param id Assassin's ID
      */
     public FlyingAssasin(Tile startingTile, Direction direction, Level level, String id) {
         super(startingTile, direction);
         this.id = id;
         this.level = level;
-        setMoveCooldownSeconds(0.3F); // Flying Assasin moves every 2 seconds
-        setHitCooldownSeconds(1.5); // Flying Assasin can hit every 2 seconds
+        setMoveCooldownSeconds(0.3F); // Flying Assassin moves every 2 seconds
+        setHitCooldownSeconds(1.5); // Flying Assassin can hit every 2 seconds
     }
 
     /**
-     * kept empty because a Flying Assasin does not collect items.
+     * Kept empty because a Flying Assassin does not collect items.
      *
      * @param item that would be collected.
      */
@@ -61,8 +65,9 @@ public class FlyingAssasin extends NonPlayableCharacter {
     }
 
     /**
-     * moves in a straight line, either horizontally or vertically, and when at the edge, takes a 180-degree turn and
-     * moves in the opposite direction.
+     * Moves in a straight line, either horizontally or vertically,
+     * and when at the edge, takes a 180-degree turn and
+     * Moves in the opposite direction.
      */
     @Override
     public void move() {
@@ -135,11 +140,19 @@ public class FlyingAssasin extends NonPlayableCharacter {
         return this.image;
     }
 
+    /**
+     * Is a check to find if protected.
+     * @return isProtected
+     */
     @Override
     public boolean isProtected() {
         return isProtected;
     }
 
+    /**
+     * This sets if Protected.
+     * @param value true to protect the entity, false to remove protection.
+     */
     @Override
     public void setProtected(boolean value) {
         isProtected = value;

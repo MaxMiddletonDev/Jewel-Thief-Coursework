@@ -7,30 +7,34 @@ import cs230.group29se.jewelthief.Items.Bomb;
 import cs230.group29se.jewelthief.Items.Collectable;
 import cs230.group29se.jewelthief.Items.Item;
 import cs230.group29se.jewelthief.Items.Lever;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * An NPC that moves following the left hand edge of their "assigned" colour, they collect items and upon coming in
- * contact with a player they cause the player to lose. If they come in contact with a flying assassin however (occupy)
+ * An NPC that moves following the left hand edge of their "assigned" colour,
+ * they collect items and upon coming in
+ * contact with a player they cause the player to lose.
+ * If they come in contact with a flying assassin however (occupy)
  * the same tile, then they are removed from the game.
  *
  * @author Baba
  */
 public class FloorThief extends NonPlayableCharacter {
-
-    /**
-     * Stores a FloorThief's assigned colour
-     */
     private Colour assignedColour;
-
-    /**
-     * Stores a Floor Thief's level
-     */
     private Level level;
 
-    private final Image image = new Image(getClass().getResource("/cs230/group29se/jewelthief/Images/Entities/NPCs/FLOORTHIEF.png").toString());
+    private final Image image = new Image(getClass().getResource(
+            "/cs230/group29se/jewelthief/Images/Entities/NPCs/FLOORTHIEF.png")
+            .toString());
 
+    /**
+     * Creates a new Floor Thief instance.
+     *
+     * @param assignedColour The colour the Thief starts on
+     * @param startingTile The tile the Thief starts on
+     * @param direction The direction the thief starts
+     * @param level The level the Thief will be instantiated on
+     * @param id Thief's ID
+     */
     public FloorThief(Colour assignedColour, Tile startingTile, Direction direction, Level level, String id) {
         super(startingTile, direction);
         this.id = id;
@@ -39,18 +43,6 @@ public class FloorThief extends NonPlayableCharacter {
 
         setMoveCooldownSeconds(0.5f); // Floor Thief moves every 1 second
         setHitCooldownSeconds(2); // Floor Thief can hit every 2 seconds
-    }
-
-    //FOR TESTING TO AVOID ERRORS WITH SMARTTHIEF
-    public FloorThief(Colour assignedColour,
-                      Tile startingTile,
-                      Direction direction,
-                      Level level) {
-        this(assignedColour,
-                startingTile,
-                direction,
-                level,
-                "FLOORTHIEF#" + startingTile.getX() + "#" + startingTile.getY());
     }
 
     /**
@@ -62,8 +54,10 @@ public class FloorThief extends NonPlayableCharacter {
     }
 
     /**
-     * When a FloorThief collides/comes in contact with a player, the player is removed from the game, if it occupies
-     * the same tile as a flying assassin, the Floor Thief is removed from the game
+     * When a FloorThief collides/comes in contact with a player,
+     * the player is removed from the game,
+     * if it occupies the same tile as a flying assassin,
+     * the Floor Thief is removed from the game.
      *
      * @param other - character that collides with this one
      */
@@ -86,7 +80,7 @@ public class FloorThief extends NonPlayableCharacter {
 
     /**
      * Collects Items and calls relevant logic
-     * @param item
+     * @param item Specific Item
      */
     @Override
     public void collectItem(Item item) {
@@ -103,7 +97,7 @@ public class FloorThief extends NonPlayableCharacter {
     }
 
     /**
-     * Handles Floor thief movements on the tiles and validates it's movements
+     * Handles Floor thief movements on the tiles and validates it's movements.
      */
     @Override
     public void move(){
@@ -126,7 +120,8 @@ public class FloorThief extends NonPlayableCharacter {
 
 
     /**
-     * Checks the 4 tiles immediately surrounding the player. If a bomb is found, it is activated.
+     * Checks the 4 tiles immediately surrounding the player.
+     * If a bomb is found, it is activated.
      */
     private void triggerAdjacentBombs() {
         int currentX = currentTile.getX();
@@ -301,6 +296,10 @@ public class FloorThief extends NonPlayableCharacter {
         isProtected = value;
     }
 
+    /**
+     * Gets the colour.
+     * @return assignedColour
+     */
     public Colour getColour() {
         return assignedColour;
     }
