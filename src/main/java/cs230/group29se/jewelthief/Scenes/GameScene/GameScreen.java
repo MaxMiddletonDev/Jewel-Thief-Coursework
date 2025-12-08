@@ -34,6 +34,7 @@ public class GameScreen extends Screen {
     public static final double OPACITY = 0.5;
     public static final int WIDTH_OFFSET = 80;
     public static final int LEVELS_UNLOCKED = 1;
+    public static final int MS_TO_SECONDS = 1_000;
     private Timeline autosaveTimeline;
     private boolean paused = false; // Indicates whether the game is paused
 
@@ -191,10 +192,18 @@ public class GameScreen extends Screen {
      * Marks the current screen as finished.
      */
     public void loadLevelFinishedScreen() {
+        // Add time remaining to score
+        Level level = GameManager.getCurrentLevel();
+        int timeBonus = Math.toIntExact(
+                level.getTimeRemainingMs() / MS_TO_SECONDS); // 1 point per second
+        level.addScore(timeBonus);
+
+        // Update profile with new max level if needed
         ProfileData profile = PersistenceManager.getCurrentProfile();
         int maxLevelUnlocked = profile.getMaxUnlockedLvl();
         if (GameManager.getCurrentLevelNumber() >= maxLevelUnlocked) {
-            profile.setMaxUnlockedLvl(GameManager.getCurrentLevelNumber() + LEVELS_UNLOCKED);
+            profile.setMaxUnlockedLvl(GameManager.getCurrentLevelNumber()
+                    + LEVELS_UNLOCKED);
             PersistenceManager.saveProfile();
         }
 
