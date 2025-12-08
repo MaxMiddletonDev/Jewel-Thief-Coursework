@@ -2,8 +2,6 @@ package cs230.group29se.jewelthief.Cosmetics;
 
 public enum SkinId {
     DEFAULT_GUY,
-    SPEED_GUY,
-    CAT_CAT,
     SPEEDSTER,
     SURVIVOR,
     DEMO_MAN,

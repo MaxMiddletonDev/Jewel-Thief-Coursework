@@ -60,17 +60,6 @@
             <Button fx:id="skin7Button" text="Select" onAction="#selectSkin7"/>
         </VBox>
 
-        <VBox alignment="CENTER" GridPane.rowIndex="1" GridPane.columnIndex="3">
-            <ImageView fx:id="skin8Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
-            <Button fx:id="skin8Button" text="Select" onAction="#selectSkin8"/>
-        </VBox>
-
-        <!-- Row 3 (skin9) -->
-        <VBox alignment="CENTER" GridPane.rowIndex="2">
-            <ImageView fx:id="skin9Image" fitWidth="80" fitHeight="80" preserveRatio="true"/>
-            <Button fx:id="skin9Button" text="Select" onAction="#selectSkin9"/>
-        </VBox>
-
     </GridPane>
 
 </AnchorPane>

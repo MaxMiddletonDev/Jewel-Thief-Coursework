@@ -43,11 +43,6 @@ public class EquipablesController extends BaseController implements Initializabl
     @FXML public ImageView skin7Image;
     @FXML public Button skin7Button;
 
-    @FXML public ImageView skin8Image;
-    @FXML public Button skin8Button;
-
-    @FXML public ImageView skin9Image;
-    @FXML public Button skin9Button;
 
     @Override
     public Canvas getCanvas() {
@@ -63,27 +58,23 @@ public class EquipablesController extends BaseController implements Initializabl
         // Map skin slots:
         Map<SkinId, ImageView> imageMap = Map.of(
                 SkinId.DEFAULT_GUY, skin1Image,
-                SkinId.SPEED_GUY,   skin2Image,
-                SkinId.CAT_CAT,     skin3Image,
-                SkinId.SPEEDSTER,   skin4Image,
-                SkinId.SURVIVOR,    skin5Image,
-                SkinId.DEMO_MAN,    skin6Image,
-                SkinId.MONEY_MAN,   skin7Image,
-                SkinId.PRO,         skin8Image,
-                SkinId.TANK,        skin9Image
+                SkinId.SPEEDSTER,   skin2Image,
+                SkinId.SURVIVOR,    skin3Image,
+                SkinId.DEMO_MAN,    skin4Image,
+                SkinId.MONEY_MAN,   skin5Image,
+                SkinId.PRO,         skin6Image,
+                SkinId.TANK,        skin7Image
 
         );
 
         Map<SkinId, Button> buttonMap = Map.of(
                 SkinId.DEFAULT_GUY, skin1Button,
-                SkinId.SPEED_GUY,   skin2Button,
-                SkinId.CAT_CAT,     skin3Button,
-                SkinId.SPEEDSTER,   skin4Button,
-                SkinId.SURVIVOR,    skin5Button,
-                SkinId.DEMO_MAN,    skin6Button,
-                SkinId.MONEY_MAN,   skin7Button,
-                SkinId.PRO,         skin8Button,
-                SkinId.TANK,        skin9Button
+                SkinId.SPEEDSTER,   skin2Button,
+                SkinId.SURVIVOR,    skin3Button,
+                SkinId.DEMO_MAN,    skin4Button,
+                SkinId.MONEY_MAN,   skin5Button,
+                SkinId.PRO,         skin6Button,
+                SkinId.TANK,        skin7Button
         );
 
         // Load default skin images + enable/disable buttons
@@ -123,41 +114,31 @@ public class EquipablesController extends BaseController implements Initializabl
 
     @FXML
     public void selectSkin2() {
-        selectSkin(SkinRegistry.getById(SkinId.SPEED_GUY));
-    }
-
-    @FXML
-    public void selectSkin3() {
-        selectSkin(SkinRegistry.getById(SkinId.CAT_CAT));
-    }
-
-    @FXML
-    public void selectSkin4() {
         selectSkin(SkinRegistry.getById(SkinId.SPEEDSTER));
     }
 
     @FXML
-    public void selectSkin5() {
+    public void selectSkin3() {
         selectSkin(SkinRegistry.getById(SkinId.SURVIVOR));
     }
 
     @FXML
-    public void selectSkin6() {
+    public void selectSkin4() {
         selectSkin(SkinRegistry.getById(SkinId.DEMO_MAN));
     }
 
     @FXML
-    public void selectSkin7() {
+    public void selectSkin5() {
         selectSkin(SkinRegistry.getById(SkinId.MONEY_MAN));
     }
 
     @FXML
-    public void selectSkin8() {
+    public void selectSkin6() {
         selectSkin(SkinRegistry.getById(SkinId.PRO));
     }
 
     @FXML
-    public void selectSkin9() {
+    public void selectSkin7() {
         selectSkin(SkinRegistry.getById(SkinId.TANK));
     }
 

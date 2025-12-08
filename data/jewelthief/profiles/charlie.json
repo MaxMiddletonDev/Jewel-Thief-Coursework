@@ -1,6 +1,6 @@
 {
   "profileName" : "Ben",
-  "unlockedAchievements" : ["Professional"],
+  "unlockedAchievements" : [ "Professional" ],
   "maxUnlockedLvl" : 5,
   "selectedSkinId" : "DEFAULT_GUY"
 }
