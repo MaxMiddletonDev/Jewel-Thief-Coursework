@@ -27,54 +27,24 @@ import java.util.ResourceBundle;
  */
 public class MainMenuController extends BaseController implements Initializable {
 
-    /**
-     * Achievements button to navigate to the Achievements screen.
-     */
-    public Button achievementsButton;
-
-    /**
-     * Equipables button to navigate to the Equipables screen.
-     */
-    public Button equipablesButton;
-
-    /**
-     * Button to select a different profile.
-     */
-    public Button selectProfileButton;
-
-    /**
-     * ImageView to display the currently equipped skin.
-     */
-    public ImageView equippedSkinImage;
-
-    /**
-     * Label to display the profile name.
-     */
-    public Label profileNameLabel;
-
-    /**
-     * Start button to begin the game.
-     */
     @FXML
-    public Button startButton;
-
-    /**
-     * High Scores button to view high scores.
-     */
+    private Button achievementsButton;
     @FXML
-    public Button highScoresButton;
-
-    /**
-     * Credits button to view game credits.
-     */
+    private Button equipablesButton;
     @FXML
-    public Button creditsButton;
-
-    /**
-     * Quit button to exit the game.
-     */
+    private Button selectProfileButton;
     @FXML
-    public Button quitButton;
+    private ImageView equippedSkinImage;
+    @FXML
+    private Label profileNameLabel;
+    @FXML
+    private Button startButton;
+    @FXML
+    private Button highScoresButton;
+    @FXML
+    private Button creditsButton;
+    @FXML
+    private Button quitButton;
 
     /**
      * Returns the canvas associated with this screen.

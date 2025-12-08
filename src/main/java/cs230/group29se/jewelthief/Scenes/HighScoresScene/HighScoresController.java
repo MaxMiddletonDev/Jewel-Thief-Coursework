@@ -28,19 +28,13 @@ import java.util.Map;
  */
 public class HighScoresController extends BaseController {
 
-    /** Table showing global high scores across all levels. */
+
     @FXML
     private TableView<HighScoreEntry> globalTable;
-
-    /** Table showing high scores filtered by level. */
     @FXML
     private TableView<HighScoreEntry> levelTable;
-
-    /** Button to return to the previous screen. */
     @FXML
     private Button backButton;
-
-    /** Dropdown allowing the user to select a level to view scores for. */
     @FXML
     private ComboBox<String> levelComboBox;
 
@@ -50,12 +44,6 @@ public class HighScoresController extends BaseController {
      * Keys are level IDs as strings; values are lists of high score entries.
      */
     private Map<String, List<HighScoreEntry>> perLevelCache = Map.of();
-
-    /**
-     * This screen does not use a canvas, so {@code null} is returned.
-     *
-     * @return {@code null} always, as no drawing canvas is used on this screen.
-     */
     @Override
     public Canvas getCanvas() {
         return null;

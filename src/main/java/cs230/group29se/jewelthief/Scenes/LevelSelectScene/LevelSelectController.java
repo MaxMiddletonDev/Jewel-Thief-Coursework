@@ -24,39 +24,28 @@ import java.util.ResourceBundle;
  */
 public class LevelSelectController extends BaseController implements Initializable {
 
-    /** Button for selecting level 1. */
     @FXML
-    public Button level1Button;
-
-    /** Button for selecting level 2. */
-    public Button level2Button;
-
-    /** Button for selecting level 4. */
-    public Button level4Button;
-
-    /** Button for selecting level 5. */
-    public Button level5Button;
-
-    /** Button for selecting level 3. */
-    public Button level3Button;
-
-    /** Button for selecting level 6. */
-    public Button level6Button;
-
-    /** Button for selecting level 7. */
-    public Button level7Button;
-
-    /** Button for selecting level 8. */
-    public Button level8Button;
-
-    /** Button for selecting level 9. */
-    public Button level9Button;
-
-    /** Button for selecting level 10. */
-    public Button level10Button;
-
-    /** Button to go back to the main menu. */
-    public Button backButton;
+    private Button level1Button;
+    @FXML
+    private Button level2Button;
+    @FXML
+    private Button level4Button;
+    @FXML
+    private Button level5Button;
+    @FXML
+    private Button level3Button;
+    @FXML
+    private Button level6Button;
+    @FXML
+    private Button level7Button;
+    @FXML
+    private Button level8Button;
+    @FXML
+    private Button level9Button;
+    @FXML
+    private Button level10Button;
+    @FXML
+    private Button backButton;
 
     /**
      * Handles the event when a level button is clicked.

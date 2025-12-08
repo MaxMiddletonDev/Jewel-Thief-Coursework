@@ -26,85 +26,38 @@ import java.util.ResourceBundle;
  */
 public class EquipablesController extends BaseController implements Initializable {
 
-    /**
-     * Title label for the Equipables screen.
-     */
-    @FXML public Label titleLabel;
-
-    /**
-     * Back button to return to the previous screen.
-     */
-    @FXML public Button backButton;
-
-    /**
-     * ImageView for displaying the first skin.
-     */
-    @FXML public ImageView skin1Image;
-
-    /**
-     * Button to select the first skin.
-     */
-    @FXML public Button skin1Button;
-
-    /**
-     * ImageView for displaying the second skin.
-     */
-    @FXML public ImageView skin2Image;
-
-    /**
-     * Button to select the second skin.
-     */
-    @FXML public Button skin2Button;
-
-    /**
-     * ImageView for displaying the third skin.
-     */
-    @FXML public ImageView skin3Image;
-
-    /**
-     * Button to select the third skin.
-     */
-    @FXML public Button skin3Button;
-
-    /**
-     * ImageView for displaying the fourth skin.
-     */
-    @FXML public ImageView skin4Image;
-
-    /**
-     * Button to select the fourth skin.
-     */
-    @FXML public Button skin4Button;
-
-    /**
-     * ImageView for displaying the fifth skin.
-     */
-    @FXML public ImageView skin5Image;
-
-    /**
-     * Button to select the fifth skin.
-     */
-    @FXML public Button skin5Button;
-
-    /**
-     * ImageView for displaying the sixth skin.
-     */
-    @FXML public ImageView skin6Image;
-
-    /**
-     * Button to select the sixth skin.
-     */
-    @FXML public Button skin6Button;
-
-    /**
-     * ImageView for displaying the seventh skin.
-     */
-    @FXML public ImageView skin7Image;
-
-    /**
-     * Button to select the seventh skin.
-     */
-    @FXML public Button skin7Button;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private Button backButton;
+    @FXML
+    private ImageView skin1Image;
+    @FXML
+    private Button skin1Button;
+    @FXML
+    private ImageView skin2Image;
+    @FXML
+    private Button skin2Button;
+    @FXML
+    private ImageView skin3Image;
+    @FXML
+    private Button skin3Button;
+    @FXML
+    private ImageView skin4Image;
+    @FXML
+    private Button skin4Button;
+    @FXML
+    private ImageView skin5Image;
+    @FXML
+    private Button skin5Button;
+    @FXML
+    private ImageView skin6Image;
+    @FXML
+    private Button skin6Button;
+    @FXML
+    private ImageView skin7Image;
+    @FXML
+    private Button skin7Button;
 
 
     /**
