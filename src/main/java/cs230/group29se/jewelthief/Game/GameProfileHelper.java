@@ -3,6 +3,7 @@ package cs230.group29se.jewelthief.Game;
 import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
 import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Profile.ProfileManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,22 @@ import java.util.List;
  */
 public class GameProfileHelper {
 
-    /** Shared ProfileManager initialized with saved profiles. */
+    // Error messages
+    private static final String ERROR_DUPLICATE_PROFILE =
+            "Profile name '%s' already exists!";
+
+    // Logging
+    private static final String LOG_PROFILE_DELETED =
+            "Deleted profile %s";
+    private static final String LOG_RENAME_FAILED =
+            "rename failed: %s";
+
+    // Profile defaults
+    private static final int DEFAULT_MAX_UNLOCKED_LEVEL = 1;
+
+    /**
+     * Shared ProfileManager initialized with saved profiles.
+     */
     private static final ProfileManager manager = loadManagerFromPersistence();
 
     /**
@@ -52,16 +68,18 @@ public class GameProfileHelper {
      */
     public static void ensureProfileExists(final String name) {
         if (manager.isDuplicateName(name)) {
-            throw new IllegalArgumentException("Profile name '"
-                    + name + "' already exists!");
+            throw new IllegalArgumentException(
+                    String.format(ERROR_DUPLICATE_PROFILE, name)
+            );
         }
+
 
         PersistenceManager.setActiveProfileName(name);
         ProfileData p = PersistenceManager.loadProfile();
         if (p == null) {
             p = new ProfileData();
             p.setProfileName(name);
-            p.setMaxUnlockedLvl(1);
+            p.setMaxUnlockedLvl(DEFAULT_MAX_UNLOCKED_LEVEL);
             manager.addProfile(p);
             PersistenceManager.setCachedProfile(p);
             PersistenceManager.saveProfile();
@@ -86,7 +104,7 @@ public class GameProfileHelper {
         PersistenceManager.deleteProfile(name);
         manager.getProfiles().removeIf(p ->
                 p.getProfileName().equalsIgnoreCase(name));
-        System.out.println("Deleted profile " + name);
+        System.out.println(String.format(LOG_PROFILE_DELETED, name));
     }
 
     /**
@@ -132,7 +150,7 @@ public class GameProfileHelper {
                     x.getProfileName().equalsIgnoreCase(oldName));
             return true;
         } catch (Exception e) {
-            System.out.println("rename failed: " + e.getMessage());
+            System.out.println(String.format(LOG_RENAME_FAILED, e.getMessage()));
             return false;
         }
     }

@@ -1,7 +1,6 @@
 package cs230.group29se.jewelthief.Profile;
 
 import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +14,9 @@ import java.util.List;
  * @version 1.0
  */
 public class ProfileManager {
+    private static final String ERROR_DUPLICATE_NAME =
+            "Profile name '%s' already exists!";
+
     /**
      * The list of all player's profile currently managed.
      */
@@ -44,8 +46,7 @@ public class ProfileManager {
     public void addProfile(ProfileData profile) {
         if (isDuplicateName(profile.getProfileName())) {
             throw new IllegalArgumentException(
-                    "Profile name '" + profile.getProfileName()
-                            + "' already exists!"
+                    String.format(ERROR_DUPLICATE_NAME, profile.getProfileName())
             );
         }
         profiles.add(profile);
