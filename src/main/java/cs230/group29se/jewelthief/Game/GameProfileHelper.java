@@ -3,15 +3,25 @@ package cs230.group29se.jewelthief.Game;
 import cs230.group29se.jewelthief.Persistence.Profile.ProfileData;
 import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Profile.ProfileManager;
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Helper class for managing game profiles.
+ * Provides utility methods for listing, creating, renaming, and deleting profiles.
+ *
+ * @author Iyaad
+ */
 public class GameProfileHelper {
 
     /** Shared ProfileManager initialized with saved profiles. */
     private static final ProfileManager manager = loadManagerFromPersistence();
 
+    /**
+     * Loads the ProfileManager with profiles from persistence storage.
+     *
+     * @return A ProfileManager instance containing the saved profiles.
+     */
     private static ProfileManager loadManagerFromPersistence() {
         List<ProfileData> savedProfiles = new ArrayList<>();
         for (String name : PersistenceManager.listProfiles()) {
@@ -26,15 +36,19 @@ public class GameProfileHelper {
 
     /**
      * Returns a list of player profile names.
-     * @return the list of player profile names.
+     *
+     * @return The list of player profile names.
      */
     public static List<String> listProfiles() {
         return PersistenceManager.listProfiles();
     }
 
     /**
-     * Checks if the players profile exists.
-     * @param name name of the profile.
+     * Ensures that a profile with the given name exists.
+     * If the profile does not exist, it creates a new one.
+     *
+     * @param name The name of the profile.
+     * @throws IllegalArgumentException if the profile name already exists.
      */
     public static void ensureProfileExists(final String name) {
         if (manager.isDuplicateName(name)) {
@@ -55,31 +69,18 @@ public class GameProfileHelper {
     }
 
     /**
-     * Sets the active profiles name.
-     * @param name name to set profile to.
-     */
-    public static void setActiveProfileName(final String name) {
-        PersistenceManager.setActiveProfileName(name);
-        ProfileData p = PersistenceManager.loadProfile();
-        if (p != null) {
-            if (!manager.isDuplicateName(p.getProfileName())) {
-                manager.addProfile(p);
-            }
-            PersistenceManager.setCachedProfile(p);
-        }
-    }
-
-    /**
-     * Gets the profile name that is in use.
-     * @return the name of the active profile.
+     * Gets the name of the currently active profile.
+     *
+     * @return The name of the active profile.
      */
     public static String getActiveProfileName() {
         return PersistenceManager.getActiveProfileName();
     }
 
     /**
-     * Delete the profile by the name given.
-     * @param name of the profile to delete.
+     * Deletes the profile with the given name.
+     *
+     * @param name The name of the profile to delete.
      */
     public static void deleteProfile(final String name) {
         PersistenceManager.deleteProfile(name);
@@ -89,10 +90,11 @@ public class GameProfileHelper {
     }
 
     /**
-     * Renames the players profile.
-     * @param oldName the name of the profile prior to the change.
-     * @param newName name of the desired profile.
-     * @return true if the change was a success.
+     * Renames a profile from the old name to a new name.
+     *
+     * @param oldName The current name of the profile.
+     * @param newName The desired new name for the profile.
+     * @return true if the rename operation was successful, false otherwise.
      */
     public static boolean renameProfile(String oldName, String newName) {
         if (oldName == null || newName == null) {
@@ -110,8 +112,6 @@ public class GameProfileHelper {
             return false;
         }
 
-        //if (listProfiles().contains(newName)) return false;
-
         try {
             PersistenceManager.setActiveProfileName(oldName);
             ProfileData p = PersistenceManager.loadProfile();
@@ -119,7 +119,7 @@ public class GameProfileHelper {
                 return false;
             }
 
-            // rename and cache
+            // Rename and cache the profile
             p.setProfileName(newName);
             manager.addProfile(p);
             PersistenceManager.setCachedProfile(p);
