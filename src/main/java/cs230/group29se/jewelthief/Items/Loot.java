@@ -15,7 +15,7 @@ import static cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.
  */
 public class Loot extends Destroyable {
 
-    public static final int QUATER_TILE = 2;
+    public static final int QUARTER_TILE = 2;
     private final LootEnum type;
 
     /**
@@ -73,9 +73,9 @@ public class Loot extends Destroyable {
     public void draw(final GraphicsContext gc) {
         gc.drawImage(type.getImage(), getX() * Tile.TILE_SIZE
                         +
-                        Tile.HALF_TILE_SIZE / QUATER_TILE,  getY() * Tile.TILE_SIZE
+                        Tile.HALF_TILE_SIZE / QUARTER_TILE,  getY() * Tile.TILE_SIZE
                         +
-                        Tile.HALF_TILE_SIZE / QUATER_TILE,
+                        Tile.HALF_TILE_SIZE / QUARTER_TILE,
                         Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
     }
 }
