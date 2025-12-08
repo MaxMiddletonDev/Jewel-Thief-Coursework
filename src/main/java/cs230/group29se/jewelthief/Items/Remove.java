@@ -16,7 +16,8 @@ public interface Remove {
     default void remove(Collectable collectable) {
         Level level = GameManager.getCurrentLevel();
         level.removeItem(collectable);
-        level.getTile(collectable.getX(), collectable.getY()).setOccupying(null);
+        level.getTile(collectable.getX(),
+                collectable.getY()).setOccupying(null);
     }
 
     /**

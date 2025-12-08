@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief.Items;
 
+import cs230.group29se.jewelthief.Entities.Player;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
@@ -41,7 +42,7 @@ public class Loot extends Destroyable {
     public void interact() {
         // Get current level from the game manager
         Level currentLevel = GameManager.getCurrentLevel();
-        if (currentLevel != null) {
+        if (currentLevel != null && collector instanceof Player) {
                 currentLevel.addScore(type.getValue());
         }
 
@@ -70,9 +71,11 @@ public class Loot extends Destroyable {
      * @param gc the class the loot will be drawn with.
      */
     public void draw(final GraphicsContext gc) {
-        gc.drawImage(type.getImage(), getX() * Tile.TILE_SIZE +
+        gc.drawImage(type.getImage(), getX() * Tile.TILE_SIZE
+                        +
                         Tile.HALF_TILE_SIZE / 2,  getY() * Tile.TILE_SIZE
-                        + Tile.HALF_TILE_SIZE / 2,
+                        +
+                        Tile.HALF_TILE_SIZE / 2,
                         Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
     }
 }

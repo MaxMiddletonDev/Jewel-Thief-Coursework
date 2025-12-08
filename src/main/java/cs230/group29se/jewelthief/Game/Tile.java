@@ -10,13 +10,34 @@ import javafx.scene.paint.Color;
  * @author Gustas Rove
  */
 public class Tile {
-    public final static int TILE_SIZE = 64;
-    public final static int HALF_TILE_SIZE = TILE_SIZE / 2;
-    private final static int BORDER_WIDTH = 2;
+    /**
+     * Size of the tile.
+     */
+    public static final int TILE_SIZE = 64;
+    /**
+     * Half the tile size.
+     */
+    public static final int HALF_TILE_SIZE = TILE_SIZE / 2;
+    /**
+     * Width of the border.
+     */
+    private static final int BORDER_WIDTH = 2;
+    /**
+     * x position of the tile.
+     */
     private final int posX;
+    /**
+     * y position of the tile.
+     */
     private final int posY;
+    /**
+     * colours of the tile.
+     */
     private Colour[] colours = new Colour[4];
     //The item or gate or nothing occupying a tile
+    /**
+     * What item or gate is occupying a tile.
+     */
     private Object occupying = null;
 
     /**
@@ -25,18 +46,19 @@ public class Tile {
      * @param posY the y position of the tile in the grid
      * @param colours an array of four colours for the quadrants
      */
-    public Tile(int posX,int posY, Colour[] colours) {
+    public Tile(final int posX, final int posY, final Colour[] colours) {
         this.posX = posX;
         this.posY = posY;
         this.colours = colours;
     }
 
     /**
-     * Determines if a move from this tile to the specified target tile is valid.
+     * Determines if a move from this tile
+     * to the specified target tile is valid.
      * @param target the destination tile to check against.
      * @return True if the tiles share a color, false if otherwise.
      */
-    public boolean isValidMove(Tile target) {
+    public boolean isValidMove(final Tile target) {
         if (target == null) {
             return false;
         }
@@ -50,6 +72,10 @@ public class Tile {
         return false;
     }
 
+    /**
+     * The size of the tile.
+     * @return the size of the tile.
+     */
     public static int getTileSize() {
         return TILE_SIZE;
     }
@@ -79,14 +105,20 @@ public class Tile {
         return posY;
     }
 
+    /**
+     * Gets the position of the tile in x ,y format.
+     * @return the x and y position as [x, y]
+     */
     public int[] getPosition() {
         return new int[]{posX, posY};
     }
 
     /**
-     * Checks if a tile has a Floor Thief's assigned colour
+     * Checks if a tile has a Floor Thief's assigned colour.
+     * @param assignedColour the colour wanted to be found.
+     * @return true if the assigned colour is present.
      */
-    public boolean containsColour(Colour assignedColour) {
+    public boolean containsColour(final Colour assignedColour) {
         for (Colour colour : this.colours) {
             if (colour == assignedColour) {
                 return true;
@@ -99,7 +131,7 @@ public class Tile {
      * Draws the tile on the given GraphicsContext.
      * @param gc the GraphicsContext to draw on
      */
-    public void draw(GraphicsContext gc) {
+    public void draw(final GraphicsContext gc) {
 //        Arrays.sort(colours, Comparator.comparing(Colour::toString));
 
         Color tlColour = colours[0].toFxColor();
@@ -114,13 +146,16 @@ public class Tile {
         gc.fillRect(pixelX, pixelY, HALF_TILE_SIZE, HALF_TILE_SIZE);
 
         gc.setFill(trColour);
-        gc.fillRect(pixelX + HALF_TILE_SIZE, pixelY, HALF_TILE_SIZE, HALF_TILE_SIZE);
+        gc.fillRect(pixelX + HALF_TILE_SIZE, pixelY,
+                HALF_TILE_SIZE, HALF_TILE_SIZE);
 
         gc.setFill(blColour);
-        gc.fillRect(pixelX, pixelY + HALF_TILE_SIZE, HALF_TILE_SIZE, HALF_TILE_SIZE);
+        gc.fillRect(pixelX, pixelY + HALF_TILE_SIZE,
+                HALF_TILE_SIZE, HALF_TILE_SIZE);
 
         gc.setFill(brColour);
-        gc.fillRect(pixelX + HALF_TILE_SIZE, pixelY + HALF_TILE_SIZE, HALF_TILE_SIZE, HALF_TILE_SIZE);
+        gc.fillRect(pixelX + HALF_TILE_SIZE,
+                pixelY + HALF_TILE_SIZE, HALF_TILE_SIZE, HALF_TILE_SIZE);
 
         // Draw border
         gc.setStroke(Color.BLACK);
@@ -133,7 +168,7 @@ public class Tile {
      * Changes what loot or gate is on a tile. Can be null.
      * @param occupying the object that will occupy the tile.
      */
-    public void setOccupying(Object occupying) {
+    public void setOccupying(final Object occupying) {
         this.occupying = occupying;
     }
 
@@ -142,41 +177,46 @@ public class Tile {
      * @return the item or gate occupying the tile,
      * if null then the tile is not occupied.
      */
-    public Object getOccupying(){
+    public Object getOccupying() {
         return occupying;
     }
 
     /**
-     * Checks if a tile is walkable
-     * @return true if the tile is walkable
+     * Checks if a tile is walkable.
+     * @return true if the tile is walkable.
      */
     public boolean isWalkable() {
         return !(occupying instanceof Gate);
     }
 
     /**
-     * Checks if a tile has a bomb
-     * @return true if there is a bomb on a tile
+     * Checks if a tile has a bomb.
+     * @return true if there is a bomb on a tile.
      */
     public boolean hasBomb() {
-        return occupying instanceof cs230.group29se.jewelthief.Items.Bomb;
+        return occupying
+                instanceof
+                cs230.group29se.jewelthief.Items.Bomb;
     }
 
     /**
-     * checks if a tile has a gate
-     * @return true if there is a gate on a tile
+     * checks if a tile has a gate.
+     * @return true if there is a gate on a tile.
      */
     public boolean hasGate() {
-        return occupying instanceof cs230.group29se.jewelthief.Items.Gate;
+        return occupying
+                instanceof
+                cs230.group29se.jewelthief.Items.Gate;
     }
 
     /**
-     * Checks a gates colour
+     * Checks a gates colour.
      * @return gate colour
      */
     public Colour getGateColour() {
         if (occupying instanceof cs230.group29se.jewelthief.Items.Gate) {
-            return ((cs230.group29se.jewelthief.Items.Gate)occupying).getColour();
+            return ((cs230.group29se.jewelthief.Items.Gate) occupying)
+                    .getColour();
         }
         return null;
     }

@@ -2,7 +2,6 @@ package cs230.group29se.jewelthief.Items;
 
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.Level;
-import cs230.group29se.jewelthief.Entities.NonPlayableCharacter;
 import cs230.group29se.jewelthief.Entities.Player;
 import cs230.group29se.jewelthief.Game.Tile;
 import javafx.scene.canvas.GraphicsContext;
@@ -21,10 +20,20 @@ public class Clock extends Destroyable {
      */
     private static final int TIME_CHANGE = 5000;
 
+    /**
+     * Clock image.
+     */
     private final Image image = new Image(
-            getClass().getResource("/cs230/group29se/jewelthief/Images/Items/CLOCK.png").toString()
+            getClass().getResource(
+                    "/cs230/group29se/jewelthief/Images/Items/CLOCK.png")
+                    .toString()
     );
 
+    /**
+     * Creates a clock at the given coordinates.
+     * @param x the x position.
+     * @param y the y position.
+     */
     public Clock(final int x, final int y) {
         super(x, y);
     }
@@ -44,7 +53,7 @@ public class Clock extends Destroyable {
             if (collector instanceof Player) {
                 // Player collected → increase time
                 currentLevel.addTime(TIME_CHANGE);
-            } else if (collector instanceof NonPlayableCharacter) {
+            } else {
                 // Thief (NPC) collected → decrease time
                 currentLevel.removeTime(TIME_CHANGE);
             }
@@ -59,9 +68,9 @@ public class Clock extends Destroyable {
      * @param gc The class used to draw the clock.
      */
     @Override
-    public void draw(GraphicsContext gc) {
-        gc.drawImage(image, getX()* Tile.TILE_SIZE + Tile.HALF_TILE_SIZE/2,
-                getY()* Tile.TILE_SIZE + Tile.HALF_TILE_SIZE/2,
+    public void draw(final GraphicsContext gc) {
+        gc.drawImage(image, getX() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
+                getY() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
                 Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
     }
 }
