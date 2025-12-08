@@ -1,6 +1,7 @@
 package cs230.group29se.jewelthief.Persistence.Storage;
 
 import cs230.group29se.jewelthief.Cosmetics.Skin;
+import cs230.group29se.jewelthief.Game.Achievements;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Persistence.Profile.*;
 
@@ -197,6 +198,12 @@ public final class PersistenceManager {
     public static void writeSelectedSkin(Skin skin) {
         ProfileData p = currentProfile();
         p.setSelectedSkinId(skin.getId().toString());
+        saveProfile();
+    }
+
+    public static void writeUnlockedAchievement(Achievements achievements) {
+        ProfileData p = currentProfile();
+        p.unlockAchievement(achievements.name());
         saveProfile();
     }
 

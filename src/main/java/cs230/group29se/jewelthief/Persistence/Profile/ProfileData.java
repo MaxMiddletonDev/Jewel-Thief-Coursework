@@ -2,6 +2,8 @@ package cs230.group29se.jewelthief.Persistence.Profile;
 
 import cs230.group29se.jewelthief.Cosmetics.SkinId;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,6 +19,10 @@ public class ProfileData {
      * The name of the player's profile.
      */
     private String profileName;
+    /**
+     * A list of unlocked achievements.
+     */
+    private List<String> unlockedAchievements = new ArrayList<>();
     /**
      * The maximum level unlocked by the player.
      */
@@ -72,5 +78,32 @@ public class ProfileData {
      */
     public void setMaxUnlockedLvl(int maxUnlockedLvl) {
         this.maxUnlockedLvl = maxUnlockedLvl;
+    }
+
+    /**
+     * This method get the unlocked achievements by the player.
+     * @return The Unlocked Achievements.
+     */
+    public List<String> getUnlockedAchievements() {
+        if (unlockedAchievements == null) unlockedAchievements = new ArrayList<>();
+        return unlockedAchievements;
+    }
+
+    /**
+     * This method sets the unlocked achievements by the player.
+     * @param unlockedAchievements The list of Unlocked Achievements.
+     */
+    public void setUnlockedAchievements(List<String> unlockedAchievements) {
+        this.unlockedAchievements = unlockedAchievements;
+    }
+
+    /**
+     * This method unlocks the achievements by the player.
+     * @param achievementName The name of a specific achievement.
+     */
+    public void unlockAchievement(String achievementName) {
+        if (!getUnlockedAchievements().contains(achievementName)) {
+            unlockedAchievements.add(achievementName);
+        }
     }
 }

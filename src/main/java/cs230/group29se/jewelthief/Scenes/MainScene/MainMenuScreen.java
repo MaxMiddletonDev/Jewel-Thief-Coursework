@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief.Scenes.MainScene;
 
+import cs230.group29se.jewelthief.Scenes.AchievementsScene.AchievementsScreen;
 import cs230.group29se.jewelthief.Cosmetics.SkinId;
 import cs230.group29se.jewelthief.Cosmetics.SkinRegistry;
 import cs230.group29se.jewelthief.Game.GameManager;
@@ -78,6 +79,9 @@ public class MainMenuScreen extends Screen {
     }
 
 
+    public enum NextAction {START_GAME, SHOW_HIGHSCORES, SHOW_ACHIEVEMENTS}
+
+
     public void onStartClicked() {
         setNextScreen(new LevelSelectScreen());
         setFinished(true);
@@ -86,6 +90,12 @@ public class MainMenuScreen extends Screen {
         setNextScreen(new HighScoresScreen());
         setFinished(true);
     }
+
+    public void onAchievementsClicked() {
+        setNextScreen(new AchievementsScreen());
+        setFinished(true);
+    }
+
 //    @Override
 //    public Scene createScene() {
 //        try {

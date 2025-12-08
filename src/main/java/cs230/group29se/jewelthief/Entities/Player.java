@@ -1,5 +1,6 @@
 package cs230.group29se.jewelthief.Entities;
 
+import cs230.group29se.jewelthief.Game.Achievements;
 import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.Level;
 import cs230.group29se.jewelthief.Game.Tile;
@@ -201,6 +202,7 @@ public class Player implements MoveableCharacter, Protectable {
     public void getHit() {
         if (isProtected()) {
             setProtected(false);
+            cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager.writeUnlockedAchievement(Achievements.SURVIVOR);
         } else {
             setAliveTo(false);
             System.out.println("Player has been hit and is no longer alive.");

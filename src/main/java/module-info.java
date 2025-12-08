@@ -39,5 +39,6 @@ module cs230.group29se.jewelthief {
     exports cs230.group29se.jewelthief.Game;
     opens cs230.group29se.jewelthief.Game to javafx.fxml;
 
-
+    opens cs230.group29se.jewelthief.Scenes.AchievementsScene to javafx.fxml;
+    exports cs230.group29se.jewelthief.Scenes.AchievementsScene;
 }
