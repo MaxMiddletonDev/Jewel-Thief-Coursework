@@ -1,6 +1,8 @@
 package cs230.group29se.jewelthief.Scenes.ProfileScene;
 
+import cs230.group29se.jewelthief.Game.GameManager;
 import cs230.group29se.jewelthief.Game.GameProfileHelper;
+import cs230.group29se.jewelthief.Persistence.Storage.PersistenceManager;
 import cs230.group29se.jewelthief.Scenes.BaseController;
 import cs230.group29se.jewelthief.Scenes.Screen;
 import javafx.fxml.FXML;
@@ -11,6 +13,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
+
+import static java.awt.SystemColor.menu;
 
 public class ProfileSelectController extends BaseController {
 
@@ -174,6 +178,10 @@ public class ProfileSelectController extends BaseController {
     @FXML
     private void handleDeleteClicked() {
         if (selectedProfile == null) return;
+        if(selectedProfile.equals("PublicProfile")) {
+            showWarn("Cannot delete", "The PublicProfile cannot be deleted.");
+            return;
+        }
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Save");
@@ -186,6 +194,11 @@ public class ProfileSelectController extends BaseController {
         }
 
         GameProfileHelper.deleteProfile(selectedProfile);
+        
+        // If we deleted the currently active profile, switch to PublicProfile
+        if(GameManager.getSelectedProfileName().equals(selectedProfile)) {
+            ((ProfileSelectScreen)getScreen()).onProfileChosen("PublicProfile");
+        }
         selectedProfile = null;
         populateProfiles();
     }
