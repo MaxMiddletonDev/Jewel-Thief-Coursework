@@ -80,8 +80,8 @@ public class Door extends Item {
      * @param gc the class the door will be drawn with.
      */
     public void draw(final GraphicsContext gc) {
-        gc.drawImage(image, getX() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
-                getY() * Tile.TILE_SIZE + Tile.HALF_TILE_SIZE / 2,
-                Tile.HALF_TILE_SIZE, Tile.HALF_TILE_SIZE);
+        gc.drawImage(image, getX() * Tile.TILE_SIZE + 2,
+                getY() * Tile.TILE_SIZE + 1,
+                Tile.TILE_SIZE, Tile.TILE_SIZE);
     }
 }

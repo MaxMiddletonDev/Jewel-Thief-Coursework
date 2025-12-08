@@ -17,6 +17,7 @@ public class SkinRegistry {
         register(new Skin(SkinId.MONEY_MAN, "Money Man ", "/cs230/group29se/jewelthief/Images/Achievements/MoneyMan.png"));
         register(new Skin(SkinId.PRO, "Professional", "/cs230/group29se/jewelthief/Images/Achievements/Pro.png"));
         register(new Skin(SkinId.TANK, "Tank", "/cs230/group29se/jewelthief/Images/Achievements/Tank.png"));
+
     }
 
     private static void register(Skin skin) {

@@ -60,7 +60,7 @@ public class Level {
     /**
      * Max time in level default 60 - seconds.
      */
-    private int maxTime = 60; // Seconds
+    private static int MAX_TIME = 60; // Seconds
     /**
      * Time remaining in level - milliseconds.
      */
@@ -73,6 +73,14 @@ public class Level {
      * Score of the level.
      */
     private int score;
+    /**
+     * To milliseconds.
+     */
+    private static final long MILLISECONDS = 1000;
+    /**
+     * To nanoseconds.
+     */
+    private static final long NANOSECONDS = 1_000_000;
     /**
      * Is the level failed - default false.
      */
@@ -117,7 +125,7 @@ public class Level {
         if (saveData != null && saveData.getTimeRemainingMs() > 0) {
             timeRemaining = saveData.getTimeRemainingMs();
         } else {
-            timeRemaining = maxTime * 1000L;
+            timeRemaining = MAX_TIME * MILLISECONDS;
         }
 
         lastUpdateTime = System.nanoTime();
@@ -217,7 +225,7 @@ public class Level {
      */
     private void updateTime() {
         long now = System.nanoTime();
-        long elapsedTime = (now - lastUpdateTime) / 1_000_000;
+        long elapsedTime = (now - lastUpdateTime) / NANOSECONDS;
         lastUpdateTime = now;
 
         timeRemaining -= elapsedTime;
@@ -326,8 +334,8 @@ public class Level {
      */
     public void addTime(final int timeToAdd) {
         timeRemaining += timeToAdd;
-        if (timeRemaining > maxTime * 1000) {
-            timeRemaining = maxTime * 1000;
+        if (timeRemaining > MAX_TIME * MILLISECONDS) {
+            timeRemaining = MAX_TIME * MILLISECONDS;
         }
     }
 
@@ -350,7 +358,7 @@ public class Level {
      * @return time remaining in seconds
      */
     public long getTimeRemainingTimeInSeconds() {
-        return timeRemaining / 1000;
+        return timeRemaining / MILLISECONDS;
     }
 
     /**
@@ -425,7 +433,7 @@ public class Level {
         java.nio.file.Path levelPath = java.nio.file.Path.of("levels",
                 filename);
         LevelDef def = new LevelLoader().loadLevel(levelId, levelPath);
-        maxTime = def.timeLimitSec;
+        MAX_TIME = def.timeLimitSec;
         int x = def.width;
         int y = def.height;
         grid = new Tile[x][y];
@@ -437,7 +445,7 @@ public class Level {
             for (int col = 0; col < x; col++) {
                 String sequence = tileTokens[col];      // e.g. "YYYY"
                 Colour[] colours = new Colour[4];
-                for (int z = 0; z < 4; z++) {
+                for (int z = 0; z < colours.length; z++) {
                     char colChar = sequence.charAt(z);
                     colours[z] = colourSetter(String.valueOf(colChar));
                 }
@@ -611,7 +619,7 @@ public class Level {
                 for (int col = 0; col < x; col++) {
                     String sequence = tileTokens[col];
                     Colour[] colours = new Colour[4];
-                    for (int z = 0; z < 4; z++) {
+                    for (int z = 0; z < colours.length; z++) {
                         char colChar = sequence.charAt(z);
                         colours[z] = colourSetter(String.valueOf(colChar));
                     }
@@ -812,21 +820,45 @@ public class Level {
 
 
     /**
+     * Where countdown left is positioned in bombparams.
+     */
+    private static final int COUNTDOWN_LEFT = 0;
+    /**
+     * where the countdown tick progress is positioned in bombparams.
+     */
+    private static final int COUNTDOWN_TICK_PROGRESS = 1;
+    /**
+     * Where next boom countdown is positioned in bombparams.
+     */
+    private static final int NEXT_BOOM_COUNTDOWN = 2;
+    /**
+     * Where explosions are positioned in bombparams.
+     */
+    private static final int EXPLOSIONS = 3;
+    /**
+     * Where armed is positioned in bombparams.
+     */
+    private static final int ARMED = 4;
+    /**
+     * Where exploding is positioned in bombparams.
+     */
+    private static final int EXPLODING = 5;
+    /**
      * Makes a bomb from existing sava data.
-     * @param bombParams the paramaters to make the bomb.
+     * @param bombParams the parameters to make the bomb.
      * @param xPos its x location
      * @param yPos its y location
      * @return the bomb made.
      */
     private static Bomb getBombFromSave(String[] bombParams, int xPos, int yPos) {
-        int countDownLeft = Integer.parseInt(bombParams[0]);
-        double countdownTickProgress = Double.parseDouble(bombParams[1]);
-        double nextBoomCountdown = Double.parseDouble(bombParams[2]);
-        int explosions = Integer.parseInt(bombParams[3]);
-        boolean armed = Boolean.parseBoolean(bombParams[4]);
-        boolean exploding = Boolean.parseBoolean(bombParams[5]);
-        Bomb tempBomb = new Bomb(countDownLeft, countdownTickProgress, nextBoomCountdown, explosions
-                , armed, exploding, xPos, yPos);
+        int countDownLeft = Integer.parseInt(bombParams[COUNTDOWN_LEFT]);
+        double countdownTickProgress = Double.parseDouble(bombParams[COUNTDOWN_TICK_PROGRESS]);
+        double nextBoomCountdown = Double.parseDouble(bombParams[NEXT_BOOM_COUNTDOWN]);
+        int explosions = Integer.parseInt(bombParams[EXPLOSIONS]);
+        boolean armed = Boolean.parseBoolean(bombParams[ARMED]);
+        boolean exploding = Boolean.parseBoolean(bombParams[EXPLODING]);
+        Bomb tempBomb = new Bomb(countDownLeft, countdownTickProgress,
+                nextBoomCountdown, explosions, armed, exploding, xPos, yPos);
         return tempBomb;
     }
 
