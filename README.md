@@ -1,8 +1,18 @@
   
 # CS-230 29SE A2 Jewel Thief
+
+Tile-based puzzle game built in Java/JavaFX. 9-person team university project. 
+
 🚀 Getting Started (Initial Setup)
 This project uses the Maven Wrapper so that everyone compiles and runs the game using the same Maven version, regardless of what is installed on your system.
 
+# Features
+  - Colour-matching movement system
+  - Enemy AI, bombs
+  - Save/load state
+  - Per-profile high scores
+  - Unlockable achievements
+  - Skins
 
 # ✅ How to build the project:
 
